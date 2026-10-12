@@ -463,8 +463,12 @@ def _rahmen_rechts():
     zs0, zs1 = Z_LEIT - 43, Z_LEIT + 43        # Schlitz
     g0, g1 = GABEL_X0, GABEL_X1
     for u0, u1 in ((GABEL_U0, GABEL_U1), (-GABEL_U1, -GABEL_U0)):
-        ob = _xz_poly([(g0, zs1), (g1, zs1), (g1, Z1 + 3), (g0 + 30, Z1 + 3)], u0, u1)
-        un = _xz_poly([(g0 + 30, Z0), (g1, Z0), (g1, zs0), (g0, zs0)], u0, u1)
+        # Schraege Stirn der Schienen: Keilspitze (Messerkante) auf 8 mm Original gekappt, senkrechte Stirnkante >= 4 mm
+        kz = 8.0 / 30.0
+        ob = _xz_poly([(g0 + 8, zs1), (g1, zs1), (g1, Z1 + 3), (g0 + 30, Z1 + 3),
+                       (g0 + 8, zs1 + kz * (Z1 + 3 - zs1))], u0, u1)
+        un = _xz_poly([(g0 + 30, Z0), (g1, Z0), (g1, zs0), (g0 + 8, zs0),
+                       (g0 + 8, zs0 - kz * (zs0 - Z0))], u0, u1)
         t += [ob, un]
         # Gleitleisten aussen, verschraubt
         ua, ub = (u1, u1 + 10) if u0 > 0 else (u0 - 10, u0)

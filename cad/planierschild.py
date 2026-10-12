@@ -34,9 +34,9 @@ Fotobefund (BS = blaue K55 senkrecht von rechts, BV = von vorn, FL, PK):
     Maskenecke, aussen an den Haubenseiten (|y| = Y_LTG) schraeg nach hinten oben (BS: x 0 / z 775 -> x 1050 /
     z 1060), Schellen an Maske, Haube und Schriftband; hinter dem Unterbau (Halter an der Unterbauwand) herunter auf
     Plattformhoehe und AM BODEN (z 885, |y| 440, Standschellen) nach hinten (7826381704). Rechts: Foerderleitung bis x 2250,
-    dann schwarzer Schlauch ueber den Werkzeugkasten zum Steuerblock oben auf dem rechten Endkasten (Kugelhebel);
+    dann schwarzer Schlauch ueber den Werkzeugkasten zum Steuerblock oben hinten auf dem rechten Endkasten (Kugelhebel); zweiter Schlauch (Ruecklauf) parallel zurueck, am Boden Rohr (y 500) in die Tankvorderwand;
     links: Saugleitung in die Tankvorderwand. Steuerblock -> zwei Leitungen auf die zwei parallelen Querrohre ueber der
-    Traverse (z 1370 Stangenseite, z 1440 Kolbenseite/Buegel; versorgen beide Zylinder), Ruecklauf in den Tank. Das
+    Traverse (z 1370 Stangenseite, z 1440 Kolbenseite/Buegel; versorgen beide Zylinder), Das
     untere duenne Rohr am Zylinder (BS, 39334013090) ist als Leckoelleitung gedeutet. Kein Gestaenge an der Haubenseite,
     kein Ventilblock auf der Pumpe (39333958410: linke Haubenseite nur das Rohr). Traverse: Rueckwand durchgehend (Quertraeger buendig mit
     den Endkaesten), Schild "Frisch" links der Mitte, Langloch rechts, Einfuellstutzen Ø ~115 mit roter Kappe
@@ -94,6 +94,7 @@ GABEL_L = 124.0               # Gabelkopf ab Scheitelauge bis Kontermutter
 # Traverse: Endkaesten aussen, Quertraeger (Oeltank) hinten oben
 EK_X0, EK_X1 = 2395.0, 2830.0
 EK_Z0, EK_Z1 = 900.0, 1240.0
+Z_AUSS_O = EK_Z1 - 30.0         # Oberkante des Kastenausschnitts (Rest oben 30 mm: keine Messerkante an der Verrundung)
 Z_AUSS = 960.0               # Unterkante des Kastenausschnitts (Zylinder + Bodenleitung)
 EK_DY, EK_T = 95.0, 12.0               # halbe Breite (y), Wandstaerke
 EK_YI = Y_SCHUB - EK_DY                # Innenseite Endkasten (880, frei von Werkzeugkasten-Deckel/Scharnier)
@@ -119,9 +120,10 @@ Z_LTG = 1085.0                # waagerechter Lauf hinter der Haube: ueber Kasten
 X_LTG_AB = 1620.0            # hier ist die Leitung hinter dem Unterbau herunter auf Plattformhoehe (Foto f7826)
 Y_HINT = 440.0                # |y| der Leitungen auf der Plattform (Gasse zwischen Sitz |y| <= 250 und Kaesten |y| >= 585)
 Z_HINT = 885.0                # Rohrachse am Boden (Unterkante 867, 27 ueber der Plattform), auf Standschellen
+XH_P, XH_R = 2720.0, 2765.0   # x der beiden Schlauchanschluesse am Steuerblock (Druck / Ruecklauf)
 X_SCHLAUCH = 2250.0           # hier geht das Rohr rechts in den Schlauch zum Steuerblock ueber
-# Steuerblock oben auf dem rechten Endkasten (Fotos f7826, 39334013090): innen vor den Fussplatten der Buegelschlaufe
-VB_X0, VB_X1 = 2470.0, 2560.0
+# Steuerblock oben auf dem rechten Endkasten, hinterer Teil (Foto f7826: Kugel hinten/aussen), hinter der Buegelschlaufe
+VB_X0, VB_X1 = 2700.0, 2790.0
 VB_Y0, VB_Y1 = 965.0, 1055.0
 VB_Z1 = EK_Z1 + 50.0          # Oberkante Block (1290)
 # Fuehrungsplatte mit Steckbolzen (kurz hinter dem Leitrad)
@@ -237,7 +239,8 @@ def schild(t):
     xl, zl = F[-1]
     t.append(stab((xl + 6, -Y_WANGE, zl - 6), (xl + 6, Y_WANGE, zl - 6), 12))
     # Seitenwangen
-    wange = F + [(X_RUECK - 10, SCHILD_H - 40), (X_RUECK + 30, 140), (X_RUECK - 50, 0)]
+    # Lippenspitze der Wange gekappt (keine Messerkante): Kappe 7 mm breit
+    wange = F[:-1] + [(F[-1][0] + 4.0, F[-1][1] - 7.0), (F[-1][0] + 7.9, F[-1][1] - 1.4), (X_RUECK - 10, SCHILD_H - 40), (X_RUECK + 30, 140), (X_RUECK - 50, 0)]
     for s in (-1, 1):
         t.append(platte_xz(wange, s * Y_WANGE, s * SCHILD_B / 2))
         t += schraubenreihe((X_RUECK - 40, s * SCHILD_B / 2, 240), (X_RUECK - 40, s * SCHILD_B / 2, 620), 3,
@@ -432,11 +435,11 @@ def endkasten(t, s):
     k -= kasten_rund(EK_X0 + EK_T, EK_X1 - EK_T, y - EK_DY + EK_T, y + EK_DY - EK_T,
                      EK_Z0 + EK_T, EK_Z1 - EK_T, 6, Axis.Y)
     # Ausschnitt vorn fuer Zylinder und Leitung (nach oben bis zur Decke: Schwenkfreiheit beim Heben)
-    k -= box(EK_X0 - 5, EK_X0 + EK_T + 5, y - R_ZYL - 12, y + R_ZYL + 12, Z_AUSS, EK_Z1 - EK_T - 2)
+    k -= box(EK_X0 - 5, EK_X0 + EK_T + 5, y - R_ZYL - 12, y + R_ZYL + 12, Z_AUSS, Z_AUSS_O)
     t.append(k)
     # Kantenschutz um den Ausschnitt
-    t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y - R_ZYL - 12, Z_AUSS - 12, EK_Z1 - 14))
-    t.append(box(EK_X0 - 8, EK_X0 + 2, y + R_ZYL + 12, y + R_ZYL + 24, Z_AUSS - 12, EK_Z1 - 14))
+    t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y - R_ZYL - 12, Z_AUSS - 12, Z_AUSS_O))
+    t.append(box(EK_X0 - 8, EK_X0 + 2, y + R_ZYL + 12, y + R_ZYL + 24, Z_AUSS - 12, Z_AUSS_O))
     t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y + R_ZYL + 24, Z_AUSS - 12, Z_AUSS))
     # Zapfenlager: Deckel aussen mit Schrauben, Nabe innen
     ya = y + s * EK_DY
@@ -470,8 +473,8 @@ def traverse(t):
     t.mat("blank", box(QT_X1 + 8, QT_X1 + 14, -570, -560, 995, 1185))
     t.mat("blank", box(QT_X1 + 8, QT_X1 + 14, -140, -130, 995, 1185))
     try:
-        pl = Plane(origin=(QT_X1 + 8, -350, 1090), x_dir=(0, 1, 0), z_dir=(1, 0, 0))   # Blick von hinten: rechts = +y
-        tx = extrude(pl * Text("Frisch", 140, font_style=FontStyle.BOLD, align=(Align.CENTER, Align.CENTER)), amount=6)
+        pl = Plane(origin=(QT_X1 + 5, -350, 1090), x_dir=(0, 1, 0), z_dir=(1, 0, 0))   # Blick von hinten: rechts = +y
+        tx = extrude(pl * Text("Frisch", 140, font_style=FontStyle.BOLD, align=(Align.CENTER, Align.CENTER)), amount=9)
         t.mat("blank", tx)
     except Exception as e:                                          # Schriftart nicht verfuegbar
         print("Frisch-Schrift entfaellt:", e)
@@ -573,13 +576,12 @@ def ventil(t):
     t.append(Pos(xm, ym, VB_Z1 + 7) * Cylinder(22, 14))                                           # Lagerbock Hebel
     t.mat("blank", stab((xm, ym, VB_Z1), (xm, ym, VB_Z1 + 90), 8))
     t.mat("schwarz", Pos(xm, ym, VB_Z1 + 90 + 35) * Sphere(45))                                   # Kugel, Oberkante 1420
-    t.append(rad_y(xm, y0 - 8, zt + 36, 26, 14))                                                  # Schlauchanschluss
+    for xx in (XH_P, XH_R):                                                                       # Schlauchanschluesse innen
+        t.append(rad_y(xx, y0 - 8, zt + 36, 17, 14))
     rr = R_QL - 3
     xq = 2655.0
-    t.append(rohr_glatt([(x1 - 4, 1022.0, zt + 30), (xq, 1022.0, zt + 30), (xq, EK_YI + 68, zt + 30)], rr, 25))   # -> Querrohr (Stangenseite)
-    t.append(rohr_glatt([(x1 - 4, 985.0, zt + 22), (BG_X1, 985.0, zt + 22), (BG_X1, EK_YI + 60, zt + 22)], rr, 25))  # -> Buegelrohr
-    t.append(rohr_glatt([(x1 - 4, 1052.0, zt + 30), (2700.0, 1052.0, zt + 30), (2700.0, 860.0, zt + 30),
-                         (2700.0, 860.0, zt - 4)], rr, 25))                                         # Ruecklauf in den Tank
+    t.append(rohr_glatt([(x0 + 4, 985.0, zt + 30), (xq, 985.0, zt + 30), (xq, EK_YI + 68, zt + 30)], rr, 25))   # -> Querrohr (Stangenseite)
+    t.append(rohr_glatt([(x0 + 4, 1022.0, zt + 22), (BG_X1, 1022.0, zt + 22), (BG_X1, EK_YI + 60, zt + 22)], rr, 25))  # -> Buegelrohr (Kolbenseite)
 
 
 def leitungen(t):
@@ -611,13 +613,20 @@ def leitungen(t):
         t.append(box(1285, 1315, ya, yb, zx - 14, zx + 14))
         for x in (1800.0, 2000.0, 2200.0) if s == 1 else (1800.0, 2000.0, 2200.0, 2450.0):
             schelle_x(t, x, s * Y_HINT, Z_HINT, R_LTG, DECK_Z - 0.3)
-    # Schlauch rechts: Plattform -> ueber die Werkzeugkaesten -> Steuerblock (von innen)
-    xm = (VB_X0 + VB_X1) / 2
+    # zwei schwarze Schlaeuche rechts (f7826): Druck (Plattform -> ueber die Werkzeugkaesten -> Steuerblock) und Ruecklauf
+    # (Steuerblock -> Plattform -> Rohr in die Tankvorderwand); beide laufen parallel
     t.mat("gummi", rohr_glatt([(X_SCHLAUCH - 6, Y_HINT, Z_HINT), (2300.0, Y_HINT, Z_HINT), (2300.0, Y_HINT, 1110.0),
-                               (2300.0, 862.0, 1110.0), (2300.0, 862.0, 1275.0), (xm, 862.0, 1275.0),
-                               (xm, VB_Y0 - 6, 1275.0)], 13.0, 45))
+                               (2300.0, 862.0, 1110.0), (2300.0, 862.0, 1275.0), (XH_P, 862.0, 1275.0),
+                               (XH_P, VB_Y0 - 6, 1275.0)], 13.0, 45))
+    t.mat("gummi", rohr_glatt([(XH_R, VB_Y0 - 6, 1275.0), (XH_R, 830.0, 1275.0), (2335.0, 830.0, 1275.0),
+                               (2335.0, 830.0, 1150.0), (2335.0, 500.0, 1150.0), (2335.0, 500.0, Z_HINT + 14)], 13.0, 45))
     t.append(ring_x(X_SCHLAUCH, Y_HINT, Z_HINT, R_LTG + 6, R_LTG - 0.5, 14))                  # Uebergang Rohr/Schlauch
     t.append(rad_x(X_SCHLAUCH + 12, Y_HINT, Z_HINT, R_LTG + 4, 14))
+    t.append(rohr_glatt([(2335.0, 500.0, Z_HINT), (2540.0, 500.0, Z_HINT), (2590.0, 500.0, Z_HINT + 75),
+                         (QT_X0 + 4, 500.0, Z_HINT + 75)], R_LTG, 70))                         # Ruecklaufrohr in den Tank
+    t.append(Pos(2335.0, 500.0, Z_HINT + 22) * Cylinder(R_LTG + 5, 14))                                 # Uebergang Schlauch/Rohr
+    for x in (2420.0, 2520.0):
+        schelle_x(t, x, 500.0, Z_HINT, R_LTG, DECK_Z - 0.3)
     # Querleitung (Stangenseite, beide Zylinder parallel) oben auf dem Traversen-Quertraeger
     xa = 2655.0
     ye = EK_YI + 60

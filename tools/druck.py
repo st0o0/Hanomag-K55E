@@ -51,8 +51,12 @@ HOEHE = float(os.environ.get("DRUCK_HOEHE", 250))   # maximale Bauhoehe
 MARGE = 1.0                    # Abstand zum Bettrand je Seite
 REIHE = BETT                   # Breite einer Reihe auf dem Bett
 PIN_D_LOCH, PIN_TIEFE, PIN_LAENGE = 2.0, 4.0, 7.5   # Passloch Dm / Tiefe je Haelfte; Stiftlaenge (1,75-mm-Filament)
+KIPP_HOEHE = 100.0             # gekippt nur akzeptieren, wenn die Bauhoehe danach hoechstens so gross ist
+KIPP_AUFLAGE = 0.15            # ... und die Auflageflaeche mindestens so viel der Huellen-Grundflaeche ausmacht
+HOEHE_STRAFE = 0.003           # Bewertung der Drucklage: Ueberhang + HOEHE_STRAFE je mm Bauhoehe
 PIN_WAND = 1.2                 # Mindestwand rund um ein Passloch
-PROBEN = 400                   # Strahlen je Koerper fuer die Wandstaerke
+PIN_WAND_MIN = 0.9             # Notfall bei duennen Schnitten (Ketten): zwei 0,45er Perimeter
+PROBEN = 1500                  # Strahlen je Koerper (hoechstens) fuer die Wandstaerke
 
 
 def _manifold_aus_solid(s):
@@ -121,20 +125,39 @@ def _trimesh(m):
     return trimesh.Trimesh(np.asarray(me.vert_properties)[:, :3], np.asarray(me.tri_verts), process=False)
 
 
-def _wandstaerke(tm, n=PROBEN, seed=1):
-    """Stichprobe der lokalen Wandstaerke (Strahl nach innen bis zur Gegenwand)."""
+def _wandstaerke(tm, n=None, seed=1):
+    """Stichprobe der lokalen Wandstaerke. Strahl von der Oberflaeche entlang -Normale nach innen; gezaehlt wird der erste
+    echte Austritt (Trefferflaeche mit fast entgegengesetzter Normale, cos >= 0,7). Streifende Treffer an Kanten und Ecken
+    sowie schraege Austritte (Keilspitzen) werden verworfen.
+    Gibt (Dicken, Punkte) zurueck oder (None, None)."""
     if len(tm.faces) == 0:
-        return None
+        return None, None
+    if n is None:
+        n = int(min(PROBEN, max(150, tm.area / 25)))
     pts, fi = trimesh.sample.sample_surface(tm, n, seed=seed)
     nrm = tm.face_normals[fi]
-    start = pts - nrm * 1e-3
-    loc, idx_ray, _ = tm.ray.intersects_location(start, -nrm, multiple_hits=False)
+    start = pts - nrm * 2e-3
+    loc, idx_ray, idx_tri = tm.ray.intersects_location(start, -nrm, multiple_hits=True)
     if len(idx_ray) == 0:
-        return None
-    d = np.full(n, np.nan)
-    d[idx_ray] = np.linalg.norm(loc - start[idx_ray], axis=1)
-    d = d[~np.isnan(d)]
-    return d if len(d) else None
+        return None, None
+    dist = np.linalg.norm(loc - start[idx_ray], axis=1)
+    cosw = np.einsum("ij,ij->i", tm.face_normals[idx_tri], -nrm[idx_ray])
+    ordn = np.lexsort((dist, idx_ray))
+    d_out, p_out = [], []
+    letzt = -1
+    for o in ordn:
+        r = idx_ray[o]
+        if r == letzt:
+            continue
+        if dist[o] < 5e-3 or cosw[o] <= 0:             # Selbsttreffer / Eintritt: naechster Treffer
+            continue
+        letzt = r
+        if cosw[o] >= 0.7:
+            d_out.append(dist[o] + 2e-3)
+            p_out.append(pts[r])
+    if not d_out:
+        return None, None
+    return np.array(d_out), np.array(p_out)
 
 
 def _ueberhang(tm):
@@ -165,9 +188,12 @@ def _limits():
 
 
 def _bett_winkel(v, L):
-    """Kleinster z-Drehwinkel (Grad), bei dem die xy-Ausdehnung der Punkte v in L x L passt, sonst None."""
+    """Kleinster z-Drehwinkel (Grad, 2-Grad-Schritte), bei dem die xy-Ausdehnung der Punkte v in L x L passt, sonst None."""
     xy = v[:, :2]
-    for ang in list(range(0, 90, 3)) + [45]:
+    if len(xy) > 200:
+        from scipy.spatial import ConvexHull
+        xy = xy[ConvexHull(xy).vertices]
+    for ang in range(0, 90, 2):
         a = math.radians(ang)
         c, s_ = math.cos(a), math.sin(a)
         x = xy[:, 0] * c - xy[:, 1] * s_
@@ -215,29 +241,60 @@ def _punkt_in(poly_list, pts):
     return inside
 
 
-def _schnittlage(k, a, nominal, fenster, loecher):
-    """Lage der Schnittebene senkrecht zu Achse a: kleinste Querschnittsflaeche im Fenster (leicht zur Mitte gezogen)."""
-    kp = k.transform(_perm(a))
-    w0, w1 = fenster
-    if w1 <= w0:
-        return (w0 + w1) / 2
-    best = None
-    for c in np.linspace(w0, w1, 25):
-        if any(abs(p[a] - c) < PIN_D_LOCH / 2 + 2.5 for ax, p in loecher if ax != a):
-            continue
-        ar = kp.slice(float(c)).area()
-        if ar <= 0:
-            continue
-        cost = ar * (1 + 0.3 * abs(c - nominal) / max(w1 - w0, 1e-6))
-        if best is None or cost < best[0]:
-            best = (cost, float(c))
-    return best[1] if best else (w0 + w1) / 2
+def _komponenten(m):
+    """Zusammenhaengende Teile eines Manifolds (Splitter und negative Schalen weg), groesste zuerst."""
+    return sorted((t for t in m.decompose() if t.volume() >= MIN_VOL), key=lambda t: -t.volume())
 
 
-def _stifte(k, a, c, loecher):
+def _gut(k, ebenen=()):
+    """Passt der Koerper ohne Schnitt aufs Bett? Niedrig (<= KIPP_HOEHE) in Einbaulage/Kipplage, sonst in einer stabilen
+    Lage bis HOEHE (auch Einbaulage, wenn sie stabil steht). Hohe Koerper brauchen eine stabile Auflage."""
+    lo, hi = _bb(k)
+    if hi[2] - lo[2] <= KIPP_HOEHE and _passt(k):
+        return True
+    if _beste_lage(k, list(ebenen), HOEHE, streng=True) is not None:
+        return True
+    # Einbaulage ohne gute Auflage: trotzdem nicht schneiden, solange der Koerper nicht schlank/hochkant ist
+    return _passt(k) and (hi[2] - lo[2] <= 140 or hi[2] - lo[2] <= 1.65 * min(hi[0] - lo[0], hi[1] - lo[1]))
+
+
+def _brauchen(t):
+    """Grobe Zahl der Stuecke, die ein Teil noch braucht (Produkt der Ueberschreitungen je Achse)."""
+    if _gut(t):
+        return 1
+    lo, hi = _bb(t)
+    return max(2, int(np.prod(np.ceil((hi - lo) / _limits() - 1e-9).clip(1))))
+
+
+def _teilung(k, a, c):
+    """Schnitt senkrecht zu Achse a bei c ohne Loecher. Kleine Reststuecke, die mit einem Nachbarn der Gegenseite
+    noch aufs Bett passen, werden dort wieder angesetzt (nicht abgetrennt). Gibt (Teile, Masken) zurueck;
+    Masken = Querschnitte (in der Frame von _perm(a)) der wieder angesetzten Reststuecke."""
+    nrm = [0.0, 0.0, 0.0]
+    nrm[a] = 1.0
+    oben, unten = k.split_by_plane(tuple(nrm), c)
+    co, cu = _komponenten(oben), _komponenten(unten)
+    masken = []
+    for quelle, ziel, sg in ((co, cu, 1), (cu, co, -1)):
+        for r in list(quelle[1:]):
+            rlo, rhi = _bb(r)
+            for i, m in enumerate(ziel):
+                mlo, mhi = _bb(m)
+                if np.any(rlo > mhi + 1e-3) or np.any(mlo > rhi + 1e-3):
+                    continue
+                u = m + r
+                if len(_komponenten(u)) == 1 and _passt(u):
+                    ziel[i] = u
+                    quelle.remove(r)
+                    masken.append(r.transform(_perm(a)).slice(c + sg * 0.05))
+                    break
+    return cu + co, masken
+
+
+def _stifte(k, a, c, loecher, masken=(), wand=PIN_WAND):
     """Passstift-Positionen (3D) fuer die Schnittebene a = c: Punkte, an denen rundum >= PIN_WAND Material bleibt."""
     kp = k.transform(_perm(a))
-    r = PIN_D_LOCH / 2 + PIN_WAND
+    r = PIN_D_LOCH / 2 + wand
     sec = None
     for d in (0.05, 1.0, 2.0, 3.0, 4.0):
         for sg in (1, -1):
@@ -245,6 +302,9 @@ def _stifte(k, a, c, loecher):
             sec = cs if sec is None else sec ^ cs
     if sec is None or sec.is_empty():
         return []
+    for mk in masken:
+        if not mk.is_empty():
+            sec = sec - mk.offset(wand + 1.0)
     er = sec.offset(-r)
     if er.is_empty():
         return []
@@ -283,44 +343,169 @@ def _loch(a, p):
     return z.translate(tuple(float(v) for v in p))
 
 
-def _schneiden(k, loecher=None, ebenen=None, info=None):
-    """Rekursiv teilen, bis jedes Stueck aufs Bett passt. Gibt ([(Manifold, Ebenen)], info) zurueck."""
-    loecher = [] if loecher is None else loecher
-    ebenen = [] if ebenen is None else ebenen
-    info = {"schnitte": [], "stifte": 0, "ohne_stifte": 0} if info is None else info
-    if _passt(k):
-        return [(k, ebenen)], info
+def _beste_ebene(k, loecher):
+    """Bester Schnitt (Achse, Lage) fuer einen zu grossen Koerper: je Achse mit Ueberschreitung Kandidaten im
+    zulaessigen Fenster, vorsortiert nach Querschnitt/Inseln, dann echt geteilt und nach Stueckzahl, Passstiften
+    und Querschnitt bewertet."""
     lo, hi = _bb(k)
     ext = hi - lo
     lim = _limits()
-    a = int(np.argmax(ext / lim))
-    n = max(2, math.ceil(ext[a] / lim[a] - 1e-9))
-    breite = ext[a] / n
-    nominal = lo[a] + breite
-    w0 = max(nominal - 0.15 * breite, lo[a] + ext[a] - (n - 1) * lim[a], lo[a] + 2)
-    w1 = min(nominal + 0.15 * breite, lo[a] + lim[a], hi[a] - 2)
-    if w1 < w0:
-        w0 = w1 = min(max(nominal, lo[a] + ext[a] - (n - 1) * lim[a]), lo[a] + lim[a])
-    c = _schnittlage(k, a, nominal, (w0, w1), loecher)
-    pins = _stifte(k, a, c, loecher)
-    nrm = [0.0, 0.0, 0.0]
-    nrm[a] = 1.0
-    oben, unten = k.split_by_plane(tuple(nrm), c)
-    for p in pins:
-        h = _loch(a, p)
-        oben, unten = oben - h, unten - h
+    achsen = [a for a in range(3) if ext[a] > lim[a]]
+    if not achsen:                                    # passt in Einbaulage, aber nur instabil/hochkant: Achsen > KIPP_HOEHE kuerzen
+        lim = np.minimum(lim, KIPP_HOEHE)
+        achsen = [a for a in range(3) if ext[a] > lim[a]]
+    best = None
+    for a in achsen:
+        n = max(2, math.ceil(ext[a] / lim[a] - 1e-9))
+        nominal = lo[a] + ext[a] / n
+        w0 = max(lo[a] + ext[a] - (n - 1) * lim[a], lo[a] + 2)
+        w1 = min(lo[a] + lim[a], hi[a] - 2)
+        if w1 < w0:
+            w0 = w1 = min(max(nominal, lo[a] + ext[a] - (n - 1) * lim[a]), lo[a] + lim[a])
+        kp = k.transform(_perm(a))
+        vor = []
+        for c in np.linspace(w0, w1, 41 if w1 > w0 else 1):
+            if any(abs(p[a] - c) < PIN_D_LOCH / 2 + 2.5 for ax, p in loecher if ax != a):
+                continue
+            cs = kp.slice(float(c))
+            ar = cs.area()
+            if ar <= 0:
+                continue
+            isl = len(cs.decompose())
+            platz = cs.offset(-(PIN_D_LOCH / 2 + PIN_WAND_MIN)).area() > 3.0      # irgendwo Platz fuer ein Passloch?
+            vor.append((0 if platz else 1, ar * (1 + 0.5 * abs(c - nominal) / max(w1 - w0, 1e-6)) + 3000 * (isl - 1),
+                        float(c), ar))
+        vor.sort()
+        mit = [v for v in vor if v[0] == 0][:6]
+        for _, _, c, ar in mit + [v for v in vor if v[0] == 1][:3]:
+            teile, masken = _teilung(k, a, c)
+            stuecke = sum(_brauchen(t) for t in teile)
+            wand = PIN_WAND
+            pins = _stifte(k, a, c, loecher, masken, wand)
+            if not pins:
+                wand = PIN_WAND_MIN
+                pins = _stifte(k, a, c, loecher, masken, wand)
+            kost = stuecke * 1e5 + (0 if pins else 3e4) + (5e3 if pins and wand < PIN_WAND else 0) + ar
+            if best is None or kost < best[0]:
+                best = (kost, a, c, teile, masken, pins, wand)
+    return best
+
+
+def _steht(v0, F, t2=None):
+    """Steht der auf z = 0 gelegte Koerper stabil? Auflageflaeche >= KIPP_AUFLAGE der Huellen-Grundflaeche und
+    Schwerpunkt (Draufsicht) innerhalb der Auflage. Gibt (ok, Auflageflaeche) zurueck."""
+    from scipy.spatial import ConvexHull, Delaunay
+    t2 = trimesh.Trimesh(v0, F, process=False) if t2 is None else t2
+    kontakt = (t2.triangles_center[:, 2] < 1.0) & (t2.face_normals[:, 2] < -0.99)   # Nietkoepfe etc. bis 1 mm
+    flach = float(t2.area_faces[kontakt].sum())
+    if flach < 100:
+        return False, flach
+    grund = ConvexHull(v0[:, :2]).volume              # 2D: Flaeche der Huelle in der Draufsicht
+    if flach < KIPP_AUFLAGE * grund:
+        return False, flach
+    kp = np.unique(t2.faces[kontakt].ravel())
+    try:
+        return bool(Delaunay(v0[kp, :2]).find_simplex(t2.center_mass[:2]) >= 0), flach
+    except Exception:
+        return False, flach
+
+
+def _beste_lage(k, ebenen, maxh, streng=False):
+    """Beste Lage eines Koerpers mit Bauhoehe <= maxh, passend auf das Bett und stabil (Auflage >= KIPP_AUFLAGE der
+    Grundflaeche, Schwerpunkt ueber der Auflage). Kandidaten: Einbaulage, Schnittflaechen, sechs Achsen, grosse ebene
+    Huellflaechen. Bewertung: Ueberhang + HOEHE_STRAFE je mm Bauhoehe - Bonus fuer grosse Auflage + Strafe, wenn die
+    groesste ebene Flaeche senkrecht steht. Gibt (score, R, ang) oder None zurueck."""
+    me = k.to_mesh()
+    V = np.asarray(me.vert_properties)[:, :3].astype(float)
+    F = np.asarray(me.tri_verts)
+    tm = trimesh.Trimesh(V, F, process=False)
+    lim = _limits()
+    kand = [(np.eye(3), streng)]
+    for a, c in ebenen:
+        sel = (np.abs(tm.triangles_center[:, a] - c) < 1e-3) & (np.abs(tm.face_normals[:, a]) > 0.999)
+        for sg in (1, -1):
+            if tm.area_faces[sel & (np.sign(tm.face_normals[:, a]) == sg)].sum() > 50:
+                n = np.zeros(3)
+                n[a] = sg
+                kand.append((_rot_unten(n), True))
+    for a in range(3):
+        for sg in (1, -1):
+            n = np.zeros(3)
+            n[a] = sg
+            kand.append((_rot_unten(n), True))
+    grosse = []                                       # (Normale, Flaeche) der groessten ebenen Huellflaechen
+    try:
+        hull = tm.convex_hull
+        for fi in np.argsort(-np.asarray(hull.facets_area))[:25]:
+            kand.append((_rot_unten(hull.facets_normal[fi]), True))
+            if hull.facets_area[fi] > 400 and len(grosse) < 3:
+                grosse.append((hull.facets_normal[fi], float(hull.facets_area[fi])))
+    except Exception:
+        pass
+    gesehen, best = set(), None
+    for R, pruef in kand:
+        key = tuple(np.round(R[2], 3))                # z-Zeile bestimmt die Lage bis auf z-Drehung
+        if key in gesehen:
+            continue
+        gesehen.add(key)
+        v = V @ R.T
+        h = float(np.ptp(v[:, 2]))
+        if h > maxh or h > lim[2]:
+            continue
+        if streng and h > KIPP_HOEHE and h > 1.5 * min(np.ptp(v[:, 0]), np.ptp(v[:, 1])):
+            continue                                  # hohe, schlanke Lage (Turm) gilt nicht als stabil
+        ang = _bett_winkel(v, lim[0])
+        if ang is None:
+            continue
+        v0 = v - [0, 0, v[:, 2].min()]
+        t2 = trimesh.Trimesh(v0, F, process=False)
+        ok, flach = _steht(v0, F, t2)
+        if pruef and not ok:
+            continue
+        score = _ueberhang(t2) + HOEHE_STRAFE * h + 3 * HOEHE_STRAFE * max(0.0, h - KIPP_HOEHE)
+        if flach > 0:
+            score -= 0.06 + 0.00005 * min(flach, 4000)
+        for n, fl in grosse:                          # grosse ebene Flaeche nicht senkrecht stellen
+            if abs((R @ n)[2]) < 0.3:
+                score += 0.00005 * min(fl, 4000)
+        if best is None or score < best[0]:
+            best = (score, R, ang)
+    return best
+
+
+def _schneiden(k, loecher=None, ebenen=None, info=None):
+    """Rekursiv teilen, bis jedes Stueck aufs Bett passt. Gibt ([(Manifold, Ebenen, Mitte)], info) zurueck."""
+    loecher = [] if loecher is None else loecher
+    ebenen = [] if ebenen is None else ebenen
+    info = {"schnitte": [], "stifte": 0, "ohne_stifte": 0, "gekippt": 0} if info is None else info
+    lo, hi = _bb(k)
+    mitte = (lo + hi) / 2
+    if _gut(k, ebenen):
+        return [(k, ebenen, mitte)], info
+    best = _beste_ebene(k, loecher)
+    if best is None:
+        return [(k, ebenen, mitte)], info
+    _, a, c, teile, masken, pins, wand = best
+    if pins:
+        H = mf.Manifold.batch_boolean([_loch(a, p) for p in pins], mf.OpType.Add)
+        hlo, hhi = _bb(H)
+        neu_teile = []
+        for t in teile:
+            tlo, thi = _bb(t)
+            if np.all(tlo <= hhi) and np.all(hlo <= thi):
+                t = t - H
+            neu_teile.append(t)
+        teile = neu_teile
     info["schnitte"].append((a, c))
     info["stifte"] += len(pins)
     info["ohne_stifte"] += 0 if pins else 1
+    info["duenn"] = info.get("duenn", 0) + (1 if pins and wand < PIN_WAND else 0)
     neu = loecher + [(a, p) for p in pins]
     eb = ebenen + [(a, c)]
     out = []
-    for h in (unten, oben):
-        for t in h.decompose():
-            lo_t, hi_t = _bb(t)
-            if t.volume() < MIN_VOL or (t.volume() < MIN_SPLITTER and min(hi_t - lo_t) < MIN_KOERPER):
-                continue                                  # Schnittsplitter (z.B. angeschnittenes Kettenglied)
-            res, _ = _schneiden(t, neu, eb, info)
+    for t in teile:
+        for t2 in _komponenten(t):
+            res, _ = _schneiden(t2, neu, eb, info)
             out += res
     return out, info
 
@@ -341,34 +526,9 @@ def _rot_unten(n):
 
 
 def _drucklage(k, ebenen):
-    """Beste Drucklage eines Stuecks: groesste Schnittflaeche nach unten, wenn der Ueberhang nicht deutlich schlechter wird;
-    dazu um z gedreht, falls es sonst nicht aufs Bett passt. Gibt (Manifold, ok) zurueck."""
-    me = k.to_mesh()
-    V = np.asarray(me.vert_properties)[:, :3].astype(float)
-    F = np.asarray(me.tri_verts)
-    tm = trimesh.Trimesh(V, F, process=False)
-    kand = [(0.0, np.eye(3))]
-    for a, c in ebenen:
-        sel = (np.abs(tm.triangles_center[:, a] - c) < 1e-3) & (np.abs(tm.face_normals[:, a]) > 0.999)
-        for sg in (1, -1):
-            ar = tm.area_faces[sel & (np.sign(tm.face_normals[:, a]) == sg)].sum()
-            if ar > 50:
-                n = np.zeros(3)
-                n[a] = sg
-                kand.append((ar, _rot_unten(n)))
-    lim = _limits()
-    best = None
-    for ar, R in kand:
-        v = V @ R.T
-        if np.ptp(v[:, 2]) > lim[2]:
-            continue
-        ang = _bett_winkel(v, lim[0])
-        if ang is None:
-            continue
-        uh = _ueberhang(trimesh.Trimesh(v - [0, 0, v[:, 2].min()], F, process=False))
-        score = uh + 0.0004 * np.ptp(v[:, 2]) - (0.06 + 0.00005 * min(ar, 4000) if ar else 0)
-        if best is None or score < best[0]:
-            best = (score, R, ang)
+    """Drucklage eines Stuecks: erst mit Bauhoehe <= KIPP_HOEHE, sonst (Notfall) bis zur Maximalhoehe.
+    Dreht ggf. um z, damit es aufs Bett passt. Gibt (Manifold, ok) zurueck."""
+    best = _beste_lage(k, ebenen, KIPP_HOEHE) or _beste_lage(k, ebenen, HOEHE)
     if best is None:
         return k, False
     _, R, ang = best
@@ -376,7 +536,6 @@ def _drucklage(k, ebenen):
     if ang:
         out = out.rotate((0, 0, float(ang)))
     return out, True
-
 
 
 def manifolds(teil, comp):
@@ -469,37 +628,54 @@ def exportiere(teil, comp, ziel, mfs=None, probleme=None):
     probleme += hinweise
 
     # Grosse Koerper teilen (Passstifte), dann Anordnung: Reihen von links nach rechts, Unterseite auf z = 0
-    stuecke = []                                     # (Manifold in Drucklage, Mitte vor dem Drehen)
+    stuecke = []                                     # (Manifold in Drucklage, Mitte vor dem Drehen, Manifold in Einbaulage)
     lim = _limits()
+
+    def ort(a, c):
+        return "xyz"[a] + "=" + str(round(float(c) * 8 + (392 if a == 2 else 0)))
     for ki, k in enumerate(koerper):
         lo, hi = _bb(k)
         if hi[0] - lo[0] <= lim[0] and hi[1] - lo[1] <= lim[1] and hi[2] - lo[2] <= lim[2]:
-            stuecke.append((k, (lo + hi) / 2))
-        elif _passt(k):                              # passt nur um z gedreht
-            stuecke.append((_drucklage(k, [])[0], (lo + hi) / 2))
-        else:
+            if hi[2] - lo[2] <= KIPP_HOEHE:
+                stuecke.append((k, (lo + hi) / 2, k))
+                continue
+        if True:
             teilstuecke, info = _schneiden(k)
-
-            def ort(a, c):
-                return "xyz"[a] + "=" + str(round(float(c) * 8 + (392 if a == 2 else 0)))
-            sch = " / ".join(ort(a, c) for a, c in sorted(info["schnitte"]))
-            txt = (f"Koerper {ki} geteilt in {len(teilstuecke)} Stuecke bei {sch} (Original-mm, Einbaulage), "
-                   f"{info['stifte']} Passstifte (Loch {PIN_D_LOCH} x {PIN_TIEFE} mm je Haelfte, Stift: "
-                   f"1,75-mm-Filament {PIN_LAENGE} mm lang)")
-            if info["ohne_stifte"]:
-                txt += f"; {info['ohne_stifte']} Schnittflaeche(n) ohne Stifte (kein Platz fuer Wand >= {PIN_WAND} mm)"
-            probleme.append(txt)
-            for t, eb in teilstuecke:
-                tlo, thi = _bb(t)
+            if info["schnitte"]:
+                sch = " / ".join(ort(a, c) for a, c in sorted(info["schnitte"]))
+                txt = (f"Koerper {ki} geteilt in {len(teilstuecke)} Stuecke bei {sch} (Original-mm, Einbaulage), "
+                       f"{info['stifte']} Passstifte (Loch {PIN_D_LOCH} x {PIN_TIEFE} mm je Haelfte, Stift: "
+                       f"1,75-mm-Filament {PIN_LAENGE} mm lang)")
+                if info.get("duenn"):
+                    txt += (f"; {info['duenn']} Schnittflaeche(n) nur mit schmaler Wand {PIN_WAND_MIN} mm um das Loch "
+                            f"(duenner Querschnitt, z.B. Kettenglieder)")
+                if info["ohne_stifte"]:
+                    txt += f"; {info['ohne_stifte']} Schnittflaeche(n) ohne Stifte (kein Platz fuer Wand >= {PIN_WAND} mm)"
+                probleme.append(txt)
+            if info["gekippt"]:
+                probleme.append(f"Koerper {ki} passt nur gekippt (auf grosser ebener Huellflaeche) auf das Bett "
+                                f"{BETT:g} x {BETT:g}, {info['gekippt']} Stueck(e)")
+            for t, eb, tmitte in teilstuecke:
                 m, ok = _drucklage(t, eb)
                 if not ok:
-                    probleme.append(f"Koerper {ki}: Teilstueck bei {[round(float(v) * 8) for v in (tlo + thi) / 2]} "
+                    probleme.append(f"Koerper {ki}: Teilstueck bei {[round(float(v) * 8) for v in tmitte]} "
                                     f"passt nicht aufs Bett")
-                stuecke.append((m, (tlo + thi) / 2))
+                stuecke.append((m, tmitte, t))
+
+    solid_bb = [(_bb(m), m.volume()) for m in teile]
+
+    def bauteil(p):
+        """Vermutetes Solid zu einem Punkt (Modell-mm, Einbaulage): kleinstes Solid, dessen Huellquader den Punkt enthaelt."""
+        kand = [(v, i, bb) for i, (bb, v) in enumerate(solid_bb) if np.all(bb[0] - 0.6 <= p) and np.all(p <= bb[1] + 0.6)]
+        if not kand:
+            return "?"
+        v, i, bb = min(kand)
+        e = (bb[1] - bb[0]) * 8
+        return f"Solid {i} ({e[0]:.0f}x{e[1]:.0f}x{e[2]:.0f} Original-mm)"
 
     platziert, berichte = [], []
     x = y = reihe_h = 0.0
-    for k, mitte in stuecke:
+    for k, mitte, pre in stuecke:
         lo, hi = np.array(k.bounding_box()[:3]), np.array(k.bounding_box()[3:])
         dx, dy = hi[0] - lo[0], hi[1] - lo[1]
         if x > 0 and x + dx > REIHE:
@@ -510,8 +686,7 @@ def exportiere(teil, comp, ziel, mfs=None, probleme=None):
         reihe_h = max(reihe_h, dy)
         tm = _trimesh(k2)
         ext = hi - lo
-        w = _wandstaerke(tm)
-                                                           # mitte: Lage im zusammengebauten Modell (Original-mm)
+        w, wp = _wandstaerke(_trimesh(pre))              # Dicke ist drehinvariant; Ort in Einbaulage
         b = {
             "ort_original_mm": [round(float(mitte[0]) * 8), round(float(mitte[1]) * 8), round(float(mitte[2]) * 8 + 392)],
             "volumen_mm3": round(k.volume(), 2),
@@ -528,8 +703,22 @@ def exportiere(teil, comp, ziel, mfs=None, probleme=None):
         if ext.min() < MIN_KOERPER:
             probleme.append(f"Koerper {len(berichte)} sehr klein ({ext.min():.2f} mm, {k.volume():.2f} mm3) bei x/y/z "
                             f"{b['ort_original_mm']} Original-mm, geht beim Druck evtl. verloren")
-        if w is not None and b["wand_unter_min"] > max(2, 0.05 * len(w)):
-            probleme.append(f"Koerper {len(berichte)} (bei {b['ort_original_mm']}): {b['wand_unter_min']}/{len(w)} Proben duenner als {MIN_WAND} mm")
+        if w is not None and b["wand_unter_min"]:
+            # Duennstellen zu Orten (6-mm-Raster im Modell) zusammenfassen
+            d = w < MIN_WAND
+            cl = {}
+            for dd, pp in zip(w[d], wp[d]):
+                cl.setdefault(tuple(np.floor(pp / 6).astype(int)), []).append((dd, pp))
+            zeilen = []
+            for lst in sorted(cl.values(), key=lambda l: min(q[0] for q in l))[:6]:
+                dmin = min(q[0] for q in lst)
+                pm = np.mean([q[1] for q in lst], axis=0)
+                zeilen.append(f"{dmin:.2f} mm ({len(lst)} Probe{'n' if len(lst) > 1 else ''}) bei x/y/z "
+                              f"[{round(float(pm[0]) * 8)}, {round(float(pm[1]) * 8)}, {round(float(pm[2]) * 8 + 392)}] "
+                              f"Original-mm, {bauteil(pm)}")
+            b["duennstellen"] = zeilen
+            probleme.append(f"Koerper {len(berichte)}: {b['wand_unter_min']}/{b['proben']} Proben duenner als {MIN_WAND} mm: "
+                            + "; ".join(zeilen) + (f" (+{len(cl) - 6} weitere Stellen)" if len(cl) > 6 else ""))
         berichte.append(b)
 
     bett = mf.Manifold.batch_boolean(platziert, mf.OpType.Add) if len(platziert) > 1 else platziert[0]
@@ -537,7 +726,7 @@ def exportiere(teil, comp, ziel, mfs=None, probleme=None):
     tm.export(str(ziel))
     lo, hi = tm.bounds
     return {
-        "id": teil.id, "solids": len(teile), "koerper": len(koerper),
+        "id": teil.id, "solids": len(teile), "koerper": len(stuecke),
         "dicht": bool(tm.is_watertight), "bett_mm": [round(float(v), 1) for v in (hi - lo)],
         "volumen_mm3": round(float(tm.volume), 1), "dreiecke": int(len(tm.faces)),
         "probleme": probleme, "koerper_liste": berichte, "sekunden": round(time.time() - t0, 1),

@@ -169,6 +169,41 @@
           "benutzt": "Gegenprobe; nicht veröffentlicht"
         }
       ]
+    },
+    {
+      "titel": "Einspritzanlage (Recherche Pumpe)",
+      "eintraege": [
+        {
+          "titel": "Wikibooks Traktorenlexikon: Hanomag R 45 A/AE",
+          "url": "https://de.wikibooks.org/wiki/Traktorenlexikon:_Hanomag_R_45_A/AE",
+          "zeigt": "Motor D 57 Vorkammer-Diesel, Daten",
+          "benutzt": "Einordnung des Motors"
+        },
+        {
+          "titel": "VORGLUEH-IG: Technik Hanomag R 45",
+          "url": "http://www.vorglueh-ig.de/techr45.html",
+          "zeigt": "Einspritzpumpe 'Hanomag oder Bosch PE 4A', Bosch-Förderpumpe, Doppel-Kraftstofffilter, Hanomag-Regler, Düsenhalter KD 82 SDA 30",
+          "benutzt": "Bauteilliste der Anlage"
+        },
+        {
+          "titel": "Theopold-Parts: Ersatzteile Hanomag-Einspritzpumpe (R38, R40, R45, R55, K55, SS/ST 55)",
+          "url": "https://www.theopold-parts-shop.de/?cPath=3_23_25&cat=c25_Ersatzteile-fuer-Hanomag-Einspritzpumpe-Hanomag-Einspritzpumpe.html",
+          "zeigt": "Hanomag-eigene Pumpe mit Pumpenelementen, Rollen, Nockenring",
+          "benutzt": "Beleg, dass es eine Hanomag-Bauart gibt"
+        },
+        {
+          "titel": "hanomag-service.de: Einspritzpumpe Hanomag D57",
+          "url": "https://www.hanomag-service.de/product-page/einspritzpumpe-hanomag-d57",
+          "zeigt": "Überholung Nockenring/Ventile/Rollenstößel",
+          "benutzt": "Aufbau (nur Text)"
+        },
+        {
+          "titel": "Eigene Fotos DSC04644–49, DSC04742, DSC04735/36",
+          "url": "",
+          "zeigt": "Kasten, Förderpumpe, Filter, Leitungen, Gestänge",
+          "benutzt": "Form und Lage aller Teile der Anlage"
+        }
+      ]
     }
   ]
 }

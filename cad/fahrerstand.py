@@ -183,9 +183,10 @@ def tank():
     t = Sammler("zink")
     X0, X1, Z0, Z1 = TANK_X0, TANK_X1, TANK_Z0, TANK_Z1
     t.append(_koerper(0.0, X0, TANK_XT + 2))
-    # gerollte Falz an der Stirn (breiter Wulst) und eine zweite Sicke dahinter, umlaufend
-    for xa, xb, g in ((X0, X0 + 12, 5.0), (X0 + 34, X0 + 48, 3.5), (X0 + 62, X0 + 70, 2.5)):
-        t.append(_koerper(g, xa, xb) - _koerper(0.0, xa - 1, xb + 1))
+    # gerollte Falz an der Stirn (breiter Wulst, endet bei x 1092 an der Rueckseite der Stirnwand: kein Keil davor) und eine zweite Sicke dahinter, umlaufend
+    for xa, xb, g in ((X0, X0 + 7, 5.0), (X0 + 34, X0 + 48, 3.5), (X0 + 62, X0 + 70, 2.5)):
+        # Innenflaeche 1,5 mm in den Tank gesenkt: Ueberlappung statt Beruehrung, sonst bleibt beim Triangulieren ein Haarspalt
+        t.append(_koerper(g, xa, xb) - _koerper(-1.5, xa - 1, xb + 1))
     # zwei runde gewoelbte Schraubenkoepfe seitlich zwischen den Baendern (Foto t39)
     for s in (-1, 1):
         for x in (1235.0, 1315.0):
@@ -197,7 +198,7 @@ def tank():
 
     # Spannbaender (lackiert) ueber Oberseite und Seiten; unten Laschen, Gewindestangen nach unten in den Flansch
     for xb in X_BAND:
-        band = _koerper(BAND_S, xb - BAND_B / 2, xb + BAND_B / 2) - _koerper(0.0, xb - BAND_B / 2 - 1, xb + BAND_B / 2 + 1)
+        band = _koerper(BAND_S, xb - BAND_B / 2, xb + BAND_B / 2) - _koerper(-1.5, xb - BAND_B / 2 - 1, xb + BAND_B / 2 + 1)
         band = band & box(xb - 30, xb + 30, -400, 400, BAND_ZE, Z1 + 40)
         t.mat("lack", band)
         for s in (-1, 1):

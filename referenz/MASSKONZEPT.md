@@ -61,8 +61,24 @@ Block x = 400 … 1030, y = ±190, Zylinderkopf bis z ≈ 1110, Ventildeckel bis
 Kühler x = 225 … 335, y = ±320, z = 480 … 1290 (innerhalb der Maske), Einfüllrohr nach vorn zum Verschluss
 auf der Maskenkappe (x = 140). Kurbelwelle z = 600.
 Schwungradgehäuse x = 1030 … 1090, r 300 um z = 640, oben bei 950 beschnitten (unter dem Tank). Alles muss **innerhalb der Haube** bleiben: Haubenwand innen y = ±(345−13).
-Sichtbar durch den Motorausschnitt: Einspritzpumpe, Kraftstofffilter mit Glasglocke (links),
-Lichtmaschine, Deckel „HANOMAG DIESEL“, Ölbad-Luftfilter.
+Sichtbar durch den Motorausschnitt: Kastenpumpe „HANOMAG DIESEL“, Förderpumpe mit Handpumpe, Vorfilter (Glasbecher),
+zwei hängende Filtertöpfe, Lichtmaschine, Ölbad-Luftfilter.
+
+Einspritzanlage links (Nutzerfotos DSC04644–49, DSC04742, fz_06m; Stand 2026-10, cad/motor.py `_seitendeckel`, `_kastenanbauten`, `_einspritzanlage`):
+
+| Teil | Maße / Lage (Original-mm, y links negativ) |
+|---|---|
+| Kastenpumpe | Gussgehäuse 360 × 185 (x 665 … 1025, z 740 … 925, y −184 … −220), Deckel 320 × 165, erhabene Fläche 285 × 130 mit „HANOMAG / DIESEL“ (Versalhöhe 42), 8 Schrauben, Ablassschraube SW 32 unten links, Rohrschelle oben mittig |
+| Gussansatz links + Reglerhebel | x 628 … 667, z 758 … 906; senkrechter Hebel Ø 18 bei x 642 mit Kugeln, unten Gestänge Ø 9 nach vorn (z 745, bis x 414, Böcke bei x 420/530) |
+| Reglerwelle / Hebel rechts | Welle Ø 22 y −202, z 880 bis x 1052, Lagerscheibe, Hebel mit Kugelknopf (Ø 28) bei x 1022, z 976 |
+| Förderpumpe | x 508 … 632, z 756 … 802, Deckel Ø 38, Handpumpe (Stößel Ø 26, Kappe Ø 42, Oberkante z ≈ 881) bei x 575 |
+| Vorfilter | Glasbecher Ø 40 mit Bügel, x 478, z 836 … 898, Kopf am Block; Rücklauf zur Förderpumpe |
+| Filtertöpfe | 2 hängende Töpfe (Kappe 76², Kugel R 33, Schraube unten) bei x 470 und 672, y −282, Kappe z 1086, Konsole am Kopf |
+| Kraftstoffleitung | Ø 10 bei y −203, z 924 über den ganzen Kasten (Schelle), hinten hoch zum Tank; Gasgestänge Ø 8 schräg von (478, z 929) nach (1010, z 1005) |
+| Ölwechsel-Schild | rot, 164 × 66, x 737, z 998 auf der Kopfwand mit 4 Nieten |
+
+Nicht belegt / entfernt: Einspritzleitungen und Düsenhalter auf der linken Seite (auf keinem Foto sichtbar), Bosch-Reihenpumpe,
+Vorreiniger, Stößelkammerdeckel. Wassereinlass am Block nach x 428 verschoben (Platz für Vorfilter und Förderpumpe).
 
 Auspuff: Durchbruch in der Haube bei x = 640, y = +220, Ø 70 (AUSPUFF_XY, Foto BS); Rohr senkrecht bis z ≈ 2000, Regenklappe.
 Ansaug/Luftfilter: Durchbruch bei x = 900, y = −220, Ø 90 (ANSAUG_XY); Ölbadfilter Ø 198 bis z ≈ 1850.
@@ -71,13 +87,13 @@ Ansaug/Luftfilter: Durchbruch bei x = 900, y = −220, Ø 90 (ANSAUG_XY); Ölbad
 
 | | Original-mm |
 |---|---|
-| Maske | 710 breit, 897 hoch, 210 tief, Unterkante z = 450 (MASKE_UK, Foto BV: h/b 1,26); Kappe 160 (Walze: im Seitenprofil über die ganze Höhe als Viertelkreis R ≈ 138 nach hinten gerollt, unten 6 Lippe über dem Querband; Oberkante quer als Bogen, Pfeilhöhe 22, Mitte z 1347, Übergang in die Seiten R 100; erhabenes Querband 15 hoch über dem Grill, Flügellogo auf der Wölbung), Grill 597 × 612, Sockel 125 (Foto g38, DSC04738) |
-| Haube | x = 210 … 1080 (Foto BS), 690 breit, Dach quer gewölbt wie die Maske (gleicher Kreisbogen, Pfeilhöhe 22, Mitte z 1347, Ecken R 90) mit zwei Längssicken bei y = ±150; Schriftzug z 1187 zwischen den Sicken bei z 1145 und 1228 (Seitenwand eben bis ≈ 1236) |
+| Maske | 710 breit, 897 hoch, 210 tief, Unterkante z = 450 (MASKE_UK); nach eigenen Fotos DSC04737/38/42: glatte Kappe 135 (Vorderfläche senkrecht, vorn oben R 35, Oberkante quer als Bogen, Pfeilhöhe 36, Mitte z 1347, Übergang in die Seiten R 70, gleicher Querschnitt wie die Haube) mit Flügellogo; Grillfenster 678 breit (Randstreifen 16) × 641 hoch, oben Querband 46, unten Abschlusswulst 48 (Mitte ≈ z 590), Sockel 116 mit Kurbelloch Ø 54 (z 530, Pumpenachse). Foto-Seitenverhältnis der Front eher h/b ≈ 1,36 (Maske dort ~8 % höher) – nicht übernommen, MASKE_UK bleibt |
+| Haube | x = 210 … 1080 (Foto BS), 690 breit, Dach quer gewölbt wie die Maske (gleicher Kreisbogen, Pfeilhöhe 36, Mitte z 1347, Ecken R 70) mit zwei Längssicken bei y = ±150; Schriftzug z 1187 zwischen den Sicken bei z 1145 und 1228 (Seitenwand eben bis ≈ 1236) |
 | Motorausschnitt | vorderes Seitensegment x = 210 … 310 (SEG_X1, Foto BS) bis z = 620 herunter, dann Ausschnitt bis hinten offen, Oberkante z = 1125, Bogen R 280 (weich auslaufend, Foto DSC04742), gebordelter Rand folgt Bogen und läuft unter dem Schriftband waagerecht nach hinten; darüber nur das Schriftband |
 | Schriftzug HANOMAG | Mitte x = 745, z = 1212, Teilung 88, Versalhöhe 55, zwischen den Sicken bei z = 1152 und 1272 |
 | Typfeld K55E | erhaben eingerahmt, x = 215 … 305, z = 678 … 722; Schrift Versalhöhe ≈ 21 mm (2,6 mm im Modell), Strich ≈ 0,7 mm |
 | Scheinwerfer | oben an den Maskenseiten, Mitte x = 110, y = ±430, z = 1190 (SCHEINWERFER; Foto BS, senkrecht und kalibriert, ist maßgeblich), Ø 150, Winkelhalter an der Maskenseite |
-| Grill | breiter flacher Mittelsteg (80 breit, Mittelrippe) über die ganze Höhe vor 3 waagerechten Rundstäben (14 hoch; mit Rollwulst oben/unten 4 gleiche Felder, Teilung ≈ 155) vor dem Drahtgitter, Rollwulst und Eckzwickel |
+| Grill | schmaler Mittelsteg (70 breit, Randwulste, flacher Kanal) über die ganze Höhe vor 3 flachen Querbändern (je 40 hoch, zwei Wülste; mit oberem Querband 46 und Abschlusswulst 48 vier gleiche Felder, Teilung ≈ 150) vor feinem Drahtgitter (Teilung 1,8 / Draht 0,6 Modell-mm); keine Eckzwickel, kein Rollwulst um das Fenster (Foto) |
 
 Fotobefund (BS, BV): Maske mit breitem Mittelsteg und waagerechten Stäben (Foto g38), Drahtgitter dahinter, Flügellogo und Kühlerverschluss auf der Kappe,
 Kurbelloch im Sockel auf der Pumpenachse. Haubenseite nur als Schriftband, Motor von der Seite sichtbar.
@@ -107,7 +123,7 @@ Aus Prospekt K 55 E und Einsatzfoto:
 | Ölpumpe | runder Körper Ø 150 (x −225 … −60) vor dem Maskensockel bei (−70, 0, 530) auf einer Frontplatte, seitlich je ein Anschluss; je Seite EINE Leitung (Ø 36; Fotos 26271249857, 40431531504, 39333958410, 7826381704, BS) um die Maskenecke, bei |y| = 392 schräg an der Haubenseite von (0, 775) nach (1050, 1060), dann hinter dem Unterbau herunter auf Plattformhöhe und am Boden (z 885, |y| 440, Standschellen) nach hinten; rechts Förderleitung bis x 2250, dann schwarzer Schlauch zum Steuerblock auf dem rechten Endkasten, links Saugleitung in die Tankvorderwand (Deutung) |
 | Hubzylinder | liegend bei y = ±975, Achse z = 1080, Mittelzapfen x = 2520 im Endkasten (Foto BS, TRAVERSE_X), Rohr 1770 … 2740, Kolbenstange zum Scheitel bei 1270; |SZ| 1250 (Arbeitsstellung), Hub 315; doppeltwirkend: oberes dünnes Rohr (z 1175) = Stangenseite, vom Kopfstück in den hohlen Endkasten und von dort zum Querrohr z 1370; Kolbenseite über die Bügelschlaufe (z 1440) in den Endkasten; unteres Rohr (z 985) als Leckölleitung gedeutet |
 | Traverse | zwei Endkästen außen (x = 2395 … 2830, z = 900 … 1240, |y| 880 … 1070) mit den Zylindern, dazwischen Querträger als Öltank (x = 2630 … 2830, Rückwand bündig mit den Endkästen, z = 900 … 1240) mit Schild „Frisch“ (y −570 … −130), Langloch rechts (y ≈ +620, ≈ 240 × 125), Einfüllstutzen Ø 115 rot gekappt bei y = −300 (26271221407); darüber zwei parallele Querrohre (z 1370 Leitung, z 1440 Bügel, Ø 28 / 32) mit Doppelschellen; Schutzbügel bis z = 1440 |
-| Steuerblock | oben auf dem rechten Endkasten (x 2470 … 2560, y 965 … 1055, z 1240 … 1290) mit Kugelhebel Ø 90 (Oberkante z 1420) (Foto 7826381704, 39334013090); Schlauch von innen, zwei Leitungen zu den Querrohren über der Traverse (z 1370 und Bügel z 1440), Rücklauf in den Tank; Maße geschätzt |
+| Steuerblock | oben auf dem rechten Endkasten, hinterer Teil (x 2700 … 2790, y 965 … 1055, z 1240 … 1290) mit Kugelhebel Ø 90 (Oberkante z 1420) (Foto 7826381704, 39334013090); zwei schwarze Schläuche (Druck und Rücklauf) laufen parallel von der Plattform über die Werkzeugkästen hoch zu seiner Innenseite; Rücklauf geht unten als Rohr (y 500) in die Tankvorderwand; zwei Leitungen zu den Querrohren über der Traverse (z 1370 und Bügel z 1440); Maße geschätzt |
 
 Wirkprinzip: der Zylinder schiebt den A-Bock-Scheitel vor/zurück, der Schubbalken dreht um das hintere
 Gelenk, das Schild hebt/senkt (Hub 1120 über / 200 unter Fahrebene).

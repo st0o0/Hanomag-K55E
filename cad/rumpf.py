@@ -233,7 +233,7 @@ def getriebe():
     t.append(rad_x((GLOCKE_XK + GLOCKE_XM) / 2, 0, zm, GLOCKE_R1, GLOCKE_XM - GLOCKE_XK))
     # Radialrippen auf dem Kegel
     rp = Polyline((xk0, GLOCKE_R0 - 14), (GLOCKE_XK + 30, GLOCKE_R1 - 2), (GLOCKE_XK + 30, GLOCKE_R1 + 10),
-                  (xk0, GLOCKE_R0 - 12), close=True)
+                  (xk0, GLOCKE_R0 - 2), close=True)     # Rippenkopf am Flansch 10 hoch (keine Keilspitze auf dem Kegel)
     rippe = extrude(Plane.XY * make_face(rp), amount=7, both=True)    # Profil in x/y, Dicke in z
     rippe = Rot(90, 0, 0) * rippe                                      # -> Profil in x/z, Dicke in y
     for w in (90, 45, -45, 135, -90):
@@ -345,15 +345,16 @@ def endantrieb():
 _RIFFEL = None
 
 
-def riffelblech(x0, x1, y0, y1, z, teilung=50.0):
+def riffelblech(x0, x1, y0, y1, z, teilung=50.0, oy=None, ny=None):
     """Traenenblech: Rauten aus kurzen Rippen, abwechselnd +-45 Grad."""
     global _RIFFEL
     if _RIFFEL is None:
         _RIFFEL = Box(28, 9, RIFFEL_H, align=(Align.CENTER, Align.CENTER, Align.MIN))
     t = []
-    nx, ny = int((x1 - x0) / teilung), int((y1 - y0) / teilung)
+    nx = int((x1 - x0) / teilung)
+    ny = ny or int((y1 - y0) / teilung)
     ox = x0 + ((x1 - x0) - nx * teilung) / 2
-    oy = y0 + ((y1 - y0) - ny * teilung) / 2
+    oy = y0 + ((y1 - y0) - ny * teilung) / 2 if oy is None else oy
     for i in range(nx):
         for j in range(ny):
             w = 45 if (i + j) % 2 else -45
@@ -379,7 +380,8 @@ def kotfluegel():
     ya = DECK_B / 2
     yi = Y_FLANSCH - 2
     t.append(box(DECK_X0, DECK_X1, yi, ya - BLECH, DECK_UK, DECK_UK + BLECH))
-    t += riffelblech(DECK_X0 + 10, DECK_X1 - 20, Y_FLANSCH + 15, ya - 25, DECK_UK + BLECH)
+    t += riffelblech(DECK_X0 + 10, DECK_X1 - 20, Y_FLANSCH + 15, ya - 25, DECK_UK + BLECH,
+                     oy=327.0, ny=11)   # Raster so, dass die Druck-Trennebene y 377 zwischen zwei Rippenreihen liegt
     # Abkantung aussen mit gerolltem Rand
     t.append(box(DECK_X0, DECK_X1, ya - BLECH, ya, DECK_UK - 90, DECK_Z - 2))
     t.append(stab((DECK_X0, ya - 2, DECK_Z - 2), (DECK_X1, ya - 2, DECK_Z - 2), 8))

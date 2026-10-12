@@ -14,13 +14,13 @@ Masse in ORIGINAL-mm (mit m() bzw. _z() umgerechnet), Hauptmasse aus cad/common.
 Druckparameter (Wandstaerke, Sickenhoehe ...) direkt in Modell-mm.
 
 Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
-  - Maske x 0..210, z 450..1347, 710 breit (h/b 1,26). Kappe ~160 (kissenfoermig, obere Ecken R 70,
-    Vorderkante R 80) mit Fluegellogo und erhabenem Querband ueber dem Grill, Grillfenster ~610 hoch
-    mit Rollwulst und Eckzwickeln, breiter flacher Mittelsteg (80, Mittelrippe) vor 3 waagerechten
-    Rundstaeben (4 gleiche Felder, Foto g38) und dem Drahtgitter. Sockel ~125, davor die
-    Hydraulikpumpe (planierschild.py, PUMPE), dahinter das Kurbelloch auf Pumpenachse.
+  - Maske x 0..210, z 450..1347, 710 breit (h/b 1,26). Nach eigenen Fotos DSC04737/38 (Front), DSC04742 (Seite):
+    glatte Kappe ~135 (Vorderflaeche senkrecht, vorn oben R 35, Oberkante quer gewoelbt) mit Fluegellogo;
+    Grillfenster fast ueber die ganze Breite (Randstreifen 16), oben Querband 46, unten Abschlusswulst 48,
+    dazwischen 3 flache Querbaender 40 (gleiche Teilung, je zwei Wulste), schmaler Mittelsteg 70 mit
+    Randwulsten ueber alles, feines Drahtgitter dahinter. Sockel ~116 mit Kurbelloch D 54 (Pumpenachse).
     Kuehlerverschluss (rot) sitzt auf der Maskenkappe bei x ~100..180, gehoert also zur Maske.
-  - Haube x 210..1080 (dahinter Tank), Dach 1347, 690 breit, zwei Laengssicken auf dem Dach.
+  - Haube x 210..1080 (dahinter Tank), Dach 1347 (Pfeilhoehe 36, Kantenradius R 70; Maske gleich), 690 breit, zwei Laengssicken auf dem Dach.
     Seite: schmales vorderes Segment x 210..310 bis z 620 herunter, dann grosser, hinten offener
     Motorausschnitt bis zum Haubenende, Oberkante 1125, vorn Bogen R ~220 in die senkrechte
     Vorderkante. Darueber nur das Schriftband: untere Laengssicke (geht vorn in die Bogensicke
@@ -84,7 +84,7 @@ SCHRIFT_FETT = 0.1    # Konturversatz der Buchstaben
 SCHRIFT_FASE = 0.3    # 45-Grad-Fase an der Oberkante der Buchstaben (faengt Licht)
 EINSENK = 0.3         # Einsenktiefe aufgesetzter Teile (keine koplanaren Booleans)
 NIET_R = 0.75         # Nietkopf-Radius (Kugelkappe, 0.6 hoch)
-GITTER_TEILUNG = 2.0  # Gittereinsatz: Maschenteilung
+GITTER_TEILUNG = 1.8  # Gittereinsatz: Maschenteilung
 GITTER_STEG = 0.6     # Drahtstaerke (>= 0.5)
 GITTER_DICKE = 0.8
 GITTER_X = 1.8        # Vorderseite Gittereinsatz (hinter der Maskenwand x 0..1.6)
@@ -93,29 +93,31 @@ GITTER_X = 1.8        # Vorderseite Gittereinsatz (hinter der Maskenwand x 0..1.
 SCHRIFT_FONT = r"C:\Windows\Fonts\GOTHICB.TTF"
 
 # ---------------- Kuehlermaske (Original-mm) ----------------
+# Nach den eigenen Fotos DSC04737/38 (frontal, rote K55) und DSC04742 (Seite): Maske 710 x 897; Kappe glatt
+# (Vorderflaeche senkrecht, Oberkante quer gewoelbt, vorn oben kleine Rundung); darunter das Grillfenster
+# fast ueber die ganze Breite (nur schmaler Randstreifen), oben ein breites Querband, unten ein breiter
+# Abschlusswulst, dazwischen 3 flache Querbaender (je zwei Wulste) und der schmale Mittelsteg ueber alles.
 KM_B = m(710)                         # Breite
 KM_Z0 = _z(MASKE_UK)                  # Unterkante (z = m(58))
 KM_H = _z(HAUBE_DACH_Z)               # Oberkante = Haubendach (z = m(955))
 KM_T = m(HAUBE_X0)                    # Tiefe (x 0..210)
-KM_R_OBEN = m(100)    # Radius Uebergang Dachbogen -> senkrechte Seiten (Frontansicht, 90..110)
-KM_SAG = m(22)        # Pfeilhoehe des Dachbogens (Mitte 1347, an den Maskenseiten 22 tiefer)
-KM_LIPPE = 0.8        # Ueberstand der Kappe ueber dem Querband (Modell-mm)
-# Aufteilung nach Foto BV (Maske 897 hoch): Kappe 0,14 / Grill 0,66 / Sockel 0,20
-KM_KAPPE = m(160)     # Kappe ueber dem Grill (Logo), Foto g38
-KM_SOCKEL = m(125)    # Sockel unter dem Grill (Kurbelloch hinter der Pumpe)
-KM_RAND = m(44)       # seitlicher Rahmen neben dem Grill (Grill/Maske 0,875 breit)
-RAHMEN_R = m(9)       # Rollwulst um das Grillfenster
-ZWICKEL = m(56)       # Eckzwickel im Grillrahmen (Schenkellaenge)
-GRILL_FELDER = 4      # waagerechte Staebe: oben/unten (Rollwulst) + 3 dazwischen -> 4 gleich hohe Felder (g38)
-STAB_R = m(7)         # waagerechte Rundstaebe (14 hoch)
-STAB_X = 0.6          # Lage der Stabachse (Front bei x = 0), liegen hinter dem Mittelsteg
-STEG_B = m(80)        # breiter flacher senkrechter Mittelsteg ueber die ganze Grillhoehe
-STEG_RIPPE = m(26)    # erhabene Mittelrippe des Steges
-STEG_X = -0.9         # Vorderseite der Stegplatte (Rippe bis -1.6)
-BAND_H, BAND_Z = m(15), m(5)   # Querband ueber dem Grill: Hoehe, Abstand ueber der Grillkante
-KURBEL_D = m(47)      # Kurbelloch (auf der Pumpenachse, von der Pumpe verdeckt)
+KM_R_OBEN = m(70)     # Radius Dachbogen -> senkrechte Seiten (Maske und Haube gleich; Seitenfoto: Schulter ~100 hoch)
+KM_SAG = m(36)        # Pfeilhoehe des Dachbogens (Foto: Dach deutlich gewoelbt; Mitte 1347, an den Seiten 36 tiefer)
+KM_R_KAPPE = m(35)    # Rundung Kappe vorn oben (Seitenprofil, DSC04742: Oberkante flach, kleine Ecke)
+KM_KAPPE = m(135)     # glatte Kappe ueber dem Grill (Fotoanteil 0,14)
+KM_SOCKEL = m(116)    # Sockel unter dem Abschlusswulst (Anteil 0,13), Kurbelloch hinter der Pumpe
+KM_RAND = m(16)       # schmaler seitlicher Randstreifen neben dem Grill (Foto: Gitter fast bis zum Maskenrand)
+GRILL_FELDER = 4      # Teilung zwischen den Mitten von oberem Querband und Abschlusswulst: 4 gleiche Felder
+BAND_O_H = m(46)      # oberes Querband (Hoehe)
+BAND_U_H = m(48)      # unterer Abschlusswulst (Hoehe)
+BAND_M_H = m(40)      # drei mittlere Querbaender (Hoehe)
+BAND_X = -0.7         # Vorderseite oberes/unteres Querband (Kappe bei x = 0)
+BAND_XM = -0.4        # Vorderseite der mittleren Querbaender
+STEG_B = m(70)        # Mittelsteg (Foto 70 breit), flacher Kanal mit Randwulsten
+STEG_X = -1.0         # Vorderseite des Mittelstegs (vor allen Querbaendern)
+STEG_WULST = m(8)     # Randwulst links/rechts, Mitte um 0.25 vertieft
+KURBEL_D = m(54)      # Kurbelloch (Foto 54; auf der Pumpenachse, von der Pumpe verdeckt)
 KURBEL_Z = _z(PUMPE[2])
-TYPSCHILD = (m(118), _z(880), m(120), m(50))   # x-Mitte, z-Mitte, Breite, Hoehe (linke Maskenseite)
 KD_X, KD_D = m(140), m(65)            # Kuehlerverschluss auf der Maskenkappe (BS: x ~100..180)
 
 # ---------------- Haube (Original-mm) ----------------
@@ -123,7 +125,7 @@ H_X0 = KM_T                           # Haube beginnt direkt hinter der Maske (x
 H_L = m(HAUBE_X1) - H_X0              # bis x = 1080 (dahinter Tank)
 H_B = m(HAUBE_B)                      # Breite 690
 H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante vorderes Seitensegment (z 620)
-H_R_DACH = m(90)                      # Radius Dachkanten (Dachbogen -> Seitenwand)
+H_R_DACH = m(70)                      # Radius Dachkanten (Dachbogen -> Seitenwand)
 SEG_L = m(SEG_X1) - H_X0              # vorderes Seitensegment x 210..310
 BOGEN_OBEN = _z(HAUBE_BAND_Z)         # Oberkante Motorausschnitt (z 1125)
 BOGEN_R = m(280)                      # Eckradius Motorausschnitt vorn oben (Foto: weicher grosser Bogen, 280..300)
@@ -354,7 +356,7 @@ def stab_z(z0, z1, x, y, r):
 def _grill():
     """Grillfenster: (Breite, Hoehe, Unterkante) in Modell-mm."""
     g_b = KM_B - 2 * KM_RAND
-    g_z0, g_z1 = KM_Z0 + KM_SOCKEL, KM_H - KM_KAPPE
+    g_z0, g_z1 = KM_Z0 + KM_SOCKEL, KM_H - KM_KAPPE      # Fenster (hinter Querband / Wulst)
     return g_b, g_z1 - g_z0, g_z0
 
 
@@ -379,44 +381,21 @@ def _kuehlerverschluss():
     return [kragen, stutzen, deckel, knebel]
 
 
-def _kappe_zc():
-    """Unterkante der Kappenrolle (z): knapp ueber dem Querband."""
-    g_b, g_h, g_z0 = _grill()
-    return g_z0 + g_h + BAND_Z + BAND_H + 0.2
-
-
-def _kappe_kreis():
-    """Seitenprofil der Kappe: Viertelkreis (Walze) von der Lippe vorn unten bis zur Dachlinie oben.
-    Rueckgabe (cx, cz, r): Mittelpunkt (x, z) und Radius."""
-    zc = _kappe_zc()
-    r = KM_H - zc
-    return r - KM_LIPPE, zc, r
-
-
-def kappe_x(z):
-    """x der gewoelbten Kappenvorderflaeche bei Hoehe z (Mitte der Maske)."""
-    cx, cz, r = _kappe_kreis()
-    return cx - math.sqrt(max(r * r - (z - cz) ** 2, 0.0))
-
-
 def _maske_aussen(d=0.0):
-    """Aussenform der Maske als Schnitt zweier Zylinderprofile: Seitenprofil (Kappe ueber die ganze Hoehe
-    als Walze nach hinten gerollt, unten kleine Lippe ueber dem Querband) und Frontprofil (Dachbogen mit
-    Pfeilhoehe KM_SAG, Ecken KM_R_OBEN). Senkrechte Kanten bleiben scharf.
+    """Aussenform der Maske als Schnitt zweier Zylinderprofile: Seitenprofil (senkrechte Vorderflaeche, vorn oben
+    Rundung KM_R_KAPPE, Oberkante flach) und Frontprofil (Dachbogen mit Pfeilhoehe KM_SAG, Ecken KM_R_OBEN).
+    Senkrechte Kanten bleiben scharf.
     d > 0: Innenraum (um die Wandstaerke d eingerueckt, hinten und unten ueberstehend) zum Aushoehlen."""
-    cx, cz, r = _kappe_kreis()
     w = math.sqrt(0.5)
-    ri, ht = r - d, KM_H - d
+    rk = KM_R_KAPPE - d
+    ht = KM_H - d
     x_hint = KM_T if d == 0 else KM_T + 5
     z_unten = KM_Z0 if d == 0 else KM_Z0 - 5
     with BuildSketch(Plane.XZ) as sx:
         with BuildLine():
-            Polyline((d, z_unten), (x_hint, z_unten), (x_hint, ht), (cx, ht))
-            ThreePointArc((cx, ht), (cx - ri * w, cz + ri * w), (cx - ri, cz))
-            if d == 0:
-                Polyline((cx - ri, cz), (0, cz - KM_LIPPE), (0, z_unten))
-            else:
-                Polyline((cx - ri, cz), (d, cz), (d, z_unten))
+            Polyline((d, z_unten), (x_hint, z_unten), (x_hint, ht), (d + rk, ht))
+            ThreePointArc((d + rk, ht), (d + rk - rk * w, ht - rk + rk * w), (d, ht - rk))
+            Polyline((d, ht - rk), (d, z_unten))
         make_face()
     seite = extrude(sx.sketch, amount=KM_B, both=True)
     fl = _dach_flaeche(KM_B / 2 - d, z_unten, max(KM_R_OBEN - d, 0.5))
@@ -424,9 +403,19 @@ def _maske_aussen(d=0.0):
     return seite & front
 
 
+def _querband(zu, h, x_vorn, laenge, r=0.8, x_hint=1.0):
+    """Flaches Querband (Box ueber die Breite) mit gerundeten Vorderkanten und feiner Mittelrille
+    (Foto: zwei Wulste uebereinander). zu = Unterkante, h = Hoehe."""
+    b = Pos(x_vorn, 0, zu) * Box(x_hint - x_vorn, laenge, h, align=(Align.MIN, Align.CENTER, Align.MIN))
+    kanten = b.edges().filter_by(Axis.Y).filter_by_position(Axis.X, x_vorn - 0.01, x_vorn + 0.01)
+    b = fillet(kanten, min(r, h / 2 - 0.3))
+    rille = Pos(x_vorn, 0, zu + h / 2) * Box(0.5, laenge + 2, 0.45)
+    return b - rille
+
+
 def kuehlermaske():
-    """Maskenschale (z 450..1347) mit Grillfenster, Rollwulst, Eckzwickeln, drei senkrechten
-    Staeben, Kurbelloch und Kuehlerverschluss auf der Kappe.
+    """Maskenschale (z 450..1347): glatte Kappe, Grillfenster fast ueber die ganze Breite, oberes Querband,
+    drei mittlere Querbaender, unterer Abschlusswulst, schmaler Mittelsteg, Kurbelloch, Kuehlerverschluss.
     Liefert (Solid, (Grillbreite, Grillhoehe, Grillunterkante))."""
     outer = _maske_aussen()
     km = outer - _maske_aussen(WAND)
@@ -438,59 +427,23 @@ def kuehlermaske():
                                                           align=(Align.CENTER, Align.CENTER, Align.MIN))
 
     teile = []
-    # Rollwulst um das Grillfenster (geschlossener Rundstab, Ecken R 1.5)
-    rr = 1.5
-    yb, za, ze = g_b / 2, g_z0, g_z1
-    xw = 0.0
-    pts = [((xw, -yb + rr, za), (xw, yb - rr, za)), ((xw, yb, za + rr), (xw, yb, ze - rr)),
-           ((xw, yb - rr, ze), (xw, -yb + rr, ze)), ((xw, -yb, ze - rr), (xw, -yb, za + rr))]
-    ecken = [((xw, yb - rr, za), (xw, yb, za), (xw, yb, za + rr)),
-             ((xw, yb, ze - rr), (xw, yb, ze), (xw, yb - rr, ze)),
-             ((xw, -yb + rr, ze), (xw, -yb, ze), (xw, -yb, ze - rr)),
-             ((xw, -yb, za + rr), (xw, -yb, za), (xw, -yb + rr, za))]
-    kanten = []
-    for (a, b), (p0, pe, p1) in zip(pts, ecken):
-        kanten.append(Line(a, b))
-        k = 1 - 1 / math.sqrt(2)            # Bogenmitte der 90-Grad-Ecke
-        pm = (p0[0], pe[1] + (p0[1] - pe[1] + p1[1] - pe[1]) * k, pe[2] + (p0[2] - pe[2] + p1[2] - pe[2]) * k)
-        kanten.append(ThreePointArc(p0, pm, p1))
-    teile.append(wulst_pfad(kanten, RAHMEN_R))
-
-    # Eckzwickel (Foto BV: rote Winkelbleche in den Rahmenecken): Dreieck mit hohl gerundeter
-    # Hypotenuse, 1.0 dick; die spitzen Enden liegen im Rollwulst (keine freien duennen Spitzen)
-    L = ZWICKEL
-    for sy in (-1, 1):
-        for zc, sz in ((za, 1), (ze, -1)):
-            yc = sy * yb
-            pl = Plane.YZ.offset(-0.4)
-            dreieck = pl * Polygon((yc, zc), (yc - sy * L, zc), (yc, zc + sz * L), align=None)
-            kehle = pl * Pos(yc - sy * 0.95 * L, zc + sz * 0.95 * L) * Circle(0.8 * L)
-            teile.append(extrude(dreieck - kehle, amount=1.0))
-
-    # waagerechte Rundstaebe (3 zwischen den Rahmenstaeben), Enden laufen in den Rollwulst
+    lb = KM_B - 0.8                                  # Baender enden 0.4 vor den Maskenseiten (liegen auf der Wand)
+    # unterer Abschlusswulst (0.5 in den Sockel eingesenkt) und oberes Querband (0.5 in die Kappe)
+    teile.append(_querband(g_z0 - 0.5, BAND_U_H + 0.5, BAND_X, lb))
+    teile.append(_querband(g_z1 - BAND_O_H, BAND_O_H + 0.5, BAND_X, lb))
+    zc_u, zc_o = g_z0 + BAND_U_H / 2, g_z1 - BAND_O_H / 2
+    # drei mittlere Querbaender, Teilung gleich zwischen den Mitten von Wulst und Querband
     for i in range(1, GRILL_FELDER):
-        z = g_z0 + i * g_h / GRILL_FELDER
-        teile.append(stab_y(-yb, yb, STAB_X, z, STAB_R))
-    # breiter flacher Mittelsteg ueber die ganze Grillhoehe, steht vor den Staeben; Rippe in der Mitte
-    plz0, plz1 = g_z0 - 0.3, g_z1 + 0.3
-    teile.append(Pos(STEG_X, 0, plz0) * Box(0.5 - STEG_X, STEG_B, plz1 - plz0,
-                                           align=(Align.MIN, Align.CENTER, Align.MIN)))
-    teile.append(Pos(-1.6, 0, plz0) * Box(1.0, STEG_RIPPE, plz1 - plz0,
-                                         align=(Align.MIN, Align.CENTER, Align.MIN)))
-    # erhabenes Querband direkt ueber dem Grill (ganze Maskenbreite)
-    zb = g_z1 + BAND_Z
-    # flach aufliegend (0.6 erhaben, 0.5 eingesenkt), endet 0.4 vor den Maskenseiten
-    teile.append(Pos(-0.6, 0, zb) * Box(1.1, KM_B - 0.8, BAND_H, align=(Align.MIN, Align.CENTER, Align.MIN)))
-
-    # Ring um das Kurbelloch (aufgesetzter Kragen, hinter der Pumpe)
-    ring = Pos(EINSENK, 0, KURBEL_Z) * Rot(0, -90, 0) * (
-        Cylinder(KURBEL_D / 2 + 1.4, 0.6 + EINSENK, align=(Align.CENTER, Align.CENTER, Align.MIN))
-        - Cylinder(KURBEL_D / 2, 0.6 + EINSENK, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    teile.append(ring)
-
-    # Abschlusswulst ueber dem Sockel (Sockelblech-Kante unter dem Grill)
-    teile.append(Pos(-0.6, 0, g_z0 - RAHMEN_R - 1.9) * Box(1.1, KM_B - 0.8, m(12),
-                                                          align=(Align.MIN, Align.CENTER, Align.MIN)))
+        zc = zc_u + i * (zc_o - zc_u) / GRILL_FELDER
+        teile.append(_querband(zc - BAND_M_H / 2, BAND_M_H, BAND_XM, lb, r=0.7, x_hint=1.0))
+    # schmaler Mittelsteg ueber die ganze Grillhoehe (Mitte zu Mitte der Randbaender), davor gelegt:
+    # Randwulste, Mitte flach vertieft
+    sz0, sz1 = zc_u, zc_o
+    steg = Pos(STEG_X, 0, sz0) * Box(1.2 - STEG_X, STEG_B, sz1 - sz0, align=(Align.MIN, Align.CENTER, Align.MIN))
+    steg = fillet(steg.edges().filter_by(Axis.Z).filter_by_position(Axis.X, STEG_X - 0.01, STEG_X + 0.01), 0.5)
+    steg = fillet(steg.edges().filter_by(Axis.Y).filter_by_position(Axis.X, STEG_X - 0.01, STEG_X + 0.01), 0.5)
+    steg -= Pos(STEG_X, 0, (sz0 + sz1) / 2) * Box(0.5, STEG_B - 2 * STEG_WULST, sz1 - sz0 - 2 * STEG_WULST)
+    teile.append(steg)
 
     teile += _kuehlerverschluss()
     km = km.fuse(*teile)
@@ -498,24 +451,11 @@ def kuehlermaske():
 
 
 def maske_zier():
-    """Fluegellogo (Kappe) und Typschild (linke Maskenseite, unter dem Scheinwerfer), Chrom/Blech."""
-    g_b, g_h, g_z0 = _grill()
-    # Logo auf der gewoelbten Kappe: Tangentialebene an die Walze, Mitte auf halber Rollhoehe
-    cx, cz, r = _kappe_kreis()
-    z_logo = cz + 0.5 * r
-    px = kappe_x(z_logo)
-    n = Vector(px - cx, 0, z_logo - cz) * (1 / r)
-    logo = hanomag_logo(Plane(origin=(px, 0, z_logo), x_dir=(0, -1, 0), z_dir=(n.X, 0, n.Z)))
-
-    # Typschild: Platte mit Rand und 4 Nieten, auf der linken Maskenseite
-    sx, sz, sb, sh = TYPSCHILD
-    pl = plane_side(sx, sz, -1, y_abs=KM_B / 2)
-    schild = extrude(pl.offset(-EINSENK) * RectangleRounded(sb, sh, 0.6), amount=0.5 + EINSENK)
-    schild -= extrude(pl.offset(0.3) * RectangleRounded(sb - 1.6, sh - 1.6, 0.4), amount=0.3)
-    for dx in (-sb / 2 + 1.0, sb / 2 - 1.0):
-        for dz in (-sh / 2 + 1.0, sh / 2 - 1.0):
-            schild += Pos(pl.from_local_coords((dx, dz, 0.5))) * Sphere(0.4)
-    return [logo, schild]
+    """Fluegellogo auf der glatten Kappe (Chrom/Blech)."""
+    # Foto DSC04738: Logo mittig, auf 2/3 der Kappenhoehe (von oben), vorn senkrecht
+    z_logo = KM_H - 0.66 * KM_KAPPE
+    logo = hanomag_logo(Plane(origin=(0, 0, z_logo), x_dir=(0, -1, 0), z_dir=(-1, 0, 0)), h=0.7)
+    return [logo]
 
 
 def gitter(g_b, g_h, g_z0):
@@ -523,7 +463,7 @@ def gitter(g_b, g_h, g_z0):
     Zwei Lagen wie ein Drahtgewebe: vorn die senkrechten, dahinter die waagerechten Draehte,
     jede Lage mit eigenem Rahmen (je ein Solid, Lagen liegen flaechig aneinander).
     So entfallen die ~1700 Kreuzungs-Booleans (Bauzeit Sekunden statt Minuten)."""
-    w, h = g_b + 2.0, g_h + 2.0
+    w, h = g_b + 1.0, g_h + 2.0   # Breite: bleibt 0.08 vor der Maskenseitenwand
     lage = GITTER_DICKE / 2 + 0.1
     ny = int((w - 2) / GITTER_TEILUNG)
     nz = int((h - 2) / GITTER_TEILUNG)
@@ -557,10 +497,10 @@ def _haube_aussen():
 
 def stirnwand():
     """Stirnwand zwischen Haube und Tank (Modell-mm, fuer modell._haube_tank): Haubenquerschnitt oberhalb des
-    Motorausschnitts, 0.5 mm Original schmaler/niedriger als die Haube; x = HAUBE_X1-6 .. TANK_X0+7."""
+    Motorausschnitts, 0.5 mm Original schmaler/niedriger als die Haube; x = HAUBE_X1-6 .. TANK_X0+13."""
     d = m(0.5)
     fl = _dach_flaeche(H_B / 2 - d, BOGEN_OBEN, H_R_DACH - d)
-    x0, x1 = m(HAUBE_X1 - 6.0), m(1085.0 + 7.0)
+    x0, x1 = m(HAUBE_X1 - 6.0), m(1085.0 + 7.0)      # bis 1098: schliesst die Stirnwulst-Keilspitze (Tank x 1085..1097) ein
     return Pos(0, 0, -d) * extrude(Pos(x0, 0, 0) * fl, amount=x1 - x0)
 
 
