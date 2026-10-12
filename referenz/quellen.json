@@ -204,6 +204,29 @@
           "benutzt": "Form und Lage aller Teile der Anlage"
         }
       ]
+    },
+    {
+      "titel": "Videos (Planiereinrichtung, Stand 2026-10)",
+      "eintraege": [
+        {
+          "titel": "YouTube – Hanomag K55 Bj.1954 mit Frisch Planiereinrichtung",
+          "url": "https://www.youtube.com/watch?v=sJxdGuRcga8",
+          "zeigt": "Blaugrüne K 55 mit Frisch-Traverse am Heck, viele Seiten-/Heckansichten, kein Schild montiert",
+          "benutzt": "Traversenkasten, Seitenverhältnisse am Heck (nur Abgleich, keine Änderung)"
+        },
+        {
+          "titel": "YouTube – Alte Baumaschinen - HANOMAG K 55 Raupe (1951-1957)",
+          "url": "https://www.youtube.com/watch?v=zLWVF2nmQDY",
+          "zeigt": "Graue K 55 mit Planierschild: fast senkrechte Seitenansicht (t=164 s), Heck mit Zylinder und Endkasten, Front mit Pumpe",
+          "benutzt": "Schubbalken (Gelenk ~390 vor der Triebradachse, hinten niedrig/vorn hoch), Schildlage und -profil (Lippe ~800 vor, Oberseite steigt nach hinten), A-Bock-Abgleich"
+        },
+        {
+          "titel": "YouTube – Hanomag K55 Raupe Tractor Pulling Ravels 2023",
+          "url": "https://www.youtube.com/watch?v=CSAGzJwkkHI",
+          "zeigt": "Grüne K 55 mit Frisch-Aufbau im Einsatz (Seite, klein)",
+          "benutzt": "nur Abgleich Gesamtanordnung, keine Maße"
+        }
+      ]
     }
   ]
 }

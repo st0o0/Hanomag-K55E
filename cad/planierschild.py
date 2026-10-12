@@ -2,7 +2,7 @@
 
 Wirkprinzip (Prospekt K 55 E, Einsatzfoto):
   Je Seite ein Schubbalken (Kastenprofil) aussen neben der Kette, hinten im
-  Gelenkbock am Kettenrahmen gelagert (x = X_TRIEB, z = Z_SCHUB), vorn am
+  Gelenkbock am Kettenrahmen gelagert (x = X_GELENK = 1860, z = Z_SCHUB), vorn am
   Schild angebolzt und ueber eine Diagonalstrebe abgestuetzt. Auf dem
   Schubbalken sitzt der A-Bock (zwei Kastenstreben + Knotenblech) mit dem
   Lagerauge im Scheitel. Der Hubzylinder liegt mit Mittelzapfen im
@@ -12,6 +12,7 @@ Wirkprinzip (Prospekt K 55 E, Einsatzfoto):
   Maskensockel (Antrieb von der Kurbelwelle), je Seite eine Leitung nach hinten.
   Steuerblock mit kleiner Kugel + Schraeghebel vorn auf dem rechten Endkasten (Foto 40431489714).
   Hubhoehe 1120 mm ueber / 200 mm unter Fahrebene.
+  Video-Umbau 2026-10: Gelenk x 1860 (vorher 2250), Schildlippe -800 (vorher -700), Balken hinten 170 / vorn 230 hoch, Kastenruecken steigend.
 
 Umbau 2026-10 nach out/frisch_analyse/fehler_frisch.md (Flickr 26271221407 ist von hinten RECHTS, nicht links);
 Stand: Traverse 270 hoch, Schubbalken hinten 250 hoch + Lagerblock, Zylinder Ø100/Stange Ø48, Steuerblock vorn mit Kugel Ø40,
@@ -48,16 +49,18 @@ Fotobefund (BS = blaue K55 senkrecht von rechts, BV = von vorn, FL, PK):
   * Schild glatt (die Bohrungsreihe auf FL gehoert zu einer anderen Maschine).
   * Fuehrungsplatte mit Steckbolzen auf dem Schubbalken kurz hinter dem Leitrad (FL).
 
-Hubkinematik (Arbeitsstellung = Schneide auf dem Boden, Schubbalken waagerecht):
-  Gelenk G = (2250, 400), Scheitel S = (1270, 1080), Zapfen Z = (2520, 1080), Schneide P = (-700, 0).
-  Schild 1120 hoch: Schubbalken dreht um G um 21,7 Grad -> S' = (1591, 1394), |S'Z| = 981.
-  Arbeitsstellung: |SZ| = 1250.   Schild 200 tief: 3,9 Grad -> S'' = (1226, 1012), |S''Z| = 1296.
-  -> Hub 1296 - 981 = 315 mm (aus der Arbeitsstellung 269 ein / 46 aus), der Zylinder schwenkt
-  um den Mittelzapfen um +18,7 / -3,0 Grad. Kolbenstange frei von 1394 (Gabelkopf) bis 1740.
-  Kopf X_KOPF 1770: eingefahren steht der Gabelkopf (124 lang) bei 1591 + 124 = 1715, also
-  ~10 mm vor dem Abstreifer. Rohrende im Endkasten X_BODEN 2740 (220 hinter dem Zapfen): bei +18,7 Grad senkt sich der Boden um ~75 und bleibt
-  in der Rueckwand frei; oben stoesst das Rohr bei vollem Hub gerade an die Kastendecke
-  (= mechanischer Endanschlag). Kolbenstangenlaenge ab Auge 570..1180 moeglich (Kolben im Rohr).
+Hubkinematik (Arbeitsstellung = Schneide auf dem Boden, Schubbalken waagerecht), Stand nach Video-Auswertung 2026-10:
+  Gelenk G = (1860, 400) (Lagerkappe ~ 390 vor der Triebradachse, Video v.mp4 t=164/166 und Foto 40431489714),
+  Scheitel S = (1270, 1080), Zapfen Z = (2520, 1080), Schneide P = (-800, 0).
+  Schild 1120 hoch: Schubbalken dreht um G um 24,1 Grad -> S' = (1599, 1262), |S'Z| = 939 (Zylinder 11 Grad geneigt).
+  Arbeitsstellung: |SZ| = 1250.   Schild 200 tief: 4,3 Grad -> S'' = (1220, 1033), |S''Z| = 1301.
+  -> Hub 1301 - 939 = 362 mm (aus der Arbeitsstellung 311 ein / 51 aus). Der Hub am Schild (1320) ist durch den kuerzeren
+  Hebel (Scheitel 900 vom Gelenk) groesser als vorher (315). Hubwerte ungeprueft gegen das Original (im Video wird nicht gehoben).
+  Kopf X_KOPF 1770: eingefahren steht der Gabelkopf (124 lang) bei 1599 + 124 = 1723, ~ 47 mm vor dem Abstreifer.
+  Rohrende im Endkasten X_BODEN 2740 (220 hinter dem Zapfen): bei +11 Grad senkt sich der Boden um ~ 42 und bleibt in der
+  Rueckwand frei. Kolbenstangenlaenge ab Auge 570..1180 moeglich (Kolben im Rohr).
+  Balken (Video, Ueberlagerung ueber Leit-/Triebradnabe, Massstab 2,29 mm/px): hinten (x > 560) 170 hoch, vorn 230, Schraegubergang
+  bei x 450..560, Balkenende vorn bei x -650; Kastenruecken steigt nach hinten (Lippe 760 -> Rueckwand z 900).
 
 Alle Masse Original-mm, X nach hinten, Y nach rechts, Z ab Boden.
 Gezeichnet in Arbeitsstellung (Schneide auf der Fahrebene).
@@ -73,7 +76,8 @@ from .common import (box, stab, rohr_glatt, balken, rad_x, rad_y, ring_x, ring_y
 # ---------------- Parameter ----------------
 # Schild
 SCHILD_B, SCHILD_H = 2200.0, 760.0     # Breite 2150..2200 (Fotos 7826381704/39333958410: Balken buendig am Seitenblech)
-X_SCHNEIDE = -700.0           # Vorderkante Schneide / Lippe
+X_SCHNEIDE = -800.0           # Vorderkante Schneide / Lippe (Video v.mp4 t=166, Ueberlagerung ueber Leit-/Triebradnabe: Lippe bei ~ -800 (+-100); vorher -700)
+SH = X_SCHNEIDE + 700.0       # Vorverlegung der Schildfront gegen den Stand vor dem Video (Rueckseite/Seitenplatten-Hinterkante bleiben)
 T_BLECH = 16.0                # Schildblech (2 mm im Modell)
 T_RIPPE = 16.0
 Y_WANGE = SCHILD_B / 2 - T_RIPPE       # Innenseite Seitenwange
@@ -82,13 +86,14 @@ X_PL_H = -230.0              # Hinterkante der Seitenplatten (ragt ueber die Kas
 X_WANGE_H = -300.0            # Hinterkante der Seitenbleche (Foto 40431489714: D-Platte, Kante senkrecht am Balkenanschluss)
 Z_LOCH = 450.0                # Bohrungsreihe im Schildblech (7826381704)
 # Schubbalken: hinten hoher flacher Kasten 120 x 250, ab x 700 nach vorn verjuengt auf 130 (Foto 40431489714)
-SB_B, SB_H = 120.0, 250.0
+SB_B, SB_H = 120.0, 170.0     # Video t=164/158: hinterer Balkenteil niedrig (~150..180), vorn hoeher (~230) mit abgeschraegtem Uebergang
 SB_Z0, SB_Z1 = Z_SCHUB - SB_H / 2, Z_SCHUB + SB_H / 2       # hinten 275 / 525
-SB_XV = 700.0                 # ab hier nach hinten volle Hoehe, davor Verjuengung
-SB_H_VORN = 240.0             # Hoehe am vorderen Auge (x = X_SCHILDBOLZEN)
+SB_XV = 560.0                 # ab hier nach hinten volle Hoehe, davor Verjuengung
+SB_H_VORN = 230.0             # Hoehe am vorderen Teil (x < SB_XV - 110)
 LB = 190.0                    # Lagerblock hinten (quadratisch)
-X_GELENK = X_TRIEB            # hinteres Gelenk
-X_SCHILDBOLZEN = -150.0       # vorderes Gelenk am Schild
+X_GELENK = 1860.0             # hinteres Gelenk: Video t=164/158 und Foto 40431489714: Lagerkappe ~ 390 VOR der Triebradachse (vorher 2250)
+X_SCHILDBOLZEN = -650.0       # Balkenende an der Schildfront (Video: Balken laeuft unter dem Kasten bis zur Zahnleiste an der Mulde)
+X_BR = -150.0                 # Gelenkboecke am Kastenruecken (unveraendert)
 # A-Bock
 XA_VORN, XA_HINTEN = ABOCK_FUESSE
 XS, ZS = ABOCK_SCHEITEL
@@ -308,18 +313,18 @@ def schild(t):
     # konvexe D-Platte (aeusserer Umriss, verdeckt die konkave Blechkontur): vorn gerade/leicht gebogen, oben schraeg nach hinten fallend,
     # Hinterkante senkrecht, hintere untere Ecke stark verrundet (Foto 40431489714)
     XP = X_PL_H
-    wange = [(-720.0, 745.0), (-728.0, 560.0), (-726.0, 400.0)]
-    cx, cz, rx, rz = -440.0, 290.0, 286.0, 290.0                     # grosser Viertelbogen vorn unten (fast halbrund)
+    wange = [(-720.0 + SH, 745.0), (-728.0 + SH, 560.0), (-726.0 + SH, 400.0)]
+    cx, cz, rx, rz = -440.0 + SH, 290.0, 286.0, 290.0                     # grosser Viertelbogen vorn unten (fast halbrund)
     for k in range(0, 13):
         th = math.radians(180 + 90 * k / 12)
         wange.append((cx + rx * math.cos(th) * 1.0, cz + rz * math.sin(th)))
-    wange += [(-330.0, 0.0), (XP - 60, 4.0), (XP - 12, 40.0), (XP, 100.0), (XP, 600.0), (-700.0, 745.0 + 0.0)]
+    wange += [(-330.0, 0.0), (XP - 60, 4.0), (XP - 12, 40.0), (XP, 100.0), (XP, 600.0), (-700.0 + SH, 745.0 + 0.0)]
     wange = wange[:-1]
     for s in (-1, 1):
         w_ = platte_xz(wange, s * Y_WANGE, s * SCHILD_B / 2)
-        w_ -= Pos(-560.0, s * (Y_WANGE + 8), 70) * Rot(90, 0, 0) * Cylinder(10, 40)
+        w_ -= Pos(-560.0 + SH, s * (Y_WANGE + 8), 70) * Rot(90, 0, 0) * Cylinder(10, 40)
         t.append(w_)
-        for (px, pz) in ((-380.0, 600.0), (X_PL_H - 45, 380.0), (X_PL_H - 70, 120.0), (-640.0, 330.0), (-520.0, 150.0)):
+        for (px, pz) in ((-380.0, 600.0), (X_PL_H - 45, 380.0), (X_PL_H - 70, 120.0), (-640.0 + SH, 330.0), (-520.0 + SH, 150.0)):
             t.mat("blank", sechskant((px, s * SCHILD_B / 2, pz), (0, s, 0), 34, 12))
     # Winkelprofil an der Hinterkante der Seitenplatte (7826381704: blaue senkrechte Kantenschiene mit Schrauben)
     for s in (-1, 1):
@@ -330,7 +335,7 @@ def schild(t):
     # Rueckseite als hoher Kastentraeger (Foto 40431489714: tiefer Kasten ueber die ganze Breite, Oberseite schraeg nach hinten
     # abfallend, senkrechte Rueckwand, nach innen Zwischenrippen) zwischen den Seitenblechen
     XB = X_WANGE_H
-    ZB0, ZB1 = 110.0, 610.0
+    ZB0, ZB1 = 110.0, 900.0      # Video t=164: Oberseite steigt nach hinten (Lippe 770 -> Kastenruecken ~ 1000), vorher fallend (ZB1 610)
     zug = _zug(B, ZB0, 690, 16)
     kasten = platte_xz(zug + [(XB, ZB1), (XB, ZB0)], -Y_WANGE, Y_WANGE)
     innen = [(x + 10, z) for x, z in _zug(B, ZB0 + 14, 676, 12)] + [(XB - 14, ZB1 - 16), (XB - 14, ZB0 + 14)]
@@ -369,21 +374,21 @@ def schild(t):
         yi = Y_SCHUB - SB_B / 2 - 4
         # Gelenkbock: Rueckplatte am Kasten + drei uebereinander gestapelte Klotzlaschen (Leiter / Zahnleiste), grosser Bolzen oben
         ya_, yb_ = sorted((s * yi, s * (Y_WANGE - 1)))
-        t.append(box(XB - 1, X_SCHILDBOLZEN + 4, ya_, yb_, Z_SCHUB - 170, Z_SCHUB + 170))              # Stirnblock am Balkenende
+        t.append(box(XB - 1, X_BR + 4, ya_, yb_, Z_SCHUB - 170, Z_SCHUB + 170))              # Stirnblock am Balkenende
         ya3, yb3 = sorted((s * (Y_WANGE + 1), s * yo))
         for zc in (Z_SCHUB - 110, Z_SCHUB, Z_SCHUB + 110):
-            t.append(box(X_PL_H + 4, X_SCHILDBOLZEN + 20, ya3, yb3, zc - 38, zc + 38))                  # Klotz hinter der Seitenplatte
+            t.append(box(X_PL_H + 4, X_BR + 20, ya3, yb3, zc - 38, zc + 38))                  # Klotz hinter der Seitenplatte
             t.mat("blank", rad_y(X_PL_H + 60, s * (Y_WANGE + 10), zc, 14, 70))                           # Stufenbolzen
         t.append(box(X_PL_H + 4, X_PL_H + 30, ya3, yb3, Z_SCHUB - 160, Z_SCHUB + 160))                  # Steg
         t.mat("blank", rad_y(X_PL_H + 85, s * (Y_WANGE + 20), Z_SCHUB + 175, 40, 56))                    # grosser Bolzen oben
         t.mat("blank", rad_y(X_PL_H + 85, s * (Y_WANGE + 52), Z_SCHUB + 175, 52, 12))
     # stehende Laschen mit U-Ausschnitt auf dem Kastenflansch (Foto: einzelne hohe Platten quer zur Schildebene)
-    ZL = ZB1 + 52 + 260                                                    # ~ 1/3 der Schildhoehe ueber der Oberleiste
+    ZL = ZB1 + 52 + 90                                                    # ~ 1/3 der Schildhoehe ueber der Oberleiste
     for y in (-860.0, -150.0, 150.0, 860.0):
         lp = platte_xz([(XB - 180, ZB1 + 36), (XB + 20, ZB1 + 10), (XB + 20, ZL - 40), (XB - 10, ZL), (XB - 140, ZL), (XB - 180, ZL - 60)],
                        y - 9, y + 9)
-        lp -= Pos(XB - 90, y, ZL - 110) * Rot(90, 0, 0) * Cylinder(22, 30)
-        lp -= box(XB - 130, XB - 50, y - 12, y + 12, ZL - 110, ZL + 5)
+        lp -= Pos(XB - 90, y, ZL - 70) * Rot(90, 0, 0) * Cylinder(22, 30)
+        lp -= box(XB - 130, XB - 50, y - 12, y + 12, ZL - 70, ZL + 5)
         t.append(lp)
     return B
 
@@ -393,7 +398,7 @@ def sb_h(x):
     """Balkenhoehe bei x: ab SB_XV nach hinten voll (250), davor linear auf SB_H_VORN am vorderen Auge."""
     if x >= SB_XV:
         return SB_H
-    return SB_H_VORN + (SB_H - SB_H_VORN) * max(0.0, (x - X_SCHILDBOLZEN) / (SB_XV - X_SCHILDBOLZEN))
+    return SB_H_VORN + (SB_H - SB_H_VORN) * max(0.0, (x - (SB_XV - 110.0)) / 110.0)
 
 
 def sb_top(x):
@@ -409,11 +414,11 @@ def schubbalken(t, s):
     yi, ya = y - SB_B / 2, y + SB_B / 2        # (nur Breitenbereich; aussen ist y + s * SB_B / 2)
     yo = y + s * SB_B / 2
     xa, xe = X_SCHILDBOLZEN, X_GELENK - LB / 2 + 10
-    xs = [xa, SB_XV, xe]
+    xs = [xa, SB_XV - 110.0, SB_XV, xe]
     # Kasten: hinten hoch und flach, nach vorn verjuengt (Foto 40431489714), Polygonplatte statt Quader
     t.append(platte_xz([(x, sb_top(x)) for x in xs] + [(x, sb_bot(x)) for x in xs[::-1]], yi, ya))
     # Gurtbleche (Obergurt / Untergurt) folgen dem Profil
-    xg = [X_SCHILDBOLZEN + 60, SB_XV, X_GELENK - 90]
+    xg = [X_SCHILDBOLZEN + 60, SB_XV - 110.0, SB_XV, X_GELENK - 90]
     t.append(platte_xz([(x, sb_top(x)) for x in xg] + [(x, sb_top(x) - 14) for x in xg[::-1]], yi - 6, ya + 6))
     t.append(platte_xz([(x, sb_bot(x)) for x in xg] + [(x, sb_bot(x) + 14) for x in xg[::-1]], yi - 6, ya + 6))
     # hinten quadratischer Lagerblock (~190 x 190), aussen ~50 ueberstehend, 4 Sechskantschrauben, Fettkappe (c_sr_beam)
@@ -448,11 +453,11 @@ def gelenkbock(t, s):
     t.append(box(1822, 1874, s * 757, s * 769, 352, 455))                       # Anschraubflansch
     t += [sechskant((x, s * 769, z), (0, s, 0), 10, 6) for x in (1828, 1868) for z in (365, 442)]
     # Bockplatte mit Auge
-    pl = platte_xz([(1832, 352), (2150, 320), (X_GELENK, 318), (X_GELENK, 482), (2150, 480), (1832, 455)], yi, ya)
+    pl = platte_xz([(1770, 335), (1960, 330), (1960, 470), (1770, 470)], yi, ya)
     pl += Pos(X_GELENK, (yi + ya) / 2, Z_SCHUB) * Rot(90, 0, 0) * Cylinder(85, 32)
     t.append(pl)
     # Versteifungsrippe oben und Nabe
-    t.append(box(1880, 2160, s * 830, s * 848, 455, 480))
+    t.append(box(1790, 1940, s * 830, s * 848, 455, 480))
     t.append(rad_y(X_GELENK, s * 900, Z_SCHUB, 70, 40))
     bolzen_y(t, X_GELENK, s * 830, s * (Y_SCHUB + 20), Z_SCHUB, 40)               # endet im Lagerblock des Schubbalkens
     schmiernippel(t, X_GELENK, s * 900, Z_SCHUB + 68)
@@ -556,7 +561,7 @@ def hubzylinder(t, s):
     t.append(rohr_glatt([(X_KOPF + 60, y, z + dz), (EK_X0 + 60, y, z + dz)], R_ZYLLTG - 2, 22))
     t.append(box(X_KOPF + 40, X_KOPF + 70, y - 18, y + 18, z - dz - 8, z - R_ZYL))
     t.append(rohr_glatt([(X_KOPF + 60, y, z - dz - 40), (X_KOPF + 60, y, z - dz), (EK_X0 + 60, y, z - dz)], R_ZYLLTG - 2, 24))
-    for x in (2050.0, 2300.0):                                    # Sattelschellen
+    for x in (2110.0, 2200.0):                                    # Sattelschellen
         t.append(box(x - 12, x + 12, y - 16, y + 16, z + R_ZYL - 6, z + dz))
         t.append(box(x - 12, x + 12, y - 16, y + 16, z - dz, z - R_ZYL + 6))
 
@@ -749,7 +754,7 @@ def ventil(t):
     t.append(rad_y(xm - 10, y0 - 16, zc, 36, 32))
     t.mat("blank", rad_y(xm - 10, y0 - 40, zc, 8, 20))
     t.mat("schwarz", rad_y(xm - 10, y0 - 52, zc, 38, 6))                                                       # Handrad
-    t += [sechskant((xm - 10 + dx, y0 - 33, zc + dz), (0, -1, 0), 12, 5) for dx in (-24, 24) for dz in (-24, 24)]
+    t += [sechskant((xm - 10 + dx, y0 - 30, zc + dz), (0, -1, 0), 12, 5) for dx in (-24, 24) for dz in (-24, 24)]
     # Anschlussstutzen: innen (Schlaeuche) und vorn (Rohre nach unten)
     for xx in (XH_P, XH_R):
         t.mat("blank", stab((xx, y0 + 2, Z_PORT), (xx, y0 - 14, Z_PORT), 14))

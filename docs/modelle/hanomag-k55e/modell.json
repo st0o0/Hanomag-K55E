@@ -1506,136 +1506,117 @@
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 11.53,
+      "druck_mb": 11.55,
       "masse_mm": [
-        450.1,
+        462.6,
         285.5,
         217.7
       ],
-      "druck_koerper": 11,
+      "druck_koerper": 9,
       "druck_bett_mm": [
-        218.0,
-        855.4,
-        183.3
+        217.7,
+        1184.0,
+        126.7
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
+          "Passung zu kuehlermaske: 3 Ansatzstellen buendig gekuerzt",
+          "Passung zu rumpf: 32 Ansatzstellen buendig gekuerzt",
           "16 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0 geteilt in 9 Stuecke bei x=278 / x=323 / x=1129 / x=1729 / y=-602 (Original-mm, Einbaulage), 9 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)",
-          "Koerper 9 sehr klein (0.62 mm, 1.22 mm3) bei x/y/z [2500, 870, 1263] Original-mm, geht beim Druck evtl. verloren",
-          "Koerper 10 sehr klein (0.62 mm, 1.22 mm3) bei x/y/z [2548, 870, 1263] Original-mm, geht beim Druck evtl. verloren"
+          "Koerper 0 geteilt in 8 Stuecke bei x=762 / x=763 / x=2197 / y=-602 (Original-mm, Einbaulage), 7 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)",
+          "Koerper 3: 1/348 Proben duenner als 0.5 mm: 0.45 mm (1 Probe) bei x/y/z [-4, -41, 590] Original-mm, Solid 234 (16x280x160 Original-mm)"
         ],
         "koerper": [
           {
             "masse_mm": [
-              125.8,
-              115.2,
+              198.8,
+              112.5,
               67.5
             ],
-            "volumen_mm3": 223499.1,
-            "wand_min": 1.22,
-            "ueberhang": 0.141
+            "volumen_mm3": 357040.6,
+            "wand_min": 1.13,
+            "ueberhang": 0.139
           },
           {
             "masse_mm": [
-              217.3,
-              178.4,
-              114.8
+              217.7,
+              192.2,
+              126.7
             ],
-            "volumen_mm3": 169245.1,
-            "wand_min": 0.56,
-            "ueberhang": 0.126
+            "volumen_mm3": 156419.1,
+            "wand_min": 1.2,
+            "ueberhang": 0.154
           },
           {
             "masse_mm": [
-              141.9,
-              60.9,
-              70.6
-            ],
-            "volumen_mm3": 61268.8,
-            "wand_min": 1.5,
-            "ueberhang": 0.192
-          },
-          {
-            "masse_mm": [
-              131.4,
+              198.9,
               218.0,
-              115.2
+              112.5
             ],
-            "volumen_mm3": 666898.0,
-            "wand_min": 1.25,
-            "ueberhang": 0.165
+            "volumen_mm3": 1075060.8,
+            "wand_min": 1.13,
+            "ueberhang": 0.138
           },
           {
             "masse_mm": [
-              71.4,
+              126.4,
               104.5,
               20.4
             ],
-            "volumen_mm3": 12166.8,
-            "wand_min": 1.5,
-            "ueberhang": 0.177
+            "volumen_mm3": 14098.2,
+            "wand_min": 0.45,
+            "ueberhang": 0.196
           },
           {
             "masse_mm": [
-              102.6,
-              20.6,
-              85.9
+              178.6,
+              44.2,
+              109.5
             ],
-            "volumen_mm3": 58921.6,
-            "wand_min": 1.13,
-            "ueberhang": 0.12
+            "volumen_mm3": 104639.7,
+            "wand_min": 1.22,
+            "ueberhang": 0.13
           },
           {
             "masse_mm": [
-              100.8,
-              19.5,
-              8.2
+              179.2,
+              26.5,
+              49.1
             ],
-            "volumen_mm3": 2139.7,
-            "wand_min": 1.5,
-            "ueberhang": 0.169
+            "volumen_mm3": 4229.5,
+            "wand_min": 1.23,
+            "ueberhang": 0.175
           },
           {
             "masse_mm": [
-              100.8,
-              19.5,
-              8.2
+              179.2,
+              26.5,
+              49.1
             ],
-            "volumen_mm3": 2139.7,
-            "wand_min": 1.5,
-            "ueberhang": 0.168
+            "volumen_mm3": 4229.5,
+            "wand_min": 1.23,
+            "ueberhang": 0.175
           },
           {
             "masse_mm": [
-              218.0,
-              214.1,
-              183.3
+              84.5,
+              211.4,
+              124.5
             ],
-            "volumen_mm3": 328578.2,
+            "volumen_mm3": 204848.8,
             "wand_min": 0.75,
-            "ueberhang": 0.149
+            "ueberhang": 0.196
           },
           {
             "masse_mm": [
-              1.5,
-              0.6,
-              1.7
+              197.7,
+              216.2,
+              16.8
             ],
-            "volumen_mm3": 1.2,
-            "wand_min": 0.63,
-            "ueberhang": 0.152
-          },
-          {
-            "masse_mm": [
-              1.5,
-              0.6,
-              1.7
-            ],
-            "volumen_mm3": 1.2,
-            "wand_min": 0.63,
-            "ueberhang": 0.152
+            "volumen_mm3": 10617.5,
+            "wand_min": 1.46,
+            "ueberhang": 0.399
           }
         ]
       }
@@ -1644,7 +1625,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-12",
-  "build": "20261012161408",
+  "build": "20261012164338",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [
@@ -1849,6 +1830,29 @@
             "url": "",
             "zeigt": "Kasten, Förderpumpe, Filter, Leitungen, Gestänge",
             "benutzt": "Form und Lage aller Teile der Anlage"
+          }
+        ]
+      },
+      {
+        "titel": "Videos (Planiereinrichtung, Stand 2026-10)",
+        "eintraege": [
+          {
+            "titel": "YouTube – Hanomag K55 Bj.1954 mit Frisch Planiereinrichtung",
+            "url": "https://www.youtube.com/watch?v=sJxdGuRcga8",
+            "zeigt": "Blaugrüne K 55 mit Frisch-Traverse am Heck, viele Seiten-/Heckansichten, kein Schild montiert",
+            "benutzt": "Traversenkasten, Seitenverhältnisse am Heck (nur Abgleich, keine Änderung)"
+          },
+          {
+            "titel": "YouTube – Alte Baumaschinen - HANOMAG K 55 Raupe (1951-1957)",
+            "url": "https://www.youtube.com/watch?v=zLWVF2nmQDY",
+            "zeigt": "Graue K 55 mit Planierschild: fast senkrechte Seitenansicht (t=164 s), Heck mit Zylinder und Endkasten, Front mit Pumpe",
+            "benutzt": "Schubbalken (Gelenk ~390 vor der Triebradachse, hinten niedrig/vorn hoch), Schildlage und -profil (Lippe ~800 vor, Oberseite steigt nach hinten), A-Bock-Abgleich"
+          },
+          {
+            "titel": "YouTube – Hanomag K55 Raupe Tractor Pulling Ravels 2023",
+            "url": "https://www.youtube.com/watch?v=CSAGzJwkkHI",
+            "zeigt": "Grüne K 55 mit Frisch-Aufbau im Einsatz (Seite, klein)",
+            "benutzt": "nur Abgleich Gesamtanordnung, keine Maße"
           }
         ]
       }
