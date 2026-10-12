@@ -1485,6 +1485,10 @@
           "ansicht": "ansicht/planierschild__blank.stl"
         },
         {
+          "material": "gummi",
+          "ansicht": "ansicht/planierschild__gummi.stl"
+        },
+        {
           "material": "schwarz",
           "ansicht": "ansicht/planierschild__schwarz.stl"
         },
@@ -1499,30 +1503,28 @@
         {
           "material": "auspuff",
           "ansicht": "ansicht/planierschild__auspuff.stl"
-        },
-        {
-          "material": "gummi",
-          "ansicht": "ansicht/planierschild__gummi.stl"
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 11.37,
+      "druck_mb": 11.53,
       "masse_mm": [
         450.1,
         285.5,
-        200.5
+        217.7
       ],
-      "druck_koerper": 9,
+      "druck_koerper": 11,
       "druck_bett_mm": [
         218.0,
-        1130.0,
-        166.1
+        855.4,
+        183.3
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
           "16 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0 geteilt in 9 Stuecke bei x=241 / x=278 / x=1129 / x=1729 / y=-602 (Original-mm, Einbaulage), 9 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)"
+          "Koerper 0 geteilt in 9 Stuecke bei x=278 / x=323 / x=1129 / x=1729 / y=-602 (Original-mm, Einbaulage), 9 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)",
+          "Koerper 9 sehr klein (0.62 mm, 1.22 mm3) bei x/y/z [2500, 870, 1263] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 10 sehr klein (0.62 mm, 1.22 mm3) bei x/y/z [2548, 870, 1263] Original-mm, geht beim Druck evtl. verloren"
         ],
         "koerper": [
           {
@@ -1531,19 +1533,19 @@
               115.2,
               67.5
             ],
-            "volumen_mm3": 222215.1,
-            "wand_min": 1.31,
+            "volumen_mm3": 223499.1,
+            "wand_min": 1.22,
             "ueberhang": 0.141
           },
           {
             "masse_mm": [
-              217.1,
+              217.3,
               178.4,
-              113.9
+              114.8
             ],
-            "volumen_mm3": 168644.4,
+            "volumen_mm3": 169245.1,
             "wand_min": 0.56,
-            "ueberhang": 0.06
+            "ueberhang": 0.126
           },
           {
             "masse_mm": [
@@ -1551,69 +1553,89 @@
               60.9,
               70.6
             ],
-            "volumen_mm3": 61307.2,
+            "volumen_mm3": 61268.8,
             "wand_min": 1.5,
-            "ueberhang": 0.193
+            "ueberhang": 0.192
           },
           {
             "masse_mm": [
-              121.2,
+              131.4,
               218.0,
               115.2
             ],
-            "volumen_mm3": 660876.2,
+            "volumen_mm3": 666898.0,
             "wand_min": 1.25,
             "ueberhang": 0.165
           },
           {
             "masse_mm": [
-              61.2,
+              71.4,
               104.5,
               20.4
             ],
-            "volumen_mm3": 11632.1,
+            "volumen_mm3": 12166.8,
             "wand_min": 1.5,
             "ueberhang": 0.177
           },
           {
             "masse_mm": [
-              111.0,
-              85.9,
-              18.6
+              102.6,
+              20.6,
+              85.9
             ],
-            "volumen_mm3": 63058.8,
-            "wand_min": 1.21,
-            "ueberhang": 0.278
+            "volumen_mm3": 58921.6,
+            "wand_min": 1.13,
+            "ueberhang": 0.12
           },
           {
             "masse_mm": [
-              111.0,
+              100.8,
               19.5,
               8.2
             ],
-            "volumen_mm3": 2407.0,
-            "wand_min": 3.0,
-            "ueberhang": 0.175
+            "volumen_mm3": 2139.7,
+            "wand_min": 1.5,
+            "ueberhang": 0.169
+          },
+          {
+            "masse_mm": [
+              100.8,
+              19.5,
+              8.2
+            ],
+            "volumen_mm3": 2139.7,
+            "wand_min": 1.5,
+            "ueberhang": 0.168
           },
           {
             "masse_mm": [
               218.0,
               214.1,
-              166.1
+              183.3
             ],
-            "volumen_mm3": 322572.2,
+            "volumen_mm3": 328578.2,
             "wand_min": 0.75,
             "ueberhang": 0.149
           },
           {
             "masse_mm": [
-              217.9,
-              209.9,
-              90.3
+              1.5,
+              0.6,
+              1.7
             ],
-            "volumen_mm3": 6954.5,
-            "wand_min": 1.5,
-            "ueberhang": 0.177
+            "volumen_mm3": 1.2,
+            "wand_min": 0.63,
+            "ueberhang": 0.152
+          },
+          {
+            "masse_mm": [
+              1.5,
+              0.6,
+              1.7
+            ],
+            "volumen_mm3": 1.2,
+            "wand_min": 0.63,
+            "ueberhang": 0.152
           }
         ]
       }
@@ -1622,7 +1644,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-12",
-  "build": "20261012155839",
+  "build": "20261012161408",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [
@@ -1702,7 +1724,7 @@
             "benutzt": "Instrumente, Lenkung, Einspritzpumpe, Filter, Deckel HANOMAG DIESEL"
           },
           {
-            "titel": "Flickr – K 55 mit FRISCH-Schild, blau",
+            "titel": "Flickr – K 55 mit FRISCH-Schild, blau (anderes Exemplar, Einzelanfertigung, Details abweichend)",
             "url": "https://live.staticflickr.com/7120/7826381704_4064fa1e84_b.jpg",
             "zeigt": "Schräg vorn links: Grill mit senkrechten Stäben, Scheinwerfer oben, Ölpumpe vor der Maske, A-Bock, Traverse",
             "benutzt": "A-Bock, Ölpumpe, Hydraulikrohre, Scheinwerfer, Grill, Schild"
