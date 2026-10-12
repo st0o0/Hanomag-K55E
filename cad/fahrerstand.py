@@ -11,14 +11,14 @@ Fotobefund (K 55, fz_05/10/11, fz_01):
   * Vierspeichen-Lenkrad mit Hupenknopf; Handgashebel neben der Saeule.
   * Schalthebel mit Gummimanschette aus dem Bodenblech, Gruppenhebel,
     Kupplungs- und Bremspedal mit Riffel-Trittflaechen, verschraubte Bodenbleche.
-Seitenfoto BS (blaue K 55, Bj. 1956) und Fehlerliste Punkt 0:
+Seitenfoto BS (blaue K 55, Bj. 1956):
   * Tank liegt direkt hinter der Haube (TANK_X0/X1 = 1085/1455), Oberkante in der
     Dachflucht. Darunter ein Blechkasten (Tankunterbau) frei ueber der Kupplungsglocke,
     seitlich mit Stuetzen auf den Laengstraegern.
   * Armaturenwand direkt hinter dem Tank bis x 1480; die Lenksaeule kommt oben hinten
-    aus ihr (x ~1500, z ~1190) und steigt unter ~40 Grad nach hinten oben zum Lenkrad
+    aus ihr (x ~1500, z ~1240) und steigt unter ~35 Grad nach hinten oben zum Lenkrad
     bei LENKRAD (1830 / 200 / 1470).
-Prospekt K 55 E (PK, PH = prospekt_heck) und Fehlerliste Punkt 6:
+Prospekt K 55 E (PK, PH = prospekt_heck):
   * Einteilige tiefe Sitzschale mit hochgezogenem Ruecken (keine getrennte Lehne),
     Lederpolster in der Schale, auf einem Mittelsockel mit Blattfeder-Arm, Mitte SITZ_X.
   * Werkzeugkaesten auf den Kotfluegeln, Batteriekasten rechts vor dem Sitz.
@@ -60,7 +60,7 @@ X_KANNE, Y_KANNE = TANK_X0 + 220, 175.0
 
 # Lenkung
 LENK_MITTE = Vector(*LENKRAD)                  # Lenkradmitte (common.py)
-LENK_FUSS = Vector(XK, LENKRAD[1], 1190.0)     # Austritt der Lenksaeule oben hinten aus der Konsole
+LENK_FUSS = Vector(XK, LENKRAD[1], 1240.0)     # Austritt (Foto BS: ~50 mm hoeher als zuvor) der Lenksaeule oben hinten aus der Konsole
 R_KRANZ, R_KRANZ_Q = 207.0, 17.0      # Kranz Mitte / Querschnitt (aussen 448)
 Y_HANDGAS = 100.0
 Z_HANDGAS = ZT + 15                   # Drehpunkt Handgashebel
@@ -316,9 +316,10 @@ def _lenkung(t):
     a, b = LENK_FUSS, LENK_MITTE
     d = (b - a).normalized()
     # Lagerbock: Flanschplatte mit 4 Schrauben, Lagergehaeuse
-    t.append(box(XK + 6, XK + 22, a.Y - 55, a.Y + 55, a.Z - 55, a.Z + 55))
+    zo = min(a.Z + 55, KONS_Z1 + 10)                           # Flansch nicht ueber die Konsolenoberkante hinaus
+    t.append(box(XK + 6, XK + 22, a.Y - 55, a.Y + 55, zo - 110, zo))
     for dy in (-42, 42):
-        for dz in (-42, 42):
+        for dz in (zo - a.Z - 100, zo - a.Z - 12):
             t.mat("blank", sechskant((XK + 22, a.Y + dy, a.Z + dz), (1, 0, 0), 16, 7))
     t.append(stab(a + Vector(15, 0, 0), a + d * 110, 46))      # Lagergehaeuse
     t.append(stab(a + d * 102, a + d * 118, 52))               # Bund
@@ -523,7 +524,7 @@ def _kaesten(t):
     # Batteriekabel: aus der Stirnwand nach vorn und durch das Kotfluegelblech zum Rumpf
     # (Kabel unter dem Kotfluegelblech)
     yk = y0 + 50
-    t.mat("gummi", rohr_glatt([(x0, yk, BAT_Z1 - 80), (x0 - 60, yk, BAT_Z1 - 80), (x0 - 60, yk, DECK_Z - 20)], 11))
+    t.mat("gummi", rohr_glatt([(x0, yk, BAT_Z1 - 80), (x0 - 60, yk, BAT_Z1 - 80), (x0 - 60, yk, DECK_Z + 2)], 11))
     t.mat("blank", rad_x(x0 - 6, yk, BAT_Z1 - 80, 16, 12))             # Kabeltuelle
     t.mat("gummi", Pos(x0 - 60, yk, DECK_Z - 2) * Cylinder(20, 10, align=(Align.CENTER, Align.CENTER, Align.MIN)))
 

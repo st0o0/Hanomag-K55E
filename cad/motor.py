@@ -41,15 +41,19 @@ Y_BLOCK = 190.0
 Z_KW = 600.0                            # Kurbelwelle
 Z_WANNE = 320.0                         # Unterkante Oelwanne
 Z_KURBEL_U = 585.0                      # Unterkante Kurbelgehaeuse vorn (ueber der Querfeder)
-Z_KOPF0, Z_KOPF1 = 1000.0, 1110.0       # Zylinderkopf
-Z_VD = 1180.0                           # Oberkante Ventildeckel
+DZ_OBEN = 70.0                          # Absenkung von Kopf und Aufbauten gegenueber dem alten Stand (Kopf-Unterkante 1000)
+Z_KOPF0 = 1000.0 - DZ_OBEN              # Block-Oberkante / Kopf-Unterkante (930 -> hier 930)
+Z_KOPF1 = Z_KOPF0 + 105.0               # Oberkante Zylinderkopf (1035)
+Z_VD = Z_KOPF1 + 48.0                   # Oberkante Ventildeckel (1083); Hutmuttern bis ~1098
+Z_AK0 = Z_KOPF1 - 26.0                  # Unterkante Ansaugkruemmer
+Z_MOTOR_OBEN = Z_VD + 15.0              # hoechster Punkt des Motors (Hutmutter-Kuppe) ~1098
 Z_TRAEGER = TRAEGER_Z1                  # Oberkante Laengstraeger (520)
 
 # Riementrieb (Ebene x = RIEMEN_X0..X1), Kreise (y, z, Wirkradius)
 RIEMEN_X0, RIEMEN_X1 = 364.0, 380.0
 SCHEIBE_KW = (0.0, Z_KW, 105.0)
 SCHEIBE_WP = (0.0, 860.0, 70.0)
-SCHEIBE_LIMA = (255.0, 900.0, 46.0)
+SCHEIBE_LIMA = (255.0, 870.0, 46.0)      # (frueher z 900; 30 tiefer, damit der abgesenkte Abgaskruemmer frei bleibt)
 LUEFTER_X, LUEFTER_R = 354.0, 245.0
 HAUBE_BLECH = 10.0                      # Luefterhaube (>= 1,2 mm Modell)
 
@@ -64,17 +68,21 @@ Y_ESP = -228.0                          # Mittelebene Einspritzpumpe und Druckle
 ESP_X0, ESP_X1 = 440.0, 670.0
 ESP_Z0, ESP_Z1 = 640.0, 745.0
 DV_X = [ESP_X0 + 30 + 50 * i for i in range(4)]   # Druckventilhalter 470..620
-DL_Z = [975, 950, 925, 900]             # Hoehe der waagerechten Leitungsabschnitte
-Z_DUESE = 1030.0                        # Duesenhalter (seitlich im Kopf)
-FILTER_X = (665.0, 735.0)               # Kraftstoff-Doppelfilter, Glasglocken (zwischen den Leitungen)
-FILTER_Y = -285.0
-FILTER_Z = 975.0                        # Mitte Filterkopf (unter den Duesenhaltern)
+Z_DUESE = Z_KOPF0 + 50.0                # Duesenhalter (seitlich im Kopf)
+DL_Z = [Z_DUESE - 20 - 9 * i for i in range(4)]   # Hoehe der waagerechten Leitungsabschnitte (ueber der Kastenpumpe)
+DL_R = 3.5                              # Radius der Druckleitungen
+FILTER_X = (528.0, 588.0)               # Kraftstoff-Doppelfilter, Glasglocken (zwischen den Leitungen)
+FILTER_Y = -291.0
+FILTER_Z = Z_DUESE + 5.0                # Mitte Filterkopf (vor den Duesenhaltern, ueber den Druckleitungen)
 FP_DX = 121.0                           # Foerderpumpe: Mitte hinter ESP_X0
 VR_X = 765.0                            # Vorreiniger mit Glasschale hinter dem Regler
 
 # Seitendeckel (unten hinter der Pumpe, ueber dem Anlasser) und Stoesselkammerdeckel
-SD_X0, SD_X1, SD_Z0, SD_Z1 = 760.0, 1010.0, 740.0, 870.0
-SK_X0, SK_X1, SK_Z0, SK_Z1 = 800.0, 1005.0, 892.0, 982.0
+# Kastenpumpe "HANOMAG DIESEL" (Nutzermasse nach Zollstockfotos): Gussgehaeuse 360 x 185, steht 30 vom Block ab,
+# darauf Deckelplatte 320 x 165, darin erhabene Flaeche 285 x 130 mit zweizeiliger Schrift.
+SD_X0, SD_X1, SD_Z0, SD_Z1 = 665.0, 1025.0, 740.0, 925.0      # Gussgehaeuse (Z0 ueber dem Reglerdeckel, hinten am Schwungradgehaeuse)
+SD_Y0, SD_Y1 = -184.0, -220.0                                  # Block-Seite (leicht eingesenkt) bis Gehaeuse-Aussenflaeche
+SK_X0, SK_X1, SK_Z0, SK_Z1 = 495.0, 625.0, 795.0, 865.0        # Stoesselkammerdeckel (vorn, hinter den Druckleitungen)
 
 # Schwungradgehaeuse
 SG_X0, SG_X1, SG_X2 = X_HINTEN, FLANSCH_GLOCKE_X - 12, FLANSCH_GLOCKE_X   # SG_X2 = Flansch Glocke
@@ -183,7 +191,7 @@ def _block(t):
     t.append(kasten_rund(400, X_HINTEN - 10, -Y_BLOCK, Y_BLOCK, 780, Z_KOPF0, 20))
     for s in (-1, 1):
         t.append(box(405, X_HINTEN - 15, s * Y_BLOCK - 4, s * Y_BLOCK + 4, 775, 790))   # Leiste unten
-        t.append(box(405, X_HINTEN - 15, s * Y_BLOCK - 4, s * Y_BLOCK + 4, 990, Z_KOPF0))  # Leiste oben
+        t.append(box(405, X_HINTEN - 15, s * Y_BLOCK - 4, s * Y_BLOCK + 4, Z_KOPF0 - 10, Z_KOPF0))  # Leiste oben
     # Steuergehaeuse vorn mit Auge fuer den Pumpenantrieb
     t.append(kasten_rund(X_VORN, 402, -170, 170, 490, 820, 40, Axis.X))
     t.append(rad_x(391, Y_ESP, 690, 46, 22))
@@ -225,27 +233,28 @@ def _kopf(t):
     # Ventildeckel mit Fussflansch, Laengssicken, Hutmuttern, Oeleinfuellstutzen
     t.append(kasten_rund(430, X_HINTEN - 40, -150, 150, Z_KOPF1, Z_KOPF1 + 10, 12))
     vd = box(440, X_HINTEN - 50, -140, 140, Z_KOPF1 + 10, Z_VD)
-    vd = fillet(vd.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 28)
-    vd = fillet(vd.edges().filter_by(Axis.Y).group_by(Axis.Z)[-1], 20)
+    vd = fillet(vd.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 24)
+    vd = fillet(vd.edges().filter_by(Axis.Y).group_by(Axis.Z)[-1], 16)
     t.append(vd)
     for y in (-60, 60):
         t.append(box(495, X_HINTEN - 105, y - 7, y + 7, Z_VD - 2, Z_VD + 5))
     for x in (480, 640, 800, X_HINTEN - 90):                          # Hutmuttern
-        t += schraube((x, 0, Z_VD), (0, 0, 1), 26, 14)
-        t.append(Pos(x, 0, Z_VD + 16) * Sphere(13))
+        t += schraube((x, 0, Z_VD), (0, 0, 1), 26, 10)
+        t.append(Pos(x, 0, Z_VD + 6) * Sphere(9))
     xo = 560.0                                                        # Oeleinfuellstutzen
-    t.mat("schwarz", Pos(xo, 85, Z_VD - 5) * Cylinder(30, 30, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    t.mat("schwarz", Pos(xo, 85, Z_VD + 25) * Cylinder(36, 14, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("schwarz", Pos(xo, 85, Z_VD - 5) * Cylinder(30, 20, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("schwarz", Pos(xo, 85, Z_VD + 10) * Cylinder(36, 5, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     # Thermostatgehaeuse vorn auf dem Kopf, Stutzen nach vorn zum Kuehler
-    t.append(kasten_rund(405, 465, -45, 45, Z_KOPF1, 1160, 12))
-    t.append(rad_x(392, 0, 1135, 24, 30))
-    t += schraubenreihe((415, -35, 1160), (455, 35, 1160), 2, (0, 0, 1), 16, 7)
+    z_th = Z_KOPF1 + 48.0                                             # Oberkante Thermostatgehaeuse
+    t.append(kasten_rund(405, 465, -45, 45, Z_KOPF1, z_th, 12))
+    t.append(rad_x(392, 0, Z_KOPF1 + 24, 24, 30))
+    t += schraubenreihe((415, -35, z_th), (455, 35, z_th), 2, (0, 0, 1), 16, 7)
     # Ansaugkruemmer links mit 4 Flanschen und Steigflansch
-    ak = kasten_rund(ZYL_X[0] - 45, ZYL_X[-1] + 50, -236, -185, 1062, Z_KOPF1, 14, Axis.X)
+    ak = kasten_rund(ZYL_X[0] - 45, ZYL_X[-1] + 50, -236, -185, Z_AK0, Z_KOPF1, 12, Axis.X)
     t.append(ak)
     for x in ZYL_X:
-        t.append(kasten_rund(x - 45, x + 45, -198, -185, 1056, Z_KOPF1, 10, Axis.Y))
-        t += [sechskant((x + dx, -198, 1083), (0, -1, 0), 18, 8) for dx in (-32, 32)]
+        t.append(kasten_rund(x - 45, x + 45, -198, -185, Z_AK0 - 4, Z_KOPF1, 8, Axis.Y))
+        t += [sechskant((x + dx, -198, Z_AK0 + 14), (0, -1, 0), 18, 8) for dx in (-32, 32)]
     xa = ANSAUG_XY[0]                                                 # Steigflansch unter dem Ansaugrohr
     t.append(kasten_rund(xa - 50, xa + 50, -265, -180, Z_KOPF1 - 2, Z_KOPF1 + 10, 12))
     for dx in (-38, 38):
@@ -257,40 +266,89 @@ def _kopf(t):
         t += [sechskant((x + dx, -195, Z_DUESE), (0, -1, 0), 16, 8) for dx in (-21, 21)]
         t.mat("blank", stab((x, -190, Z_DUESE), (x, -242, Z_DUESE), 16))
         t.mat("blank", sechskant((x, -242, Z_DUESE), (0, -1, 0), 26, 10))
-        t.mat("blank", stab((x, -228, Z_DUESE), (x, -228, 1008), 8))
-        t.mat("blank", sechskant((x, -228, 1012), (0, 0, -1), 18, 10))
+        t.mat("blank", stab((x, -228, Z_DUESE), (x, -228, Z_DUESE - 10), 8))
+        t.mat("blank", sechskant((x, -228, Z_DUESE - 8), (0, 0, -1), 18, 8))
     # Leckoelleitung ueber den Duesenhaltern
-    t.mat("blank", stab((ZYL_X[0] - 15, -236, 1052), (ZYL_X[-1] + 15, -236, 1052), 4))
+    z_leck = Z_DUESE + 20.0
+    t.mat("blank", stab((ZYL_X[0] - 15, -236, z_leck), (ZYL_X[-1] + 15, -236, z_leck), 3.5))
     for x in ZYL_X:
-        t.mat("blank", stab((x, -236, 1040), (x, -236, 1054), 5))
+        t.mat("blank", stab((x, -236, z_leck - 10), (x, -236, z_leck + 2), 4.5))
+
+
+def _schrift_mass(t, mitte_x, mitte_z, y_flaeche, txt, breite, hoehe, erhaben=5.0):
+    """Erhabene Schrift auf einer Flaeche mit Normale -Y, auf Sollbreite und Soll-Versalhoehe gestreckt
+    (Mitte mitte_x / mitte_z). Material wie die uebrige Schrift (blank)."""
+    roh = extrude(Text(txt, font_size=40, font_path=FONT, align=(Align.CENTER, Align.CENTER)), amount=1.0)
+    bb = roh.bounding_box()
+    roh = Pos(-(bb.min.X + bb.max.X) / 2, -(bb.min.Y + bb.max.Y) / 2, 0) * roh
+    roh = scale(roh, by=(breite / bb.size.X, hoehe / bb.size.Y, 1.0))
+    roh = scale(roh, by=(1.0, 1.0, (erhaben + 0.5)))               # Dicke 1 -> erhaben + 0,5 (Einsenkung)
+    pl = Plane(origin=(mitte_x, y_flaeche + 0.5, mitte_z), x_dir=(1, 0, 0), z_dir=(0, -1, 0))   # lokales +Y = +Z
+    t.mat("blank", Location(pl) * roh)
 
 
 def _seitendeckel(t):
-    """Seitendeckel 'HANOMAG DIESEL' mit erhabener Schrift, Typenschild, Kontrolldeckel."""
-    # Flansch und kastenfoermiger Deckel
-    t.append(kasten_rund(SD_X0 - 15, SD_X1 + 15, -195, -184, SD_Z0 - 16, SD_Z1 + 16, 26, Axis.Y))
-    dk = box(SD_X0, SD_X1, -222, -194, SD_Z0, SD_Z1)
-    dk = fillet(dk.edges().filter_by(Axis.Y), 18)
-    dk = fillet(dk.edges().group_by(Axis.Y)[0], 6)
-    t.append(dk)
-    # Schrauben am Flansch (oben/unten je 4, seitlich je 1)
-    for i in range(4):
-        x = SD_X0 + 20 + i * (SD_X1 - SD_X0 - 40) / 3
-        for z in (SD_Z0 - 8, SD_Z1 + 8):
-            t.append(sechskant((x, -195, z), (0, -1, 0), 15, 7))
-    for x in (SD_X0 - 7, SD_X1 + 7):
-        t.append(sechskant((x, -195, (SD_Z0 + SD_Z1) / 2), (0, -1, 0), 15, 7))
-    xm = (SD_X0 + SD_X1) / 2
-    zm = (SD_Z0 + SD_Z1) / 2
-    _schrift(t, xm, zm + 31, -222, "HANOMAG", 42)
-    _schrift(t, xm, zm - 31, -222, "DIESEL", 42, teilung=36)
-    # Typenschild mit Nieten (am Block ueber der Einspritzpumpe, hinter den Druckleitungen)
-    tx0, tx1, tz0, tz1 = 500.0, 600.0, 835.0, 885.0
+    """Hanomag-Kastenpumpe 'HANOMAG DIESEL' an der linken Blockseite: Gussgehaeuse 360 x 185, 30 vom Block,
+    Deckelplatte 320 x 165 mit 8 Sechskantschrauben (Halteblech oben), erhabene Flaeche 285 x 130 mit
+    Schrift, Ablassschraube SW 32 unten links, Abstellhebel mit Kugelknopf hinten, Typenschild."""
+    xm = (SD_X0 + SD_X1) / 2                                          # 845
+    zm = (SD_Z0 + SD_Z1) / 2                                          # 832,5
+    # Gussgehaeuse (Kasten), Ecken gerundet, Aussenkante abgerundet
+    kasten = box(SD_X0, SD_X1, SD_Y1, SD_Y0, SD_Z0, SD_Z1)
+    kasten = fillet(kasten.edges().filter_by(Axis.Y), 22)
+    kasten = fillet(kasten.edges().group_by(Axis.Y)[0], 5)
+    t.append(kasten)
+    # Deckelplatte 320 x 165
+    px0, px1, pz0, pz1 = xm - 160, xm + 160, zm - 82.5, zm + 82.5
+    y_pl = SD_Y1 - 8.0                                                # Plattenflaeche
+    platte = box(px0, px1, SD_Y1 + 1, y_pl, pz0, pz1)
+    platte = fillet(platte.edges().filter_by(Axis.Y), 12)
+    platte = fillet(platte.edges().group_by(Axis.Y)[0], 2.5)
+    t.append(platte)
+    # Ablassschraube SW 32 unten links (Sockel + Sechskant), Freiraum in der erhabenen Flaeche
+    ax, az = px0 + 26, pz0 + 26
+    t.append(Pos(ax, y_pl + 0.5, az) * Rot(90, 0, 0) * Cylinder(25, 7.0, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("blank", sechskant((ax, y_pl - 6.5, az), (0, -1, 0), 32, 13))
+    # erhabene Flaeche 285 x 130, umlaufend abgerundet; an der Ablassschraube ausgespart
+    ex0, ex1, ez0, ez1 = xm - 142.5, xm + 142.5, zm - 65, zm + 65
+    y_er = y_pl - 5.0
+    erh = box(ex0, ex1, y_pl + 0.5, y_er, ez0, ez1)
+    erh = fillet(erh.edges().filter_by(Axis.Y), 20)
+    erh = fillet(erh.edges().group_by(Axis.Y)[0], 3.5)
+    erh = erh - Pos(ax, y_pl, az) * Rot(90, 0, 0) * Cylinder(32, 40)
+    t.append(erh)
+    # Schrift: HANOMAG (Breite 245, Versalhoehe 42), DIESEL (167, 40), Oberkante zu Oberkante 52
+    z_top = zm + 46.0
+    _schrift_mass(t, xm, z_top - 21, y_er, "HANOMAG", 245.0, 42.0)
+    _schrift_mass(t, xm, z_top - 52 - 20, y_er, "DIESEL", 167.0, 40.0)
+    # 8 Sechskantschrauben: oben links/Mitte/rechts, unten rechts + 3 gleichmaessig dazwischen (unten links = Ablassschraube)
+    s_sw, s_h = 14.0, 6.0
+    xs_oben = (px0 + 13, xm, px1 - 13)
+    for x in xs_oben:
+        t.mat("blank", sechskant((x, y_pl + 0.3, pz1 - (13 if x != xm else 9)), (0, -1, 0), s_sw, s_h))
+    xr = px1 - 13
+    for i in range(1, 5):
+        x = ax + (xr - ax) * i / 4
+        t.mat("blank", sechskant((x, y_pl + 0.3, pz0 + (13 if i == 4 else 9)), (0, -1, 0), s_sw, s_h))
+    # Halteblech (Lasche) oben mittig, nach oben ueber die Platte bis zum Gehaeuserand
+    lasche = box(xm - 14, xm + 14, SD_Y1 + 1, y_pl - 1.5, pz1 - 22, SD_Z1 - 3)
+    lasche = fillet(lasche.edges().filter_by(Axis.Y), 6)
+    t.mat("blank", lasche)
+    # Abstellhebel hinten (rechts neben dem Kasten): Lagerbock, Hebel schraeg nach hinten unten, Kugelknopf
+    hx, hz = SD_X1 - 12, SD_Z1 - 50
+    y_h = -258.0
+    t.append(stab((hx, SD_Y1 + 1, hz), (hx, y_h, hz), 11))                            # Lagerzapfen
+    t.mat("blank", rad_y(hx, y_h - 3, hz, 16, 6))
+    ende = (hx + 52, y_h - 3, hz - 62)
+    t.mat("blank", stab((hx, y_h - 3, hz), ende, 6))
+    t.mat("blank", Pos(*ende) * Sphere(13))
+    # Typenschild mit Nieten (am Block, links vor den Druckleitungen)
+    tx0, tx1, tz0, tz1 = 408.0, 464.0, 850.0, 890.0
     t.mat("blank", box(tx0, tx1, -194, -190, tz0, tz1))
     for x in (tx0 + 8, tx1 - 8):
         for z in (tz0 + 8, tz1 - 8):
             t.mat("blank", Pos(x, -194, z) * Sphere(4))
-    # Stoesselkammer-Kontrolldeckel mit Schraubenkranz (ueber dem Seitendeckel)
+    # Stoesselkammer-Kontrolldeckel mit Schraubenkranz (am Block hinter den Druckleitungen)
     t.append(kasten_rund(SK_X0, SK_X1, -200, -189, SK_Z0, SK_Z1, 15, Axis.Y))
     for z in (SK_Z0 + 12, SK_Z1 - 12):
         t += schraubenreihe((SK_X0 + 15, -200, z), (SK_X1 - 15, -200, z), 4, (0, -1, 0), 16, 7)
@@ -331,44 +389,51 @@ def _einspritzanlage(t):
     _einspritzpumpe(t)
     # Druckleitungen: senkrecht hoch, waagerecht gestaffelt, senkrecht zum Duesenstutzen.
     # Gestaffelte Hoehen DL_Z (hohe Leitung = vorderster Zylinder) -> keine Kreuzung.
+    z_ende = Z_DUESE - 14.0                                            # Unterkante Duesenstutzen
     for xo, xt, zh in zip(DV_X, ZYL_X, DL_Z):
         if abs(xt - xo) < 40:                                          # kurzer Versatz: S-Schlag
-            pts = [(xo, Y_ESP, ESP_Z1 + 28), (xo, Y_ESP, zh - 60), (xt, Y_ESP, zh), (xt, Y_ESP, 1006)]
+            pts = [(xo, Y_ESP, ESP_Z1 + 28), (xo, Y_ESP, zh - 60), (xt, Y_ESP, zh), (xt, Y_ESP, z_ende)]
         else:
-            pts = [(xo, Y_ESP, ESP_Z1 + 28), (xo, Y_ESP, zh), (xt, Y_ESP, zh), (xt, Y_ESP, 1006)]
-        t.mat("blank", rohr_glatt(pts, 5, 22))
+            pts = [(xo, Y_ESP, ESP_Z1 + 28), (xo, Y_ESP, zh), (xt, Y_ESP, zh), (xt, Y_ESP, z_ende)]
+        t.mat("blank", rohr_glatt(pts, DL_R, 18))
     # Leitungsschellen am Block (zwischen Filterkonsole und Seitendeckel)
-    for x, z0, z1, y_wand in ((ZYL_X[2] - 30, 890, 935, -190), (ZYL_X[3] - 60, 888, 912, -200)):
-        t.append(box(x - 9, x + 9, Y_ESP - 10, Y_ESP + 10, z0, z1))
-        t.append(box(x - 5, x + 5, Y_ESP + 10, y_wand + 1, (z0 + z1) / 2 - 8, (z0 + z1) / 2 + 8))
+    # (liegen ueber der Kastenpumpe, halten die beiden laengsten Leitungen)
+    zc = (DL_Z[2] + DL_Z[3]) / 2
+    for x in (ZYL_X[2] - 30, ZYL_X[3] - 60):
+        t.append(box(x - 9, x + 9, Y_ESP - 6, Y_ESP + 6, DL_Z[3] - 9, DL_Z[2] + 9))
+        t.append(box(x - 5, x + 5, Y_ESP + 6, -189, zc - 6, zc + 6))
+    # duenne Kraftstoffleitung (Leckoel-Ruecklauf) laengs ueber der Kastenpumpe, hinter den Druckleitungen
+    zr = DL_Z[0] + 10.0
+    t.mat("blank", rohr_glatt([(SD_X0 + 25, -205, zr), (SD_X1 - 25, -205, zr), (SD_X1 - 25, -192, zr + 14)], DL_R, 12))
+    t.mat("blank", sechskant((SD_X0 + 25, -205, zr), (-1, 0, 0), 14, 6))
     # Kraftstoff-Doppelfilter mit Glasglocken; Konsole am Block zwischen den Druckleitungen,
     # Filterkopf unter den Duesenhaltern (FILTER_Z)
-    fx0, fx1 = FILTER_X[0] - 32, FILTER_X[1] + 32
+    fx0, fx1 = FILTER_X[0] - 28, FILTER_X[1] + 28
     fm = (fx0 + fx1) / 2
     zk0, zk1 = FILTER_Z - 20, FILTER_Z + 20                            # Filterkopf
-    t.append(box(fm - 20, fm + 20, -196, -244, zk0 + 5, zk1 - 5))
-    t.append(kasten_rund(fx0, fx1, FILTER_Y - 40, FILTER_Y + 40, zk0, zk1, 12))
+    t.append(box(fm - 14, fm + 14, -196, -244, zk0 + 5, zk1 - 5))
+    t.append(kasten_rund(fx0, fx1, FILTER_Y - 32, FILTER_Y + 32, zk0, zk1, 12))
     t.mat("blank", sechskant((fm, FILTER_Y, zk1), (0, 0, 1), 18, 10))           # Entlueftung
     zg = zk0 - 10                                                      # Glockenoberkante
     for x in FILTER_X:
-        t.append(Pos(x, FILTER_Y, zg) * Cylinder(34, 10, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-        glocke = Pos(x, FILTER_Y, zg - 85) * Cylinder(30, 86, align=(Align.CENTER, Align.CENTER, Align.MIN))
+        t.append(Pos(x, FILTER_Y, zg) * Cylinder(30, 10, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+        glocke = Pos(x, FILTER_Y, zg - 85) * Cylinder(26, 86, align=(Align.CENTER, Align.CENTER, Align.MIN))
         glocke = fillet(glocke.edges().group_by(Axis.Z)[0], 12)
         t.mat("glas", glocke)
         t.mat("blank", Pos(x, FILTER_Y, zg - 97) * Cylinder(14, 14, align=(Align.CENTER, Align.CENTER, Align.MIN)))
         # Spannbuegel
-        for dy in (-35, 35):
+        for dy in (-30, 30):
             t.mat("blank", stab((x, FILTER_Y + dy, zg), (x, FILTER_Y + dy, zg - 92), 3.5))
-        t.mat("blank", stab((x, FILTER_Y - 35, zg - 92), (x, FILTER_Y + 35, zg - 92), 4))
+        t.mat("blank", stab((x, FILTER_Y - 30, zg - 92), (x, FILTER_Y + 30, zg - 92), 4))
         t.mat("blank", sechskant((x, FILTER_Y, zg - 97), (0, 0, -1), 16, 8))
     # Kraftstoffleitungen: Vorreiniger -> Foerderpumpe -> Filter -> Pumpe (aussen bei y ~ -300)
     y0 = Y_ESP - 36
     xf = ESP_X0 + FP_DX
-    xs = xf - 18                                                      # Steigleitung vor der Handpumpe
+    xs = fx0 - 12                                                     # Steigleitung vor dem Filter
     t.mat("blank", rohr_glatt([(xf + 20, y0 - 26, 690), (xs, -308, 700), (xs, -308, FILTER_Z),
                                (fx0 + 4, -308, FILTER_Z)], 4, 14))
     # Filter -> Pumpe: zwischen den Glocken senkrecht nach unten (verdeckt den Seitendeckel nicht)
-    t.mat("blank", rohr_glatt([(fm, -252, zk0 + 2), (fm, -252, 800), (ESP_X1 - 15, -252, 772),
+    t.mat("blank", rohr_glatt([(fm, -252, zk0 + 2), (fm, -252, 820), (ESP_X1 - 15, -252, 790),
                                (ESP_X1 - 15, -252, ESP_Z1 - 3)], 4, 14))
     t.mat("blank", sechskant((fm, -252, zk0), (0, 0, -1), 16, 8))
     t.mat("blank", sechskant((fx0, -308, FILTER_Z), (-1, 0, 0), 16, 8))
@@ -430,7 +495,7 @@ def _lichtmaschine(t):
     for x in (420, 600):
         t.append(box(x, x + 28, 185, y - 10, z - 72, z - 50))
         t.append(box(x, x + 28, y - 30, y + 10, z - 70, z - 40))
-    t.append(box(386, 398, 60, y - 40, 905, 925))
+    t.append(box(386, 398, 60, y - 40, z + 5, z + 25))
 
 
 def _kuehler(t):
@@ -468,10 +533,10 @@ def _kuehler(t):
         # Stehbolzen der Wasserkastenverschraubung
         t.mat("schwarz", schraubenreihe((K_X0, s * 260, K_NETZ_Z1 + 10), (K_X0, s * 260, K_Z1 - 30), 2, (-1, 0, 0), 16, 6))
     # Schlaeuche mit Schellen
-    oben = [(K_X1 + 14, 0, 1240), (368, 0, 1222), (386, 0, 1150), (392, 0, 1135)]
+    oben = [(K_X1 + 14, 0, 1240), (362, 0, 1222), (378, 0, 1130), (388, 0, Z_KOPF1 + 60), (392, 0, Z_KOPF1 + 24)]
     t.mat("gummi", rohr_glatt(oben, 27, 45))
     _gummi_schelle(t, (K_X1 + 18, 0, 1240), (1, 0, 0), 27)
-    _gummi_schelle(t, (388, 0, 1143), (0.2, 0, -1), 27, schloss=(0, 1, 0))
+    _gummi_schelle(t, (390, 0, Z_KOPF1 + 40), (0.1, 0, -1), 27, schloss=(0, 1, 0))
     unten = [(K_X1 + 14, -300, 552), (395, -300, 560), (412, -300, 760), (440, -232, 800)]
     t.mat("gummi", rohr_glatt(unten, 25, 50))
     _gummi_schelle(t, (K_X1 + 20, -300, 552), (1, 0, 0), 25)
@@ -590,7 +655,7 @@ def auspuff():
 def _auspuff(t):
     ax, ay = AUSPUFF_XY
     r_rohr = AUSPUFF_D / 2 - 5                         # 5 mm Luft im Haubendurchbruch
-    yk, zk, rk = 255.0, 1055.0, 40.0                                   # Sammelrohr
+    yk, zk, rk = 255.0, Z_KOPF1 - 25.0, 40.0                         # Sammelrohr (am abgesenkten Kopf)
     # Sammelrohr mit runden Enden, 4 Stutzen mit Flanschen
     t.append(stab((ZYL_X[0] - 40, yk, zk), (ZYL_X[-1] + 40, yk, zk), rk))
     for x in (ZYL_X[0] - 40, ZYL_X[-1] + 40):

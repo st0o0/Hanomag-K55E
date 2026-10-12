@@ -254,7 +254,8 @@ function waehle(id) {
       </tbody>
     </table>
     <div class="seg">
-      ${teil.druck ? `<a class="btn" href="${state.basis + teil.druck}" download>Druckdatei · ${fmt(teil.druck_mb)} MB</a>` : ""}
+      ${teil.druck ? `<a class="btn" href="${state.basis + teil.druck}" download>Druckdatei · ${fmt(teil.druck_mb)} MB</a>
+        <button type="button" class="btn leise" data-a="druck">Druckansicht</button>` : ""}
       <button type="button" class="btn leise" data-a="nur">Nur dieses zeigen</button>
       <button type="button" class="btn leise" data-a="alle">Alle zeigen</button>
       <button type="button" class="btn leise" data-a="weg">Ausblenden</button>
@@ -263,6 +264,7 @@ function waehle(id) {
   panel.querySelector('[data-a="nur"]').onclick = () => state.teile.forEach((_, k) => zeige(k, k === id));
   panel.querySelector('[data-a="alle"]').onclick = () => state.teile.forEach((_, k) => zeige(k, true));
   panel.querySelector('[data-a="weg"]').onclick = () => { zeige(id, false); waehle(null); };
+  const dk = panel.querySelector('[data-a="druck"]'); if (dk) dk.onclick = () => druckAn(true, id);
   zeigeTab("teile");
 }
 
@@ -274,7 +276,9 @@ function baueDateien() {
     const li = document.createElement("li");
     const n = t.druck_koerper, bett = t.druck_bett_mm;
     li.innerHTML = `<a href="${state.basis + t.druck}" download>${t.name}</a><span>${fmt(t.druck_mb)} MB</span>
-      ${n ? `<small>${n === 1 ? "1 Druckteil" : `${n} Druckteile`}${bett ? ` · Bett ${bett.map((v) => fmt(v, 0)).join(" × ")} mm` : ""}</small>` : ""}`;
+      ${n ? `<small>${n === 1 ? "1 Druckteil" : `${n} Druckteile`}${bett ? ` · Bett ${bett.map((v) => fmt(v, 0)).join(" × ")} mm` : ""}</small>` : ""}
+      <button type="button" class="link ansehen">Ansehen</button>`;
+    li.querySelector(".ansehen").addEventListener("click", () => druckAn(true, t.id));
     ul.appendChild(li);
   });
   $("#step-zeile").innerHTML = state.info.step
@@ -712,7 +716,7 @@ function labelZiehen(ev, z) {
 let down = null;
 renderer.domElement.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clientY }; });
 renderer.domElement.addEventListener("pointermove", (e) => {
-  if (!state.info) return;
+  if (!state.info || druck.an) return;
   const z = state.ziehen;
   if (z?.art === "punkt") {
     const hit = treffer(e);
@@ -743,7 +747,7 @@ renderer.domElement.addEventListener("pointerup", (e) => {
     messListe(); waehleMessung(z.m); speichern();
     return;
   }
-  if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 5 || !state.info) return;
+  if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 5 || !state.info || druck.an) return;
   const hit = treffer(e);
   if (state.messen) {
     if (hit) punktSetzen(messPunkt(e, hit));
@@ -761,7 +765,9 @@ window.addEventListener("keydown", (e) => {
     else if (state.messen) setzeNeuTyp(typ);
     return;
   }
-  if (e.key === "m" || e.key === "M") messenAn(!state.messen);
+  if (e.key === "d" || e.key === "D") druckAn(!druck.an);
+  else if (druck.an) { if (e.key === "Escape") druckAn(false); }
+  else if (e.key === "m" || e.key === "M") messenAn(!state.messen);
   else if (e.key === "s" || e.key === "S") schnittAn(!state.schnitt);
   else if (e.key === "Escape") {
     if (state.ziehen?.art === "punkt") { const z = state.ziehen; z.m[z.k] = z.alt; state.ziehen = null; controls.enabled = true; stage.classList.remove("zieht"); messListe(); }
@@ -771,6 +777,207 @@ window.addEventListener("keydown", (e) => {
     else waehle(null);
   }
   else if ((e.key === "Delete" || e.key === "Backspace") && state.messungen.length) loeschen(state.messAuswahl || state.messungen.at(-1));
+});
+
+/* ---------------- Druckansicht ----------------
+ * Zeigt die Druckdatei eines Teils so, wie sie aufs Bett kommt: Unterseite auf z = 0, Einzelteile nebeneinander.
+ * Eigene Gruppe im CAD-System (z oben), das Modell ist solange ausgeblendet. Überhänge > 45° werden rot eingefärbt.
+ */
+const BETTEN = { fdm: { x: 220, y: 220 }, gross: { x: 300, y: 300 }, resin: { x: 218, y: 123 } };
+const UEBERHANG_COS = Math.cos(THREE.MathUtils.degToRad(45));
+const druck = {
+  an: false, teil: null, bett: "fdm", ueberhang: true, cache: new Map(), mesh: null, bettObj: null,
+  modellBox: null, rasterWar: true, gruppe: new THREE.Group(), laden: 0,
+};
+druck.gruppe.rotation.x = -Math.PI / 2;
+druck.gruppe.visible = false;
+scene.add(druck.gruppe);
+
+/* Farben je Dreieck: Überhang, wenn die Normale steiler als 45° nach unten zeigt und das Dreieck nicht auf dem Bett liegt */
+function druckFarben(geo) {
+  const pos = geo.getAttribute("position"), n = pos.count;
+  const basis = new THREE.Color(css("--druck")), rot = new THREE.Color(css("--ueberhang"));
+  const farben = new Float32Array(n * 3);
+  const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
+  const ab = new THREE.Vector3(), ac = new THREE.Vector3(), nrm = new THREE.Vector3();
+  let flaecheU = 0, flaeche = 0;
+  for (let i = 0; i + 2 < n; i += 3) {
+    a.fromBufferAttribute(pos, i); b.fromBufferAttribute(pos, i + 1); c.fromBufferAttribute(pos, i + 2);
+    nrm.crossVectors(ab.subVectors(b, a), ac.subVectors(c, a));
+    const f = nrm.length() / 2;
+    if (f > 0) nrm.divideScalar(f * 2);
+    const ueber = nrm.z < -UEBERHANG_COS && Math.min(a.z, b.z, c.z) > 0.2;
+    flaeche += f; if (ueber) flaecheU += f;
+    const col = ueber ? rot : basis;
+    for (let k = 0; k < 3; k++) { farben[(i + k) * 3] = col.r; farben[(i + k) * 3 + 1] = col.g; farben[(i + k) * 3 + 2] = col.b; }
+  }
+  geo.setAttribute("color", new THREE.BufferAttribute(farben, 3));
+  return flaeche ? flaecheU / flaeche : 0;
+}
+
+function druckMaterial() {
+  return new THREE.MeshStandardMaterial({
+    color: druck.ueberhang ? 0xffffff : new THREE.Color(css("--druck")),
+    vertexColors: druck.ueberhang, roughness: 0.7, metalness: 0.0,
+    emissive: 0x2a2a2a,                               // Unterseiten nicht ganz schwarz
+  });
+}
+
+/* Druckbett: Platte, 10-mm-Raster und Rand, mittig unter dem Belegungsfeld */
+function baueBett(mitte) {
+  if (druck.bettObj) {
+    druck.gruppe.remove(druck.bettObj);
+    druck.bettObj.traverse((o) => { o.geometry?.dispose(); o.material?.dispose(); });
+  }
+  const { x: bx, y: by } = BETTEN[druck.bett];
+  const g = new THREE.Group();
+  const x0 = Math.round(mitte.x - bx / 2), y0 = Math.round(mitte.y - by / 2);
+  // nur von oben sichtbar, damit man von unten die Ueberhaenge sieht
+  const platte = new THREE.Mesh(new THREE.PlaneGeometry(bx, by),
+    new THREE.MeshStandardMaterial({ color: new THREE.Color(css("--bett")), roughness: 0.9 }));
+  platte.position.set(x0 + bx / 2, y0 + by / 2, -0.05);
+  g.add(platte);
+  const pkt = [];
+  for (let x = 0; x <= bx; x += 10) pkt.push(x0 + x, y0, 0, x0 + x, y0 + by, 0);
+  for (let y = 0; y <= by; y += 10) pkt.push(x0, y0 + y, 0, x0 + bx, y0 + y, 0);
+  const lg = new THREE.BufferGeometry();
+  lg.setAttribute("position", new THREE.Float32BufferAttribute(pkt, 3));
+  g.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: new THREE.Color(css("--bett-linie")) })));
+  const rand = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(x0, y0, 0.05), new THREE.Vector3(x0 + bx, y0, 0.05),
+    new THREE.Vector3(x0 + bx, y0 + by, 0.05), new THREE.Vector3(x0, y0 + by, 0.05)]);
+  g.add(new THREE.LineLoop(rand, new THREE.LineBasicMaterial({ color: new THREE.Color(css("--accent")) })));
+  druck.gruppe.add(g);
+  druck.bettObj = g;
+}
+
+async function ladeDruck(id) {
+  if (druck.cache.has(id)) return druck.cache.get(id);
+  const t = state.teile.get(id).teil;
+  const v = state.info.build ? `?v=${state.info.build}` : "";
+  const geo = await new STLLoader().loadAsync(state.basis + t.druck + v);
+  geo.computeVertexNormals();
+  geo.computeBoundingBox();
+  const eintrag = { geo, anteil: druckFarben(geo) };
+  druck.cache.set(id, eintrag);
+  return eintrag;
+}
+
+function passt(m, bett) {
+  const [a, b] = m;
+  return (a <= bett.x && b <= bett.y) || (a <= bett.y && b <= bett.x);
+}
+
+function druckInfo(teil, eintrag) {
+  const bett = BETTEN[druck.bett];
+  const bb = eintrag.geo.boundingBox, feld = [bb.max.x - bb.min.x, bb.max.y - bb.min.y, bb.max.z - bb.min.z];
+  const pr = teil.druck_pruefung || {};
+  const koerper = pr.koerper || [];
+  const zuGross = koerper.filter((k) => !passt(k.masse_mm, bett));
+  const groesst = koerper.reduce((m, k) => (!m || k.volumen_mm3 > m.volumen_mm3 ? k : m), null);
+  const wand = koerper.map((k) => k.wand_min).filter((w) => w != null);
+  const n = teil.druck_koerper || koerper.length || 1;
+  let status, warn = false;
+  if (zuGross.length) {
+    warn = true;
+    status = `${zuGross.length === 1 ? "Ein Druckteil ist" : `${zuGross.length} Druckteile sind`} größer als das Bett. Im Slicer teilen oder ein größeres Bett wählen.`;
+  } else if (passt(feld, bett)) status = n === 1 ? "Passt aufs Bett." : `Alle ${n} Druckteile passen zusammen aufs Bett.`;
+  else status = "Jedes Druckteil passt aufs Bett, alle zusammen nicht: im Slicer auf mehrere Drucke verteilen.";
+  if (pr.dicht === false) { warn = true; status += " Achtung: Datei nicht dicht."; }
+  const hinweise = (pr.hinweise || []).filter((h) => !/^Passung|eingeschlossene|Splitter/.test(h));
+  const passung = (pr.hinweise || []).filter((h) => /^Passung/.test(h)).length;
+  $("#druck-info").innerHTML = `
+    <p class="status${warn ? " warn" : ""}">${status}</p>
+    <dl>
+      <dt>Druckteile</dt><dd>${n}</dd>
+      <dt>Belegt</dt><dd>${feld.slice(0, 2).map((v) => fmt(v, 0)).join(" × ")} mm, Höhe ${fmt(feld[2], 0)} mm</dd>
+      ${groesst ? `<dt>Größtes Teil</dt><dd>${groesst.masse_mm.map((v) => fmt(v, 0)).join(" × ")} mm</dd>` : ""}
+      ${koerper.length ? `<dt>Volumen</dt><dd>${fmt(koerper.reduce((s, k) => s + k.volumen_mm3, 0) / 1000, 1)} cm³</dd>` : ""}
+      ${wand.length ? `<dt>Dünnste Wand</dt><dd>${fmt(Math.min(...wand), 2)} mm (Stichprobe)</dd>` : ""}
+      <dt>Überhang</dt><dd>${fmt(eintrag.anteil * 100, 0)} % der Fläche</dd>
+    </dl>
+    ${hinweise.length ? `<h4>Hinweise</h4><ul>${hinweise.slice(0, 6).map((h) => `<li>${esc(h)}</li>`).join("")}${hinweise.length > 6 ? `<li>… ${hinweise.length - 6} weitere im Prüfbericht</li>` : ""}</ul>` : ""}
+    ${passung ? `<p class="note">Zu ${passung === 1 ? "einem Nachbarteil" : `${passung} Nachbarteilen`} ist das Teil bündig gekürzt, damit beide sauber aneinander liegen.</p>` : ""}
+    <a class="btn" href="${state.basis + teil.druck}" download>Druckdatei · ${fmt(teil.druck_mb)} MB</a>`;
+}
+
+function druckRahmen() {
+  druck.gruppe.updateMatrixWorld(true);
+  state.box.setFromObject(druck.gruppe);
+}
+
+async function zeigeDruck(id) {
+  const teil = state.teile.get(id)?.teil;
+  if (!teil?.druck) return;
+  druck.teil = id;
+  $("#druck-teil").value = id;
+  const nr = ++druck.laden;
+  $("#druck-info").innerHTML = `<p class="note">Lade Druckdatei · ${fmt(teil.druck_mb)} MB …</p>`;
+  let eintrag;
+  try { eintrag = await ladeDruck(id); } catch (err) {
+    console.error(err);
+    $("#druck-info").innerHTML = `<p class="status warn">Druckdatei konnte nicht geladen werden.</p>`;
+    return;
+  }
+  if (nr !== druck.laden || !druck.an) return;
+  if (druck.mesh) { druck.gruppe.remove(druck.mesh); druck.mesh.material.dispose(); }
+  druck.mesh = new THREE.Mesh(eintrag.geo, druckMaterial());
+  druck.gruppe.add(druck.mesh);
+  baueBett(eintrag.geo.boundingBox.getCenter(new THREE.Vector3()));
+  druckRahmen();
+  druckInfo(teil, eintrag);
+  ansicht("iso");
+}
+
+function druckAn(an, id) {
+  if (an === druck.an) { if (an && id) zeigeDruck(id); return; }
+  druck.an = an;
+  $("#t-druck").setAttribute("aria-pressed", String(an));
+  $("#druck-panel").hidden = !an;
+  stage.classList.toggle("druck", an);
+  $("#raster-note").textContent = an ? "Bettraster 10 mm · Maße in Modell-mm"
+    : `Raster 10 mm = ${10 * state.info.massstab} mm Original`;
+  if (an) {
+    if (state.messen) messenAn(false);
+    if (state.schnitt) schnittAn(false);
+    druck.modellBox = state.box.clone();
+    druck.rasterWar = raster ? raster.visible : true;
+    if (raster) raster.visible = false;
+    wurzel.visible = false;
+    druck.gruppe.visible = true;
+    const sel = $("#druck-teil");
+    if (!sel.options.length) state.info.teile.filter((t) => t.druck).forEach((t) => sel.add(new Option(t.name, t.id)));
+    const gewaehlt = state.auswahl && state.teile.get(state.auswahl).teil.druck ? state.auswahl : null;
+    zeigeDruck(id || gewaehlt || druck.teil || sel.options[0].value);
+  } else {
+    druck.laden++;
+    wurzel.visible = true;
+    druck.gruppe.visible = false;
+    if (raster) raster.visible = druck.rasterWar;
+    if (druck.modellBox) state.box.copy(druck.modellBox);
+    ansicht("iso");
+  }
+}
+$("#t-druck").addEventListener("click", () => druckAn(!druck.an));
+$("#druck-teil").addEventListener("change", (e) => zeigeDruck(e.target.value));
+$("#druck-bett").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-bett]"); if (!b) return;
+  druck.bett = b.dataset.bett;
+  document.querySelectorAll("#druck-bett button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  const eintrag = druck.teil && druck.cache.get(druck.teil);
+  if (eintrag && druck.mesh) {
+    baueBett(eintrag.geo.boundingBox.getCenter(new THREE.Vector3()));
+    druckRahmen();
+    druckInfo(state.teile.get(druck.teil).teil, eintrag);
+  }
+});
+$("#druck-ueber").addEventListener("change", (e) => {
+  druck.ueberhang = e.target.checked;
+  if (druck.mesh) { druck.mesh.material.dispose(); druck.mesh.material = druckMaterial(); }
+});
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+  druck.cache.forEach((e) => { e.anteil = druckFarben(e.geo); });
+  if (druck.an && druck.teil) zeigeDruck(druck.teil);
 });
 
 /* ---------------- Schleife ---------------- */

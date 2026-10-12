@@ -20,7 +20,7 @@ Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
     Hydraulikpumpe (planierschild.py, PUMPE), dahinter das Kurbelloch auf Pumpenachse.
     Kuehlerverschluss (rot) sitzt auf der Maskenkappe bei x ~100..180, gehoert also zur Maske.
   - Haube x 210..1080 (dahinter Tank), Dach 1347, 690 breit, zwei Laengssicken auf dem Dach.
-    Seite: schmales vorderes Segment x 210..360 bis z 620 herunter, dann grosser, hinten offener
+    Seite: schmales vorderes Segment x 210..310 bis z 620 herunter, dann grosser, hinten offener
     Motorausschnitt bis zum Haubenende, Oberkante 1125, vorn Bogen R ~220 in die senkrechte
     Vorderkante. Darueber nur das Schriftband: untere Laengssicke (geht vorn in die Bogensicke
     parallel zum Ausschnitt ueber), HANOMAG in normaler Laufweite (Mitte x ~745), obere Laengssicke.
@@ -28,7 +28,7 @@ Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
     "K55E" in einem erhabenen, eingerahmten Feld vorn unten im Segment (PK).
     Kein ovales und kein helles Schild an der Seite (auf keinem Foto).
     Durchbrueche mit Kragen fuer Auspuff (rechts) und Ansaugrohr (links) im Dach.
-  - Scheinwerfer: oben an den Maskenseiten (BS, BV, PK, WC), Mitte x 110, |y| 430, z 1150, D 150;
+  - Scheinwerfer: oben an den Maskenseiten (BS, BV, PK, WC), Mitte x 110, |y| 430, z 1190 (BS massgeblich), D 150;
     Topf mit gewoelbtem Ruecken, Chromring, Glas; Winkelhalter an der Maskenseite unter der Lampe.
 
 Hinweis zur Vernetzung: die Seitenwand ist eine einzige ebene Flaeche. Buchstaben, Schilder und
@@ -93,7 +93,7 @@ H_L = m(HAUBE_X1) - H_X0              # bis x = 1080 (dahinter Tank)
 H_B = m(HAUBE_B)                      # Breite 690
 H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante vorderes Seitensegment (z 620)
 H_R_DACH = m(60)                      # Radius Dachkanten
-SEG_L = m(SEG_X1) - H_X0              # vorderes Seitensegment x 210..360
+SEG_L = m(SEG_X1) - H_X0              # vorderes Seitensegment x 210..310
 BOGEN_OBEN = _z(HAUBE_BAND_Z)         # Oberkante Motorausschnitt (z 1125)
 BOGEN_R = m(220)                      # Eckradius Motorausschnitt vorn oben
 SICKE_Z = _z(1152)                    # untere Laengssicke (geht vorn in die Bogensicke ueber)
@@ -105,10 +105,10 @@ SCHRIFT_X, SCHRIFT_Z = m(745), _z(1212)  # Mitte Schriftzug (zwischen den Sicken
 SCHRIFT_TEILUNG = m(88)                  # Buchstabenteilung (normale Laufweite)
 SCHRIFT_VERSAL = m(55)                   # Versalhoehe
 TYP = "K55E"
-TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(281), _z(700), m(25), m(31)
+TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(260), _z(700), m(20), 2.6   # Versalhoehe 2.6 mm Modell (Strich ~0.7)
 TYP_ABSTAND = 0.6                        # lichter Abstand der Glyphen (Modell-mm, >= 0.5)
-TYP_FELD_B, TYP_FELD_H = m(126), m(60)   # erhabenes Feld (x 218..344, z 670..730), Nieten dort ausgespart
-TYP_RAHMEN = 0.7                         # Rahmenbreite (Modell-mm)
+TYP_FELD_B, TYP_FELD_H = m(90), m(44)    # erhabenes Feld (x 215..305, z 678..722), Nieten dort ausgespart
+TYP_RAHMEN = 0.55                        # Rahmenbreite (Modell-mm)
 TYP_FASE = 0.15                          # kleinere Fase: Strich ~1.0 mm, Deckflaeche >= 0.7 mm
 AUSPUFF = (m(AUSPUFF_XY[0]), m(AUSPUFF_XY[1]), m(70))   # x, y, Durchmesser (motor.py nutzt h.AUSPUFF)
 ANSAUG = (m(ANSAUG_XY[0]), m(ANSAUG_XY[1]), m(90))

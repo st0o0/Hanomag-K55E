@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Modellwerkstatt</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect x=%271%27 y=%271%27 width=%2714%27 height=%2714%27 fill=%27none%27 stroke=%27%23a8262b%27 stroke-width=%272%27/%3E%3Crect x=%275%27 y=%275%27 width=%276%27 height=%276%27 fill=%27%23a8262b%27/%3E%3C/svg%3E">
+<meta property="og:title" content="Hanomag K 55 E · Modellwerkstatt">
+<meta property="og:description" content="Planierraupe Hanomag K 55 E im Maßstab 1:8: ansehen, messen, Druckdateien laden.">
 <meta name="description" content="3D-Modelle im Maßstab ansehen, direkt am Modell messen und Druckdateien laden.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,6 +48,10 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z M4 12h16" /></svg>
           <span>Schnitt</span>
         </button>
+        <button type="button" class="tool" id="t-druck" aria-pressed="false" title="Druckansicht (D)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18 M5 19l2-5h10l2 5 M9 14V8h6v6 M12 3v5"/></svg>
+          <span>Druck</span>
+        </button>
         <button type="button" class="tool" id="t-raster" aria-pressed="true" title="Raster">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
           <span>Raster</span>
@@ -68,6 +75,17 @@
       <input type="range" id="schnitt-pos" min="0" max="1" step="0.001" value="0.5" aria-label="Schnittposition">
       <output id="schnitt-out" class="mono">–</output>
       <button type="button" class="link" id="schnitt-flip">Seite wechseln</button>
+    </div>
+
+    <div class="druckpanel" id="druck-panel" hidden>
+      <label class="druck-wahl"><span>Druckdatei</span><select id="druck-teil"></select></label>
+      <div class="seg" id="druck-bett" role="group" aria-label="Druckbett">
+        <button type="button" data-bett="fdm" aria-pressed="true">Bett 220 × 220</button>
+        <button type="button" data-bett="gross" aria-pressed="false">300 × 300</button>
+        <button type="button" data-bett="resin" aria-pressed="false">Resin 218 × 123</button>
+      </div>
+      <label class="schalter"><input type="checkbox" id="druck-ueber" checked> Überhänge über 45° rot (brauchen Stützen)</label>
+      <div class="druck-info" id="druck-info" aria-live="polite"></div>
     </div>
 
     <div class="hud-bottom">
@@ -128,7 +146,7 @@
     </section>
 
     <section class="panel" id="p-dateien" role="tabpanel" aria-labelledby="tab-dateien" hidden>
-      <p class="lead">Druckdateien im Maßstab, Einheit mm. Jede Datei ist geschlossen und ohne Überschneidungen, die Einzelteile liegen flach nebeneinander auf dem Druckbett. In der App ist das Modell leicht vereinfacht; die Dateien hier sind fein aufgelöst.</p>
+      <p class="lead">Druckdateien im Maßstab, Einheit mm. Jede Datei ist geschlossen und ohne Überschneidungen, die Einzelteile liegen flach nebeneinander auf dem Druckbett. Mit <b>Ansehen</b> öffnet sich die Druckansicht. In der App ist das Modell leicht vereinfacht; die Dateien hier sind fein aufgelöst.</p>
       <ul class="dateien" id="dateien"></ul>
       <p class="note" id="step-zeile"></p>
     </section>
@@ -145,7 +163,8 @@
         <li><b>Zoomen:</b> Mausrad oder zwei Finger auseinander</li>
         <li><b>Teil auswählen:</b> Teil anklicken; Maße und Druckdatei erscheinen oben</li>
         <li><b>Maß bearbeiten:</b> Beschriftung ziehen, Endpunkt einer gewählten Messung ziehen</li>
-        <li><b>Tasten:</b> M Messen · 1–4 Messart · S Schnitt · Esc abbrechen · Entf gewählte Messung löschen</li>
+        <li><b>Druckansicht:</b> zeigt die Druckdatei so, wie sie aufs Bett kommt, mit Bettgröße und Überhängen</li>
+        <li><b>Tasten:</b> M Messen · 1–4 Messart · S Schnitt · D Druckansicht · Esc abbrechen · Entf gewählte Messung löschen</li>
       </ul>
     </section>
 

@@ -1,91 +1,101 @@
-# Hanomag K 55 E – Modell 1:8
+# Hanomag K 55 E – 1:8 Scale Model
 
-Parametrisches CAD-Modell der Planierraupe **Hanomag K 55 E** mit FRISCH-Planiereinrichtung 55 FH2
-im Maßstab 1:8, dazu die **Modellwerkstatt**: eine Web-App zum Ansehen, Messen und Herunterladen der Druckdateien.
+Parametric CAD model of the **Hanomag K 55 E** crawler dozer (built 1950–1956) with the FRISCH 55 FH2 dozer blade
+at 1:8 scale, plus the **Modellwerkstatt** ("model workshop"): a web app to view and measure the model and to download the print files.
 
-**Online:** https://st0o0.github.io/Hanomag-K55E/
+**Live:** https://st0o0.github.io/Hanomag-K55E/
 
-## Web-App (`docs/`)
+The web app and the CAD sources are in German. Dimensions are in mm throughout.
 
-- Modell von allen Seiten ansehen, Teile ein- und ausblenden, auseinanderziehen
-- **Messen:** zwei Punkte antippen, rastet an Ecken ein. Messart direkt oder nur Länge X, Breite Y, Höhe Z (Tasten 1–4).
-  Darstellung wie im CAD mit Hilfslinien, Pfeilen und Maßlinie im Abstand zum Objekt. Beschriftung ziehen verschiebt die Maßlinie,
-  Endpunkte einer gewählten Messung lassen sich auf dem Modell verschieben, Name und Messart sind in der Liste änderbar.
-  Messungen bleiben im Browser gespeichert.
-- **Schnitt** längs, quer oder in der Höhe
-- Teil anklicken: Außenmaße und Druckdatei
-- STL-Download je Teil, STEP des Gesamtmodells
-- **Quellen:** alle Referenzfotos, Prospekte und Daten mit Link und Verwendungszweck (gepflegt in `referenz/quellen.json`, `tools/build.py` übernimmt sie)
+## Web app (`docs/`)
 
-Lokal starten:
+- View the model from all sides, show and hide parts, explode the assembly
+- **Measure:** tap two points; snaps to nearby corners. Measure direct distance or only length X, width Y, height Z (keys 1–4).
+  Dimensions are drawn as in CAD, with extension lines, arrows and a dimension line offset from the object.
+  Drag the label to move the dimension line, drag the end points of a selected measurement along the model, and rename it or change its type in the list.
+  Measurements are stored in the browser.
+- **Section** lengthwise, crosswise or horizontal
+- Click a part: overall dimensions and print file
+- STL download per part, STEP file of the whole model
+- **Print view** (key D): shows a part's print file the way it sits on the build plate. Choose the bed size
+  (220 × 220, 300 × 300, resin 218 × 123); overhangs steeper than 45° are shown in red, together with the notes from the print check
+- **Sources:** all reference photos, brochures and data with links and what they were used for
+  (kept in `referenz/quellen.json`, picked up by `tools/build.py`)
+
+Run locally:
 
 ```sh
 python -m http.server 8765 -d docs
 # http://127.0.0.1:8765
 ```
 
-Auf GitHub Pages: *Settings → Pages → Build and deployment → Deploy from a branch → `main`, Ordner `/docs`*.
+GitHub Pages: the workflow `.github/workflows/pages.yml` publishes `docs/` on every push to `main` that touches it
+(or manually via *Actions → Pages → Run workflow*). One-time setup: *Settings → Pages → Build and deployment → Source: GitHub Actions*.
 
-## Struktur
+## Layout
 
 ```
-cad/            CAD-Quellen (build123d), Maße in Original-mm
-  common.py       Maßstab, Helfer
-  haube.py        Motorhaube, Kühlermaske, Gitter, Scheinwerfer
-  laufwerk.py     Kettenrahmen, Leitrad, Triebrad, Rollen, Ketten
-  rumpf.py        Rahmen, Querblattfeder, Getriebe, Plattform
-  motor.py        Motor D57, Kühler, Auspuff, Luftfilter
-  fahrerstand.py  Tank, Instrumente, Lenkung, Sitz
-  planierschild.py FRISCH 55 FH2
-  modell.py       Register aller Teile (Name, Material, Explosionsrichtung)
+cad/            CAD sources (build123d), dimensions in full-size mm
+  common.py       scale, key dimensions, helpers
+  haube.py        hood, radiator mask, grille, headlights
+  laufwerk.py     track frames, idler, sprocket, rollers, tracks
+  rumpf.py        frame, transverse leaf spring, transmission, platform
+  motor.py        Hanomag D57 engine, radiator, exhaust, air filter
+  fahrerstand.py  fuel tank, instruments, steering, seat
+  planierschild.py FRISCH 55 FH2 dozer blade and hydraulics
+  modell.py       registry of all parts (name, material, explode direction)
 tools/
-  build.py        baut alles -> docs/modelle/hanomag-k55e/
-  render.py       Vorschaubilder -> out/
-docs/           Web-App (GitHub Pages)
-  modelle/index.json           Liste aller Modelle
-  modelle/hanomag-k55e/        modell.json, ansicht/*.stl, druck/*.stl, STEP
-referenz/       Quellen und Maßherleitung
+  build.py        builds everything -> docs/modelle/hanomag-k55e/
+  druck.py        print-ready STL files and print check
+  kollision.py    collision check between parts
+  render.py       preview images -> out/
+docs/           web app (GitHub Pages)
+  modelle/index.json           list of all models
+  modelle/hanomag-k55e/        modell.json, ansicht/*.stl (display), druck/*.stl (print), STEP
+referenz/       sources and how the dimensions were derived
 ```
 
-## Bauen
+## Building
 
 ```sh
 python -m venv .venv
 .venv/Scripts/pip install -r requirements.txt     # Windows
-.venv/Scripts/python tools/build.py                # alles inkl. STEP
-.venv/Scripts/python tools/build.py haube motor    # nur einzelne Teile
-.venv/Scripts/python tools/render.py --vorschau    # Vorschaubilder
+.venv/Scripts/python tools/build.py                # everything, including STEP
+.venv/Scripts/python tools/build.py haube motor    # selected parts only
+.venv/Scripts/python tools/render.py --vorschau    # preview images
 ```
 
-Maße ändern: in der jeweiligen Datei unter `cad/` (Original-mm), dann `tools/build.py`.
+To change a dimension, edit the relevant file in `cad/` (full-size mm), then run `tools/build.py`.
 
-## Weitere Modelle
+## Adding models
 
-Neues Modell als eigenes Paket anlegen, mit einem Build-Skript nach `docs/modelle/<id>/` exportieren
-(`modell.json` wie bei der K 55 E) und in `docs/modelle/index.json` eintragen. Die App zeigt es dann in der Auswahl oben.
+Create a new model as its own package, export it with a build script to `docs/modelle/<id>/`
+(`modell.json` like the K 55 E) and add it to `docs/modelle/index.json`. The app then lists it in the model picker.
 
-## 3D-Druck
+## 3D printing
 
-Die Dateien unter `docs/modelle/hanomag-k55e/druck/` sind druckfertig aufbereitet (`tools/druck.py`, läuft in `tools/build.py` mit):
+The files in `docs/modelle/hanomag-k55e/druck/` are prepared for printing (`tools/druck.py`, run as part of `tools/build.py`):
 
-- alle Einzelsolids eines Teils boolesch vereinigt (manifold3d): geschlossen, mannigfaltig, ohne Selbstüberschneidung
-- eingeschlossene Hohlräume gefüllt, Splitter aus der Vereinigung entfernt
-- in zusammenhängende Druckteile zerlegt, jedes mit der Unterseite auf z = 0, nebeneinander auf dem Bett
-- Prüfbericht `out/druckpruefung.md`: Dichtheit, Wandstärke (Stichprobe), kleinste Teile, Überhänge
+- all solids of a part merged with boolean unions (manifold3d): closed, manifold, no self-intersections
+- where two parts overlap, the smaller piece is trimmed flush so the parts fit together after printing
+- enclosed voids filled, slivers from the union removed
+- split into connected print pieces, each with its underside on z = 0, laid out side by side on the bed
+- check report `out/druckpruefung.md`: watertightness, wall thickness (sampled), smallest pieces, overhangs
 
-Gedacht für Resin oder FDM mit 0,4-mm-Düse und feiner Schichthöhe. Feinste Details sind 0,5 mm (Modell).
-Große Teile (Rumpf, Planierschild) brauchen ein großes Bett oder müssen im Slicer geteilt werden.
+Intended for resin or FDM with a 0.4 mm nozzle and fine layers. The finest details are 0.5 mm at model scale.
+Large parts (frame, dozer blade) need a large bed or have to be split in the slicer.
 
 ```sh
-.venv/Scripts/python.exe tools/druck.py            # nur Druckdateien neu
-.venv/Scripts/python.exe tools/druck.py haube      # einzelnes Teil
+.venv/Scripts/python.exe tools/druck.py            # print files only
+.venv/Scripts/python.exe tools/druck.py haube      # a single part
 ```
 
-## Genauigkeit
+## Accuracy
 
-Maße aus Fotos und Prospekten abgeleitet, ca. ±5 %. Details siehe `referenz/MASSKONZEPT.md` und `referenz/FEHLERLISTE.md`.
-Vor dem Druck die Anschlussmaße am eigenen Modell prüfen.
+Dimensions are derived from photos, brochures and measurements on a real machine, roughly ±5 %.
+See `referenz/MASSKONZEPT.md` for how they were derived. Check the mating dimensions on your own model before printing.
 
-## Lizenz
+## License
 
-Apache License 2.0, siehe `LICENSE`. Die Referenzfotos gehören ihren Urhebern und sind nicht Teil des Repositorys (Links im Quellen-Tab der App).
+Apache License 2.0, see `LICENSE`. The reference photos belong to their owners and are not part of the repository
+(links in the app's Sources tab).

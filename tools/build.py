@@ -76,6 +76,14 @@ def main(argv):
             if e["id"] == db["id"]:
                 e["druck_mb"] = round((DRUCK / f"{db['id']}.stl").stat().st_size / 1e6, 2)
                 e["druck_koerper"], e["druck_bett_mm"] = db["koerper"], db["bett_mm"]
+                # Kurzfassung des Pruefberichts fuer die Druckansicht der App
+                e["druck_pruefung"] = {
+                    "dicht": db["dicht"],
+                    "hinweise": [p for p in db["probleme"] if "repariert" not in p],
+                    "koerper": [{"masse_mm": k["masse_mm"], "volumen_mm3": round(k["volumen_mm3"], 1),
+                                 "wand_min": k.get("wand_min"), "ueberhang": k.get("ueberhang")}
+                                for k in db.get("koerper_liste", [])],
+                }
     if not nur:                                       # veraltete Druckdateien entfernen
         gueltig = {f"{t.id}.stl" for t in TEILE if t.druck}
         for f in DRUCK.glob("*.stl"):

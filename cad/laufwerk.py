@@ -7,8 +7,7 @@ Aufbau je Seite (Fotobefund fz_01m, fz_09m, FL2, BS, Wiking-Modell, Prospekt):
     das Leitrad steht in der Ist-Lage leitrad_x() (Kettenschluss, 6,6 mm hinter X_LEIT).
     Die innere Gabelwange traegt bei x 560 das Joch der Querblattfeder (rumpf.py)
   - Spannfeder in einem geschlossenen Rohrgehaeuse (FL2, fz_01m: dickes Rohr zwischen Leitrad und
-    Stuetzrollenbock), vorn Federteller + Stellmutter auf der Spannstange, hinten Widerlager mit
-    Mutter + Kontermutter; Rohr mit zwei Schellen auf dem Untergurt
+    Stuetzrollenbock), vorn Federteller + Stellmutter auf der Spannstange, hinten Widerlager (Sackloch); Rohr mit zwei Schellen auf dem Untergurt
   - 5 Laufrollen mit Spurkraenzen in Lagerboecken unter dem Untergurt, gleich geteilt
     (Foto BS: Achsdeckel bei x ~830..1740)
   - Stuetzrolle auf einem Bock mit Gabel (Foto BS: im A-Bock-Fenster bei x ~1365)
@@ -82,12 +81,12 @@ GABEL_U0, GABEL_U1 = 125.0, 150.0  # Leitradgabel-Wangen
 GABEL_X0, GABEL_X1 = X_LEIT - 80.0, X_LEIT + 380.0   # 370..830 (Joch der Querfeder bei x 499..621 liegt auf)
 X_RIEGEL = X_LEIT + 375.0        # Stirnriegel-Mitte 825
 # Spannfeder im geschlossenen Rohrgehaeuse (Foto FL2, fz_01m: Rohr ~160 dick, zwischen Leitrad und
-# Stuetzrollenbock, Stange vorn zum Lagerschlitten, hinten Mutter + Kontermutter am Widerlager)
+# Stuetzrollenbock, Stange vorn zum Lagerschlitten, hinten Widerlager an der Kastenstirn)
 FEDER_U, FEDER_Z = 30.0, 425.0   # Achse Rohr/Stange
 R_ROHR = 75.0
 X_ROHR0 = X_LEIT + 460.0         # 910
-X_ROHR1 = X_KASTEN0 - 95.0       # 1175
-X_WL1 = X_ROHR1 + 35.0           # Widerlager X_ROHR1..X_WL1
+X_ROHR1 = X_KASTEN0 - 15.0       # 1255 (Foto fz_01m: Rohr reicht bis knapp vor den Kasten/Stuetzrollenbock)
+X_WL1 = X_ROHR1 + 35.0           # Widerlager X_ROHR1..X_WL1 (ersetzt die Kastenstirn, 1290)
 
 
 def _fil(obj, kanten, r):
@@ -434,6 +433,8 @@ def _rahmen_rechts():
     kasten = box(X_KASTEN0, X_KASTEN1, -KASTEN_B, KASTEN_B, Z0 + GURT_D - 1, Z1)
     kasten = _fil(kasten, kasten.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 25)
     kasten = _fil(kasten, kasten.edges().filter_by(Axis.Z).group_by(Axis.X)[-1], 20)
+    # Stirn des Kastens fuer das Widerlager des verlaengerten Federrohrs freilegen
+    kasten -= box(X_KASTEN0 - 1, X_WL1, -KASTEN_B - 1, KASTEN_B + 1, Z0, Z1 + 1)
     t.append(kasten)
     # Deckel aussen mit Schraubenreihen
     t.append(box(X_KASTEN0 + 60, X_KASTEN1 - 60, KASTEN_B - 1, KASTEN_B + 6, Z0 + 40, Z1 - 30))
@@ -486,7 +487,7 @@ def _rahmen_rechts():
     t.append(rad_x(xj + 52, FEDER_U, FEDER_Z, 22, 24))                       # Stangenkopf (zwischen den Riegeln)
     # --- Spannfeder im geschlossenen Rohrgehaeuse (Feder selbst unsichtbar) ---
     # Stange vom Stangenkopf durch Federteller und Rohr bis hinter das Widerlager
-    x_st1 = X_WL1 + 48
+    x_st1 = X_ROHR1 + 15                                                      # endet im Sackloch des Widerlagers
     t.mat("blank", rad_x((xj + 64 + x_st1) / 2, FEDER_U, FEDER_Z, 20, x_st1 - xj - 64))
     tel = rad_x(X_ROHR0 - 9, FEDER_U, FEDER_Z, 62, 24)                        # vorderer Federteller (sichtbar)
     t.append(_fas(tel, tel.edges(), 4))
@@ -503,14 +504,10 @@ def _rahmen_rechts():
         t.append(box(x - 22, x + 22, FEDER_U - 50, FEDER_U + 50, Z0 + GURT_D - 1, FEDER_Z - 45))
         for su in (-1, 1):
             t.mat("blank", sechskant((x, FEDER_U + su * 62, Z0 + GURT_D - 0.5), (0, 0, 1), 18, 8))
-    # Widerlager (Rohr stuetzt sich vorn dagegen), Stange mit Mutter + Kontermutter dahinter
-    wl = box(X_ROHR1, X_WL1, -KASTEN_B, KASTEN_B, Z0 + GURT_D - 1, FEDER_Z + R_ROHR + 5)         - rad_x((X_ROHR1 + X_WL1) / 2, FEDER_U, FEDER_Z, 22, 60)
+    # Widerlager (Rohr stuetzt sich vorn dagegen, ersetzt die Kastenstirn), Stange endet im Sackloch
+    wl = box(X_ROHR1, X_WL1, -KASTEN_B, KASTEN_B, Z0 + GURT_D - 1, FEDER_Z + R_ROHR + 5)         - rad_x(X_ROHR1 + 10, FEDER_U, FEDER_Z, 22, 22)
     wl = _fil(wl, wl.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 15)
     t.append(wl)
-    t.append(_xz_poly([(X_WL1 - 2, Z0 + GURT_D), (X_KASTEN0 + 3, Z0 + GURT_D), (X_KASTEN0 + 3, Z0 + 70),
-                       (X_WL1 - 2, FEDER_Z + R_ROHR - 10)], KASTEN_B - 15, KASTEN_B - 5))   # Stuetzblech zum Kasten
-    for x0, h in ((X_WL1 + 2, 24), (X_WL1 + 28, 18)):
-        t.mat("blank", Pos(x0, FEDER_U, FEDER_Z) * Rot(0, 90, 0) * extrude(RegularPolygon(34, 6), amount=h))
     # --- Schwinglager hinten um die Triebradnabe (Endantrieb) ---
     arm = box(X_KASTEN1 - 40, X_TRIEB, -195, -60, Z_TRIEB - 60, Z_TRIEB + 60) + rad_y(X_TRIEB, -160, Z_TRIEB, 205, 70)
     arm = arm - rad_y(X_TRIEB, -125, Z_TRIEB, 126, 170)

@@ -33,12 +33,12 @@ HAUBE_X0, HAUBE_X1, HAUBE_B = 210.0, 1080.0, 690.0   # Foto BS: Haube endet ~108
 HAUBE_DACH_Z = 392.0 + 955.0  # 1347
 HAUBE_UNTEN_Z = 620.0         # Unterkante vorderes Haubenseitensegment (auf Hoehe Kettenoberkante)
 HAUBE_BAND_Z = 1125.0         # Oberkante Motorausschnitt = Unterkante Schriftband (Band 1125..Dach)
-SEG_X1 = 360.0                # vorderes Seitensegment x 210..360, dann Bogen R ~220 in die Bandkante
+SEG_X1 = 310.0                # vorderes Seitensegment x 210..310 (Foto BS), dann Bogen R ~220 in die Bandkante
 TANK_X0, TANK_X1, TANK_B = 1085.0, 1455.0, 620.0   # direkt hinter der Haube, Oberkante in der Dachflucht
 TANK_Z0, TANK_Z1 = 1000.0, 1335.0
 Y_SCHUB = 975.0               # Schubbalken-Mitte (aussen an der Kette)
 Z_SCHUB = 400.0
-TRAVERSE_X, TRAVERSE_Z = 2690.0, 1080.0           # Zylinderachse; Traverse sitzt auf dem Kotfluegel-Heck
+TRAVERSE_X, TRAVERSE_Z = 2520.0, 1080.0           # Zylinder-Mittelzapfen (Foto BS: Deckel am Endkasten bei x ~2520), Achshoehe
 ABOCK_SCHEITEL = (1270.0, 1080.0)                 # x, z des A-Bock-Scheitels (Foto BS, senkrecht von der Seite)
 ABOCK_FUESSE = (920.0, 1650.0)                    # vorderer / hinterer Fuss auf dem Schubbalken, fast symmetrisch
 
@@ -46,7 +46,7 @@ ABOCK_FUESSE = (920.0, 1650.0)                    # vorderer / hinterer Fuss auf
 FLANSCH_GLOCKE_X = 1090.0     # Schwungradgehaeuse -> Kupplungsglocke (motor.py endet hier, rumpf.py beginnt hier)
 AUSPUFF_XY = (640.0, 220.0)   # Durchbruch Auspuff im Haubendach
 ANSAUG_XY = (900.0, -220.0)   # Durchbruch Ansaugrohr Luftfilter im Haubendach
-SCHEINWERFER = (110.0, 430.0, 1150.0)             # Lampenmitte x, |y|, z: oben an den Maskenseiten
+SCHEINWERFER = (110.0, 430.0, 1190.0)             # Lampenmitte x, |y|, z: oben an den Maskenseiten
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
 Y_LTG = 380.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
 LENKRAD = (1830.0, 200.0, 1470.0)                 # Lenkradmitte

@@ -24,8 +24,8 @@ Fotobefund (BS = blaue K55 senkrecht von rechts, BV = von vorn, FL, PK):
     "Frisch" auf der Rueckwand; zugleich Oeltank, Einfuellstutzen mit roter Kappe oben
     links, Entluefter). Oben auf dem Quertraeger die Querleitung zwischen den Endkaesten,
     darueber das Querrohr des Schutzbuegels (zwei parallele Rohre).
-    BS zeigt einen runden Deckel auf der Endkasten-Aussenseite bei x ~2520 - der
-    Mittelzapfen bleibt hier aber bei TRAVERSE_X (common.py).
+    BS zeigt den runden Deckel auf der Endkasten-Aussenseite bei x ~2520: dort sitzt der
+    Mittelzapfen des Hubzylinders (TRAVERSE_X in common.py).
   * Schutzbuegel: Rohrbuegel ueber dem Endkasten (BS: Schlaufe x ~2310..2600, Scheitel
     z ~1400) mit Querrohr ueber der Traverse, dazu eine Rohrschlaufe hinten links (PK).
   * Pumpe vor dem Maskensockel auf einer Frontplatte (BV), zwei dicke Rohre um die
@@ -34,20 +34,23 @@ Fotobefund (BS = blaue K55 senkrecht von rechts, BV = von vorn, FL, PK):
     Dann waagerecht nach hinten neben Tank und Konsole vorbei, ueber die Kaesten vor
     dem Sitz und aussen in den vorderen Zylinderkopf (Stangenseite) seiner Seite
     (Museumsfoto 32048589988, BS). Vom Kopf ein Rohr oben am Zylinder entlang in den
-    Endkasten (Kolbenseite, BS). Keine Leitungen auf der Plattform, kein Steuerschieber
+    Endkasten (Kolbenseite, BS). Doppeltwirkend: eine zweite Leitung vom Pumpengehaeuse
+    laeuft aussen neben der ersten (|y| = Y_LTG2) parallel nach hinten, weicht vor dem Zylinder
+    nach aussen aus, taucht (Reduzierstueck auf dickes Rohr -> duenne Leitung) unter die erste
+    ab und laeuft unter dem Zylinder in den Endkasten (Bodenseite). Keine Leitungen auf der Plattform, kein Steuerschieber
     am Sitz: das Steuerventil sitzt auf der Pumpe, Gestaenge an der linken Haubenseite
     unter dem Rohr zum Handhebel an der Armaturenkonsole.
   * Schild glatt (die Bohrungsreihe auf FL gehoert zu einer anderen Maschine).
   * Fuehrungsplatte mit Steckbolzen auf dem Schubbalken kurz hinter dem Leitrad (FL).
 
 Hubkinematik (Arbeitsstellung = Schneide auf dem Boden, Schubbalken waagerecht):
-  Gelenk G = (2250, 400), Scheitel S = (1270, 1080), Zapfen Z = (2690, 1080), Schneide P = (-700, 0).
-  Schild 1120 hoch: Schubbalken dreht um G um 21,7 Grad -> S' = (1591, 1394), |S'Z| = 1143.
-  Arbeitsstellung: |SZ| = 1420.   Schild 200 tief: 3,9 Grad -> S'' = (1226, 1012), |S''Z| = 1466.
-  -> Hub 1466 - 1143 = 323 mm (aus der Arbeitsstellung 277 ein / 46 aus), der Zylinder schwenkt
-  um den Mittelzapfen um +16,0 / -2,7 Grad. Kolbenstange frei von 1394 (Gabelkopf) bis 1740.
+  Gelenk G = (2250, 400), Scheitel S = (1270, 1080), Zapfen Z = (2520, 1080), Schneide P = (-700, 0).
+  Schild 1120 hoch: Schubbalken dreht um G um 21,7 Grad -> S' = (1591, 1394), |S'Z| = 981.
+  Arbeitsstellung: |SZ| = 1250.   Schild 200 tief: 3,9 Grad -> S'' = (1226, 1012), |S''Z| = 1296.
+  -> Hub 1296 - 981 = 315 mm (aus der Arbeitsstellung 269 ein / 46 aus), der Zylinder schwenkt
+  um den Mittelzapfen um +18,7 / -3,0 Grad. Kolbenstange frei von 1394 (Gabelkopf) bis 1740.
   Kopf X_KOPF 1770: eingefahren steht der Gabelkopf (124 lang) bei 1591 + 124 = 1715, also
-  ~10 mm vor dem Abstreifer. Rohrende im Endkasten X_BODEN 2740: bei +16 Grad bleibt der Boden
+  ~10 mm vor dem Abstreifer. Rohrende im Endkasten X_BODEN 2740 (220 hinter dem Zapfen): bei +18,7 Grad senkt sich der Boden um ~75 und bleibt
   in der Rueckwand frei; oben stoesst das Rohr bei vollem Hub gerade an die Kastendecke
   (= mechanischer Endanschlag). Kolbenstangenlaenge ab Auge 570..1180 moeglich (Kolben im Rohr).
 
@@ -60,7 +63,7 @@ from .common import (box, stab, rohr_glatt, balken, rad_x, rad_y, ring_x, ring_y
                      schraube, schraubenreihe, schraubenkreis, kasten_rund, Sammler,
                      Y_SCHUB, Z_SCHUB, DECK_X0, DECK_X1, TRAVERSE_X, TRAVERSE_Z, ABOCK_SCHEITEL,
                      ABOCK_FUESSE, X_TRIEB, X_LEIT, DECK_Z, PUMPE, Y_LTG, HAUBE_X1, HAUBE_B,
-                     HAUBE_BAND_Z, TANK_X1, MASKE_UK, SCHEINWERFER)
+                     HAUBE_BAND_Z, TANK_X1, MASKE_UK, SCHEINWERFER, SEG_X1)
 
 # ---------------- Parameter ----------------
 # Schild
@@ -82,7 +85,7 @@ A_TIEFE, A_BREITE = 70.0, 110.0        # Kastenstrebe: quer (y) x in der Ebene
 # dreieckiger Ausschnitt im Stegblech (BS): Basis ueber dem Schubbalken, Spitze unter dem Scheitel
 AUS_B, AUS_Z0, AUS_Z1 = 290.0, SB_Z1 + 45, SB_Z1 + 265
 # Hubzylinder (Mittelzapfen im Endkasten der Traverse), Rechnung siehe Docstring
-X_ZAPFEN, Z_ZYL = TRAVERSE_X, TRAVERSE_Z
+X_ZAPFEN, Z_ZYL = TRAVERSE_X, TRAVERSE_Z   # Mittelzapfen bei x 2520 (Foto BS)
 R_ZYL, R_STANGE = 65.0, 30.0
 X_KOPF = 1770.0               # Zylinderkopf-Flansch (Vorderseite)
 X_BODEN = 2740.0              # Zylinderboden-Flansch (im Endkasten)
@@ -90,6 +93,7 @@ GABEL_L = 124.0               # Gabelkopf ab Scheitelauge bis Kontermutter
 # Traverse: Endkaesten aussen, Quertraeger (Oeltank) hinten oben
 EK_X0, EK_X1 = 2395.0, 2830.0
 EK_Z0, EK_Z1 = 900.0, 1240.0
+Z_AUSS = 960.0               # Unterkante des Kastenausschnitts (Zylinder + Bodenleitung)
 EK_DY, EK_T = 95.0, 12.0               # halbe Breite (y), Wandstaerke
 EK_YI = Y_SCHUB - EK_DY                # Innenseite Endkasten (880, frei von Werkzeugkasten-Deckel/Scharnier)
 QT_X0, QT_X1 = 2630.0, 2810.0          # Quertraeger = Oeltank, Rueckwand bei QT_X1
@@ -105,6 +109,10 @@ VH_X, VH_Z = PU_X - 10.0, PU_Z + 190.0   # Schieberhebel: x, oberes Ende (Gestae
 PU_PL = 2.4                   # Frontplatte 2,4 mm in den Maskensockel (x = 0) eingesenkt
 # Leitungen
 R_LTG, R_ZYLLTG = 22.0, 11.0
+R_LTG2 = 13.0                 # duenne Bodenleitung am Zylinder (nach dem Reduzierstueck)
+DY_LTG2 = 52.0                # zweite Leitung: Abstand nach aussen (lichter Spalt 8)
+DZ_LTG2 = -52.0              # zweite Leitung vorn/an der Haube so weit unter der ersten (Seitenansicht: zwei Rohre)
+DX_LTG2 = -60.0               # zweite Leitung biegt 60 frueher nach aussen ab (Abstand der Schraegstuecke ~53)
 R_GEST = 6.0                  # Steuergestaenge
 Y_HAUBE = HAUBE_B / 2         # Haubenseite aussen (345)
 LTG_VORN = (0.0, 775.0)       # (x, z) Maskenecke: Beginn des Schraegstuecks (Foto BS)
@@ -418,12 +426,12 @@ def endkasten(t, s):
     k -= kasten_rund(EK_X0 + EK_T, EK_X1 - EK_T, y - EK_DY + EK_T, y + EK_DY - EK_T,
                      EK_Z0 + EK_T, EK_Z1 - EK_T, 6, Axis.Y)
     # Ausschnitt vorn fuer Zylinder und Leitung (nach oben bis zur Decke: Schwenkfreiheit beim Heben)
-    k -= box(EK_X0 - 5, EK_X0 + EK_T + 5, y - R_ZYL - 12, y + R_ZYL + 12, Z_ZYL - R_ZYL - 22, EK_Z1 - EK_T - 2)
+    k -= box(EK_X0 - 5, EK_X0 + EK_T + 5, y - R_ZYL - 12, y + R_ZYL + 12, Z_AUSS, EK_Z1 - EK_T - 2)
     t.append(k)
     # Kantenschutz um den Ausschnitt
-    t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y - R_ZYL - 12, Z_ZYL - R_ZYL - 34, EK_Z1 - 14))
-    t.append(box(EK_X0 - 8, EK_X0 + 2, y + R_ZYL + 12, y + R_ZYL + 24, Z_ZYL - R_ZYL - 34, EK_Z1 - 14))
-    t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y + R_ZYL + 24, Z_ZYL - R_ZYL - 34, Z_ZYL - R_ZYL - 22))
+    t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y - R_ZYL - 12, Z_AUSS - 12, EK_Z1 - 14))
+    t.append(box(EK_X0 - 8, EK_X0 + 2, y + R_ZYL + 12, y + R_ZYL + 24, Z_AUSS - 12, EK_Z1 - 14))
+    t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y + R_ZYL + 24, Z_AUSS - 12, Z_AUSS))
     # Zapfenlager: Deckel aussen mit Schrauben, Nabe innen
     ya = y + s * EK_DY
     t.append(rad_y(X_ZAPFEN, ya + s * 8, Z_ZYL, 58, 19))
@@ -526,17 +534,24 @@ def _z_haube(x):
     return za + (x - xa) * (zb - za) / (xb - xa)
 
 
-def _schelle_haube(t, x, s, r):
+def _schelle_haube(t, x, s, r, dy=0.0):
     """Rohrschelle um die Leitung an der Maske/Haubenseite mit Lasche zur Wand.
-    Hinter dem Seitensegment (x > 360) ist die Haube unten offen: dort haengt die Schelle am Schriftband."""
+    Hinter dem Seitensegment (x > SEG_X1) ist die Haube unten offen: dort haengt die Schelle am Schriftband.
+    dy > 0: zweite Leitung weiter aussen; ihre Schelle haengt per Bruecke an der Schelle der ersten."""
     (xa, za), (xb, zb) = LTG_VORN, LTG_HINTEN
     d = (xb - xa, 0, zb - za)
     z = _z_haube(x)
-    y = s * Y_LTG
+    y = s * (Y_LTG + dy)
+    if dy:
+        z += DZ_LTG2
     t.append(ring_dir((x, y, z), d, r + 8, r - 0.5, 26))
+    if dy:
+        ya, yb = sorted((s * (Y_LTG + r + 2), s * (Y_LTG + dy - r + 2)))
+        t.append(box(x - 13, x + 13, ya, yb, z - 14, z - DZ_LTG2 + 14))
+        return
     yw = 355.0 if x < 210 else Y_HAUBE                       # Maskenseite / Haubenseite aussen
     ya, yb = sorted((s * (yw - 2.4), s * (Y_LTG - r + 4)))
-    if x < 360:
+    if x < SEG_X1:
         t.append(box(x - 15, x + 15, ya, yb, z - 16, z + 16))
         t.mat("schwarz", sechskant((x, s * (Y_LTG - r + 4), z), (0, s, 0), 12, 5))
     else:
@@ -559,6 +574,29 @@ def leitungen(t):
         t.append(rohr_glatt(pts, R_LTG, 70))
         for x in (100.0, 290.0, 980.0):
             _schelle_haube(t, x, s, R_LTG)
+            _schelle_haube(t, x, s, R_LTG, DY_LTG2)
+        # zweite Leitung (Bodenseite): Pumpengehaeuse -> aussen parallel -> unter dem Zylinder in den Endkasten
+        y2 = Y_LTG + DY_LTG2
+        xe = X_LTG_AUS + DX_LTG2                 # Beginn des Schraegstuecks nach aussen (zur ersten versetzt)
+        yb_ = 893.0                                              # y am Ende des Schraegstuecks: ausserhalb von Batterie-/Werkzeugkasten (|y| <= 870)
+        xb_ = xe + (yb_ - y2) / (418.0 / 215.0)                  # Schraegstueck mit gleicher Steigung wie die erste
+        xr = xb_ + 20                                            # Reduzierstueck auf die duenne Leitung
+        dz = DZ_LTG2
+        pts2 = [(PU_X, s * 84, PU_Z), (PU_X, s * 350, PU_Z), (PU_X, s * y2, PU_Z + 82), (PU_X, s * y2, PU_Z + 150),
+                (LTG_VORN[0], s * y2, LTG_VORN[1] + dz), (LTG_HINTEN[0], s * y2, LTG_HINTEN[1] + dz),
+                (LTG_HINTEN[0] + 120, s * y2, Z_LTG + dz), (1330.0, s * y2, Z_LTG + dz), (1425.0, s * y2, Z_LTG),
+                (xe, s * y2, Z_LTG), (xb_, s * yb_, Z_LTG), (xr, s * yb_, Z_LTG)]
+        t.append(rohr_glatt(pts2, R_LTG, 70))
+        t.append(rad_y(PU_X, s * 76, PU_Z, R_LTG + 14, 16))                      # Anschlussflansch am Pumpengehaeuse
+        t += [sechskant((PU_X + dx, s * 84, PU_Z), (0, s, 0), 12, 6) for dx in (-R_LTG - 7, R_LTG + 7)]
+        t.append(rad_x(xr + 6, s * yb_, Z_LTG, R_LTG + 4, 12))                     # Reduzierstueck
+        yz = Y_SCHUB - 45                                                        # unter dem Zylinder, innen
+        z2 = Z_AUSS + 25.0                                                       # Achse der Bodenleitung (frei von Kopf und Zylinderrohr, im Kastenausschnitt)
+        pts3 = [(xr + 6, s * yb_, Z_LTG), (xr + 50, s * yb_, z2), (X_KOPF + 90, s * yb_, z2),
+                (X_KOPF + 130, s * yz, z2), (EK_X0 + 45, s * yz, z2)]
+        t.append(rohr_glatt(pts3, R_LTG2, 40))
+        for x in (2050.0, 2300.0):                                                # Schellen am Zylinderrohr
+            t.append(box(x - 10, x + 10, *sorted((s * (yz - 8), s * (yz + 8))), z2, 1038.0))
         # Anschlussblock am Zylinderkopf (innen), eingesenkt ins Kopfstueck
         ya, yb = sorted((s * (yk - 6), s * (Y_SCHUB - R_ZYL + 6)))
         t.append(box(xk - 22, xk + 22, ya, yb, Z_LTG - 24, Z_LTG + 24))
@@ -594,11 +632,11 @@ def gestaenge(t):
     t.mat("blank", Pos(VH_X, -76, VH_Z - 10) * Sphere(R_GEST + 4))               # Kugelgelenk vorn
     (xa, za), (xb, zb) = LTG_VORN, LTG_HINTEN
     d = (xb - xa, 0, zb - za)
-    for x in (130.0, 320.0, 1010.0):
+    for x in (130.0, 295.0, 1010.0):
         z = _z_haube(x) - dz
         yw = 355.0 if x < 210 else Y_HAUBE
         t.append(ring_dir((x, y, z), d, R_GEST + 7, R_GEST + 1, 20))
-        if x < 360:
+        if x < SEG_X1:
             t.append(box(x - 12, x + 12, -(yw - 2.4), y + R_GEST + 3, z - 12, z + 12))
         else:   # unter dem Schriftband haengend
             t.append(box(x - 12, x + 12, -(yw - 2.4), -(yw + 12), z, HAUBE_BAND_Z + 45))
