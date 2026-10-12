@@ -61,7 +61,7 @@ Block x = 400 … 1030, y = ±190, Zylinderkopf bis z ≈ 1110, Ventildeckel bis
 Kühler x = 225 … 335, y = ±320, z = 480 … 1290 (innerhalb der Maske), Einfüllrohr nach vorn zum Verschluss
 auf der Maskenkappe (x = 140). Kurbelwelle z = 600.
 Schwungradgehäuse x = 1030 … 1090, r 300 um z = 640, oben bei 950 beschnitten (unter dem Tank). Alles muss **innerhalb der Haube** bleiben: Haubenwand innen y = ±(345−13).
-Sichtbar durch den Motorausschnitt: Einspritzpumpe mit Förderpumpe, Kraftstofffilter mit Glasglocke (links), Düsenhalter mit Druckleitungen,
+Sichtbar durch den Motorausschnitt: Einspritzpumpe mit Förderpumpe, zwei Kraftstofffilter mit Glasbirnen (links), Düsenhalter mit Druckleitungen,
 Kastendeckel „HANOMAG DIESEL“, Lichtmaschine, Ölbad-Luftfilter.
 
 Kastendeckel „HANOMAG DIESEL“ links (Nutzerfotos DSC04644–49, DSC04742, DSC04735/36; cad/motor.py `_seitendeckel`). Auf den Fotos ist es ein Gussgehäuse mit Deckel am hinteren Block, ohne sichtbare Pumpenanbauten außer Hebeln:
@@ -76,8 +76,11 @@ Kastendeckel „HANOMAG DIESEL“ links (Nutzerfotos DSC04644–49, DSC04742, DS
 
 Nicht umgesetzt: eingegossene Motornummer „503801“ unter dem Kasten (Strich < 0,5 mm im Druck). Der Motorraum ist sonst auf dem Stand vor Commit 9f865b6 (Einspritzleitungen, Düsenhalter, Bosch-Pumpe, Filter).
 
-Auspuff: Durchbruch in der Haube bei x = 640, y = +220, Ø 70 (AUSPUFF_XY, Foto BS); Rohr senkrecht bis z ≈ 2000, Regenklappe.
-Ansaug/Luftfilter: Durchbruch bei x = 900, y = −220, Ø 90 (ANSAUG_XY); Ölbadfilter Ø 198 bis z ≈ 1850.
+Motor-Fotoreview 2026-10 (Fotos DSC04729–44; Einspritzpumpe, Kasten HANOMAG DIESEL, Druckleitungen, Düsenhalter, Förderpumpe unverändert):
+- Auspuff: Durchbruch bei x = 700, y = +220, Ø 58 (AUSPUFF_XY/AUSPUFF_D); offenes glattes Rohr Ø 48 bis z 1985 (keine Regenklappe/Schelle); Sammelrohr Ø 72 auf z 1064 (über der Lichtmaschine).
+- Ansaugung: Ölbadtopf Ø 184, z 1054 … 1244 UNTER der Haube (x 950, y −236; Spannring + 2 Bügelverschlüsse, grau), Rohr Ø 66 durch das Dach (ANSAUG_XY/ANSAUG_D, Durchbruch Ø 76), Kragen (2 Ringe, z 1478 … 1540), Trichter Ø 125, Pilzhut Ø 236 bis z 1840 (DSC04743/44: Hut 3,6 × Rohr), Leuchte mit Glasdom Ø 80 / 85 hoch 90 vor der Rohrachse (DSC04729).
+- Kraftstofffilter: zwei getrennte Glasbirnen Ø 100 bei x 525 / 756, y −270, Mitte z 1095, Köpfe z 1138 … 1168, Konsolen auf dem Zylinderkopf. Gusszylinder links Ø 90, z 838 … 1000 bei x 416, y −262 mit Flansch und Gestänge (z 905); Ölschild 120 × 28 an der Kopfwand z 999 … 1027.
+- Rechts: Anlasser tuerkis Ø 115, Achse y 272, z 830, x 813 … 1030 (rotes Antriebsteil, grauer Magnetschalter, Panzerkabel Ø 32); Ölfilter Kanister Ø 55 × 130, 32° nach vorn, auf 4-Schrauben-Platte x 720, z 840; Lichtmaschine 190 lang, Mitte z 960; roter Handlochdeckel 220 × 94 (x 780 … 1000, z 922 … 1016, 10 Schrauben); Rohr Ø 10 (z 905) mit T-Stück bei x 1000, Schlauch und Hahn; Öldruckleitung entfernt.
 
 ## Haube & Maske (haube.py, Modellsystem 1:8)
 
@@ -87,7 +90,8 @@ Ansaug/Luftfilter: Durchbruch bei x = 900, y = −220, Ø 90 (ANSAUG_XY); Ölbad
 | Haube | x = 210 … 1080 (Foto BS), 690 breit, Dach quer gewölbt wie die Maske (gleicher Kreisbogen, Pfeilhöhe 42, Mitte z 1347, Ecken R 85; Längsrichtung eben) mit zwei Längssicken bei y = ±150; Schriftzug z 1187 zwischen den Sicken bei z 1145 und 1228 (Seitenwand eben bis ≈ 1236) |
 | Motorausschnitt | vorderes Seitensegment x = 210 … 310 (SEG_X1, Foto BS) bis z = 620 herunter, dann Ausschnitt bis hinten offen, Oberkante z = 1125, Bogen R 280 (weich auslaufend, Foto DSC04742), gebordelter Rand folgt Bogen und läuft unter dem Schriftband waagerecht nach hinten; darüber nur das Schriftband |
 | Schriftzug HANOMAG | Mitte x = 745, z = 1212, Teilung 88, Versalhöhe 55, zwischen den Sicken bei z = 1152 und 1272 |
-| Typfeld K55E | erhaben eingerahmt, x = 215 … 305, z = 678 … 722; Schrift Versalhöhe ≈ 21 mm (2,6 mm im Modell), Strich ≈ 0,7 mm |
+| Typfeld „K55“ | erhaben eingerahmt, x = 214 … 286, z = 910 … 950 (Mitte z 930; Foto: „K55“ ohne E, Segment nur 100 breit); Schrift Versalhöhe 26 mm (3,2 mm im Modell; Foto ~40) |
+| Fensterblech | Kantenblech am Unterrand beider Motorfenster, x 305 … 1080, y 332 … 345 (bündig), z 737 … 772, Oberkante mit schräger Lippe bis 780 |
 | Scheinwerfer | oben an den Maskenseiten, Mitte x = 110, y = ±430, z = 1190 (SCHEINWERFER; Foto BS, senkrecht und kalibriert, ist maßgeblich), Ø 150, Winkelhalter an der Maskenseite |
 | Grill | schmaler Mittelsteg (70 breit, Randwulste, flacher Kanal) über die ganze Höhe vor 3 flachen Querbändern (je 40 hoch, zwei Wülste; mit oberem Querband 46 und Abschlusswulst 48 vier gleiche Felder, Teilung ≈ 150) vor feinem Drahtgitter (Teilung 1,8 / Draht 0,6 Modell-mm); keine Eckzwickel, kein Rollwulst um das Fenster (Foto) |
 

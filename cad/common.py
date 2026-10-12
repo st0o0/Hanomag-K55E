@@ -44,8 +44,10 @@ ABOCK_FUESSE = (920.0, 1650.0)                    # vorderer / hinterer Fuss auf
 
 # Motor / Anbauten (Foto BS, BV)
 FLANSCH_GLOCKE_X = 1090.0     # Schwungradgehaeuse -> Kupplungsglocke (motor.py endet hier, rumpf.py beginnt hier)
-AUSPUFF_XY = (640.0, 220.0)   # Durchbruch Auspuff im Haubendach
-ANSAUG_XY = (900.0, -220.0)   # Durchbruch Ansaugrohr Luftfilter im Haubendach
+AUSPUFF_XY = (700.0, 220.0)   # Durchbruch Auspuff im Haubendach (Fotos DSC04729/30/42: x ~ 700)
+AUSPUFF_D = 58.0              # Durchbruch Auspuff (Rohr Ø 48, 5 mm Luft rundum)
+ANSAUG_XY = (950.0, -236.0)   # Durchbruch Ansaugrohr (Ölbadtopf darunter im Motorraum, Fotos DSC04742/43/44)
+ANSAUG_D = 76.0               # Durchbruch Ansaugrohr (Rohr Ø 66)
 SCHEINWERFER = (110.0, 430.0, 1190.0)             # Lampenmitte x, |y|, z: oben an den Maskenseiten
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
 Y_LTG = 392.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)

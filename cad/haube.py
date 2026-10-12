@@ -40,7 +40,7 @@ Geraden bzw. Kreise sind.
 import math
 from build123d import *
 from .common import (m, sechskant, rohr_glatt, MASKE_UNTEN, MASKE_UK, HAUBE_X0, HAUBE_X1, HAUBE_B,
-                     HAUBE_DACH_Z, HAUBE_UNTEN_Z, HAUBE_BAND_Z, SEG_X1, AUSPUFF_XY, ANSAUG_XY,
+                     HAUBE_DACH_Z, HAUBE_UNTEN_Z, HAUBE_BAND_Z, SEG_X1, AUSPUFF_XY, ANSAUG_XY, AUSPUFF_D, ANSAUG_D,
                      SCHEINWERFER, PUMPE)
 
 
@@ -137,14 +137,14 @@ SCHRIFT = "HANOMAG"
 SCHRIFT_X, SCHRIFT_Z = m(745), _z(1187)  # Mitte Schriftzug (zwischen den Sicken)
 SCHRIFT_TEILUNG = m(88)                  # Buchstabenteilung (normale Laufweite)
 SCHRIFT_VERSAL = m(55)                   # Versalhoehe
-TYP = "K55E"
-TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(260), _z(700), m(20), 2.6   # Versalhoehe 2.6 mm Modell (Strich ~0.7)
+TYP = "K55"      # Fotos DSC04729/42: Schriftzug "K55" (kein E sichtbar)
+TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(250), _z(930), m(20), 3.2   # Mitte z 930 (Foto DSC04742: z 900..960); Versalhoehe 3.2 mm Modell = 26 Orig.
 TYP_ABSTAND = 0.6                        # lichter Abstand der Glyphen (Modell-mm, >= 0.5)
-TYP_FELD_B, TYP_FELD_H = m(90), m(44)    # erhabenes Feld (x 215..305, z 678..722), Nieten dort ausgespart
+TYP_FELD_B, TYP_FELD_H = m(72), m(40)    # erhabenes Feld (x 214..286, z 910..950): das Segment ist nur 100 breit, rechts liegt die Bogensicke
 TYP_RAHMEN = 0.55                        # Rahmenbreite (Modell-mm)
 TYP_FASE = 0.15                          # kleinere Fase: Strich ~1.0 mm, Deckflaeche >= 0.7 mm
-AUSPUFF = (m(AUSPUFF_XY[0]), m(AUSPUFF_XY[1]), m(70))   # x, y, Durchmesser (motor.py nutzt h.AUSPUFF)
-ANSAUG = (m(ANSAUG_XY[0]), m(ANSAUG_XY[1]), m(90))
+AUSPUFF = (m(AUSPUFF_XY[0]), m(AUSPUFF_XY[1]), m(AUSPUFF_D))   # x, y, Durchmesser (motor.py nutzt h.AUSPUFF)
+ANSAUG = (m(ANSAUG_XY[0]), m(ANSAUG_XY[1]), m(ANSAUG_D))
 
 # ---------------- Scheinwerfer (je Seite, separat drucken) ----------------
 SW_D = m(150)                                # Aussendurchmesser
@@ -643,6 +643,20 @@ def _haubenhalter(side):
     return [lasche, arm, bolzen, oese]
 
 
+def _fensterblech(side):
+    """Kantenblech am Unterrand des Motorfensters (Fotos DSC04729/42): durchgehende Winkelschiene, buendig mit
+    der Haubenaussenkante (y 332..345), sichtbare Hoehe ~40 (z 737..772), Oberkante mit schraeger Aussenlippe
+    (innen z 780 -> aussen z 772). Beginnt bei x 305 (ueberlappt die Segmentkante, sonst schwebt das Blech)
+    und endet am Haubenende x 1080."""
+    yo, yi = H_B / 2, H_B / 2 - WAND
+    z0, z1, z2 = _z(737.0), _z(772.0), _z(780.0)
+    pts = [(side * yi, z0), (side * yo, z0), (side * yo, z1), (side * yi, z2)]
+    with BuildSketch(Plane.YZ) as sk:
+        Polygon(*pts, align=None)
+    x0 = m(305.0)
+    return extrude(Pos(x0, 0, 0) * sk.sketch, amount=H_X0 + H_L - x0)
+
+
 def haube():
     """Motorhaube x 210..1080: Blech 1.6 mm, Dachkantenradius, grosse Motorausschnitte mit
     Bordelrand, Schriftband mit Sicken und HANOMAG, Typfeld K55E, Dachsicken, Nieten,
@@ -667,6 +681,7 @@ def haube():
         teile += buchstaben(plane_side(SCHRIFT_X, SCHRIFT_Z, side), SCHRIFT, SCHRIFT_TEILUNG,
                             SCHRIFT_VERSAL, SCHRIFT_H)
         teile += _typfeld(side)
+        teile.append(_fensterblech(side))
 
     # zwei Laengssicken auf dem Dach (PK), hinter der vorderen Nietreihe bis zur Hinterkante
     for sy in (-1, 1):
