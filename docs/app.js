@@ -12,7 +12,9 @@ const $ = (s) => document.querySelector(s);
 const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmt = (v, d = 1) => v.toLocaleString("de-DE", { minimumFractionDigits: d, maximumFractionDigits: d });
 
-const LACK = { rot: 0xa8262b, orange: 0xd9771f, grau: 0x9aa1a6, gelb: 0xd8ae1f };
+// Lackierungen ab Werk (siehe Info-Hinweis in index.html); Raeder je Lackierung
+const LACK = { gruen: 0x3b5a55, blau: 0x2b4a6b, rot: 0xa72920, grau: 0x9aa1a6, gelb: 0xd8ae1f };
+const RAEDER = { gruen: 0x9b2321, blau: 0x9b2321, rot: 0x9b2321, grau: 0x8a9196 };
 const STANDARD = { farbe: "#a8262b", rauheit: 0.55, metall: 0.15 };
 let PALETTE = {};
 function material(name) {
@@ -183,6 +185,7 @@ $("#farben").addEventListener("click", (e) => {
   const b = e.target.closest("button[data-farbe]"); if (!b) return;
   const c = new THREE.Color(LACK[b.dataset.farbe]);
   faerben(["lack"], c); faerben(["motor"], c, 0.82);
+  faerben(["raeder"], new THREE.Color(RAEDER[b.dataset.farbe]));
   if (anbauWieLack) faerben(["anbau"], c);
   document.querySelectorAll("#farben button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
 });

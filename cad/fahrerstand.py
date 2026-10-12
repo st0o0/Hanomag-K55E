@@ -44,7 +44,7 @@ UB_PLATTE_Z0 = GLOCKE_Z1 + 12   # Unterkante Tankauflage 962 (frei ueber der Glo
 STUETZEN_X = (TANK_X0 + 70, TANK_X1 - 90)   # Stuetzen auf den Laengstraegern
 
 # Armaturenkonsole: Wand direkt hinter dem Tank
-XW0 = TANK_X1 - 3            # Vorderseite (3 mm in die Falzraender des Tanks eingesenkt)
+XW0 = TANK_X1 + 10            # Vorderseite Armaturenwand: frei hinter Tank und Spannbaendern (abnehmbares Haubenteil)
 XK = TANK_X1 + 25            # Rueckseite = Instrumentenflaeche 1480
 KONS_Z0, KONS_Z1 = UB_PLATTE_Z0, 1250.0   # Wand ueber der Glocke; Beine bei |y| >= 300 bis aufs Deck
 KONS_Y = UNTERBAU_Y
@@ -209,8 +209,10 @@ def tank():
     t.mat("blank", box(xh - 14, xh + 14, yh + 14, yh + 36, zh - 14, zh + 14))  # Hahnkoerper
     t.mat("blank", Pos(xh, yh + 25, zh + 14) * Cylinder(5, 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("lack", Pos(xh, yh + 25, zh + 26) * box(-30, 30, -5, 5, 0, 8))   # Knebel
-    t.mat("blank", rohr_glatt([(xh, yh + 25, zh - 8), (xh, yh + 25, UB_PLATTE_Z0 - 12),
-                               (xh, UNTERBAU_Y - 4, UB_PLATTE_Z0 - 12)], 6))
+    # Leitung aussen an der Unterbau-Seitenwand hinab, Anschlussflansch liegt nur an (getrennte Druckteile)
+    yl = UNTERBAU_Y + 7
+    t.mat("blank", rohr_glatt([(xh, yl, zh - 8), (xh, yl, UB_PLATTE_Z0 - 12)], 6))
+    t.mat("blank", box(xh - 10, xh + 10, UNTERBAU_Y, yl + 6, UB_PLATTE_Z0 - 22, UB_PLATTE_Z0 - 2))
     return t
 
 
@@ -220,8 +222,8 @@ def _unterbau(t):
     Seitenwaende bei |y| 308..330, je zwei Stuetzen auf die Laengstraeger."""
     x0, x1 = TANK_X0, XW0
     yi = UNTERBAU_Y - UNTERBAU_S
-    # Tankauflage mit Abkantung, 3 mm in die Tankunterseite eingesenkt
-    t.append(box(x0, x1, -UNTERBAU_Y - 6, UNTERBAU_Y + 6, UB_PLATTE_Z0, TANK_Z0 + 3))
+    # Tankauflage mit Abkantung, Tank liegt nur auf (Haube und Tank sind ein abnehmbares Teil)
+    t.append(box(x0, x1, -UNTERBAU_Y - 6, UNTERBAU_Y + 6, UB_PLATTE_Z0, TANK_Z0))   # Tank liegt nur auf (abnehmbar)
     for s in (-1, 1):
         y0, y1 = sorted((s * yi, s * UNTERBAU_Y))
         t.append(box(x0, x1, y0, y1, UB_Z0, UB_PLATTE_Z0 + 1))

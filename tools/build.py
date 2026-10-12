@@ -38,7 +38,7 @@ def main(argv):
         for f in ANSICHT.glob("*.stl"):
             f.unlink()
 
-    eintraege, alle, druckberichte = [], [], []
+    eintraege, alle, druckliste = [], [], []
     for t in TEILE:
         if nur and t.id not in nur:
             if t.id in alt:
@@ -55,24 +55,32 @@ def main(argv):
             liste.append({"material": mat, "ansicht": datei})
         c = Compound(children=list(schichten.values()))
         alle.append(c)
-        db = None
-        if t.druck:                                    # vereinigt, dicht, flach aufs Bett gelegt
-            db = druck.exportiere(t, c, DRUCK / f"{t.id}.stl")
-            druckberichte.append(db)
+        if t.druck:
+            druckliste.append((t, c))
         bb = c.bounding_box()
         e = {
             "id": t.id, "name": t.name, "gruppe": t.gruppe, "material": t.material,
             "hinweis": t.hinweis, "explode": list(t.explode),
             "schichten": liste,
             "druck": f"druck/{t.id}.stl" if t.druck else None,
-            "druck_mb": round((DRUCK / f"{t.id}.stl").stat().st_size / 1e6, 2) if t.druck else None,
+            "druck_mb": None,
             "masse_mm": [round(bb.size.X, 1), round(bb.size.Y, 1), round(bb.size.Z, 1)],
-            "druck_koerper": db["koerper"] if db else None,
-            "druck_bett_mm": db["bett_mm"] if db else None,
         }
         eintraege.append(e)
         print(f"{t.id:22s} {e['masse_mm']}  {time.time() - t0:5.1f}s")
 
+    # Druckdateien: Passung zwischen den Teilen, vereinigt, dicht, flach aufs Bett gelegt (tools/druck.py)
+    druckberichte = druck.alle_exportieren(druckliste, DRUCK) if druckliste else []
+    for db in druckberichte:
+        for e in eintraege:
+            if e["id"] == db["id"]:
+                e["druck_mb"] = round((DRUCK / f"{db['id']}.stl").stat().st_size / 1e6, 2)
+                e["druck_koerper"], e["druck_bett_mm"] = db["koerper"], db["bett_mm"]
+    if not nur:                                       # veraltete Druckdateien entfernen
+        gueltig = {f"{t.id}.stl" for t in TEILE if t.druck}
+        for f in DRUCK.glob("*.stl"):
+            if f.name not in gueltig:
+                f.unlink()
     if druckberichte:
         (ROOT / "out").mkdir(exist_ok=True)
         druck.bericht_md(druckberichte, ROOT / "out" / "druckpruefung.md")

@@ -522,17 +522,23 @@ def _rahmen_rechts():
     rolle, zr = laufrolle()
     for x in LAUFROLLEN_X:
         for mat, lst in rolle.schichten().items():
-            t.mat(mat, [Pos(x, 0, zr) * s for s in lst])
+            t.mat(_rad_mat(mat), [Pos(x, 0, zr) * s for s in lst])
     # --- Stuetzrolle ---
     zc = _stuetz_z()
     st = stuetzrolle(zc)
     for mat, lst in st.schichten().items():
-        t.mat(mat, [Pos(X_STUETZ, 0, zc) * s for s in lst])
+        t.mat(_rad_mat(mat), [Pos(X_STUETZ, 0, zc) * s for s in lst])
     # --- Leitrad und Triebrad ---
     for rad, (x, z) in ((leitrad(), (xl, Z_LEIT)), (triebrad(), (X_TRIEB, Z_TRIEB))):
         for mat, lst in rad.schichten().items():
-            t.mat(mat, [Pos(x, 0, z) * s for s in lst])
+            t.mat(_rad_mat(mat), [Pos(x, 0, z) * s for s in lst])
     return t
+
+
+def _rad_mat(mat):
+    """Laufraeder (Leitrad, Triebrad, Lauf- und Stuetzrollen) bekommen ein eigenes Material: ab Werk
+    waren die Raeder rot abgesetzt (Hanomag ab 1953: Aufbau gruen bzw. blau, Raeder rot)."""
+    return "raeder" if mat == "lack" else mat
 
 
 def kettenrahmen(seite):

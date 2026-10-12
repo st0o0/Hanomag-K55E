@@ -14,9 +14,12 @@ from .common import zu_modell, MASSSTAB, BODEN_Z_MODELL
 
 # Farbpalette (App und Renderer). Lack, Motor und Anbau sind in der App umschaltbar.
 MATERIALIEN = {
-    "lack":        {"name": "Lack",               "farbe": "#a8262b", "rauheit": 0.55, "metall": 0.15},
-    "motor":       {"name": "Motorlack",          "farbe": "#8a2024", "rauheit": 0.6,  "metall": 0.2},
-    "anbau":       {"name": "Planiereinrichtung", "farbe": "#a8262b", "rauheit": 0.55, "metall": 0.15},
+    # Hanomag ab 1953 (Inland): dunkles Gruen aus 50 % RAL 5010, 40 % RAL 6002, 8 % RAL 7001, 2 % RAL 9010,
+    # Raeder rot (Felgenrot RAL 3002). Weitere Lackierungen (Dunkelblau, Export-Rot) in der App umschaltbar.
+    "lack":        {"name": "Lack (Hanomag-Grün)", "farbe": "#3b5a55", "rauheit": 0.55, "metall": 0.15},
+    "motor":       {"name": "Motorlack",          "farbe": "#304a46", "rauheit": 0.6,  "metall": 0.2},
+    "anbau":       {"name": "Planiereinrichtung", "farbe": "#3b5a55", "rauheit": 0.55, "metall": 0.15},
+    "raeder":      {"name": "Räder (Felgenrot)",  "farbe": "#9b2321", "rauheit": 0.55, "metall": 0.15},
     "stahl":       {"name": "Kettenstahl",        "farbe": "#3b3d3f", "rauheit": 0.5,  "metall": 0.6},
     "blank":       {"name": "Blanker Stahl",      "farbe": "#9ca1a5", "rauheit": 0.3,  "metall": 0.85},
     "chrom":       {"name": "Chrom",              "farbe": "#e1e5e8", "rauheit": 0.12, "metall": 1.0},
@@ -65,10 +68,29 @@ def _sw(seite):
     return _d(**sw)
 
 
+def _haube_tank():
+    """Haube und Tank als ein abnehmbares Teil (Wunsch Modellbau: Zugang zum Innenraum durch Abheben).
+    Verbunden durch eine Stirnwand im Haubenquerschnitt oberhalb des Motorausschnitts, die vorn in die
+    Haubenwaende und hinten in die Tankstirn greift."""
+    from build123d import Box, Pos, fillet, Axis, Align
+    from .common import HAUBE_X1, HAUBE_B, HAUBE_DACH_Z, HAUBE_BAND_Z, TANK_X0
+    teile = zu_modell(fahrerstand.tank())               # {material: Compound} im Modellsystem
+    x0, x1 = HAUBE_X1 - 6.0, TANK_X0 + 7.0               # greift 6 mm in die Haube, 7 mm in die Tankstirn
+    wand = Pos(x0, 0, HAUBE_BAND_Z) * Box(x1 - x0, HAUBE_B - 1.0, HAUBE_DACH_Z - 1.0 - HAUBE_BAND_Z,
+                                          align=(Align.MIN, Align.CENTER, Align.MIN))
+    wand = fillet(wand.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 59.0)
+    stirn = zu_modell([wand])["lack"]
+    lack = [h.haube(), stirn] + list(teile.pop("lack", Compound(children=[])).children)
+    out = _d(lack=lack)
+    out.update(teile)
+    return out
+
+
 TEILE = [
-    Teil("haube", "Motorhaube", "Haube & Maske", "lack", lambda: _d(lack=[h.haube()]), (0, 0, 45),
-         "Dach mit Längssicken, Seitenwände mit großem Motorausschnitt, Schriftband HANOMAG, Typfeld K55E, Nieten. Druck stehend auf der Hinterkante.",
-         druck_rot=(0.0, 90.0, 0.0)),
+    Teil("haube_tank", "Motorhaube mit Tank", "Haube & Maske", "lack", lambda: _haube_tank(), (0, 0, 45),
+         "Ein Teil zum Abnehmen: Haube mit Dachsicken, vordere Seitenteile mit rundem Motorausschnitt, Schriftband "
+         "HANOMAG, Typfeld K55E, Stirnwand hinten und verzinkter Tank mit Spannbändern, Deckel und Kanne. "
+         "Abgenommen ist der Motorraum von oben und von der Seite frei."),
     Teil("kuehlermaske", "Kühlermaske", "Haube & Maske", "lack",
          lambda: _d(lack=[_km()[0]], chrom=h.maske_zier()), (-40, 0, 0),
          "Maske wie R 45: Flügellogo, drei senkrechte Grillstäbe, Kühlerverschluss auf der Kappe, Kurbelloch."),
@@ -93,8 +115,6 @@ TEILE = [
          "36 Bodenplatten 400 mm mit Greifer, Kettenglieder, Bolzen."),
     Teil("kette_rechts", "Kette rechts", "Fahrgestell", "stahl", lambda: zu_modell(laufwerk.kette(1), "stahl"), (0, 75, 0),
          "36 Bodenplatten 400 mm mit Greifer, Kettenglieder, Bolzen."),
-    Teil("tank", "Kraftstofftank", "Fahrerstand", "zink", lambda: zu_modell(fahrerstand.tank()), (0, 0, 35),
-         "Verzinkter, gewölbter Tank mit Spannbändern, Flügelmutter-Deckel, Kanne und Kraftstoffhahn."),
     Teil("fahrerstand", "Fahrerstand", "Fahrerstand", "lack", lambda: zu_modell(fahrerstand.fahrerstand()), (20, 0, 20),
          "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, einteilige Sitzschale auf Blattfeder, Werkzeugkästen, Batteriekasten, Rücklicht."),
     Teil("planierschild", "Planierschild FRISCH 55 FH2", "Planiereinrichtung", "anbau",

@@ -142,9 +142,8 @@ def _drehen(m, rot):
     return m
 
 
-def exportiere(teil, comp, ziel):
-    """Vereinigt alle Solids von `comp`, legt die Koerper aufs Bett, schreibt `ziel` (STL). Gibt Bericht zurueck."""
-    t0 = time.time()
+def manifolds(teil, comp):
+    """Alle Solids eines Teils als manifold3d-Koerper (Modell-mm, Einbaulage) + Hinweise."""
     teile, probleme = [], []
     for i, s in enumerate(comp.solids()):
         m, grund = _manifold_aus_solid(s)
@@ -156,6 +155,77 @@ def exportiere(teil, comp, ziel):
             teile.append(m)
     if not teile:
         raise ValueError(f"{teil.id}: keine druckbaren Solids")
+    return teile, probleme
+
+
+def _bb(m):
+    b = m.bounding_box()
+    return np.array(b[:3]), np.array(b[3:])
+
+
+def passung(eintraege):
+    """Passung zwischen getrennt gedruckten Teilen.
+
+    Im CAD greifen angesetzte Teile 0,3 mm (Modell) in ihr Gegenstueck (keine koplanaren Booleans, sichtbar
+    geschlossene Fuge). Fuer den Druck waere das Uebermass: die Teile passen nicht buendig. Hier wird bei jeder
+    Ueberschneidung zweier Solids aus verschiedenen Teilen das kleinere Solid um das groessere gekuerzt; danach
+    liegen die Flaechen exakt aneinander. eintraege: Liste von dicts mit 'teil', 'mfs' (Liste), 'probleme'."""
+    for e in eintraege:
+        e["bbs"] = [_bb(m) for m in e["mfs"]]
+        lo = np.min([b[0] for b in e["bbs"]], axis=0); hi = np.max([b[1] for b in e["bbs"]], axis=0)
+        e["bb"] = (lo, hi)
+    def schneiden(a, b, tol=0.0):
+        return np.all(a[0] <= b[1] + tol) and np.all(b[0] <= a[1] + tol)
+    for i, A in enumerate(eintraege):
+        for B in eintraege[i + 1:]:
+            if not schneiden(A["bb"], B["bb"]):
+                continue
+            n = 0
+            for ia, ma in enumerate(A["mfs"]):
+                for ib, mb in enumerate(B["mfs"]):
+                    if not schneiden(A["bbs"][ia], B["bbs"][ib]):
+                        continue
+                    if (ma ^ mb).volume() < 1e-4:
+                        continue
+                    if ma.volume() <= mb.volume():
+                        ma = ma - mb
+                        A["mfs"][ia] = ma
+                        A["bbs"][ia] = _bb(ma) if ma.volume() > 0 else A["bbs"][ia]
+                    else:
+                        mb = mb - ma
+                        B["mfs"][ib] = mb
+                        B["bbs"][ib] = _bb(mb) if mb.volume() > 0 else B["bbs"][ib]
+                    n += 1
+            if n:
+                A["probleme"].append(f"Passung zu {B['teil'].id}: {n} Ansatzstellen buendig gekuerzt")
+                B["probleme"].append(f"Passung zu {A['teil'].id}: {n} Ansatzstellen buendig gekuerzt")
+    for e in eintraege:
+        e["mfs"] = [m for m in e["mfs"] if m.volume() > 0]
+
+
+def alle_exportieren(liste, ordner):
+    """liste: [(teil, comp)] -> Passung untereinander, dann je Teil exportieren. Gibt Berichte zurueck."""
+    eintraege = []
+    for teil, comp in liste:
+        mfs, pr = manifolds(teil, comp)
+        eintraege.append({"teil": teil, "mfs": mfs, "probleme": pr})
+    passung(eintraege)
+    berichte = []
+    for e in eintraege:
+        b = exportiere(e["teil"], None, Path(ordner) / f"{e['teil'].id}.stl", mfs=e["mfs"], probleme=e["probleme"])
+        berichte.append(b)
+        print(f"  Druck {b['id']:20s} {b['solids']:5d} Solids -> {b['koerper']:4d} Koerper  dicht={b['dicht']}  "
+              f"{len(b['probleme'])} Hinweise  {b['sekunden']}s")
+    return berichte
+
+
+def exportiere(teil, comp, ziel, mfs=None, probleme=None):
+    """Vereinigt alle Solids (aus `comp` oder fertig als `mfs`), legt die Koerper aufs Bett, schreibt `ziel` (STL)."""
+    t0 = time.time()
+    if mfs is None:
+        teile, probleme = manifolds(teil, comp)
+    else:
+        teile, probleme = mfs, list(probleme or [])
     ges = mf.Manifold.batch_boolean(teile, mf.OpType.Add)
     ges = _drehen(ges, getattr(teil, "druck_rot", (0, 0, 0)))
     koerper, hinweise = _koerper_bereinigen(ges.decompose())
@@ -202,7 +272,7 @@ def exportiere(teil, comp, ziel):
     tm.export(str(ziel))
     lo, hi = tm.bounds
     return {
-        "id": teil.id, "solids": len(comp.solids()), "koerper": len(koerper),
+        "id": teil.id, "solids": len(teile), "koerper": len(koerper),
         "dicht": bool(tm.is_watertight), "bett_mm": [round(float(v), 1) for v in (hi - lo)],
         "volumen_mm3": round(float(tm.volume), 1), "dreiecke": int(len(tm.faces)),
         "probleme": probleme, "koerper_liste": berichte, "sekunden": round(time.time() - t0, 1),
@@ -234,15 +304,11 @@ def main(argv):
     nur = [a for a in argv if not a.startswith("--")]
     ziel = ROOT / "docs" / "modelle" / INFO["id"] / "druck"
     ziel.mkdir(parents=True, exist_ok=True)
-    berichte = []
-    for t in TEILE:
-        if not t.druck or (nur and t.id not in nur):
-            continue
-        c = Compound(children=list(t.bauen().values()))
-        b = exportiere(t, c, ziel / f"{t.id}.stl")
-        berichte.append(b)
-        print(f"{t.id:22s} {b['solids']:5d} Solids -> {b['koerper']:4d} Koerper  dicht={b['dicht']}  "
-              f"Bett {b['bett_mm']}  {len(b['probleme'])} Probleme  {b['sekunden']}s")
+    liste = [(t, Compound(children=list(t.bauen().values()))) for t in TEILE
+             if t.druck and (not nur or t.id in nur)]
+    if nur:
+        print("Hinweis: Passung nur zwischen den angegebenen Teilen; fuer die endgueltigen Dateien alle Teile bauen.")
+    berichte = alle_exportieren(liste, ziel)
     (ROOT / "out").mkdir(exist_ok=True)
     bericht_md(berichte, ROOT / "out" / "druckpruefung.md")
     (ROOT / "out" / "druckpruefung.json").write_text(json.dumps(berichte, ensure_ascii=False, indent=1), encoding="utf-8")

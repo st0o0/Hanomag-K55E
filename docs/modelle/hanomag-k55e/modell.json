@@ -17,20 +17,26 @@
   "genauigkeit": "Maße aus Fotos und Prospekt abgeleitet, ca. ±5 %. Haube und Maske wie K 55.",
   "materialien": {
     "lack": {
-      "name": "Lack",
-      "farbe": "#a8262b",
+      "name": "Lack (Hanomag-Grün)",
+      "farbe": "#3b5a55",
       "rauheit": 0.55,
       "metall": 0.15
     },
     "motor": {
       "name": "Motorlack",
-      "farbe": "#8a2024",
+      "farbe": "#304a46",
       "rauheit": 0.6,
       "metall": 0.2
     },
     "anbau": {
       "name": "Planiereinrichtung",
-      "farbe": "#a8262b",
+      "farbe": "#3b5a55",
+      "rauheit": 0.55,
+      "metall": 0.15
+    },
+    "raeder": {
+      "name": "Räder (Felgenrot)",
+      "farbe": "#9b2321",
       "rauheit": 0.55,
       "metall": 0.15
     },
@@ -111,11 +117,11 @@
   },
   "teile": [
     {
-      "id": "haube",
-      "name": "Motorhaube",
+      "id": "haube_tank",
+      "name": "Motorhaube mit Tank",
       "gruppe": "Haube & Maske",
       "material": "lack",
-      "hinweis": "Dach mit Längssicken, Seitenwände mit großem Motorausschnitt, Schriftband HANOMAG, Typfeld K55E, Nieten. Druck stehend auf der Hinterkante.",
+      "hinweis": "Ein Teil zum Abnehmen: Haube mit Dachsicken, vordere Seitenteile mit rundem Motorausschnitt, Schriftband HANOMAG, Typfeld K55E, Stirnwand hinten und verzinkter Tank mit Spannbändern, Deckel und Kanne. Abgenommen ist der Motorraum von oben und von der Seite frei.",
       "explode": [
         0,
         0,
@@ -124,21 +130,29 @@
       "schichten": [
         {
           "material": "lack",
-          "ansicht": "ansicht/haube__lack.stl"
+          "ansicht": "ansicht/haube_tank__lack.stl"
+        },
+        {
+          "material": "zink",
+          "ansicht": "ansicht/haube_tank__zink.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/haube_tank__blank.stl"
         }
       ],
-      "druck": "druck/haube.stl",
-      "druck_mb": 4.53,
+      "druck": "druck/haube_tank.stl",
+      "druck_mb": 6.79,
       "masse_mm": [
-        108.8,
+        155.6,
         91.2,
-        91.5
+        102.0
       ],
       "druck_koerper": 1,
       "druck_bett_mm": [
-        91.5,
+        155.6,
         91.2,
-        108.8
+        102.0
       ]
     },
     {
@@ -163,7 +177,7 @@
         }
       ],
       "druck": "druck/kuehlermaske.stl",
-      "druck_mb": 1.33,
+      "druck_mb": 1.71,
       "masse_mm": [
         27.7,
         89.7,
@@ -233,7 +247,7 @@
         }
       ],
       "druck": "druck/scheinwerfer_links.stl",
-      "druck_mb": 0.53,
+      "druck_mb": 0.77,
       "masse_mm": [
         10.5,
         19.6,
@@ -242,7 +256,7 @@
       "druck_koerper": 1,
       "druck_bett_mm": [
         10.5,
-        19.5,
+        18.8,
         27.1
       ]
     },
@@ -272,7 +286,7 @@
         }
       ],
       "druck": "druck/scheinwerfer_rechts.stl",
-      "druck_mb": 0.53,
+      "druck_mb": 0.77,
       "masse_mm": [
         10.5,
         19.5,
@@ -281,7 +295,7 @@
       "druck_koerper": 1,
       "druck_bett_mm": [
         10.5,
-        19.5,
+        18.8,
         27.1
       ]
     },
@@ -323,7 +337,7 @@
         }
       ],
       "druck": "druck/motor.stl",
-      "druck_mb": 4.83,
+      "druck_mb": 9.58,
       "masse_mm": [
         122.4,
         82.1,
@@ -374,7 +388,7 @@
         }
       ],
       "druck": "druck/auspuff.stl",
-      "druck_mb": 1.31,
+      "druck_mb": 1.68,
       "masse_mm": [
         78.1,
         77.4,
@@ -413,7 +427,7 @@
         }
       ],
       "druck": "druck/rumpf.stl",
-      "druck_mb": 6.08,
+      "druck_mb": 14.72,
       "masse_mm": [
         359.0,
         226.5,
@@ -445,10 +459,14 @@
         {
           "material": "blank",
           "ansicht": "ansicht/laufwerk_links__blank.stl"
+        },
+        {
+          "material": "raeder",
+          "ansicht": "ansicht/laufwerk_links__raeder.stl"
         }
       ],
       "druck": "druck/laufwerk_links.stl",
-      "druck_mb": 2.17,
+      "druck_mb": 2.52,
       "masse_mm": [
         301.4,
         49.0,
@@ -480,10 +498,14 @@
         {
           "material": "blank",
           "ansicht": "ansicht/laufwerk_rechts__blank.stl"
+        },
+        {
+          "material": "raeder",
+          "ansicht": "ansicht/laufwerk_rechts__raeder.stl"
         }
       ],
       "druck": "druck/laufwerk_rechts.stl",
-      "druck_mb": 2.17,
+      "druck_mb": 2.52,
       "masse_mm": [
         301.4,
         49.0,
@@ -514,7 +536,7 @@
         }
       ],
       "druck": "druck/kette_links.stl",
-      "druck_mb": 2.17,
+      "druck_mb": 3.91,
       "masse_mm": [
         320.8,
         50.0,
@@ -545,7 +567,7 @@
         }
       ],
       "druck": "druck/kette_rechts.stl",
-      "druck_mb": 2.17,
+      "druck_mb": 3.91,
       "masse_mm": [
         320.8,
         50.0,
@@ -556,45 +578,6 @@
         320.8,
         50.0,
         100.0
-      ]
-    },
-    {
-      "id": "tank",
-      "name": "Kraftstofftank",
-      "gruppe": "Fahrerstand",
-      "material": "zink",
-      "hinweis": "Verzinkter, gewölbter Tank mit Spannbändern, Flügelmutter-Deckel, Kanne und Kraftstoffhahn.",
-      "explode": [
-        0,
-        0,
-        35
-      ],
-      "schichten": [
-        {
-          "material": "zink",
-          "ansicht": "ansicht/tank__zink.stl"
-        },
-        {
-          "material": "lack",
-          "ansicht": "ansicht/tank__lack.stl"
-        },
-        {
-          "material": "blank",
-          "ansicht": "ansicht/tank__blank.stl"
-        }
-      ],
-      "druck": "druck/tank.stl",
-      "druck_mb": 2.3,
-      "masse_mm": [
-        46.2,
-        81.2,
-        61.5
-      ],
-      "druck_koerper": 1,
-      "druck_bett_mm": [
-        46.2,
-        81.2,
-        61.5
       ]
     },
     {
@@ -643,16 +626,16 @@
         }
       ],
       "druck": "druck/fahrerstand.stl",
-      "druck_mb": 4.1,
+      "druck_mb": 6.34,
       "masse_mm": [
         226.4,
         221.8,
         141.3
       ],
-      "druck_koerper": 12,
+      "druck_koerper": 13,
       "druck_bett_mm": [
         206.7,
-        140.7,
+        140.8,
         141.3
       ]
     },
@@ -690,7 +673,7 @@
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 6.44,
+      "druck_mb": 9.61,
       "masse_mm": [
         462.6,
         302.0,
@@ -707,7 +690,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-12",
-  "build": "20261012080523",
+  "build": "20261012082732",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [
