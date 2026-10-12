@@ -6,7 +6,8 @@ Fotobefund (eigene Fotos t39/t42/t46 des Nutzers, K 55; dazu fz_05/10/11, fz_01)
     waagerecht auf dem Unterbauflansch (z 1125). Hinten ist die Oberseite laenger als die Unterseite:
     Oberkante bis x ~1545, Unterkante bis 1455, dazwischen schraege Rueckwand, oben mit grossem Radius
     (100) in die Oberseite uebergehend. Unter dem Ueberhang sitzt das Armaturenbrett.
-    Querschnitt fast haubenbreit (680, leicht bombierte Oberseite), Seiten senkrecht, obere Laengskanten R 115, Unterseite flach.
+    Querschnitt fast haubenbreit (680): Dachbogen und Kantenradius (R 70) werden aus haube.py uebernommen
+    (Tank setzt den Haubenquerschnitt buendig fort), Seiten senkrecht, Unterseite flach.
     Stirn mit umlaufender gerollter Falz/Sicke, hinten unten waagerechte Abkantung mit Schraubenreihe.
     Zwei Spannbaender quer ueber Oberseite und Seiten (bei ~14 % und ~72 % der Laenge), unten mit
     Gewindestangen/Muttern durch Knotenbleche am Auflageflansch des Unterbaus gespannt.
@@ -23,18 +24,17 @@ Fotobefund (eigene Fotos t39/t42/t46 des Nutzers, K 55; dazu fz_05/10/11, fz_01)
   * Schalthebel mit Gummimanschette aus dem Bodenblech, Gruppenhebel,
     Kupplungs- und Bremspedal mit Riffel-Trittflaechen, verschraubte Bodenbleche.
 Prospekt K 55 E (PK, PH = prospekt_heck):
-  * Einteilige tiefe Sitzschale mit hochgezogenem Ruecken (keine getrennte Lehne),
-    Lederpolster in der Schale, auf einem Mittelsockel mit Blattfeder-Arm, Mitte SITZ_X.
+  * Sitz: laut Fotos (DSC04745, c_sl_box) flache, gelochte Blechschale OHNE Ruecken und ohne Polster
+    (Lochbild, umgebordelter Rand), auf Sitztraeger und Blattfeder-Arm im Mittelsockel, Mitte SITZ_X.
   * Werkzeugkaesten auf den Kotfluegeln, Batteriekasten rechts vor dem Sitz.
-Ruecklicht: hinten links an der Rueckwand des schlanken Traversen-Quertraegers
-  (x 2810, y -770, z 1150; Lage mit planierschild.py abgestimmt).
 """
 import math
 from build123d import *
-from .common import (DECK_Z, TANK_X0, TANK_X1, TANK_B, TANK_Z0, TANK_Z1,
+from .common import (MASSSTAB, MASKE_UNTEN, DECK_Z, TANK_X0, TANK_X1, TANK_B, TANK_Z0,
                      LENKRAD, SITZ_X, Y_TRAEGER, TRAEGER_Z1,
                      box, stab, rohr_glatt, rad_x, rad_y, ring_x,
                      schraubenreihe, kasten_rund, sechskant, Sammler)
+from .haube import z_dach as _haube_z_dach, H_R_DACH as _HAUBE_R_DACH
 
 # ---------------- Parameter ----------------
 # Freiraum fuer die Kupplungsglocke des Rumpfs unter Tank und Konsole: |y| < 300, z <= 950
@@ -58,17 +58,23 @@ KONS_Z0, KONS_Z1 = UB_PLATTE_Z0, FL_Z0   # Wand 962..1116 ueber der Glocke; Bein
 KONS_Y = UNTERBAU_Y
 ZT = 1040.0                  # Mitte der Instrumententafel
 
+def _zq(y):
+    """Hoehe des Haubendachs (Original-mm ab Boden) bei Querlage y (Original-mm), aus haube.z_dach (Modell-mm)."""
+    return _haube_z_dach(abs(y) / MASSSTAB) * MASSSTAB + MASKE_UNTEN
+
+
 # Tank in Haubenform (Seitenprofil X-Z, Querschnitt Y-Z)
+TANK_Z1 = _zq(0.0)           # Oberkante Tankmitte = Haubendach (folgt haube.py)
 TANK_XT = 1605.0             # virtuelle Ecke hinten oben; nach der Verrundung reicht die Oberseite bis x ~1535
 R_T_OBEN_H, R_T_OBEN_V = 75.0, 40.0   # Radius hintere / vordere Oberkante (Seitenprofil)
 R_T_UNTEN_H = 30.0           # Radius hintere Unterkante
-R_QUER = 115.0               # Radius der oberen Laengskanten (Querschnitt)
+R_QUER = _HAUBE_R_DACH * MASSSTAB   # Radius der oberen Laengskanten = Kantenradius der Haube (R 70)
 Y_TANK = TANK_B / 2          # Tankseite y = +-325
 X_BAND = (1150.0, 1400.0)    # Spannbaender bei ~14 % und ~72 % der Tanklaenge (hinten auf der ebenen Oberseite)
 BAND_B, BAND_S = 40.0, 8.0   # Breite in x, Blechstaerke
 BAND_ZE = TANK_Z0 + 42.0     # Bandende unten (Lasche)
 Y_ROD = Y_TANK + 10.0        # Gewindestangen aussen neben dem Tank |y| 350 (im Flansch, FL_Y 355)
-BOMB = 13.0                  # Bombierung der Oberseite (quer, Mitte gegen Seiten)
+BOMB = TANK_Z1 - _zq(Y_TANK)   # Bombierung der Oberseite (Pfeilhoehe bis zur Tankseite, aus dem Haubendach)
 X_STUTZEN, Y_STUTZEN = 1275.0, -140.0
 X_KANNE, Y_KANNE = 1275.0, 140.0
 LTG_Y = UNTERBAU_Y + 15      # Kraftstoffleitung aussen an der Unterbau-Wand (|y| 345), laeuft frei durch die Flanschbohrung
@@ -89,15 +95,17 @@ SCHALT = (XK + 320, -100.0)  # Fuss Schalthebel 1800
 GRUPPE = (XK + 300, 60.0)    # Fuss Gruppenhebel 1780
 BODEN_X1 = 2330.0            # Ende Bodenblech (hinter dem Sitzsockel)
 
-# Sitz: einteilige Schale (Ellipsoid, oben schraeg abgeschnitten, Ruecken hochgezogen)
-SITZ_A, SITZ_C = 225.0, 305.0         # Halbachsen aussen: x/y, z
-SITZ_WAND = 12.0
-SITZ_ZB = DECK_Z + 190                # Unterkante Schale (aussen) 1030
-SITZ_LIPPE = 95.0                     # Vorderkante ueber Schalenboden
-SITZ_RUECKEN = SITZ_C + 10            # Rueckenoberkante ueber Schalenboden
-SITZ_MULDE_DX = 150.0                 # tiefster Punkt der Randlinie vor der Sitzmitte
-SITZ_NEIG = 6.0                       # Schale nach hinten geneigt (Grad, um den Boden)
-POLSTER = 28.0                        # Polsterdicke
+# Sitz: flache gelochte Blechschale (Schalensitz ohne Lehne, Fotos DSC04745 / c_sl_box), Randellipse x/y,
+# flach gemuldet (Ausschnitt eines Ellipsoids), umgebordelter Rand, Sitztraeger unter der Mitte, Blattfeder-Arm
+SITZ_A, SITZ_B = 190.0, 215.0        # Halbachsen der Randellipse (Tiefe x 380, Breite y 430)
+SITZ_T = 6.0                          # Blechstaerke
+SITZ_TIEFE = 30.0                     # Mulde: Rand liegt so viel ueber dem Schalenboden
+SITZ_EA, SITZ_EB = 330.0, 370.0       # Halbachsen des Muldenellipsoids x/y
+SITZ_ZB = DECK_Z + 190                # Unterkante Schale in der Mitte 1030
+SITZ_NEIG = 3.0                       # Schale nach hinten geneigt (Grad, um den Boden)
+SITZ_LOCH_D = 26.0                    # Lochdurchmesser
+SITZ_RAND_H = 14.0                    # umgebordelter Rand nach unten
+SITZ_TRAEGER = (-45.0, 50.0, 45.0)    # Sitztraeger-Block unter der Mitte: x von/bis (rel. SITZ_X), halbe Breite y
 SOCKEL_X = SITZ_X + 100               # Mittelsockel hinter dem Getriebedeckel 2250
 SOCKEL_Z1 = 972.0                     # Oberkante Sockel (Federeinspannung)
 
@@ -109,9 +117,6 @@ BAT = (1620.0, 1890.0, 585.0, 860.0)  # Batteriekasten rechts / Werkzeugkasten l
 BAT_Z1 = DECK_Z + 170
 GETR_DECKEL = (1960.0, 2180.0, 170.0, 845.0, 850.0)  # Rumpf: x0, x1, y+-, Oberkante, Schraubenkoepfe
 
-# Ruecklicht an der Rueckwand der Traverse (planierschild.py: Rueckwand buendig mit den Endkaesten bei x 2830)
-TRAV_HINTEN = 2830.0
-RL_Y, RL_Z = -770.0, 1150.0
 # Hydraulikleitungen der Planiereinrichtung: neben dem Tank |y| ~357..403 auf z ~1085, dann schraeg nach aussen zu den Zylinderkoepfen (x ~1825); nichts auf der Plattform
 
 
@@ -186,7 +191,10 @@ def tank():
     # gerollte Falz an der Stirn (breiter Wulst, endet bei x 1092 an der Rueckseite der Stirnwand: kein Keil davor) und eine zweite Sicke dahinter, umlaufend
     for xa, xb, g in ((X0, X0 + 7, 5.0), (X0 + 34, X0 + 48, 3.5), (X0 + 62, X0 + 70, 2.5)):
         # Innenflaeche 1,5 mm in den Tank gesenkt: Ueberlappung statt Beruehrung, sonst bleibt beim Triangulieren ein Haarspalt
-        t.append(_koerper(g, xa, xb) - _koerper(-1.5, xa - 1, xb + 1))
+        falz = _koerper(g, xa, xb) - _koerper(-1.5, xa - 1, xb + 1)
+        # Kanten der Rueckseite (x = xb) oben verrunden: nimmt dem Falzende an der verrundeten Stirnkante den spitzen Keil (Wand < 0,5 mm)
+        falz = fillet([e for e in falz.edges() if abs(e.center().X - xb) < 1e-3 and e.center().Z > 1200], 1.5)
+        t.append(falz)
     # zwei runde gewoelbte Schraubenkoepfe seitlich zwischen den Baendern (Foto t39)
     for s in (-1, 1):
         for x in (1235.0, 1315.0):
@@ -208,7 +216,7 @@ def tank():
             t.mat("blank", sechskant((xb, s * Y_ROD, BAND_ZE), (0, 0, 1), 17, 8))
 
     # Einfuellstutzen mit Fluegelmutter-Deckel oben
-    zm1 = Z1
+    zm1 = _zq(Y_STUTZEN)                                        # Dachhoehe an der Stutzenachse (Haubenbogen)
     zs = zm1 - 30
     t.append(Pos(X_STUTZEN, Y_STUTZEN, zs) * Cylinder(42, 62, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.append(Pos(X_STUTZEN, Y_STUTZEN, zm1 - 9) * Cylinder(56, 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))  # Schweisskragen (reicht in die Bombierung)
@@ -454,44 +462,60 @@ def _hebel_pedale(t):
 
 
 def _sitz(t):
-    """Einteilige Schalensitz (Prospekt K 55 E, PH): tiefe gepresste Schale (Ellipsoid),
-    oben von einem Kreisbogen abgeschnitten -> vorn flache Lippe, hinten hochgezogener Ruecken, Randwulst,
-    Lederpolster als Auskleidung mit dickerem Sitzkissen. Getragen von einer Sitzkonsole
-    auf einem Blattfeder-Arm, der hinter dem Getriebedeckel in einem Mittelsockel eingespannt ist."""
-    A, C, w, zb = SITZ_A, SITZ_C, SITZ_WAND, SITZ_ZB
-    m = (SITZ_X, 0, zb + C)                                   # Ellipsoid-Mitte
-    aussen = _ellipsoid(m, A, A, C)
-    innen = _ellipsoid(m, A - w, A - w, C - w)
-    # Schnittflaeche: Kreisbogen (Zylinder quer) - vorn flache Lippe SITZ_LIPPE ueber dem Boden,
-    # tiefster Punkt bei SITZ_X - SITZ_MULDE_DX, hinten steil hoch auf SITZ_RUECKEN
-    xc, z_tief = SITZ_X - SITZ_MULDE_DX, zb + SITZ_LIPPE - 8
-    dx, dz = SITZ_X + A - xc, SITZ_RUECKEN - (SITZ_LIPPE - 8)
-    rb = (dx * dx + dz * dz) / (2 * dz)
-    zcb = z_tief + rb
+    """Flache gelochte Blechschale ohne Ruecken (Fotos DSC04745, c_sl_box): Ellipsenrand, flach gemuldet,
+    zwei Lochringe (6 + 12 Loecher), umgebordelter Rand (Wulst + Schuerze), zwei Quersteifen und Sitztraeger
+    mit Nieten unter der Mitte. Getragen von einem Blattfeder-Arm, der hinter dem Getriebedeckel
+    in einem Mittelsockel eingespannt ist."""
+    A, B, tt, zb = SITZ_A, SITZ_B, SITZ_T, SITZ_ZB
+    ea, eb = SITZ_EA, SITZ_EB
+    ec = SITZ_TIEFE / (1 - math.sqrt(1 - (A / ea) ** 2))          # Muldentiefe am Rand der x-Achse
+    zc = zb + ec
 
-    def ueber(off):
-        """Bereich ueber der Schnittflaeche, um off nach innen (negativ: nach unten) verschoben."""
-        return Pos(xc, 0, zcb) * Rot(90, 0, 0) * Cylinder(rb - off, 1400)
+    def ell(dz=0.0):
+        """Muldenellipsoid, um dz nach oben verschoben; der Boden der Schale liegt auf seiner Unterseite."""
+        return _ellipsoid((SITZ_X, 0, zc + dz), ea, eb, ec)
 
-    schale = aussen - innen - ueber(0)
-    # Randwulst: aussen aufgedickter Streifen unter der Schnittkante
-    wulst = ((_ellipsoid(m, A + 9, A + 9, C + 9) - innen) & ueber(-24)) - ueber(0)
-    # Polster: Auskleidung bis 40 unter die Kante, dazu Sitzkissen (in der Mitte gemuldet)
-    innen2 = _ellipsoid(m, A - w - POLSTER, A - w - POLSTER, C - w - POLSTER)
-    auskleidung = (innen - innen2) - ueber(-40)
-    kissen = (innen & box(SITZ_X - 400, SITZ_X + 400, -400, 400, zb, zb + 80)) - Pos(0, 0, 50) * innen
-    polster = auskleidung + kissen
+    def prisma(ra, rb, z0, z1):
+        return Pos(SITZ_X, 0, (z0 + z1) / 2) * scale(Cylinder(1, z1 - z0), by=(ra, rb, 1))
+
+    def boden(x, y):
+        """Hoehe der Schalenunterseite (ungeneigt) bei Abstand x, y von der Mitte."""
+        return zb + ec * (1 - math.sqrt(1 - (x / ea) ** 2 - (y / eb) ** 2))
+
+    ze = zb + SITZ_TIEFE + tt
+    schale = (ell() - ell(tt)) & prisma(A, B, zb - 1, ze + 4)
+    # Lochbild: Innenring 6 Loecher, Aussenring 12 Loecher (elliptisch gestreckt, gegeneinander versetzt)
+    loecher = []
+    for n, rx, ry, w0 in ((6, 70.0, 85.0, 0.0), (12, 135.0, 160.0, 15.0)):
+        for k in range(n):
+            w = math.radians(w0 + k * 360.0 / n)
+            loecher.append(Pos(SITZ_X + rx * math.cos(w), ry * math.sin(w), zb + 30)
+                           * Cylinder(SITZ_LOCH_D / 2, 160))
+    for c in loecher:
+        schale = schale - c
+    # umgebordelter Rand: Schuerze nach unten (folgt der Mulde) und gerollter Wulst oben
+    ring = prisma(A, B, zb - 30, ze + 4) - prisma(A - tt, B - tt, zb - 31, ze + 5)
+    schuerze = ring & (ell(-SITZ_RAND_H) - ell(tt))
+    zw = zb + SITZ_TIEFE + tt - 0.5
+    wulst_pfad = Wire([Pos(SITZ_X, 0, zw) * Edge.make_ellipse(A - 5, B - 5)])
+    wulst = sweep(Plane(origin=(SITZ_X + A - 5, 0, zw), z_dir=(0, 1, 0)) * Circle(5.5), path=wulst_pfad)
+    # zwei Quersteifen unter der Schale (folgen der Mulde), links/rechts vom Sitztraeger
+    steifen = []
+    for s_ in (-1, 1):
+        y0, y1 = sorted((s_ * 48.0, s_ * (B - 10)))
+        steifen.append(((ell(-10) - ell(1)) & box(SITZ_X - 10, SITZ_X + 10, y0, y1, zb - 20, ze))
+                       & prisma(A - tt, B - tt, zb - 30, ze))
+    # Sitztraeger: Block unter der Mitte (an die Schalenunterseite angepasst), seitlich Schrauben
+    tx0, tx1, ty = SITZ_TRAEGER
+    kz0 = zb - 50
+    traeger = box(SITZ_X + tx0, SITZ_X + tx1, -ty, ty, kz0, zb + 8) - ell(1)
+    schrauben = [sechskant((SITZ_X + dx, s_ * ty, zb - 25), (0, s_, 0), 14, 6) for dx in (-25, 25) for s_ in (-1, 1)]
+    # Nieten oben auf der Schale (Kugelkappen) ueber dem Sitztraeger
+    nieten = [Pos(SITZ_X + dx, dy, boden(dx, dy) + tt - 1) * Sphere(5) for dx in (-35, 35) for dy in (-28, 28)]
 
     neig = Pos(SITZ_X, 0, zb) * Rot(0, SITZ_NEIG, 0) * Pos(-SITZ_X, 0, -zb)
-    aussen_n = neig * aussen
-    t.append(neig * schale)
-    t.append(neig * wulst)
-    t.mat("leder", neig * polster)
-
-    # Sitzkonsole unter der Schale (an die Schale angepasst)
-    kz0 = zb - 25
-    t.append(box(SITZ_X - 80, SITZ_X + 80, -60, 60, kz0, zb + 45) - aussen_n)
-    t += [sechskant((SITZ_X + dx, dy, kz0), (0, 0, -1), 14, 6) for dx in (-60, 60) for dy in (-40, 40)]
+    for k in [schale, schuerze, wulst, traeger] + steifen + schrauben + nieten:
+        t.append(neig * k)
 
     # Mittelsockel hinter dem Getriebedeckel: gepresster Kasten mit Fussplatte
     zb_s = DECK_Z + 6                                         # auf dem Bodenblech
@@ -503,7 +527,7 @@ def _sitz(t):
             t.mat("blank", sechskant((sx + dx, dy, zb_s + 10), (0, 0, 1), 14, 6))
     # Blattfeder-Arm: hinten im Sockel eingespannt, nach vorn unter die Sitzkonsole (zwei Lagen)
     p0 = Vector(sx + 30, 0, SOCKEL_Z1 + 5)
-    p1 = Vector(SITZ_X - 65, 0, kz0 - 5)
+    p1 = Vector(SITZ_X - 40, 0, kz0 + 4)
     pm = (p0 + p1) * 0.5 + Vector(0, 0, -5)
     arc = ThreePointArc(p0, pm, p1)
     for l, dz in ((1.0, 0.0), (0.55, -14.0)):
@@ -581,23 +605,6 @@ def _kaesten(t):
     t.mat("gummi", Pos(x0 - 60, yk, DECK_Z - 2) * Cylinder(20, 10, align=(Align.CENTER, Align.CENTER, Align.MIN)))
 
 
-def _ruecklicht(t):
-    """Rechteckiges Ruecklicht mit runder Scheibe hinten links an der Rueckwand des
-    Traversen-Quertraegers (planierschild.py: Rueckwand x = TRAV_HINTEN, z 1060..1240)."""
-    y, zl = RL_Y, RL_Z
-    xe = TRAV_HINTEN - 2                    # Anlage an der Rueckwand (2 mm eingesenkt)
-    # Flanschplatte mit 2 Schrauben, Ausleger, Gehaeuse
-    t.append(box(xe, xe + 12, y - 30, y + 30, zl - 70, zl - 10))
-    t += [sechskant((xe + 12, y + dy, zl - 40), (1, 0, 0), 12, 5) for dy in (-18, 18)]
-    t.append(box(xe + 10, xe + 32, y - 18, y + 18, zl - 58, zl - 44))
-    t.append(kasten_rund(xe + 30, xe + 75, y - 55, y + 55, zl - 50, zl + 50, 10, Axis.X))
-    t.mat("chrom", ring_x(xe + 78, y, zl, 42, 34, 8))
-    t.mat("ruecklicht", rad_x(xe + 77, y, zl, 36, 6))
-    t.mat("ruecklicht", Pos(xe + 80, y, zl) * scale(Sphere(1), by=(8, 34, 34)))
-    # Kabel in die Traverse
-    t.mat("gummi", rohr_glatt([(xe + 45, y + 45, zl - 49), (xe + 45, y + 45, zl - 62), (xe + 1, y + 45, zl - 62)], 5))
-
-
 def fahrerstand():
     t = Sammler("lack")
     _unterbau(t)
@@ -606,5 +613,4 @@ def fahrerstand():
     _hebel_pedale(t)
     _sitz(t)
     _kaesten(t)
-    _ruecklicht(t)
     return t

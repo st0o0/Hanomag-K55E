@@ -142,34 +142,33 @@
         }
       ],
       "druck": "druck/haube_tank.stl",
-      "druck_mb": 7.54,
+      "druck_mb": 7.57,
       "masse_mm": [
-        165.5,
+        166.1,
         91.2,
-        103.3
+        103.9
       ],
       "druck_koerper": 1,
       "druck_bett_mm": [
-        165.5,
+        166.1,
         91.2,
-        103.2
+        103.9
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Passung zu fahrerstand: 1 Ansatzstellen buendig gekuerzt",
-          "Passung zu planierschild: 4 Ansatzstellen buendig gekuerzt"
+          "Passung zu fahrerstand: 1 Ansatzstellen buendig gekuerzt"
         ],
         "koerper": [
           {
             "masse_mm": [
-              165.5,
+              166.1,
               91.2,
-              103.2
+              103.9
             ],
-            "volumen_mm3": 147642.7,
-            "wand_min": 0.55,
-            "ueberhang": 0.244
+            "volumen_mm3": 152434.2,
+            "wand_min": 0.75,
+            "ueberhang": 0.245
           }
         ]
       }
@@ -224,8 +223,8 @@
               89.7,
               27.6
             ],
-            "volumen_mm3": 20975.6,
-            "wand_min": 0.56,
+            "volumen_mm3": 20892.0,
+            "wand_min": 0.55,
             "ueberhang": 0.192
           }
         ]
@@ -425,8 +424,8 @@
           "ansicht": "ansicht/motor__blank.stl"
         },
         {
-          "material": "raeder",
-          "ansicht": "ansicht/motor__raeder.stl"
+          "material": "bosch",
+          "ansicht": "ansicht/motor__bosch.stl"
         },
         {
           "material": "glas",
@@ -435,14 +434,10 @@
         {
           "material": "gummi",
           "ansicht": "ansicht/motor__gummi.stl"
-        },
-        {
-          "material": "bosch",
-          "ansicht": "ansicht/motor__bosch.stl"
         }
       ],
       "druck": "druck/motor.stl",
-      "druck_mb": 8.67,
+      "druck_mb": 10.93,
       "masse_mm": [
         122.4,
         82.1,
@@ -460,7 +455,7 @@
           "Passung zu kuehlermaske: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu auspuff: 6 Ansatzstellen buendig gekuerzt",
           "81 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0: 11/1475 Proben duenner als 0.5 mm: 0.50 mm (1 Probe) bei x/y/z [364, 91, 648] Original-mm, Solid 222 (17x124x203 Original-mm); 0.50 mm (2 Proben) bei x/y/z [372, 217, 901] Original-mm, Solid 312 (4x112x112 Original-mm); 0.50 mm (2 Proben) bei x/y/z [378, 25, 929] Original-mm, Solid 309 (4x160x160 Original-mm); 0.50 mm (1 Probe) bei x/y/z [364, 30, 705] Original-mm, Solid 222 (17x124x203 Original-mm); 0.50 mm (1 Probe) bei x/y/z [364, 14, 487] Original-mm, Solid 407 (8x422x451 Original-mm); 0.50 mm (2 Proben) bei x/y/z [372, 210, 852] Original-mm, Solid 312 (4x112x112 Original-mm) (+2 weitere Stellen)"
+          "Koerper 0: 7/1467 Proben duenner als 0.5 mm: 0.50 mm (1 Probe) bei x/y/z [364, 54, 917] Original-mm, Solid 243 (17x203x124 Original-mm); 0.50 mm (1 Probe) bei x/y/z [364, 26, 710] Original-mm, Solid 242 (17x124x203 Original-mm); 0.50 mm (1 Probe) bei x/y/z [376, 69, 826] Original-mm, Solid 427 (4x160x160 Original-mm); 0.50 mm (1 Probe) bei x/y/z [364, 53, 686] Original-mm, Solid 242 (17x124x203 Original-mm); 0.50 mm (1 Probe) bei x/y/z [376, -6, 939] Original-mm, Solid 427 (4x160x160 Original-mm); 0.50 mm (1 Probe) bei x/y/z [376, -2, 485] Original-mm, Solid 532 (8x422x451 Original-mm) (+1 weitere Stellen)"
         ],
         "koerper": [
           {
@@ -469,7 +464,7 @@
               82.1,
               128.9
             ],
-            "volumen_mm3": 440465.7,
+            "volumen_mm3": 445689.1,
             "wand_min": 0.5,
             "ueberhang": 0.132
           },
@@ -1252,7 +1247,7 @@
       "name": "Fahrerstand",
       "gruppe": "Fahrerstand",
       "material": "lack",
-      "hinweis": "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, einteilige Sitzschale auf Blattfeder, Werkzeugkästen, Batteriekasten, Rücklicht.",
+      "hinweis": "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, flache gelochte Sitzschale auf Blattfeder, Werkzeugkästen, Batteriekasten.",
       "explode": [
         20,
         0,
@@ -1286,44 +1281,38 @@
         {
           "material": "gummi",
           "ansicht": "ansicht/fahrerstand__gummi.stl"
-        },
-        {
-          "material": "leder",
-          "ansicht": "ansicht/fahrerstand__leder.stl"
         }
       ],
       "druck": "druck/fahrerstand.stl",
-      "druck_mb": 6.47,
+      "druck_mb": 9.4,
       "masse_mm": [
-        228.9,
+        192.9,
         221.8,
         137.1
       ],
-      "druck_koerper": 13,
+      "druck_koerper": 11,
       "druck_bett_mm": [
-        188.1,
+        177.3,
         142.7,
-        166.4
+        157.1
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
           "Passung zu haube_tank: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu rumpf: 19 Ansatzstellen buendig gekuerzt",
-          "Passung zu planierschild: 3 Ansatzstellen buendig gekuerzt",
-          "54 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0: 2/1446 Proben duenner als 0.5 mm: 0.09 mm (1 Probe) bei x/y/z [2391, 97, 1298] Original-mm, Solid 142 (425x383x230 Original-mm); 0.46 mm (1 Probe) bei x/y/z [2377, -113, 1280] Original-mm, Solid 142 (425x383x230 Original-mm)"
+          "17 eingeschlossene Hohlraeume gefuellt"
         ],
         "koerper": [
           {
             "masse_mm": [
               137.1,
               97.8,
-              166.4
+              157.1
             ],
-            "volumen_mm3": 122613.8,
-            "wand_min": 0.09,
-            "ueberhang": 0.06
+            "volumen_mm3": 114129.3,
+            "wand_min": 0.69,
+            "ueberhang": 0.053
           },
           {
             "masse_mm": [
@@ -1332,7 +1321,7 @@
               25.2
             ],
             "volumen_mm3": 30558.1,
-            "wand_min": 0.75,
+            "wand_min": 0.5,
             "ueberhang": 0.043
           },
           {
@@ -1367,16 +1356,6 @@
           },
           {
             "masse_mm": [
-              10.7,
-              13.8,
-              15.0
-            ],
-            "volumen_mm3": 1156.8,
-            "wand_min": 1.0,
-            "ueberhang": 0.114
-          },
-          {
-            "masse_mm": [
               1.5,
               6.8,
               6.8
@@ -1404,16 +1383,6 @@
             "volumen_mm3": 27.6,
             "wand_min": 1.25,
             "ueberhang": 0.195
-          },
-          {
-            "masse_mm": [
-              1.5,
-              1.5,
-              13.1
-            ],
-            "volumen_mm3": 23.2,
-            "wand_min": 1.5,
-            "ueberhang": 0.0
           },
           {
             "masse_mm": [
@@ -1465,20 +1434,28 @@
           "ansicht": "ansicht/planierschild__anbau.stl"
         },
         {
-          "material": "blank",
-          "ansicht": "ansicht/planierschild__blank.stl"
+          "material": "zink",
+          "ansicht": "ansicht/planierschild__zink.stl"
         },
         {
           "material": "schwarz",
           "ansicht": "ansicht/planierschild__schwarz.stl"
         },
         {
-          "material": "chrom",
-          "ansicht": "ansicht/planierschild__chrom.stl"
+          "material": "blank",
+          "ansicht": "ansicht/planierschild__blank.stl"
         },
         {
-          "material": "ruecklicht",
-          "ansicht": "ansicht/planierschild__ruecklicht.stl"
+          "material": "bosch",
+          "ansicht": "ansicht/planierschild__bosch.stl"
+        },
+        {
+          "material": "zifferblatt",
+          "ansicht": "ansicht/planierschild__zifferblatt.stl"
+        },
+        {
+          "material": "auspuff",
+          "ansicht": "ansicht/planierschild__auspuff.stl"
         },
         {
           "material": "gummi",
@@ -1486,110 +1463,146 @@
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 12.79,
+      "druck_mb": 11.71,
       "masse_mm": [
-        461.9,
-        302.0,
-        182.5
+        448.0,
+        277.8,
+        199.9
       ],
-      "druck_koerper": 8,
+      "druck_koerper": 12,
       "druck_bett_mm": [
-        217.0,
-        919.5,
-        143.1
+        218.0,
+        798.7,
+        165.5
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Passung zu haube_tank: 4 Ansatzstellen buendig gekuerzt",
           "Passung zu kuehlermaske: 3 Ansatzstellen buendig gekuerzt",
           "Passung zu rumpf: 32 Ansatzstellen buendig gekuerzt",
-          "Passung zu fahrerstand: 3 Ansatzstellen buendig gekuerzt",
-          "53 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0 geteilt in 8 Stuecke bei x=-434 / x=533 / x=1131 / x=1707 / y=-509 (Original-mm, Einbaulage), 8 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)",
-          "Koerper 5: 1/430 Proben duenner als 0.5 mm: 0.45 mm (1 Probe) bei x/y/z [-4, -112, 590] Original-mm, Solid 239 (16x280x160 Original-mm)",
-          "Koerper 6: 1/1471 Proben duenner als 0.5 mm: 0.47 mm (1 Probe) bei x/y/z [1131, 1009, 732] Original-mm, Solid 122 (446x70x669 Original-mm)"
+          "50 eingeschlossene Hohlraeume gefuellt",
+          "Koerper 0 geteilt in 8 Stuecke bei x=-285 / x=1121 / x=1129 / y=-475 / y=-96 (Original-mm, Einbaulage), 10 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)"
         ],
         "koerper": [
           {
             "masse_mm": [
-              155.6,
-              87.4,
-              107.3
+              53.2,
+              126.3,
+              122.5
             ],
-            "volumen_mm3": 126304.8,
-            "wand_min": 1.45,
-            "ueberhang": 0.126
-          },
-          {
-            "masse_mm": [
-              217.0,
-              102.3,
-              107.8
-            ],
-            "volumen_mm3": 111306.0,
-            "wand_min": 1.13,
-            "ueberhang": 0.04
-          },
-          {
-            "masse_mm": [
-              159.6,
-              73.1,
-              77.0
-            ],
-            "volumen_mm3": 96142.2,
-            "wand_min": 1.22,
-            "ueberhang": 0.169
-          },
-          {
-            "masse_mm": [
-              107.3,
-              214.6,
-              34.6
-            ],
-            "volumen_mm3": 201410.9,
-            "wand_min": 1.84,
-            "ueberhang": 0.3
-          },
-          {
-            "masse_mm": [
-              195.8,
-              30.1,
-              79.1
-            ],
-            "volumen_mm3": 75567.5,
+            "volumen_mm3": 127660.8,
             "wand_min": 1.12,
-            "ueberhang": 0.165
+            "ueberhang": 0.1
           },
           {
             "masse_mm": [
-              172.4,
+              53.2,
+              150.2,
+              122.5
+            ],
+            "volumen_mm3": 151031.4,
+            "wand_min": 1.21,
+            "ueberhang": 0.099
+          },
+          {
+            "masse_mm": [
+              176.2,
+              84.4,
+              24.6
+            ],
+            "volumen_mm3": 83887.5,
+            "wand_min": 0.6,
+            "ueberhang": 0.288
+          },
+          {
+            "masse_mm": [
+              218.0,
+              79.5,
+              129.4
+            ],
+            "volumen_mm3": 181947.8,
+            "wand_min": 1.23,
+            "ueberhang": 0.123
+          },
+          {
+            "masse_mm": [
+              177.2,
+              85.9,
+              24.6
+            ],
+            "volumen_mm3": 84683.1,
+            "wand_min": 0.71,
+            "ueberhang": 0.289
+          },
+          {
+            "masse_mm": [
+              172.1,
               104.5,
-              90.1
+              20.4
             ],
-            "volumen_mm3": 16488.2,
-            "wand_min": 0.45,
-            "ueberhang": 0.173
+            "volumen_mm3": 16180.4,
+            "wand_min": 1.0,
+            "ueberhang": 0.204
           },
           {
             "masse_mm": [
-              214.1,
-              200.4,
-              143.1
+              218.0,
+              198.2,
+              165.5
             ],
-            "volumen_mm3": 327189.1,
-            "wand_min": 0.47,
-            "ueberhang": 0.14
+            "volumen_mm3": 302831.0,
+            "wand_min": 1.12,
+            "ueberhang": 0.149
           },
           {
             "masse_mm": [
-              200.7,
-              79.1,
-              56.7
+              166.9,
+              71.9,
+              85.4
             ],
-            "volumen_mm3": 4486.2,
-            "wand_min": 1.06,
-            "ueberhang": 0.171
+            "volumen_mm3": 4509.8,
+            "wand_min": 1.75,
+            "ueberhang": 0.172
+          },
+          {
+            "masse_mm": [
+              1.2,
+              3.0,
+              3.0
+            ],
+            "volumen_mm3": 8.8,
+            "wand_min": 1.25,
+            "ueberhang": 0.076
+          },
+          {
+            "masse_mm": [
+              1.2,
+              3.0,
+              3.0
+            ],
+            "volumen_mm3": 8.8,
+            "wand_min": 1.25,
+            "ueberhang": 0.076
+          },
+          {
+            "masse_mm": [
+              1.2,
+              3.0,
+              3.0
+            ],
+            "volumen_mm3": 8.8,
+            "wand_min": 1.25,
+            "ueberhang": 0.081
+          },
+          {
+            "masse_mm": [
+              1.2,
+              3.0,
+              3.0
+            ],
+            "volumen_mm3": 8.8,
+            "wand_min": 1.25,
+            "ueberhang": 0.081
           }
         ]
       }
@@ -1598,7 +1611,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-12",
-  "build": "20261012125855",
+  "build": "20261012144403",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [
@@ -1618,7 +1631,7 @@
             "benutzt": "Maskenunterkante, Verhältnis Maskenhöhe zu Breite, Lage der Ölpumpe"
           },
           {
-            "titel": "Flickr – blaue K 55 mit FRISCH-Schild, schräg hinten links",
+            "titel": "Flickr – blaue K 55 mit FRISCH-Schild, schräg hinten rechts",
             "url": "https://www.flickr.com/photo.gne?id=26271221407",
             "zeigt": "Heck der Planiereinrichtung: durchgehende Traverse mit Schild „Frisch“, Einfüllstutzen mit roter Kappe, zwei parallele Querrohre mit Schlaufe, Ventilblock dahinter",
             "benutzt": "Form der Traverse (Rückwand bündig), Schild, Einfüllstutzen, Querrohre, Lage des Ventilblocks (nur Vermutung)"
@@ -1784,7 +1797,7 @@
             "titel": "VORGLUEH-IG: Technik Hanomag R 45",
             "url": "http://www.vorglueh-ig.de/techr45.html",
             "zeigt": "Einspritzpumpe 'Hanomag oder Bosch PE 4A', Bosch-Förderpumpe, Doppel-Kraftstofffilter, Hanomag-Regler, Düsenhalter KD 82 SDA 30",
-            "benutzt": "Bauteilliste der Anlage"
+            "benutzt": "Hintergrund; Bauteile der Anlage wie zuvor, Kasten nach Fotos"
           },
           {
             "titel": "Theopold-Parts: Ersatzteile Hanomag-Einspritzpumpe (R38, R40, R45, R55, K55, SS/ST 55)",

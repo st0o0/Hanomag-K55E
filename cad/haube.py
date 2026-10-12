@@ -101,8 +101,8 @@ KM_B = m(710)                         # Breite
 KM_Z0 = _z(MASKE_UK)                  # Unterkante (z = m(58))
 KM_H = _z(HAUBE_DACH_Z)               # Oberkante = Haubendach (z = m(955))
 KM_T = m(HAUBE_X0)                    # Tiefe (x 0..210)
-KM_R_OBEN = m(70)     # Radius Dachbogen -> senkrechte Seiten (Maske und Haube gleich; Seitenfoto: Schulter ~100 hoch)
-KM_SAG = m(36)        # Pfeilhoehe des Dachbogens (Foto: Dach deutlich gewoelbt; Mitte 1347, an den Seiten 36 tiefer)
+KM_R_OBEN = m(85)     # Radius Dachbogen -> senkrechte Seiten (Maske und Haube gleich; Fotos Flickr 26271249857/39333958410: runde Schulter ~85-90)
+KM_SAG = m(42)        # Pfeilhoehe des Dachbogens (Flickr-Frontfoto: Mitte zur senkrechten Seite ~75 inkl. Ecke, Bogen allein ~42)
 KM_R_KAPPE = m(35)    # Rundung Kappe vorn oben (Seitenprofil, DSC04742: Oberkante flach, kleine Ecke)
 KM_KAPPE = m(135)     # glatte Kappe ueber dem Grill (Fotoanteil 0,14)
 KM_SOCKEL = m(116)    # Sockel unter dem Abschlusswulst (Anteil 0,13), Kurbelloch hinter der Pumpe
@@ -125,7 +125,7 @@ H_X0 = KM_T                           # Haube beginnt direkt hinter der Maske (x
 H_L = m(HAUBE_X1) - H_X0              # bis x = 1080 (dahinter Tank)
 H_B = m(HAUBE_B)                      # Breite 690
 H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante vorderes Seitensegment (z 620)
-H_R_DACH = m(70)                      # Radius Dachkanten (Dachbogen -> Seitenwand)
+H_R_DACH = m(85)                      # Radius Dachkanten (Dachbogen -> Seitenwand), gleich KM_R_OBEN
 SEG_L = m(SEG_X1) - H_X0              # vorderes Seitensegment x 210..310
 BOGEN_OBEN = _z(HAUBE_BAND_Z)         # Oberkante Motorausschnitt (z 1125)
 BOGEN_R = m(280)                      # Eckradius Motorausschnitt vorn oben (Foto: weicher grosser Bogen, 280..300)

@@ -110,7 +110,7 @@ TEILE = [
     Teil("kette_rechts", "Kette rechts", "Fahrgestell", "stahl", lambda: zu_modell(laufwerk.kette(1), "stahl"), (0, 75, 0),
          "36 Bodenplatten 400 mm mit Greifer, Kettenglieder, Bolzen."),
     Teil("fahrerstand", "Fahrerstand", "Fahrerstand", "lack", lambda: zu_modell(fahrerstand.fahrerstand()), (20, 0, 20),
-         "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, einteilige Sitzschale auf Blattfeder, Werkzeugkästen, Batteriekasten, Rücklicht."),
+         "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, flache gelochte Sitzschale auf Blattfeder, Werkzeugkästen, Batteriekasten."),
     Teil("planierschild", "Planierschild FRISCH 55 FH2", "Planiereinrichtung", "anbau",
          lambda: zu_modell(planierschild.planierschild(), "anbau"), (-70, 0, 0),
          "Schild 2400 mm mit Bohrungsreihe, Schubbalken, A-Böcke, zwei Hubzylinder in den Endkästen der Traverse, Öltank, Schutzbügel, Pumpe vor der Maske mit Leitungen, Steuerschieber."),

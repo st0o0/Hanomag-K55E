@@ -10,8 +10,12 @@ Wirkprinzip (Prospekt K 55 E, Einsatzfoto):
   A-Bock-Scheitel an. Einfahren zieht den Scheitel nach hinten -> Schubbalken
   dreht um das hintere Gelenk -> Schild hebt. runde Zahnrad-Oelpumpe vor dem
   Maskensockel (Antrieb von der Kurbelwelle), je Seite eine Leitung nach hinten.
-  Steuerblock mit Kugelhebel oben auf dem rechten Endkasten (Foto 7826381704).
+  Steuerblock mit kleiner Kugel + Schraeghebel vorn auf dem rechten Endkasten (Foto 40431489714).
   Hubhoehe 1120 mm ueber / 200 mm unter Fahrebene.
+
+Umbau 2026-10 nach out/frisch_analyse/fehler_frisch.md (Flickr 26271221407 ist von hinten RECHTS, nicht links);
+Stand: Traverse 270 hoch, Schubbalken hinten 250 hoch + Lagerblock, Zylinder Ø100/Stange Ø48, Steuerblock vorn mit Kugel Ø40,
+Leitungen flach knapp ueber dem Laengstraeger/Plattform (Nutzerhinweis). Aeltere Angaben unten, soweit nicht ueberholt.
 
 Fotobefund (BS = blaue K55 senkrecht von rechts, BV = von vorn, FL, PK):
   * A-Bock fast symmetrisch: Fuesse ABOCK_FUESSE (920 / 1650) auf dem Schubbalken,
@@ -68,42 +72,50 @@ from .common import (box, stab, rohr_glatt, balken, rad_x, rad_y, ring_x, ring_y
 
 # ---------------- Parameter ----------------
 # Schild
-SCHILD_B, SCHILD_H = 2400.0, 850.0
+SCHILD_B, SCHILD_H = 2200.0, 850.0     # Breite 2150..2200 (Fotos 7826381704/39333958410: Balken buendig am Seitenblech)
 X_SCHNEIDE = -700.0           # Vorderkante Schneide / Lippe
 T_BLECH = 16.0                # Schildblech (2 mm im Modell)
 T_RIPPE = 16.0
 Y_WANGE = SCHILD_B / 2 - T_RIPPE       # Innenseite Seitenwange
 X_RUECK = -470.0              # Hinterkante der Rippen
-# Schubbalken (Kastenprofil 120 x 170)
-SB_B, SB_H = 120.0, 170.0
-SB_Z0, SB_Z1 = Z_SCHUB - SB_H / 2, Z_SCHUB + SB_H / 2
+# Schubbalken: hinten hoher flacher Kasten 120 x 250, ab x 700 nach vorn verjuengt auf 130 (Foto 40431489714)
+SB_B, SB_H = 120.0, 250.0
+SB_Z0, SB_Z1 = Z_SCHUB - SB_H / 2, Z_SCHUB + SB_H / 2       # hinten 275 / 525
+SB_XV = 700.0                 # ab hier nach hinten volle Hoehe, davor Verjuengung
+SB_H_VORN = 130.0             # Hoehe am vorderen Auge (x = X_SCHILDBOLZEN)
+LB = 190.0                    # Lagerblock hinten (quadratisch)
 X_GELENK = X_TRIEB            # hinteres Gelenk
 X_SCHILDBOLZEN = -360.0       # vorderes Gelenk am Schild
 # A-Bock
 XA_VORN, XA_HINTEN = ABOCK_FUESSE
 XS, ZS = ABOCK_SCHEITEL
-A_TIEFE, A_BREITE = 70.0, 110.0        # Kastenstrebe: quer (y) x in der Ebene
+A_TIEFE, A_BREITE = 70.0, 110.0        # Kastenstrebe: quer (y); Breite in der Ebene unten 150 -> oben 110
+A_BREITE_UNTEN = 144.0
 # dreieckiger Ausschnitt im Stegblech (BS): Basis ueber dem Schubbalken, Spitze unter dem Scheitel
 AUS_B, AUS_Z0, AUS_Z1 = 290.0, SB_Z1 + 45, SB_Z1 + 265
 # Hubzylinder (Mittelzapfen im Endkasten der Traverse), Rechnung siehe Docstring
 X_ZAPFEN, Z_ZYL = TRAVERSE_X, TRAVERSE_Z   # Mittelzapfen bei x 2520 (Foto BS)
-R_ZYL, R_STANGE = 65.0, 30.0
+R_ZYL, R_STANGE = 50.0, 24.0        # Rohr Ø100, Stange Ø48 (Foto 40431489714)
 X_KOPF = 1770.0               # Zylinderkopf-Flansch (Vorderseite)
 X_BODEN = 2740.0              # Zylinderboden-Flansch (im Endkasten)
 GABEL_L = 124.0               # Gabelkopf ab Scheitelauge bis Kontermutter
 # Traverse: Endkaesten aussen, Quertraeger (Oeltank) hinten oben
 EK_X0, EK_X1 = 2395.0, 2830.0
-EK_Z0, EK_Z1 = 900.0, 1240.0
-Z_AUSS_O = EK_Z1 - 30.0         # Oberkante des Kastenausschnitts (Rest oben 30 mm: keine Messerkante an der Verrundung)
-Z_AUSS = 960.0               # Unterkante des Kastenausschnitts (Zylinder + Bodenleitung)
+EK_Z0, EK_Z1 = 900.0, 1170.0   # 270 hoch (Seitenfotos 240..290)
+Z_AUSS_O = EK_Z1 - 18.0         # Oberkante des Kastenausschnitts (Rest oben 18 mm, Verrundung 14)
+Z_AUSS = 995.0               # Unterkante des Kastenausschnitts (Zylinder + untere Leitung)
+EK_SCHR_DX, EK_SCHR_DY = 90.0, 150.0   # abgeschraegte hintere Aussenecke (Nutzerhinweis, c_ende_l)
+Y_LANGLOCH = 790.0            # Langloch rechts in der Rueckwand (270 x 110), vor der Schraege (gerade Rueckwand endet bei y 920)
 EK_DY, EK_T = 95.0, 12.0               # halbe Breite (y), Wandstaerke
 EK_YI = Y_SCHUB - EK_DY                # Innenseite Endkasten (880, frei von Werkzeugkasten-Deckel/Scharnier)
 QT_X0, QT_X1 = 2630.0, EK_X1           # Quertraeger = Oeltank, Rueckwand buendig mit den Endkaesten (26271221407: durchgehende Rueckwand)
 QT_Z0, QT_Z1 = EK_Z0, EK_Z1           # so hoch wie die Endkaesten (zoom_heck_l)
 # Schutzbuegel
-R_BUEGEL = 16.0               # Ø 32 (BS ~30)
-BG_X0, BG_X1, BG_Z = 2340.0, 2600.0, 1440.0
-R_QL, Z_QL = 14.0, 1370.0     # Querleitung: unteres der zwei parallelen Querrohre ueber der Traverse (rr_valve)
+R_BUEGEL = 15.0               # Ø 30 (BS ~30)
+BG_X0, BG_X1, BG_Z = 2340.0, 2600.0, EK_Z1 + 125.0
+R_QL, Z_QL = 15.0, EK_Z1 + 70.0   # zwei parallele Querrohre dicht ueber der Traverse (c_links: 40..80 mm)
+X_QL = 2655.0
+Y_HAARNADEL = -680.0          # linkes Ende: enger Haarnadelbogen
 # Oelpumpe vor dem Maskensockel (runde Zahnradpumpe, Fotos 26271249857 / 40431531504 / 40431489714)
 PU_X, PU_Y, PU_Z = PUMPE
 PU_R = 75.0                   # Gehaeuse Ø 150 (BS: 140 hoch, vorn: ~160)
@@ -113,22 +125,21 @@ PU_XPORT, PU_ZPORT = -135.0, PU_Z - 40.0   # Anschluss seitlich, etwas unter der
 # Leitungen: je Seite EINE Leitung (Fotos), Ø ~ 36
 R_LTG, R_ZYLLTG = 18.0, 11.0
 Y_HAUBE = HAUBE_B / 2         # Haubenseite aussen (345)
-LTG_VORN = (0.0, 775.0)       # (x, z) Maskenecke: Beginn des Schraegstuecks (Foto BS)
-LTG_HINTEN = (HAUBE_X1 - 30.0, 1060.0)   # Ende des Schraegstuecks am Haubenende
-Z_LTG = 1085.0                # waagerechter Lauf hinter der Haube: ueber Kastendeckel (1022) und
-                              # Spannbuegel-Fluegel (bis 1060) der Kaesten vor dem Sitz (fahrerstand.py)
-X_LTG_AB = 1620.0            # hier ist die Leitung hinter dem Unterbau herunter auf Plattformhoehe (Foto f7826)
+Z_LTG = 560.0                 # Leitungen laufen flach knapp ueber dem Laengstraeger (Oberkante 520) an der Haubenseite nach hinten
+LTG_VORN = (0.0, Z_LTG)       # (x, z) Maskenecke
+LTG_HINTEN = (1405.0, Z_LTG)  # hier steigt die Leitung kurz senkrecht vor der Plattformkante (x 1430) auf Plattformhoehe
+X_LTG_AB = LTG_HINTEN[0]
 Y_HINT = 440.0                # |y| der Leitungen auf der Plattform (Gasse zwischen Sitz |y| <= 250 und Kaesten |y| >= 585)
 Z_HINT = 885.0                # Rohrachse am Boden (Unterkante 867, 27 ueber der Plattform), auf Standschellen
-XH_P, XH_R = 2720.0, 2765.0   # x der beiden Schlauchanschluesse am Steuerblock (Druck / Ruecklauf)
+XH_P, XH_R = 2447.0, 2485.0   # x der beiden Schlauchanschluesse am Steuerblock (Druck / Ruecklauf)
 X_SCHLAUCH = 2250.0           # hier geht das Rohr rechts in den Schlauch zum Steuerblock ueber
 # Steuerblock oben auf dem rechten Endkasten, hinterer Teil (Foto f7826: Kugel hinten/aussen), hinter der Buegelschlaufe
-VB_X0, VB_X1 = 2700.0, 2790.0
-VB_Y0, VB_Y1 = 965.0, 1055.0
-VB_Z1 = EK_Z1 + 50.0          # Oberkante Block (1290)
+VB_X0, VB_X1 = 2415.0, 2505.0   # Steuerblock VORN auf dem Endkasten, hinter dem Zylinderkopf (c_sr_box)
+VB_Y0, VB_Y1 = 950.0, 1035.0
+VB_Z1 = EK_Z1 + 80.0          # Oberkante Block (1250)
 # Fuehrungsplatte mit Steckbolzen (kurz hinter dem Leitrad)
-FP_X0, FP_X1 = X_LEIT + 230.0, X_LEIT + 310.0
-X_STECK = X_LEIT + 350.0
+FP_X0, FP_X1 = X_LEIT + 110.0, X_LEIT + 250.0   # stehende Platte 140 lang (Foto 40431489714), etwa 320 vor dem A-Bock-Fuss
+X_STECK = X_LEIT + 280.0
 
 
 # ---------------- Helfer ----------------
@@ -231,20 +242,63 @@ def _zug(B, za, zb, n=8):
     return [(_x_rueck(B, za + (zb - za) * i / n), za + (zb - za) * i / n) for i in range(n + 1)]
 
 
+def _randpunkte(poly, step, inset):
+    """Punkte im Abstand `step` entlang des geschlossenen Polygons (x, z), um `inset` nach innen versetzt."""
+    n = len(poly)
+    area = sum(poly[i][0] * poly[(i + 1) % n][1] - poly[(i + 1) % n][0] * poly[i][1] for i in range(n))
+    sg = 1.0 if area > 0 else -1.0
+    segs = []
+    for i in range(n):
+        (x0, z0), (x1, z1) = poly[i], poly[(i + 1) % n]
+        L = math.hypot(x1 - x0, z1 - z0)
+        if L > 1e-6:
+            segs.append((x0, z0, x1, z1, L))
+    total = sum(sg_[4] for sg_ in segs)
+    k = max(1, round(total / step))
+    d = total / k
+    out, acc, i = [], 0.0, 0
+    for j in range(k):
+        pos = (j + 0.5) * d
+        while i < len(segs) - 1 and acc + segs[i][4] < pos:
+            acc += segs[i][4]
+            i += 1
+        x0, z0, x1, z1, L = segs[i]
+        u = (pos - acc) / L
+        nx, nz = -(z1 - z0) / L * sg, (x1 - x0) / L * sg     # Normale nach innen
+        out.append((x0 + (x1 - x0) * u + nx * inset, z0 + (z1 - z0) * u + nz * inset))
+
+    def _innen(px, pz):
+        # Punkt im Polygon und mindestens 0.7 * inset von jeder Kante entfernt
+        ein = False
+        for (xa, za), (xb, zb) in zip(poly, poly[1:] + poly[:1]):
+            if (za > pz) != (zb > pz) and px < xa + (pz - za) * (xb - xa) / (zb - za):
+                ein = not ein
+            dx, dz = xb - xa, zb - za
+            L2 = dx * dx + dz * dz
+            if L2 > 1e-9:
+                q = max(0.0, min(1.0, ((px - xa) * dx + (pz - za) * dz) / L2))
+                if math.hypot(px - xa - q * dx, pz - za - q * dz) < 0.7 * inset:
+                    return False
+        return ein
+    return [p for p in out if _innen(*p)]
+
+
 def schild(t):
     F, B = _profil()
-    # Schildblech (gewoelbt, Lippe nach vorn gekantet), glatt
-    t.append(platte_xz(F + B[::-1], -Y_WANGE, Y_WANGE))
+    # Schildblech (gewoelbt, Lippe nach vorn gekantet), glatt; Front blank/graumetallisch (39333958410), nur die Seitenbleche lackiert
+    t.mat("zink", platte_xz(F + B[::-1], -Y_WANGE, Y_WANGE))
     # Wulst an der Lippe
     xl, zl = F[-1]
     t.append(stab((xl + 6, -Y_WANGE, zl - 6), (xl + 6, Y_WANGE, zl - 6), 12))
     # Seitenwangen
     # Lippenspitze der Wange gekappt (keine Messerkante): Kappe 7 mm breit
-    wange = F[:-1] + [(F[-1][0] + 4.0, F[-1][1] - 7.0), (F[-1][0] + 7.9, F[-1][1] - 1.4), (X_RUECK - 10, SCHILD_H - 40), (X_RUECK + 30, 140), (X_RUECK - 50, 0)]
+    # "D"-Form (c_sr_schild): hintere Kante fast senkrecht, Oberkante steigt nach vorn, vorn grosser konvexer Radius
+    wange = F[:-1] + [(F[-1][0] + 4.0, F[-1][1] - 7.0), (F[-1][0] + 7.9, F[-1][1] - 1.4), (X_RUECK, SCHILD_H - 70), (X_RUECK, 0)]
     for s in (-1, 1):
         t.append(platte_xz(wange, s * Y_WANGE, s * SCHILD_B / 2))
-        t += schraubenreihe((X_RUECK - 40, s * SCHILD_B / 2, 240), (X_RUECK - 40, s * SCHILD_B / 2, 620), 3,
-                            (0, s, 0), 22, 8)
+        # Randschrauben im ~70-mm-Raster rundum
+        for (px, pz) in _randpunkte(wange, 70.0, 30.0):
+            t.mat("schwarz", sechskant((px, s * SCHILD_B / 2, pz), (0, s, 0), 16, 6))
     # Rippen auf der Rueckseite
     for y in (0.0, -430.0, 430.0, -860.0, 860.0):
         rippe = _zug(B, 30, 800, 16) + [(X_RUECK, 770), (X_RUECK, 170), (X_RUECK - 70, 30)]
@@ -264,9 +318,9 @@ def schild(t):
             t.mat("schwarz", rad_x(x0 - 2, y, 85, 14, 4))
     # Eckmesser (dicker, oben angeschraegt)
     for s in (-1, 1):
-        pts = [(s * 904, 0), (s * SCHILD_B / 2, 0), (s * SCHILD_B / 2, 240), (s * 1060, 240), (s * 904, 150)]
+        pts = [(s * 904, 0), (s * SCHILD_B / 2, 0), (s * SCHILD_B / 2, 240), (s * 1000, 240), (s * 904, 150)]
         t.mat("blank", platte_yz(pts, x0 - 6, x0 + 20))
-        for y, z in ((s * 960, 60), (s * 1120, 60), (s * 1120, 170)):
+        for y, z in ((s * 960, 60), (s * 1060, 60), (s * 1060, 170)):
             t.mat("schwarz", rad_x(x0 - 8, y, z, 14, 4))
     # Anschlussboecke fuer die Schubbalken (Gabel aus zwei Blechen)
     for s in (-1, 1):
@@ -276,16 +330,31 @@ def schild(t):
             pl += Pos(X_SCHILDBOLZEN, ya + 10, Z_SCHUB) * Rot(90, 0, 0) * Cylinder(75, 20)
             t.append(pl)
         bolzen_y(t, X_SCHILDBOLZEN, s * (Y_SCHUB - 72), s * (Y_SCHUB + 92), Z_SCHUB, 32)
+        # zwei weitere Bolzen im Gabelbock (c_sr_schild: ~3 Bolzen), Koepfe aussen
+        for zb in (305.0, 495.0):
+            xb = (X_SCHILDBOLZEN + _x_rueck(B, zb)) / 2
+            t.mat("blank", sechskant((xb, s * (Y_SCHUB + 72), zb), (0, s, 0), 28, 9))
         # Laschen fuer die Diagonalstrebe am oberen Holm
         for dy in (-26, 10):
             t.append(box(X_RUECK - 30, X_RUECK + 50, s * 860 + dy, s * 860 + dy + 16, 680, 760))
+    # Obergurt als Z-Profil: breit nach hinten abgekantet (c_sr_schild)
+    t.append(platte_xz([(X_RUECK - 15, 780), (X_RUECK - 75, 780), (X_RUECK - 75, 792), (X_RUECK - 15, 792)], -Y_WANGE, Y_WANGE))
+    # stehende Laschen mit U-Ausschnitt, ~130 ueber der Oberkante (Hauptfoto: Laschen oben auf dem Schild)
+    ZL = SCHILD_H + 130
+    for y in (-700.0, -250.0, 250.0, 700.0):
+        lp = platte_yz([(y - 55, 790), (y + 55, 790), (y + 55, ZL - 20), (y + 35, ZL), (y - 35, ZL), (y - 55, ZL - 20)],
+                       X_RUECK - 75, X_RUECK - 61)
+        lp -= Pos(X_RUECK - 68, y, ZL - 60) * Rot(0, 90, 0) * Cylinder(20, 30)
+        lp -= box(X_RUECK - 80, X_RUECK - 50, y - 20, y + 20, ZL - 60, ZL + 10)
+        t.append(lp)
+        t.mat("blank", rad_x(X_RUECK - 77, y, ZL - 60, 12, 10))   # Sicherungsbolzen
     return B
 
 
 def diagonalstrebe(t, s):
     """Rundrohrstrebe vom oberen Schildholm zum Schubbalken (Stabilisierung)."""
     p1 = Vector(X_RUECK + 25, s * 860, 720)
-    p2 = Vector(300, s * (Y_SCHUB - 30), SB_Z1 + 45)
+    p2 = Vector(300, s * (Y_SCHUB - 30), sb_top(300.0) + 45)
     d = (p2 - p1).normalized()
     t.append(stab(p1 + d * 40, p2 - d * 40, 28))
     for p in (p1, p2):
@@ -293,29 +362,54 @@ def diagonalstrebe(t, s):
         t.append(rad_y(p.X, p.Y, p.Z, 34, 20))
     bolzen_y(t, p1.X, s * 840, s * 882, p1.Z, 16)
     # Lasche auf dem Schubbalken
-    t.append(platte_xz([(p2.X - 70, SB_Z1), (p2.X + 70, SB_Z1), (p2.X + 45, p2.Z + 55), (p2.X - 45, p2.Z + 55)],
+    t.append(platte_xz([(p2.X - 70, sb_top(p2.X - 70)), (p2.X + 70, sb_top(p2.X + 70)), (p2.X + 45, p2.Z + 55), (p2.X - 45, p2.Z + 55)],
                        s * (Y_SCHUB - 52), s * (Y_SCHUB - 8)) - rad_y(p2.X, s * (Y_SCHUB - 30), p2.Z, 36, 60))
     bolzen_y(t, p2.X, s * (Y_SCHUB - 60), s * (Y_SCHUB + 5), p2.Z, 16)
 
 
 # ---------------- Schubbalken, Gelenkbock, A-Bock ----------------
+def sb_h(x):
+    """Balkenhoehe bei x: ab SB_XV nach hinten voll (250), davor linear auf SB_H_VORN am vorderen Auge."""
+    if x >= SB_XV:
+        return SB_H
+    return SB_H_VORN + (SB_H - SB_H_VORN) * max(0.0, (x - X_SCHILDBOLZEN) / (SB_XV - X_SCHILDBOLZEN))
+
+
+def sb_top(x):
+    return Z_SCHUB + sb_h(x) / 2
+
+
+def sb_bot(x):
+    return Z_SCHUB - sb_h(x) / 2
+
+
 def schubbalken(t, s):
     y = s * Y_SCHUB
-    yi, ya = y - SB_B / 2, y + SB_B / 2
-    # Kastenprofil mit Gurtblechen
-    t.append(box(X_SCHILDBOLZEN + 60, X_GELENK, yi, ya, SB_Z0, SB_Z1))
-    t.append(box(X_SCHILDBOLZEN + 120, X_GELENK - 90, yi - 6, ya + 6, SB_Z1 - 14, SB_Z1))   # Obergurt
-    t.append(box(X_SCHILDBOLZEN + 120, X_GELENK - 90, yi - 6, ya + 6, SB_Z0, SB_Z0 + 14))   # Untergurt
+    yi, ya = y - SB_B / 2, y + SB_B / 2        # (nur Breitenbereich; aussen ist y + s * SB_B / 2)
+    yo = y + s * SB_B / 2
+    xa, xe = X_SCHILDBOLZEN + 60, X_GELENK - LB / 2 + 10
+    xs = [xa, SB_XV, xe]
+    # Kasten: hinten hoch und flach, nach vorn verjuengt (Foto 40431489714), Polygonplatte statt Quader
+    t.append(platte_xz([(x, sb_top(x)) for x in xs] + [(x, sb_bot(x)) for x in xs[::-1]], yi, ya))
+    # Gurtbleche (Obergurt / Untergurt) folgen dem Profil
+    xg = [X_SCHILDBOLZEN + 120, SB_XV, X_GELENK - 90]
+    t.append(platte_xz([(x, sb_top(x)) for x in xg] + [(x, sb_top(x) - 14) for x in xg[::-1]], yi - 6, ya + 6))
+    t.append(platte_xz([(x, sb_bot(x)) for x in xg] + [(x, sb_bot(x) + 14) for x in xg[::-1]], yi - 6, ya + 6))
     # vorderes Auge (geschmiedet, schmaler) mit Uebergang
     t.append(rad_y(X_SCHILDBOLZEN, y, Z_SCHUB, 68, 100))
     t.append(box(X_SCHILDBOLZEN, X_SCHILDBOLZEN + 70, y - 50, y + 50, Z_SCHUB - 68, Z_SCHUB + 68))
     schmiernippel(t, X_SCHILDBOLZEN + 30, y, Z_SCHUB + 66)
-    # hinteres Gelenkauge (voll gerundet) mit Buchse
-    t.append(rad_y(X_GELENK, y, Z_SCHUB, SB_H / 2, SB_B))
-    t.mat("blank", rad_y(X_GELENK, y, Z_SCHUB, 50, SB_B + 8))
+    # hinten quadratischer Lagerblock (~190 x 190), aussen ~50 ueberstehend, 4 Sechskantschrauben, Fettkappe (c_sr_beam)
+    yb = yo + s * 50
+    t.append(kasten_rund(X_GELENK - LB / 2, X_GELENK + LB / 2, y - s * SB_B / 2, yb, Z_SCHUB - LB / 2, Z_SCHUB + LB / 2, 14, Axis.Y))
+    for dx in (-62, 62):
+        for dz in (-62, 62):
+            t.mat("blank", sechskant((X_GELENK + dx, yb, Z_SCHUB + dz), (0, s, 0), 26, 10))
+    t.mat("blank", stab((X_GELENK, yb, Z_SCHUB), (X_GELENK, yb + s * 18, Z_SCHUB), 24))            # Fettkappe
+    t.mat("blank", stab((X_GELENK, yb + s * 18, Z_SCHUB), (X_GELENK, yb + s * 26, Z_SCHUB), 10))
     # Querschotte aussen sichtbar als Schweisslaschen
     for x in (450, 1100, 1750):
-        t.append(box(x - 8, x + 8, ya, ya + 6, SB_Z0 + 14, SB_Z1 - 14))
+        t.append(box(x - 8, x + 8, yo, yo + s * 6, sb_bot(x) + 14, sb_top(x) - 14))
 
 
 def gelenkbock(t, s):
@@ -334,37 +428,53 @@ def gelenkbock(t, s):
     # Versteifungsrippe oben und Nabe
     t.append(box(1880, 2160, s * 830, s * 848, 455, 480))
     t.append(rad_y(X_GELENK, s * 900, Z_SCHUB, 70, 40))
-    bolzen_y(t, X_GELENK, s * 830, s * 1075, Z_SCHUB, 40)
-    t.mat("schwarz", sechskant((X_GELENK, s * 1053, Z_SCHUB), (0, s, 0), 80, 22))   # Kronenmutter
+    bolzen_y(t, X_GELENK, s * 830, s * (Y_SCHUB + 20), Z_SCHUB, 40)               # endet im Lagerblock des Schubbalkens
     schmiernippel(t, X_GELENK, s * 900, Z_SCHUB + 68)
 
 
 def fuehrungsplatte(t, s):
-    """Fuehrungsplatte (innen am Schubbalken, hochstehend) und Steckbolzen in einer Aufschweisshuelse
-    auf dem Obergurt, kurz hinter dem Leitrad (FL)."""
+    """Fuehrungsplatte (innen am Schubbalken, stehend ~ 240 hoch x 140 lang, 2 Sechskantschrauben oben) und Steckbolzen in einer
+    Aufschweisshuelse auf dem Obergurt, kurz hinter der Platte (Foto 40431489714; Lage des Bolzens unsicher)."""
     y = s * Y_SCHUB
     yi = y - s * SB_B / 2                     # Innenseite Schubbalken
-    pts = [(FP_X0, SB_Z0 + 12), (FP_X1, SB_Z0 + 12), (FP_X1, SB_Z1 + 160), (FP_X1 - 25, SB_Z1 + 190),
-           (FP_X0 + 25, SB_Z1 + 190), (FP_X0, SB_Z1 + 160)]
+    za, zb = sb_top(FP_X0), sb_top(FP_X1)
+    pts = [(FP_X0, sb_bot(FP_X0) + 12), (FP_X1, sb_bot(FP_X1) + 12), (FP_X1, zb + 160), (FP_X1 - 25, zb + 190),
+           (FP_X0 + 25, za + 190), (FP_X0, za + 160)]
     t.append(platte_xz(pts, yi + s * 3, yi - s * 16))
-    t += [sechskant(((FP_X0 + FP_X1) / 2, yi - s * 16, z), (0, -s, 0), 18, 7) for z in (SB_Z0 + 50, SB_Z1 - 50)]
+    t += [sechskant((x, yi - s * 16, za + 140), (0, -s, 0), 18, 7) for x in (FP_X0 + 40, FP_X1 - 40)]
     # Steckbolzen: Huelse, Bolzen mit Bund, Ziehring
-    t.append(scheibe_z(X_STECK, y, SB_Z1 - 3, 24, 43))
-    t.mat("blank", scheibe_z(X_STECK, y, SB_Z1 + 40, 13, 30))
-    t.mat("blank", scheibe_z(X_STECK, y, SB_Z1 + 70, 20, 10))
-    t.mat("blank", ring_y(X_STECK, y, SB_Z1 + 100, 24, 15, 9))
+    zt = sb_top(X_STECK)
+    t.append(scheibe_z(X_STECK, y, zt - 3, 24, 43))
+    t.mat("blank", scheibe_z(X_STECK, y, zt + 40, 13, 30))
+    t.mat("blank", scheibe_z(X_STECK, y, zt + 70, 20, 10))
+    t.mat("blank", ring_y(X_STECK, y, zt + 100, 24, 15, 9))
     # Haltekette des Bolzens (Oese an der Huelse)
-    t.append(ring_x(X_STECK, y + s * 26, SB_Z1 + 20, 10, 5, 6))
+    t.append(ring_x(X_STECK, y + s * 26, zt + 20, 10, 5, 6))
+
+
+def _bein(xf, y):
+    """Kastenstrebe von Fuss xf zum Scheitel, nach oben verjuengt (unten 150, oben 110 in der Ebene), 70 tief."""
+    F = Vector(xf, 0, SB_Z1 - 20)
+    P = Vector(XS, 0, ZS)
+    d = (P - F).normalized()
+    p = Vector(-d.Z, 0, d.X)
+    pts = [(F + p * (A_BREITE_UNTEN / 2)), (F - p * (A_BREITE_UNTEN / 2)), (P - p * (A_BREITE / 2)), (P + p * (A_BREITE / 2))]
+    return platte_xz([(q.X, q.Z) for q in pts], y - A_TIEFE / 2, y + A_TIEFE / 2)
 
 
 def abock(t, s):
-    """A-Bock: zwei Kastenstreben von ABOCK_FUESSE zum Scheitel, Stegblech mit Dreieckausschnitt."""
+    """A-Bock: zwei Kastenstrebe (nach oben verjuengt) von ABOCK_FUESSE zum Scheitel, Stegblech mit Dreieckausschnitt,
+    flacher Kastenkopf am Scheitel, schraeges Knotenblech vor dem vorderen Fuss auf dem Balken (c_sr_beam)."""
     y = s * Y_SCHUB
     yi, ya = y - A_TIEFE / 2, y + A_TIEFE / 2
     for xf in (XA_VORN, XA_HINTEN):
-        t.append(balken((xf, y, SB_Z1 - 20), (XS, y, ZS), A_TIEFE, A_BREITE))
+        t.append(_bein(xf, y))
         t.append(box(xf - 90, xf + 90, y - 55, y + 55, SB_Z1 - 3, SB_Z1 + 16))       # Fussplatte
         t += schraubenreihe((xf - 65, y + s * 55, SB_Z1 + 8), (xf + 65, y + s * 55, SB_Z1 + 8), 2, (0, s, 0), 18, 6)
+    # Knotenblech (~ 240 lang) vom vorderen Fuss nach vorn abfallend bis hinter den Steckbolzen, 2 Schrauben
+    t.append(platte_xz([(X_STECK + 40, SB_Z1), (X_STECK + 40, SB_Z1 + 45), (XA_VORN + 90, SB_Z1 + 200), (XA_VORN + 60, SB_Z1)],
+                       y - 10, y + 10))
+    t += [sechskant((x, y + s * 10, SB_Z1 + 22 + (x - X_STECK - 40) * 0.2), (0, s, 0), 16, 6) for x in (X_STECK + 80, X_STECK + 140)]
     # Stegblech zwischen den Streben mit dreieckigem Ausschnitt unten in der Mitte (BS)
     xm = (XA_VORN + XA_HINTEN) / 2
     aussen = Polygon((XA_VORN + 40, SB_Z1 - 3), (XA_HINTEN - 40, SB_Z1 - 3), (XS, ZS - 70), align=None)
@@ -375,11 +485,11 @@ def abock(t, s):
     # Randleiste um den Ausschnitt (Flachstahl, beidseitig 6 mm aufgesetzt)
     rand = extrude(Plane.XZ * (offset(innen, 22) - innen), amount=32)
     t.append(Pos(0, y - 16 - rand.bounding_box().min.Y, 0) * rand)
-    # Scheitel: Lagerauge mit Buchse
+    # Scheitel: flacher Kastenkopf (~ 180 x 170) mit Lagerauge und Buchse
+    t.append(kasten_rund(XS - 110, XS + 70, yi, ya, ZS - 85, ZS + 85, 22, Axis.Y))
     t.append(rad_y(XS, y, ZS, 78, A_TIEFE))
-    t.append(box(XS - 60, XS + 60, yi, ya, ZS - 120, ZS - 40))
     t.mat("blank", rad_y(XS, y, ZS, 44, A_TIEFE + 6))
-    schmiernippel(t, XS, y, ZS + 76)
+    schmiernippel(t, XS, y, ZS + 85)
 
 
 # ---------------- Hubzylinder ----------------
@@ -395,61 +505,84 @@ def hubzylinder(t, s):
     t.append(box(XS + 75, XS + GABEL_L - 16, y - 60, y + 60, z - 48, z + 48))
     t.mat("schwarz", sechskant((XS + GABEL_L - 16, y, z), (1, 0, 0), 70, 16))     # Kontermutter
     bolzen_y(t, XS, s * (Y_SCHUB - 70), s * (Y_SCHUB + 75), z, 32)
-    # Kolbenstange (chrom)
+    # Kolbenstange (matt braun-blank, Foto 40431489714)
     x0 = XS + GABEL_L - 4
-    t.mat("chrom", rad_x((x0 + X_KOPF - 30) / 2, y, z, R_STANGE, X_KOPF - 30 - x0))
-    # Stopfbuchse, Kopfflansch mit Schrauben, Kopfstueck
-    t.append(rad_x(X_KOPF - 18, y, z, 48, 36))
-    t.mat("schwarz", rad_x(X_KOPF - 40, y, z, 38, 10))           # Abstreifer
-    t.append(rad_x(X_KOPF + 15, y, z, 88, 30))
-    t += schraubenkreis((X_KOPF, y, z), (-1, 0, 0), 74, 8, 18, 9, start=22.5)
-    t.append(rad_x(X_KOPF + 55, y, z, R_ZYL + 12, 52))
-    # Zylinderrohr bis in den Endkasten
-    t.append(rad_x((X_KOPF + 78 + X_BODEN) / 2, y, z, R_ZYL, X_BODEN - X_KOPF - 78))
+    t.mat("blank", rad_x((x0 + X_KOPF - 30) / 2, y, z, R_STANGE, X_KOPF - 30 - x0))
+    # Stopfbuchse, vierkantiger Kopfblock (~ 60 lang x 165 x 165, Eckschrauben), Rohr dahinter
+    t.append(rad_x(X_KOPF - 18, y, z, 34, 36))
+    t.mat("schwarz", rad_x(X_KOPF - 40, y, z, 29, 10))           # Abstreifer
+    t.append(kasten_rund(X_KOPF - 4, X_KOPF + 56, y - 82, y + 82, z - 82, z + 82, 8, Axis.X))
+    for dy in (-58, 58):
+        for dz in (-58, 58):
+            t.mat("blank", sechskant((X_KOPF - 4, y + dy, z + dz), (-1, 0, 0), 20, 8))
+    # Zylinderrohr Ø100 bis in den Endkasten
+    t.append(rad_x((X_KOPF + 50 + X_BODEN) / 2, y, z, R_ZYL, X_BODEN - X_KOPF - 50))
     # Zapfenring mit Querzapfen (lagert in beiden Kastenwaenden)
     t.append(rad_x(X_ZAPFEN, y, z, R_ZYL + 10, 90))
-    t.mat("blank", rad_y(X_ZAPFEN, y, z, 34, 2 * EK_DY - 2 * EK_T + 6))
+    t.mat("blank", rad_y(X_ZAPFEN, y, z, 28, 2 * EK_DY - 2 * EK_T + 6))
     # Bodenflansch, Boden mit Schrauben
-    t.append(rad_x(X_BODEN + 8, y, z, 80, 16))
-    t.append(rad_x(X_BODEN + 31, y, z, 72, 30))
-    t += schraubenkreis((X_BODEN + 46, y, z), (1, 0, 0), 50, 6, 16, 8, start=30)
-    # Anschluss Ringseite oben am Kopfstueck, Rohr auf dem Zylinder in den Endkasten (Foto BS)
-    zr = z + R_ZYL + 30
-    t.append(box(X_KOPF + 40, X_KOPF + 76, y - 20, y + 20, z + R_ZYL, z + R_ZYL + 16))
-    t.append(rohr_glatt([(X_KOPF + 58, y, z + R_ZYL + 4), (X_KOPF + 58, y, zr), (EK_X0 + 60, y, zr)], R_ZYLLTG - 2, 22))
+    t.append(rad_x(X_BODEN + 8, y, z, R_ZYL + 14, 16))
+    t.append(rad_x(X_BODEN + 31, y, z, R_ZYL + 7, 30))
+    t += schraubenkreis((X_BODEN + 46, y, z), (1, 0, 0), 36, 6, 14, 8, start=30)
+    # zwei duenne Rohre ueber die ganze Zylinderlaenge oben und unten (z +- 62), unteres biegt am Kopf nach unten (c_sr_box)
+    dz = 62.0
+    t.append(box(X_KOPF + 40, X_KOPF + 70, y - 18, y + 18, z + R_ZYL, z + dz + 8))
+    t.append(rohr_glatt([(X_KOPF + 60, y, z + dz), (EK_X0 + 60, y, z + dz)], R_ZYLLTG - 2, 22))
+    t.append(box(X_KOPF + 40, X_KOPF + 70, y - 18, y + 18, z - dz - 8, z - R_ZYL))
+    t.append(rohr_glatt([(X_KOPF + 60, y, z - dz - 40), (X_KOPF + 60, y, z - dz), (EK_X0 + 60, y, z - dz)], R_ZYLLTG - 2, 24))
     for x in (2050.0, 2300.0):                                    # Sattelschellen
-        t.append(box(x - 12, x + 12, y - 16, y + 16, z + R_ZYL - 6, zr))
-    # Anschluss Bodenseite unten am Kopfstueck, spiegelbildlich: Rohr unter dem Zylinder in den Endkasten (Foto BS)
-    zu = z - R_ZYL - 30
-    t.append(box(X_KOPF + 40, X_KOPF + 76, y - 20, y + 20, z - R_ZYL - 16, z - R_ZYL))
-    t.append(rohr_glatt([(X_KOPF + 58, y, z - R_ZYL - 4), (X_KOPF + 58, y, zu), (EK_X0 + 60, y, zu)], R_ZYLLTG - 2, 22))
-    for x in (2050.0, 2300.0):
-        t.append(box(x - 12, x + 12, y - 16, y + 16, zu, z - R_ZYL + 6))
+        t.append(box(x - 12, x + 12, y - 16, y + 16, z + R_ZYL - 6, z + dz))
+        t.append(box(x - 12, x + 12, y - 16, y + 16, z - dz, z - R_ZYL + 6))
 
 
 # ---------------- Traverse (Endkaesten + Quertraeger/Oeltank) ----------------
+def _ecke_prisma(s, y, grow):
+    """Prisma (z-Extrusion) ueber der hinteren Aussenecke des Endkastens: Region hinter der Schraege
+    (Dx = EK_SCHR_DX, Dy = EK_SCHR_DY). grow > 0 verschiebt die Schraegflaeche um grow nach innen (fuer den Innenraum)."""
+    ya = y + s * EK_DY
+    p1 = Vector(EK_X1 - EK_SCHR_DX, ya, 0)
+    p2 = Vector(EK_X1, ya - s * EK_SCHR_DY, 0)
+    d = (p2 - p1).normalized()
+    n = Vector(EK_SCHR_DY, s * EK_SCHR_DX, 0).normalized()          # zeigt zur abgeschnittenen Ecke
+    a, b = p1 - n * grow - d * 60, p2 - n * grow + d * 60
+    pts = [(a.X, a.Y), (b.X, b.Y), (b.X + n.X * 200, b.Y + n.Y * 200), (a.X + n.X * 200, a.Y + n.Y * 200)]
+    pr = extrude(Plane.XY.offset(EK_Z0 - 5) * Polygon(*pts, align=None), amount=EK_Z1 - EK_Z0 + 10)
+    return pr
+
+
 def endkasten(t, s):
-    """Rechteckiger Endkasten (Blechkasten, hohl), Zylinder ragt vorn durch einen Ausschnitt hinein."""
+    """Rechteckiger Endkasten (Blechkasten, hohl) mit abgeschraegter hinterer Aussenecke (Dx 90 / Dy 150), Zylinder ragt vorn
+    durch einen Ausschnitt hinein; Stuetzschraege (Konsole) unten, Langloch in der Rueckwand (rechts)."""
     y = s * Y_SCHUB
-    k = kasten_rund(EK_X0, EK_X1, y - EK_DY, y + EK_DY, EK_Z0, EK_Z1, 18, Axis.Y)
-    k -= kasten_rund(EK_X0 + EK_T, EK_X1 - EK_T, y - EK_DY + EK_T, y + EK_DY - EK_T,
-                     EK_Z0 + EK_T, EK_Z1 - EK_T, 6, Axis.Y)
-    # Ausschnitt vorn fuer Zylinder und Leitung (nach oben bis zur Decke: Schwenkfreiheit beim Heben)
+    k = kasten_rund(EK_X0, EK_X1, y - EK_DY, y + EK_DY, EK_Z0, EK_Z1, 14, Axis.Y)
+    k -= _ecke_prisma(s, y, 0.0)
+    ki = kasten_rund(EK_X0 + EK_T, EK_X1 - EK_T, y - EK_DY + EK_T, y + EK_DY - EK_T, EK_Z0 + EK_T, EK_Z1 - EK_T, 6, Axis.Y)
+    ki -= _ecke_prisma(s, y, EK_T)
+    k -= ki
+    # Ausschnitt vorn fuer Zylinder und Leitungen (nach oben bis fast zur Decke: Schwenkfreiheit beim Heben)
     k -= box(EK_X0 - 5, EK_X0 + EK_T + 5, y - R_ZYL - 12, y + R_ZYL + 12, Z_AUSS, Z_AUSS_O)
+    zm = (EK_Z0 + EK_Z1) / 2
+    if s > 0:
+        # Langloch in der Rueckwand dicht am rechten Ende (26271221407: Obround ~ 270 x 110, vor der Schraege)
+        k -= kasten_rund(EK_X1 - EK_T - 2, EK_X1 + 2, Y_LANGLOCH - 135, Y_LANGLOCH + 135, zm - 55, zm + 55, 54, Axis.X)
     t.append(k)
     # Kantenschutz um den Ausschnitt
     t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y - R_ZYL - 12, Z_AUSS - 12, Z_AUSS_O))
     t.append(box(EK_X0 - 8, EK_X0 + 2, y + R_ZYL + 12, y + R_ZYL + 24, Z_AUSS - 12, Z_AUSS_O))
     t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y + R_ZYL + 24, Z_AUSS - 12, Z_AUSS))
-    # Zapfenlager: Deckel aussen mit Schrauben, Nabe innen
+    # Zapfenlager: Deckel Ø100 aussen vorn (1-2 Schrauben + Fettloch), Nabe innen
     ya = y + s * EK_DY
-    t.append(rad_y(X_ZAPFEN, ya + s * 8, Z_ZYL, 58, 19))
-    t += schraubenkreis((X_ZAPFEN, ya + s * 17, Z_ZYL), (0, s, 0), 42, 6, 14, 7, start=30)
+    t.append(rad_y(X_ZAPFEN, ya + s * 6, Z_ZYL, 50, 14))
+    t += [sechskant((X_ZAPFEN + dx, ya + s * 13, Z_ZYL + 26), (0, s, 0), 14, 6) for dx in (-26, 26)]
+    t.mat("schwarz", rad_y(X_ZAPFEN, ya + s * 13, Z_ZYL - 14, 7, 4))                # Fettloch
     yi = y - s * EK_DY
-    t.append(rad_y(X_ZAPFEN, yi - s * 8, Z_ZYL, 52, 19))
-    schmiernippel(t, X_ZAPFEN, ya + s * 8, Z_ZYL + 56)
+    t.append(rad_y(X_ZAPFEN, yi - s * 8, Z_ZYL, 44, 19))
     # Schweissnaht-/Falzleisten aussen
     t.append(box(EK_X0 + 30, EK_X1 - 30, ya - s * 3, ya + s * 6, EK_Z0 + 22, EK_Z0 + 34))
+    # Stuetzschraege (Konsole) unter dem Kasten, nach vorn abfallend ~ 30..36 Grad (c_sr_box / c_sl_box)
+    ys = s * (Y_SCHUB + 30)
+    t.append(platte_xz([(EK_X1 - 40, EK_Z0 + 2), (EK_X1 - 160, EK_Z0 + 2), (EK_X1 - 310, EK_Z0 - 110), (EK_X1 - 310, EK_Z0 - 155)],
+                       ys - 13, ys + 13))
     # Konsole auf der Kotfluegelkante (Randwulst y = +-900), verschraubt
     yk0, yk1 = sorted((s * (EK_YI - 28), s * (EK_YI + 3)))
     t.append(box(QT_X0 + 10, DECK_X1 - 5, yk0, yk1, DECK_Z, EK_Z0 + 3))
@@ -462,53 +595,62 @@ def traverse(t):
     for s in (-1, 1):
         endkasten(t, s)
     # Quertraeger = Oeltank, hinten oben zwischen den Endkaesten (Enden 3 mm in die Kastenwand)
-    qt = kasten_rund(QT_X0, QT_X1, -EK_YI - 3, EK_YI + 3, QT_Z0, QT_Z1, 20, Axis.Y)
-    # Langloch (Griffoeffnung) in der Rueckwand rechts (26271221407: ovale Vertiefung ~240 x 125 bei y ~ +620)
-    qt -= kasten_rund(QT_X1 - 14, QT_X1 + 2, 620 - 120, 620 + 120, 1010, 1134, 60, Axis.X)
+    qt = kasten_rund(QT_X0, QT_X1, -EK_YI - 3, EK_YI + 3, QT_Z0, QT_Z1, 14, Axis.Y)
+    zm = (QT_Z0 + QT_Z1) / 2
+    # Langloch rechts in der Rueckwand (setzt sich im Endkasten fort, s. endkasten)
+    qt -= kasten_rund(QT_X1 - 20, QT_X1 + 2, Y_LANGLOCH - 135, Y_LANGLOCH + 135, zm - 55, zm + 55, 54, Axis.X)
     t.append(qt)
-    # Firmenschild "Frisch" auf der Rueckwand links der Mitte (26271221407)
-    t.mat("schwarz", box(QT_X1, QT_X1 + 8, -570, -130, 995, 1185))
-    t.mat("blank", box(QT_X1 + 8, QT_X1 + 14, -570, -130, 995, 1005))
-    t.mat("blank", box(QT_X1 + 8, QT_X1 + 14, -570, -130, 1175, 1185))
-    t.mat("blank", box(QT_X1 + 8, QT_X1 + 14, -570, -560, 995, 1185))
-    t.mat("blank", box(QT_X1 + 8, QT_X1 + 14, -140, -130, 995, 1185))
+    # umlaufender Bodenflansch nach hinten abgekantet (~ 35 vor, ~ 45 hoch), je 2 Sechskantschrauben (c_links)
+    yfl = EK_YI + 3 + 40
+    t.append(box(QT_X1 - 2, QT_X1 + 35, -yfl, yfl, QT_Z0, QT_Z0 + 45))
+    for yc in (-340.0, 440.0):
+        for dy in (-35, 35):
+            t.mat("schwarz", sechskant((QT_X1 + 35, yc + dy, QT_Z0 + 22), (1, 0, 0), 22, 8))
+    # Firmenschild "Frisch": dunkelblaue Platte, weisser Rand und weisse Blockschrift (26271221407), 410 x 215 bei y -230
+    zs0, zs1 = zm - 90, zm + 125
+    ys0, ys1 = -230 - 205, -230 + 205
+    t.mat("bosch", box(QT_X1, QT_X1 + 6, ys0, ys1, zs0, zs1))
+    for (a, b, c, d) in ((ys0, ys1, zs0, zs0 + 12), (ys0, ys1, zs1 - 12, zs1), (ys0, ys0 + 12, zs0, zs1), (ys1 - 12, ys1, zs0, zs1)):
+        t.mat("zifferblatt", box(QT_X1 + 6, QT_X1 + 10, a, b, c, d))
     try:
-        pl = Plane(origin=(QT_X1 + 5, -350, 1090), x_dir=(0, 1, 0), z_dir=(1, 0, 0))   # Blick von hinten: rechts = +y
-        tx = extrude(pl * Text("Frisch", 140, font_style=FontStyle.BOLD, align=(Align.CENTER, Align.CENTER)), amount=9)
-        t.mat("blank", tx)
+        pl = Plane(origin=(QT_X1 + 6, -230, (zs0 + zs1) / 2), x_dir=(0, 1, 0), z_dir=(1, 0, 0))   # Blick von hinten: rechts = +y
+        tx = extrude(pl * Text("Frisch", 95, font_style=FontStyle.BOLD, align=(Align.CENTER, Align.CENTER)), amount=4)
+        t.mat("zifferblatt", tx)
     except Exception as e:                                          # Schriftart nicht verfuegbar
         print("Frisch-Schrift entfaellt:", e)
     # Reinigungsdeckel vorn mit Schrauben
     t.append(box(QT_X0 - 8, QT_X0 + 2, -380, 380, QT_Z0 + 30, QT_Z1 - 30))
     t += schraubenreihe((QT_X0 - 8, -350, QT_Z1 - 48), (QT_X0 - 8, 350, QT_Z1 - 48), 7, (-1, 0, 0), 14, 6)
     t += schraubenreihe((QT_X0 - 8, -350, QT_Z0 + 48), (QT_X0 - 8, 350, QT_Z0 + 48), 7, (-1, 0, 0), 14, 6)
-    # Einfuellstutzen links (26271221407): Ø ~115, ~110 hoch, rote Kappe; Entluefter/Peilstab sind nicht zu sehen
-    xe = 2740.0
-    t.append(scheibe_z(xe, -300, QT_Z1 - 2, 55, 112))
-    t.mat("ruecklicht", scheibe_z(xe, -300, QT_Z1 + 108, 60, 18))                # rote Kappe
+    # Einfuellstutzen (26271221407): Ø ~ 136, ~ 125 hoch, flache rotbraune Kappe mit Rand, bei y -170
+    xe, ye_ = 2730.0, -170.0
+    t.append(scheibe_z(xe, ye_, QT_Z1 - 2, 68, 112))
+    t.mat("auspuff", scheibe_z(xe, ye_, QT_Z1 + 108, 72, 16))                   # Kappe mit Rand
+    t.mat("auspuff", scheibe_z(xe, ye_, QT_Z1 + 122, 54, 6))
     # Ablassschraube unten
     t.mat("schwarz", sechskant((2720, 520, QT_Z0), (0, 0, -1), 30, 14))
 
 
 # ---------------- Schutzbuegel ----------------
 def schutzbuegel(t):
-    """Rohrbuegel ueber den Endkaesten mit Querrohr ueber der Traverse (BS, PK, FL) und
-    Rohrschlaufe hinten links am Endkasten (PK)."""
-    yb = Y_SCHUB - 55
-    for s in (-1, 1):
-        y = s * yb
-        t.append(rohr_glatt([(BG_X1, y, EK_Z1 - 3), (BG_X1, y, BG_Z), (BG_X0, y, BG_Z),
-                             (EK_X0 + 30, y, EK_Z1 - 3)], R_BUEGEL, 70))
-        for x in (BG_X1, EK_X0 + 30):                                # Fussplatten
-            t.append(box(x - 40, x + 40, y - 36, y + 36, EK_Z1 - 3, EK_Z1 + 10))
-    t.append(stab((BG_X1, -yb, BG_Z), (BG_X1, yb, BG_Z), R_BUEGEL))
-    # Rohrschlaufe hinten links
-    y0, y1 = -(Y_SCHUB + 60), -(Y_SCHUB - 60)
-    z = 1150.0
-    t.append(rohr_glatt([(EK_X1 - 3, y0, z), (EK_X1 + 140, y0, z), (EK_X1 + 140, y1, z), (EK_X1 - 3, y1, z)],
-                        R_BUEGEL - 2, 50))
-    for yy in (y0, y1):
-        t.append(box(EK_X1 - 3, EK_X1 + 12, yy - 30, yy + 30, z - 30, z + 30))
+    """Niedriges Gelaender (Foto 26271221407, c_links, c_sr_box): ein durchgehendes Rohr bildet zwei parallele Querrohre
+    (Abstand 55) dicht ueber der Traverse (40..80 mm); links endet es in einem engen Haarnadelbogen (y -680), rechts
+    laeuft es in einer niedrigen Schlaufe ueber dem Steuerblock auf dem rechten Endkasten aus. Nichts ragt ueber die
+    Rueckwand hinaus (keine Schlaufe hinten links)."""
+    y = Y_SCHUB - 55
+    ya = 1018.0                                                  # Ende der Stangenseiten-Leitung (hinter dem Steuerblock)
+    t.append(rohr_glatt([(EK_X0 + 30, y, EK_Z1 - 3), (BG_X0, y, BG_Z), (BG_X1, y, BG_Z),
+                         (BG_X1, Y_HAARNADEL, BG_Z), (X_QL, Y_HAARNADEL, Z_QL),
+                         (X_QL, ya, Z_QL), (X_QL, ya, EK_Z1 - 3)], R_BUEGEL, 30))
+    for x, yy in ((EK_X0 + 30, y), (X_QL, ya)):                  # Fussplatten
+        t.append(box(x - 36, x + 36, yy - 36, yy + 36, EK_Z1 - 3, EK_Z1 + 10))
+    # Haarnadelbogen links: Stuetze auf der Decke
+    xh = (BG_X1 + X_QL) / 2
+    t.append(box(xh - 36, xh + 36, Y_HAARNADEL - 36, Y_HAARNADEL + 36, EK_Z1 - 3, EK_Z1 + 10))
+    t.append(stab((xh, Y_HAARNADEL, EK_Z1), (xh, Y_HAARNADEL, Z_QL + 6), 10))
+    for yy in (-450.0, -100.0, 250.0, 600.0):                    # Doppelschellen halten beide Querrohre
+        t.append(box(X_QL - 12, X_QL + 12, yy - 14, yy + 14, QT_Z1 - 2, Z_QL - R_QL + 2))
+        t.append(box(BG_X1 - 12, X_QL + 12, yy - 8, yy + 8, Z_QL - R_QL, BG_Z + R_BUEGEL))
 
 
 # ---------------- Oelpumpe ----------------
@@ -536,52 +678,56 @@ def oelpumpe(t):
 
 
 # ---------------- Hydraulikleitungen ----------------
-def _z_haube(x):
-    """z der Leitung auf dem Schraegstueck an der Haubenseite."""
-    (xa, za), (xb, zb) = LTG_VORN, LTG_HINTEN
-    return za + (x - xa) * (zb - za) / (xb - xa)
-
-
 def _schelle_haube(t, x, s, r):
-    """Rohrschelle um die Leitung an der Maske/Haubenseite mit Lasche zur Wand.
-    Hinter dem Seitensegment (x > SEG_X1) ist die Haube unten offen: dort haengt die Schelle am Schriftband."""
-    (xa, za), (xb, zb) = LTG_VORN, LTG_HINTEN
-    d = (xb - xa, 0, zb - za)
-    z = _z_haube(x)
+    """Rohrschelle um die flach laufende Leitung. An Maske/Haubenseite (x < SEG_X1) mit Lasche zur Wand, sonst auf einer
+    Konsole, die auf dem Laengstraeger (Oberkante z 520, y 200..280) steht und nach aussen unter die Leitung greift."""
+    z = Z_LTG
     y = s * Y_LTG
-    t.append(ring_dir((x, y, z), d, r + 8, r - 0.5, 26))
-    yw = 355.0 if x < 210 else Y_HAUBE                       # Maskenseite / Haubenseite aussen
-    ya, yb = sorted((s * (yw - 2.4), s * (Y_LTG - r + 4)))
+    t.append(ring_x(x, y, z, r + 8, r - 0.5, 26))
     if x < SEG_X1:
+        yw = 355.0 if x < 210 else Y_HAUBE                       # Maskenseite / Haubenseite aussen
+        ya, yb = sorted((s * (yw - 2.4), s * (Y_LTG - r + 4)))
         t.append(box(x - 15, x + 15, ya, yb, z - 16, z + 16))
         t.mat("schwarz", sechskant((x, s * (Y_LTG - r + 4), z), (0, s, 0), 12, 5))
     else:
-        t.append(box(x - 15, x + 15, ya, yb, z + r - 2, HAUBE_BAND_Z + 45))
-        t.mat("schwarz", sechskant((x, s * (Y_LTG - r + 4), HAUBE_BAND_Z + 25), (0, s, 0), 12, 5))
+        ya, yb = sorted((s * 262.0, s * Y_LTG))
+        t.append(box(x - 18, x + 18, ya, yb, 520.0, z - r + 2))     # Konsole auf dem Obergurt des Laengstraegers (Oberkante z 520)
+        t.mat("schwarz", sechskant((x, s * 330.0, z - r + 2), (0, 0, 1), 12, 5))
 
 
 def ventil(t):
-    """Steuerblock oben auf dem rechten Endkasten (Fotos f7826/7826381704, 39334013090): kleiner Block mit durchgehendem
-    Schieber, Kugelhebel (Kugel Ø 90) darauf; Schlauch von der Plattform kommt von innen (-y), zwei Leitungen zu den
-    Querrohren, Rueckleitung in den Oeltank. Steht auf der Kastendecke (z 1240, bis 1 mm eingesenkt)."""
+    """Steuerblock VORN auf dem rechten Endkasten, hinter dem Zylinderkopf (Foto 40431489714, c_sr_box; die grosse Kugel von
+    7826381704 ist eine Alga-Maschine): gelblicher Block mit durchgehendem Schieber, darauf eine kleine Kugel Ø 40 auf
+    duenner Stange und ein langer schraeger Hebel (~ 350, ~ 18 Grad nach vorn geneigt). Schlaeuche kommen von innen (-y),
+    zwei Leitungen laufen nach hinten in die Querrohre. Steht auf der Kastendecke (1 mm eingesenkt)."""
     zt = EK_Z1
     y0, y1, x0, x1 = VB_Y0, VB_Y1, VB_X0, VB_X1
     xm, ym = (x0 + x1) / 2, (y0 + y1) / 2
     t.append(box(x0 - 8, x1 + 8, y0 - 8, y1 + 8, zt - 1, zt + 10))                              # Fussplatte
     t += [sechskant((x, y, zt + 10), (0, 0, 1), 14, 6) for x in (x0 - 2, x1 + 2) for y in (y0 - 3, y1 + 3)]
-    t.append(kasten_rund(x0, x1, y0, y1, zt + 10, VB_Z1, 8, Axis.Z))                              # Ventilkoerper
-    t.append(rad_x(xm, ym, zt + 32, 22, x1 - x0 + 30))                                            # Schieber
+    t.mat("blank", kasten_rund(x0, x1, y0, y1, zt + 10, VB_Z1, 8, Axis.Z))                      # Ventilkoerper
+    t.mat("blank", rad_x(xm, ym, zt + 38, 22, x1 - x0 + 30))                                    # Schieber
     for x in (x0 - 15, x1 + 15):
-        t.mat("blank", rad_x(x, ym, zt + 32, 15, 9))
-    t.append(Pos(xm, ym, VB_Z1 + 7) * Cylinder(22, 14))                                           # Lagerbock Hebel
-    t.mat("blank", stab((xm, ym, VB_Z1), (xm, ym, VB_Z1 + 90), 8))
-    t.mat("schwarz", Pos(xm, ym, VB_Z1 + 90 + 35) * Sphere(45))                                   # Kugel, Oberkante 1420
+        t.mat("blank", rad_x(x, ym, zt + 38, 15, 9))
+    # kleine Kugel Ø 40 auf duenner Stange (Foto: Stange ~ 100 ueber dem Block), hinten auf dem Block
+    xk = x1 - 25
+    t.append(Pos(xk, ym, VB_Z1 + 7) * Cylinder(18, 14))                                           # Lagerbock
+    t.mat("blank", stab((xk, ym, VB_Z1), (xk, ym, VB_Z1 + 100), 6))
+    t.mat("schwarz", Pos(xk, ym, VB_Z1 + 100 + 14) * Sphere(20))                                  # Kugel Ø 40
+    # langer schraeger Hebel (nach vorn geneigt) auf der Vorderseite des Blocks
+    xl = x0 + 25
+    a = math.radians(18)
+    p0 = (xl, ym, VB_Z1 + 6)
+    p1 = (xl - 350 * math.sin(a), ym, VB_Z1 + 6 + 350 * math.cos(a))
+    t.append(Pos(xl, ym, VB_Z1 + 7) * Cylinder(18, 14))
+    t.mat("blank", stab(p0, p1, 7))
+    t.mat("schwarz", Pos(*p1) * Sphere(10))
     for xx in (XH_P, XH_R):                                                                       # Schlauchanschluesse innen
-        t.append(rad_y(xx, y0 - 8, zt + 36, 17, 14))
+        t.append(rad_y(xx, y0 - 8, zt + 38, 17, 14))
     rr = R_QL - 3
-    xq = 2655.0
-    t.append(rohr_glatt([(x0 + 4, 985.0, zt + 30), (xq, 985.0, zt + 30), (xq, EK_YI + 68, zt + 30)], rr, 25))   # -> Querrohr (Stangenseite)
-    t.append(rohr_glatt([(x0 + 4, 1022.0, zt + 22), (BG_X1, 1022.0, zt + 22), (BG_X1, EK_YI + 60, zt + 22)], rr, 25))  # -> Buegelrohr (Kolbenseite)
+    t.append(rohr_glatt([(x1 + 4, 1018.0, 1235.0), (X_QL - 4, 1018.0, 1235.0)], rr, 25))      # -> Querrohr (Stangenseite)
+    t.append(rohr_glatt([(x1 + 4, 975.0, 1205.0), (BG_X1, 975.0, 1205.0), (BG_X1, 920.0, 1205.0),
+                         (BG_X1, 920.0, BG_Z - 12)], rr, 25))                                  # -> Buegelrohr (Kolbenseite)
 
 
 def leitungen(t):
@@ -596,30 +742,25 @@ def leitungen(t):
       * Zylinder: oberes duenne Rohr = Stangenseite (Kopf -> Endkasten), Kolbenseite ueber die Buegelschlaufe in den Kasten,
         unteres Rohr = Leckoelleitung des Kopfes (gedeutet)."""
     for s in (-1, 1):
-        pts = [(PU_XPORT, s * 104, PU_ZPORT), (PU_XPORT, s * 300, PU_ZPORT), (-35.0, s * Y_LTG, 560.0),
-               (LTG_VORN[0], s * Y_LTG, LTG_VORN[1]), (LTG_HINTEN[0], s * Y_LTG, LTG_HINTEN[1]),
-               (X_LTG_AB, s * Y_LTG, Z_HINT + 30), (X_LTG_AB + 90, s * Y_HINT, Z_HINT)]
+        pts = [(PU_XPORT, s * 104, PU_ZPORT), (PU_XPORT, s * 300, PU_ZPORT), (-35.0, s * Y_LTG, Z_LTG),
+               (LTG_HINTEN[0], s * Y_LTG, LTG_HINTEN[1]),
+               (X_LTG_AB, s * Y_LTG, Z_HINT), (X_LTG_AB + 110, s * Y_LTG, Z_HINT), (X_LTG_AB + 210, s * Y_HINT, Z_HINT)]
         if s == 1:
             pts += [(X_SCHLAUCH, s * Y_HINT, Z_HINT)]
         else:
             pts += [(2540.0, s * Y_HINT, Z_HINT), (2590.0, s * Y_HINT, Z_HINT + 75), (QT_X0 + 4, s * Y_HINT, Z_HINT + 75)]
         t.append(rohr_glatt(pts, R_LTG, 70))
-        for x in (100.0, 290.0, 980.0):
+        for x in (100.0, 290.0, 470.0, 815.0):
             _schelle_haube(t, x, s, R_LTG)
-        # Halter am Unterbau (Seitenwand y = +-330) auf dem Schraegstueck
-        zx = LTG_HINTEN[1] + (1300.0 - LTG_HINTEN[0]) * (Z_HINT + 30 - LTG_HINTEN[1]) / (X_LTG_AB - LTG_HINTEN[0])
-        t.append(ring_x(1300.0, s * Y_LTG, zx, R_LTG + 8, R_LTG - 0.5, 26))
-        ya, yb = sorted((s * 331.0, s * (Y_LTG - R_LTG + 4)))
-        t.append(box(1285, 1315, ya, yb, zx - 14, zx + 14))
         for x in (1800.0, 2000.0, 2200.0) if s == 1 else (1800.0, 2000.0, 2200.0, 2450.0):
             schelle_x(t, x, s * Y_HINT, Z_HINT, R_LTG, DECK_Z - 0.3)
     # zwei schwarze Schlaeuche rechts (f7826): Druck (Plattform -> ueber die Werkzeugkaesten -> Steuerblock) und Ruecklauf
     # (Steuerblock -> Plattform -> Rohr in die Tankvorderwand); beide laufen parallel
-    t.mat("gummi", rohr_glatt([(X_SCHLAUCH - 6, Y_HINT, Z_HINT), (2300.0, Y_HINT, Z_HINT), (2300.0, Y_HINT, 1110.0),
-                               (2300.0, 862.0, 1110.0), (2300.0, 862.0, 1275.0), (XH_P, 862.0, 1275.0),
-                               (XH_P, VB_Y0 - 6, 1275.0)], 13.0, 45))
-    t.mat("gummi", rohr_glatt([(XH_R, VB_Y0 - 6, 1275.0), (XH_R, 830.0, 1275.0), (2335.0, 830.0, 1275.0),
-                               (2335.0, 830.0, 1150.0), (2335.0, 500.0, 1150.0), (2335.0, 500.0, Z_HINT + 14)], 13.0, 45))
+    t.mat("gummi", rohr_glatt([(X_SCHLAUCH - 6, Y_HINT, Z_HINT), (2300.0, Y_HINT, Z_HINT), (2300.0, Y_HINT, 1085.0),
+                               (2300.0, 862.0, 1085.0), (XH_P, 862.0, 1085.0), (XH_P, 862.0, 1208.0),
+                               (XH_P, VB_Y0 - 6, 1208.0)], 13.0, 45))
+    t.mat("gummi", rohr_glatt([(XH_R, VB_Y0 - 6, 1208.0), (XH_R, 830.0, 1208.0), (XH_R, 830.0, 1092.0),
+                               (2335.0, 830.0, 1092.0), (2335.0, 500.0, 1092.0), (2335.0, 500.0, Z_HINT + 14)], 13.0, 45))
     t.append(ring_x(X_SCHLAUCH, Y_HINT, Z_HINT, R_LTG + 6, R_LTG - 0.5, 14))                  # Uebergang Rohr/Schlauch
     t.append(rad_x(X_SCHLAUCH + 12, Y_HINT, Z_HINT, R_LTG + 4, 14))
     t.append(rohr_glatt([(2335.0, 500.0, Z_HINT), (2540.0, 500.0, Z_HINT), (2590.0, 500.0, Z_HINT + 75),
@@ -627,15 +768,6 @@ def leitungen(t):
     t.append(Pos(2335.0, 500.0, Z_HINT + 22) * Cylinder(R_LTG + 5, 14))                                 # Uebergang Schlauch/Rohr
     for x in (2420.0, 2520.0):
         schelle_x(t, x, 500.0, Z_HINT, R_LTG, DECK_Z - 0.3)
-    # Querleitung (Stangenseite, beide Zylinder parallel) oben auf dem Traversen-Quertraeger
-    xa = 2655.0
-    ye = EK_YI + 60
-    t.append(rohr_glatt([(xa, -ye, EK_Z1 - 3), (xa, -ye, Z_QL), (xa, ye, Z_QL), (xa, ye, EK_Z1 - 3)], R_QL, 30))
-    for y in (-ye, ye):                                                  # Verschraubungen auf der Decke
-        t.mat("blank", sechskant((xa, y, EK_Z1), (0, 0, 1), 30, 14))
-    for y in (-700, -350, 350, 700):                                     # Doppelschellen halten beide Querrohre
-        t.append(box(xa - 12, xa + 12, y - 14, y + 14, QT_Z1 - 2, Z_QL - R_QL + 2))
-        t.append(box(BG_X1 - 10, xa + 12, y - 8, y + 8, Z_QL - R_QL, BG_Z + R_BUEGEL))
 
 
 # ---------------- Gesamt ----------------
