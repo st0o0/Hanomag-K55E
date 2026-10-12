@@ -72,14 +72,8 @@ def _haube_tank():
     """Haube und Tank als ein abnehmbares Teil (Wunsch Modellbau: Zugang zum Innenraum durch Abheben).
     Verbunden durch eine Stirnwand im Haubenquerschnitt oberhalb des Motorausschnitts, die vorn in die
     Haubenwaende und hinten in die Tankstirn greift."""
-    from build123d import Box, Pos, fillet, Axis, Align
-    from .common import HAUBE_X1, HAUBE_B, HAUBE_DACH_Z, HAUBE_BAND_Z, TANK_X0
     teile = zu_modell(fahrerstand.tank())               # {material: Compound} im Modellsystem
-    x0, x1 = HAUBE_X1 - 6.0, TANK_X0 + 7.0               # greift 6 mm in die Haube, 7 mm in die Tankstirn
-    wand = Pos(x0, 0, HAUBE_BAND_Z) * Box(x1 - x0, HAUBE_B - 1.0, HAUBE_DACH_Z - 1.0 - HAUBE_BAND_Z,
-                                          align=(Align.MIN, Align.CENTER, Align.MIN))
-    wand = fillet(wand.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 59.0)
-    stirn = zu_modell([wand])["lack"]
+    stirn = h.stirnwand()                                # Haubenquerschnitt (Dachbogen), schon im Modellsystem
     lack = [h.haube(), stirn] + list(teile.pop("lack", Compound(children=[])).solids())
     out = _d(lack=lack)
     out.update(teile)

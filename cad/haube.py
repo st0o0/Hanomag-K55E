@@ -49,6 +49,31 @@ def _z(z_orig):
     return m(z_orig - MASKE_UNTEN)
 
 
+def _dach_radius():
+    """Radius des quer gewoelbten Daches (Modell-mm): Pfeilhoehe KM_SAG ueber die Maskenbreite."""
+    hb = m(710) / 2
+    return (hb * hb + KM_SAG * KM_SAG) / (2 * KM_SAG)
+
+
+def z_dach(y):
+    """Dachhoehe (Modell-z) bei Querlage y: Kreisbogen, Mitte = Haubendach."""
+    R = _dach_radius()
+    return _z(HAUBE_DACH_Z) - (R - math.sqrt(R * R - y * y))
+
+
+def _dach_flaeche(hb, z0, r_ecke):
+    """Querschnitt (Ebene YZ, lokal y/z) mit Dachbogen und verrundeten oberen Ecken."""
+    zt = z_dach(hb)
+    with BuildSketch(Plane.YZ) as sk:
+        with BuildLine():
+            Polyline((-hb, z0), (-hb, zt))
+            ThreePointArc((-hb, zt), (0, z_dach(0)), (hb, zt))
+            Polyline((hb, zt), (hb, z0), (-hb, z0))
+        make_face()
+    fl = sk.sketch.faces()[0]
+    return fl.fillet_2d(r_ecke, [v for v in fl.vertices() if v.Z > zt - 0.01])
+
+
 # ---------------- Druck-Parameter (Modell-mm, nicht skaliert) ----------------
 WAND = 1.6            # Blechstaerke Haube / Maske
 SICKE_H = 0.5         # sichtbare Hoehe der Sicke ueber der Wand
@@ -72,8 +97,9 @@ KM_B = m(710)                         # Breite
 KM_Z0 = _z(MASKE_UK)                  # Unterkante (z = m(58))
 KM_H = _z(HAUBE_DACH_Z)               # Oberkante = Haubendach (z = m(955))
 KM_T = m(HAUBE_X0)                    # Tiefe (x 0..210)
-KM_R_OBEN = m(70)     # Radius obere Laengskanten (Frontansicht, Foto g38: ~70)
-KM_R_VORN = m(80)     # Radius obere Vorderkante (Kappe kissenfoermig, rollt nach hinten ins Dach)
+KM_R_OBEN = m(100)    # Radius Uebergang Dachbogen -> senkrechte Seiten (Frontansicht, 90..110)
+KM_SAG = m(22)        # Pfeilhoehe des Dachbogens (Mitte 1347, an den Maskenseiten 22 tiefer)
+KM_LIPPE = 0.8        # Ueberstand der Kappe ueber dem Querband (Modell-mm)
 # Aufteilung nach Foto BV (Maske 897 hoch): Kappe 0,14 / Grill 0,66 / Sockel 0,20
 KM_KAPPE = m(160)     # Kappe ueber dem Grill (Logo), Foto g38
 KM_SOCKEL = m(125)    # Sockel unter dem Grill (Kurbelloch hinter der Pumpe)
@@ -97,16 +123,16 @@ H_X0 = KM_T                           # Haube beginnt direkt hinter der Maske (x
 H_L = m(HAUBE_X1) - H_X0              # bis x = 1080 (dahinter Tank)
 H_B = m(HAUBE_B)                      # Breite 690
 H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante vorderes Seitensegment (z 620)
-H_R_DACH = m(60)                      # Radius Dachkanten
+H_R_DACH = m(90)                      # Radius Dachkanten (Dachbogen -> Seitenwand)
 SEG_L = m(SEG_X1) - H_X0              # vorderes Seitensegment x 210..310
 BOGEN_OBEN = _z(HAUBE_BAND_Z)         # Oberkante Motorausschnitt (z 1125)
 BOGEN_R = m(280)                      # Eckradius Motorausschnitt vorn oben (Foto: weicher grosser Bogen, 280..300)
-SICKE_Z = _z(1152)                    # untere Laengssicke (geht vorn in die Bogensicke ueber)
-SICKE_OBEN_Z = _z(1272)               # obere Laengssicke (unter dem Dachradius, Wand eben bis 1287)
+SICKE_Z = _z(1145)                    # untere Laengssicke (geht vorn in die Bogensicke ueber)
+SICKE_OBEN_Z = _z(1228)               # obere Laengssicke (unter dem Dachradius, Wand eben bis 1287)
 SICKE_VORN_Z = _z(790)                # kurze Sicke im vorderen Segment = Ende der Bogensicke
 DACH_SICKE_Y = m(150)                 # Laengssicken auf dem Dach (|y|)
 SCHRIFT = "HANOMAG"
-SCHRIFT_X, SCHRIFT_Z = m(745), _z(1212)  # Mitte Schriftzug (zwischen den Sicken)
+SCHRIFT_X, SCHRIFT_Z = m(745), _z(1187)  # Mitte Schriftzug (zwischen den Sicken)
 SCHRIFT_TEILUNG = m(88)                  # Buchstabenteilung (normale Laufweite)
 SCHRIFT_VERSAL = m(55)                   # Versalhoehe
 TYP = "K55E"
@@ -353,22 +379,49 @@ def _kuehlerverschluss():
     return [kragen, stutzen, deckel, knebel]
 
 
-def _maske_aussen():
-    """Aussenform der Maske als Schnitt zweier Zylinderprofile: Seitenprofil (Vorderkante oben R KM_R_VORN)
-    und Frontprofil (obere Ecken R KM_R_OBEN). Senkrechte Kanten bleiben scharf (ein Fillet-Kantenzug
-    wuerde R80 die senkrechten Vorderkanten hinabziehen); die Nahtkanten oben werden mit R 4 verrundet."""
+def _kappe_zc():
+    """Unterkante der Kappenrolle (z): knapp ueber dem Querband."""
+    g_b, g_h, g_z0 = _grill()
+    return g_z0 + g_h + BAND_Z + BAND_H + 0.2
+
+
+def _kappe_kreis():
+    """Seitenprofil der Kappe: Viertelkreis (Walze) von der Lippe vorn unten bis zur Dachlinie oben.
+    Rueckgabe (cx, cz, r): Mittelpunkt (x, z) und Radius."""
+    zc = _kappe_zc()
+    r = KM_H - zc
+    return r - KM_LIPPE, zc, r
+
+
+def kappe_x(z):
+    """x der gewoelbten Kappenvorderflaeche bei Hoehe z (Mitte der Maske)."""
+    cx, cz, r = _kappe_kreis()
+    return cx - math.sqrt(max(r * r - (z - cz) ** 2, 0.0))
+
+
+def _maske_aussen(d=0.0):
+    """Aussenform der Maske als Schnitt zweier Zylinderprofile: Seitenprofil (Kappe ueber die ganze Hoehe
+    als Walze nach hinten gerollt, unten kleine Lippe ueber dem Querband) und Frontprofil (Dachbogen mit
+    Pfeilhoehe KM_SAG, Ecken KM_R_OBEN). Senkrechte Kanten bleiben scharf.
+    d > 0: Innenraum (um die Wandstaerke d eingerueckt, hinten und unten ueberstehend) zum Aushoehlen."""
+    cx, cz, r = _kappe_kreis()
+    w = math.sqrt(0.5)
+    ri, ht = r - d, KM_H - d
+    x_hint = KM_T if d == 0 else KM_T + 5
+    z_unten = KM_Z0 if d == 0 else KM_Z0 - 5
     with BuildSketch(Plane.XZ) as sx:
-        with Locations((KM_T / 2, (KM_Z0 + KM_H) / 2)):
-            Rectangle(KM_T, KM_H - KM_Z0)
-        fillet(sx.vertices().group_by(Axis.Y)[-1].group_by(Axis.X)[0], KM_R_VORN)
+        with BuildLine():
+            Polyline((d, z_unten), (x_hint, z_unten), (x_hint, ht), (cx, ht))
+            ThreePointArc((cx, ht), (cx - ri * w, cz + ri * w), (cx - ri, cz))
+            if d == 0:
+                Polyline((cx - ri, cz), (0, cz - KM_LIPPE), (0, z_unten))
+            else:
+                Polyline((cx - ri, cz), (d, cz), (d, z_unten))
+        make_face()
     seite = extrude(sx.sketch, amount=KM_B, both=True)
-    with BuildSketch(Plane.YZ) as sy:
-        with Locations((0, (KM_Z0 + KM_H) / 2)):
-            Rectangle(KM_B, KM_H - KM_Z0)
-        fillet(sy.vertices().group_by(Axis.Y)[-1], KM_R_OBEN)
-    aussen = seite & extrude(sy.sketch, amount=KM_T)
-    naht = [e for e in aussen.edges() if e.geom_type not in (GeomType.LINE, GeomType.CIRCLE)]
-    return fillet(naht, 4.0)
+    fl = _dach_flaeche(KM_B / 2 - d, z_unten, max(KM_R_OBEN - d, 0.5))
+    front = extrude(Pos(-1, 0, -d) * fl, amount=x_hint + 1)
+    return seite & front
 
 
 def kuehlermaske():
@@ -376,8 +429,7 @@ def kuehlermaske():
     Staeben, Kurbelloch und Kuehlerverschluss auf der Kappe.
     Liefert (Solid, (Grillbreite, Grillhoehe, Grillunterkante))."""
     outer = _maske_aussen()
-    f = outer.faces()
-    km = offset(outer, amount=-WAND, openings=[f.sort_by(Axis.X)[-1], f.sort_by(Axis.Z)[0]])
+    km = outer - _maske_aussen(WAND)
 
     g_b, g_h, g_z0 = _grill()
     g_z1 = g_z0 + g_h
@@ -448,8 +500,12 @@ def kuehlermaske():
 def maske_zier():
     """Fluegellogo (Kappe) und Typschild (linke Maskenseite, unter dem Scheinwerfer), Chrom/Blech."""
     g_b, g_h, g_z0 = _grill()
-    z_logo = (g_z0 + g_h + BAND_Z + BAND_H + KM_H - KM_R_VORN) / 2
-    logo = hanomag_logo(plane_front(z_logo))
+    # Logo auf der gewoelbten Kappe: Tangentialebene an die Walze, Mitte auf halber Rollhoehe
+    cx, cz, r = _kappe_kreis()
+    z_logo = cz + 0.5 * r
+    px = kappe_x(z_logo)
+    n = Vector(px - cx, 0, z_logo - cz) * (1 / r)
+    logo = hanomag_logo(Plane(origin=(px, 0, z_logo), x_dir=(0, -1, 0), z_dir=(n.X, 0, n.Z)))
 
     # Typschild: Platte mit Rand und 4 Nieten, auf der linken Maskenseite
     sx, sz, sb, sh = TYPSCHILD
@@ -493,9 +549,19 @@ def gitter(g_b, g_h, g_z0):
 # Haube
 # ------------------------------------------------------------------
 def _haube_aussen():
-    hh = KM_H - H_UNTEN
-    b = Pos(H_X0, 0, H_UNTEN) * Box(H_L, H_B, hh, align=(Align.MIN, Align.CENTER, Align.MIN))
-    return fillet(b.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], H_R_DACH)
+    """Haubenkoerper: Dachbogen (gleicher Kreisbogen wie die Maske, bei den Haubenseiten y = +-345) und
+    Dachecken H_R_DACH, bis H_UNTEN, x = H_X0..H_X0+H_L."""
+    fl = _dach_flaeche(H_B / 2, H_UNTEN, H_R_DACH)
+    return extrude(Pos(H_X0, 0, 0) * fl, amount=H_L)
+
+
+def stirnwand():
+    """Stirnwand zwischen Haube und Tank (Modell-mm, fuer modell._haube_tank): Haubenquerschnitt oberhalb des
+    Motorausschnitts, 0.5 mm Original schmaler/niedriger als die Haube; x = HAUBE_X1-6 .. TANK_X0+7."""
+    d = m(0.5)
+    fl = _dach_flaeche(H_B / 2 - d, BOGEN_OBEN, H_R_DACH - d)
+    x0, x1 = m(HAUBE_X1 - 6.0), m(1085.0 + 7.0)
+    return Pos(0, 0, -d) * extrude(Pos(x0, 0, 0) * fl, amount=x1 - x0)
 
 
 def _ausschnitt():
@@ -550,7 +616,7 @@ def _sicke_bogen(profil, cx, cz, r_bahn, y, w_ende, side):
 
 def _dachsicke(y, x0, x1):
     """Laengssicke auf dem Haubendach bei y (Trapezprofil, Normale +Z)."""
-    pl = Plane(origin=(x0, y, KM_H), x_dir=(0, 1, 0), z_dir=(1, 0, 0))
+    pl = Plane(origin=(x0, y, z_dach(y)), x_dir=(0, 1, 0), z_dir=(1, 0, 0))
     return extrude(_profil_sicke(pl), amount=x1 - x0)
 
 
@@ -597,7 +663,7 @@ def _seitensicken(side):
     # Nietreihe an der Vorderkante (Anschluss Maske); frei lassen: Haubenhalter, Typfeld, Sicken
     yn = side * (H_B / 2 + 0.6 - NIET_R)
     n = 13
-    z_a, z_e = H_UNTEN + 3, KM_H - H_R_DACH - 2
+    z_a, z_e = H_UNTEN + 3, z_dach(H_B / 2) - H_R_DACH - 2
     z_halter = (SICKE_Z + SICKE_OBEN_Z) / 2
     f0, f1 = _typ_feld_z()
     for i in range(n):
@@ -672,11 +738,11 @@ def haube():
         y = -(H_B / 2 - H_R_DACH - 1.5) + i * (H_B - 2 * H_R_DACH - 3) / (n - 1)
         if abs(abs(y) - DACH_SICKE_Y) < 1.8:
             continue
-        teile.append(Pos(H_X0 + 1.8, y, KM_H + 0.6 - NIET_R) * Sphere(NIET_R))
+        teile.append(Pos(H_X0 + 1.8, y, z_dach(y) + 0.6 - NIET_R) * Sphere(NIET_R))
 
     # Kragen an den Rohrdurchbruechen (Auspuff rechts, Ansaugrohr links)
     for (x, y, d) in (AUSPUFF, ANSAUG):
-        kr = Pos(x, y, KM_H - EINSENK) * Cylinder(d / 2 + 1.6, 0.6 + EINSENK,
+        kr = Pos(x, y, z_dach(y) - 0.8) * Cylinder(d / 2 + 1.6, 0.6 + 0.8,
                                                   align=(Align.CENTER, Align.CENTER, Align.MIN))
         kr = fillet(kr.edges().group_by(Axis.Z)[-1].sort_by(SortBy.RADIUS)[-1:], 0.4)
         teile.append(kr)

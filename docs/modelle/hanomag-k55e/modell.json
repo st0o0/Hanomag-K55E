@@ -142,7 +142,7 @@
         }
       ],
       "druck": "druck/haube_tank.stl",
-      "druck_mb": 7.51,
+      "druck_mb": 7.9,
       "masse_mm": [
         165.5,
         91.2,
@@ -157,6 +157,8 @@
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
+          "Passung zu motor: 1 Ansatzstellen buendig gekuerzt",
+          "Passung zu fahrerstand: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu planierschild: 4 Ansatzstellen buendig gekuerzt",
           "3 eingeschlossene Hohlraeume gefuellt"
         ],
@@ -167,9 +169,9 @@
               91.2,
               103.2
             ],
-            "volumen_mm3": 148869.6,
-            "wand_min": 0.4,
-            "ueberhang": 0.242
+            "volumen_mm3": 148779.1,
+            "wand_min": 0.43,
+            "ueberhang": 0.246
           }
         ]
       }
@@ -196,7 +198,7 @@
         }
       ],
       "druck": "druck/kuehlermaske.stl",
-      "druck_mb": 1.65,
+      "druck_mb": 1.55,
       "masse_mm": [
         27.9,
         89.7,
@@ -213,6 +215,7 @@
         "hinweise": [
           "Passung zu scheinwerfer_links: 2 Ansatzstellen buendig gekuerzt",
           "Passung zu scheinwerfer_rechts: 2 Ansatzstellen buendig gekuerzt",
+          "Passung zu motor: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu planierschild: 3 Ansatzstellen buendig gekuerzt"
         ],
         "koerper": [
@@ -222,9 +225,9 @@
               89.6,
               117.9
             ],
-            "volumen_mm3": 20346.5,
-            "wand_min": 1.0,
-            "ueberhang": 0.094
+            "volumen_mm3": 20194.7,
+            "wand_min": 0.72,
+            "ueberhang": 0.091
           }
         ]
       }
@@ -436,7 +439,7 @@
         }
       ],
       "druck": "druck/motor.stl",
-      "druck_mb": 10.22,
+      "druck_mb": 10.24,
       "masse_mm": [
         122.4,
         82.1,
@@ -451,6 +454,8 @@
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
+          "Passung zu haube_tank: 1 Ansatzstellen buendig gekuerzt",
+          "Passung zu kuehlermaske: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu auspuff: 6 Ansatzstellen buendig gekuerzt",
           "81 eingeschlossene Hohlraeume gefuellt"
         ],
@@ -461,7 +466,7 @@
               82.1,
               128.9
             ],
-            "volumen_mm3": 447717.4,
+            "volumen_mm3": 445046.9,
             "wand_min": 0.5,
             "ueberhang": 0.132
           },
@@ -624,7 +629,7 @@
         }
       ],
       "druck": "druck/rumpf.stl",
-      "druck_mb": 14.72,
+      "druck_mb": 14.73,
       "masse_mm": [
         359.0,
         226.5,
@@ -640,7 +645,7 @@
         "dicht": true,
         "hinweise": [
           "Passung zu fahrerstand: 19 Ansatzstellen buendig gekuerzt",
-          "Passung zu planierschild: 2 Ansatzstellen buendig gekuerzt"
+          "Passung zu planierschild: 45 Ansatzstellen buendig gekuerzt"
         ],
         "koerper": [
           {
@@ -649,7 +654,7 @@
               226.5,
               96.2
             ],
-            "volumen_mm3": 923796.0,
+            "volumen_mm3": 923780.3,
             "wand_min": 1.12,
             "ueberhang": 0.251
           },
@@ -1255,6 +1260,7 @@
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
+          "Passung zu haube_tank: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu rumpf: 19 Ansatzstellen buendig gekuerzt",
           "Passung zu planierschild: 2 Ansatzstellen buendig gekuerzt",
           "54 eingeschlossene Hohlraeume gefuellt"
@@ -1266,7 +1272,7 @@
               97.8,
               137.1
             ],
-            "volumen_mm3": 122597.1,
+            "volumen_mm3": 122592.4,
             "wand_min": 0.01,
             "ueberhang": 0.277
           },
@@ -1417,16 +1423,16 @@
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 10.09,
+      "druck_mb": 10.14,
       "masse_mm": [
         461.9,
         302.0,
         182.0
       ],
-      "druck_koerper": 1,
+      "druck_koerper": 2,
       "druck_bett_mm": [
         461.9,
-        302.0,
+        309.0,
         182.0
       ],
       "druck_pruefung": {
@@ -1434,7 +1440,7 @@
         "hinweise": [
           "Passung zu haube_tank: 4 Ansatzstellen buendig gekuerzt",
           "Passung zu kuehlermaske: 3 Ansatzstellen buendig gekuerzt",
-          "Passung zu rumpf: 2 Ansatzstellen buendig gekuerzt",
+          "Passung zu rumpf: 45 Ansatzstellen buendig gekuerzt",
           "Passung zu fahrerstand: 2 Ansatzstellen buendig gekuerzt",
           "52 eingeschlossene Hohlraeume gefuellt"
         ],
@@ -1445,9 +1451,19 @@
               302.0,
               182.0
             ],
-            "volumen_mm3": 950528.3,
+            "volumen_mm3": 962404.7,
             "wand_min": 1.25,
             "ueberhang": 0.145
+          },
+          {
+            "masse_mm": [
+              3.5,
+              3.0,
+              1.2
+            ],
+            "volumen_mm3": 9.7,
+            "wand_min": 1.25,
+            "ueberhang": 0.0
           }
         ]
       }
@@ -1456,7 +1472,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-12",
-  "build": "20261012103716",
+  "build": "20261012110156",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [

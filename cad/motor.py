@@ -60,7 +60,7 @@ HAUBE_BLECH = 10.0                      # Luefterhaube (>= 1,2 mm Modell)
 # Kuehler (hinter der Maske, z innerhalb MASKE_UK 450 .. Dach)
 K_X0, K_X1 = 225.0, 335.0
 K_Y = 320.0
-K_Z0, K_Z1 = 480.0, 1290.0
+K_Z0, K_Z1 = 480.0, 1270.0   # Oberkante unter der gewoelbten Dachecke
 K_NETZ_Z0, K_NETZ_Z1 = 580.0, 1180.0
 
 # Einspritzanlage (linke Seite, vorn)
