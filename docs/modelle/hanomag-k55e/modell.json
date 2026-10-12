@@ -1506,117 +1506,114 @@
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 11.11,
+      "druck_mb": 11.37,
       "masse_mm": [
-        448.6,
-        278.5,
+        450.1,
+        285.5,
         200.5
       ],
       "druck_koerper": 9,
       "druck_bett_mm": [
         218.0,
-        1062.0,
+        1130.0,
         166.1
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Passung zu kuehlermaske: 3 Ansatzstellen buendig gekuerzt",
-          "Passung zu rumpf: 32 Ansatzstellen buendig gekuerzt",
-          "15 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0 geteilt in 9 Stuecke bei x=-163 / x=285 / x=1129 / x=1711 / y=-630 (Original-mm, Einbaulage), 9 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)",
-          "Koerper 6: 2/395 Proben duenner als 0.5 mm: 0.45 mm (1 Probe) bei x/y/z [-5, -108, 586] Original-mm, Solid 210 (16x280x160 Original-mm); 0.45 mm (1 Probe) bei x/y/z [-4, 60, 590] Original-mm, Solid 210 (16x280x160 Original-mm)"
+          "16 eingeschlossene Hohlraeume gefuellt",
+          "Koerper 0 geteilt in 9 Stuecke bei x=241 / x=278 / x=1129 / x=1729 / y=-602 (Original-mm, Einbaulage), 9 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)"
         ],
         "koerper": [
           {
             "masse_mm": [
-              125.1,
-              101.5,
-              60.5
+              125.8,
+              115.2,
+              67.5
             ],
-            "volumen_mm3": 204159.8,
-            "wand_min": 1.29,
-            "ueberhang": 0.113
+            "volumen_mm3": 222215.1,
+            "wand_min": 1.31,
+            "ueberhang": 0.141
           },
           {
             "masse_mm": [
-              216.5,
-              177.8,
+              217.1,
+              178.4,
               113.9
             ],
-            "volumen_mm3": 167649.6,
-            "wand_min": 1.12,
+            "volumen_mm3": 168644.4,
+            "wand_min": 0.56,
             "ueberhang": 0.06
           },
           {
             "masse_mm": [
-              144.2,
-              57.4,
+              141.9,
+              60.9,
               70.6
             ],
-            "volumen_mm3": 58270.7,
+            "volumen_mm3": 61307.2,
             "wand_min": 1.5,
-            "ueberhang": 0.192
+            "ueberhang": 0.193
           },
           {
             "masse_mm": [
-              101.3,
+              121.2,
               218.0,
-              68.6
+              115.2
             ],
-            "volumen_mm3": 625272.5,
-            "wand_min": 1.46,
-            "ueberhang": 0.245
+            "volumen_mm3": 660876.2,
+            "wand_min": 1.25,
+            "ueberhang": 0.165
           },
           {
             "masse_mm": [
-              18.8,
-              18.8,
-              10.6
-            ],
-            "volumen_mm3": 2531.5,
-            "wand_min": 1.75,
-            "ueberhang": 0.003
-          },
-          {
-            "masse_mm": [
-              161.5,
-              85.9,
-              18.6
-            ],
-            "volumen_mm3": 83991.9,
-            "wand_min": 1.12,
-            "ueberhang": 0.275
-          },
-          {
-            "masse_mm": [
-              161.5,
+              61.2,
               104.5,
               20.4
             ],
-            "volumen_mm3": 13534.5,
-            "wand_min": 0.45,
-            "ueberhang": 0.2
+            "volumen_mm3": 11632.1,
+            "wand_min": 1.5,
+            "ueberhang": 0.177
+          },
+          {
+            "masse_mm": [
+              111.0,
+              85.9,
+              18.6
+            ],
+            "volumen_mm3": 63058.8,
+            "wand_min": 1.21,
+            "ueberhang": 0.278
+          },
+          {
+            "masse_mm": [
+              111.0,
+              19.5,
+              8.2
+            ],
+            "volumen_mm3": 2407.0,
+            "wand_min": 3.0,
+            "ueberhang": 0.175
           },
           {
             "masse_mm": [
               218.0,
-              217.6,
+              214.1,
               166.1
             ],
-            "volumen_mm3": 325680.5,
+            "volumen_mm3": 322572.2,
             "wand_min": 0.75,
-            "ueberhang": 0.15
+            "ueberhang": 0.149
           },
           {
             "masse_mm": [
-              169.2,
-              71.2,
-              87.5
+              217.9,
+              209.9,
+              90.3
             ],
-            "volumen_mm3": 4547.4,
+            "volumen_mm3": 6954.5,
             "wand_min": 1.5,
-            "ueberhang": 0.172
+            "ueberhang": 0.177
           }
         ]
       }
@@ -1625,7 +1622,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-12",
-  "build": "20261012155225",
+  "build": "20261012155839",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [
