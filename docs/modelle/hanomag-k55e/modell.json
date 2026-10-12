@@ -1,0 +1,861 @@
+{
+  "id": "hanomag-k55e",
+  "name": "Hanomag K 55 E",
+  "untertitel": "Planierraupe mit FRISCH-Planiereinrichtung 55 FH2",
+  "massstab": 8.0,
+  "boden_z": -49.0,
+  "original": {
+    "laenge": 2880,
+    "breite": 1800,
+    "hoehe": 1840,
+    "spur": 1270,
+    "kette": 400,
+    "gewicht": 4640,
+    "motor": "Hanomag D57, 4 Zyl., 5702 cm³, 55 PS bei 1300/min",
+    "baujahre": "1950–1956"
+  },
+  "genauigkeit": "Maße aus Fotos und Prospekt abgeleitet, ca. ±5 %. Haube und Maske wie K 55.",
+  "materialien": {
+    "lack": {
+      "name": "Lack",
+      "farbe": "#a8262b",
+      "rauheit": 0.55,
+      "metall": 0.15
+    },
+    "motor": {
+      "name": "Motorlack",
+      "farbe": "#8a2024",
+      "rauheit": 0.6,
+      "metall": 0.2
+    },
+    "anbau": {
+      "name": "Planiereinrichtung",
+      "farbe": "#a8262b",
+      "rauheit": 0.55,
+      "metall": 0.15
+    },
+    "stahl": {
+      "name": "Kettenstahl",
+      "farbe": "#3b3d3f",
+      "rauheit": 0.5,
+      "metall": 0.6
+    },
+    "blank": {
+      "name": "Blanker Stahl",
+      "farbe": "#9ca1a5",
+      "rauheit": 0.3,
+      "metall": 0.85
+    },
+    "chrom": {
+      "name": "Chrom",
+      "farbe": "#e1e5e8",
+      "rauheit": 0.12,
+      "metall": 1.0
+    },
+    "zink": {
+      "name": "Verzinkt",
+      "farbe": "#a9b0b5",
+      "rauheit": 0.35,
+      "metall": 0.7
+    },
+    "schwarz": {
+      "name": "Schwarz",
+      "farbe": "#1c1c1c",
+      "rauheit": 0.45,
+      "metall": 0.3
+    },
+    "gummi": {
+      "name": "Gummi",
+      "farbe": "#121212",
+      "rauheit": 0.95,
+      "metall": 0.0
+    },
+    "leder": {
+      "name": "Sitzpolster",
+      "farbe": "#171717",
+      "rauheit": 0.35,
+      "metall": 0.05
+    },
+    "glas": {
+      "name": "Glas",
+      "farbe": "#d9e8f0",
+      "rauheit": 0.05,
+      "metall": 0.1,
+      "deckkraft": 0.35
+    },
+    "ruecklicht": {
+      "name": "Rücklicht",
+      "farbe": "#c0121c",
+      "rauheit": 0.2,
+      "metall": 0.0,
+      "leuchten": 0.35
+    },
+    "zifferblatt": {
+      "name": "Zifferblatt",
+      "farbe": "#efeadb",
+      "rauheit": 0.6,
+      "metall": 0.0
+    },
+    "bosch": {
+      "name": "Bosch-Blau",
+      "farbe": "#2f6e86",
+      "rauheit": 0.5,
+      "metall": 0.3
+    },
+    "auspuff": {
+      "name": "Auspuff, rostig",
+      "farbe": "#5b3b2b",
+      "rauheit": 0.9,
+      "metall": 0.4
+    }
+  },
+  "teile": [
+    {
+      "id": "haube",
+      "name": "Motorhaube",
+      "gruppe": "Haube & Maske",
+      "material": "lack",
+      "hinweis": "Dach mit Längssicken, Seitenwände mit großem Motorausschnitt, Schriftband HANOMAG, Typfeld K55E, Nieten. Druck stehend auf der Hinterkante.",
+      "explode": [
+        0,
+        0,
+        45
+      ],
+      "schichten": [
+        {
+          "material": "lack",
+          "ansicht": "ansicht/haube__lack.stl"
+        }
+      ],
+      "druck": "druck/haube.stl",
+      "druck_mb": 4.53,
+      "masse_mm": [
+        108.8,
+        91.2,
+        91.5
+      ],
+      "druck_koerper": 1,
+      "druck_bett_mm": [
+        91.5,
+        91.2,
+        108.8
+      ]
+    },
+    {
+      "id": "kuehlermaske",
+      "name": "Kühlermaske",
+      "gruppe": "Haube & Maske",
+      "material": "lack",
+      "hinweis": "Maske wie R 45: Flügellogo, drei senkrechte Grillstäbe, Kühlerverschluss auf der Kappe, Kurbelloch.",
+      "explode": [
+        -40,
+        0,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "lack",
+          "ansicht": "ansicht/kuehlermaske__lack.stl"
+        },
+        {
+          "material": "chrom",
+          "ansicht": "ansicht/kuehlermaske__chrom.stl"
+        }
+      ],
+      "druck": "druck/kuehlermaske.stl",
+      "druck_mb": 1.33,
+      "masse_mm": [
+        27.7,
+        89.7,
+        117.9
+      ],
+      "druck_koerper": 1,
+      "druck_bett_mm": [
+        27.6,
+        89.6,
+        117.9
+      ]
+    },
+    {
+      "id": "gitter",
+      "name": "Grillgitter",
+      "gruppe": "Haube & Maske",
+      "material": "schwarz",
+      "hinweis": "Einsatz hinter dem Grill, 2 mm Maschen. Für FDM besser Messinggaze verwenden.",
+      "explode": [
+        -22,
+        0,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "schwarz",
+          "ansicht": "ansicht/gitter__schwarz.stl"
+        }
+      ],
+      "druck": "druck/gitter.stl",
+      "druck_mb": 0.92,
+      "masse_mm": [
+        1.0,
+        79.8,
+        76.6
+      ],
+      "druck_koerper": 1,
+      "druck_bett_mm": [
+        1.0,
+        79.8,
+        76.6
+      ]
+    },
+    {
+      "id": "scheinwerfer_links",
+      "name": "Scheinwerfer links",
+      "gruppe": "Haube & Maske",
+      "material": "schwarz",
+      "hinweis": "Gehäuse mit Halter, Chromring, Glas.",
+      "explode": [
+        -10,
+        -30,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "schwarz",
+          "ansicht": "ansicht/scheinwerfer_links__schwarz.stl"
+        },
+        {
+          "material": "chrom",
+          "ansicht": "ansicht/scheinwerfer_links__chrom.stl"
+        },
+        {
+          "material": "glas",
+          "ansicht": "ansicht/scheinwerfer_links__glas.stl"
+        }
+      ],
+      "druck": "druck/scheinwerfer_links.stl",
+      "druck_mb": 0.53,
+      "masse_mm": [
+        10.5,
+        19.6,
+        27.1
+      ],
+      "druck_koerper": 1,
+      "druck_bett_mm": [
+        10.5,
+        19.5,
+        27.1
+      ]
+    },
+    {
+      "id": "scheinwerfer_rechts",
+      "name": "Scheinwerfer rechts",
+      "gruppe": "Haube & Maske",
+      "material": "schwarz",
+      "hinweis": "Gehäuse mit Halter, Chromring, Glas.",
+      "explode": [
+        -10,
+        30,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "schwarz",
+          "ansicht": "ansicht/scheinwerfer_rechts__schwarz.stl"
+        },
+        {
+          "material": "chrom",
+          "ansicht": "ansicht/scheinwerfer_rechts__chrom.stl"
+        },
+        {
+          "material": "glas",
+          "ansicht": "ansicht/scheinwerfer_rechts__glas.stl"
+        }
+      ],
+      "druck": "druck/scheinwerfer_rechts.stl",
+      "druck_mb": 0.53,
+      "masse_mm": [
+        10.5,
+        19.5,
+        27.1
+      ],
+      "druck_koerper": 1,
+      "druck_bett_mm": [
+        10.5,
+        19.5,
+        27.1
+      ]
+    },
+    {
+      "id": "motor",
+      "name": "Motor D57 & Kühler",
+      "gruppe": "Antrieb",
+      "material": "motor",
+      "hinweis": "4-Zylinder-Diesel 5,7 l: Einspritzpumpe mit Leitungen, Kraftstofffilter mit Glasglocken, Lichtmaschine, Bosch-Anlasser, Riementrieb, Kühler mit Lüfter und Schläuchen.",
+      "explode": [
+        0,
+        0,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "motor",
+          "ansicht": "ansicht/motor__motor.stl"
+        },
+        {
+          "material": "schwarz",
+          "ansicht": "ansicht/motor__schwarz.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/motor__blank.stl"
+        },
+        {
+          "material": "bosch",
+          "ansicht": "ansicht/motor__bosch.stl"
+        },
+        {
+          "material": "glas",
+          "ansicht": "ansicht/motor__glas.stl"
+        },
+        {
+          "material": "gummi",
+          "ansicht": "ansicht/motor__gummi.stl"
+        }
+      ],
+      "druck": "druck/motor.stl",
+      "druck_mb": 4.83,
+      "masse_mm": [
+        122.4,
+        82.1,
+        128.9
+      ],
+      "druck_koerper": 7,
+      "druck_bett_mm": [
+        163.2,
+        82.1,
+        128.9
+      ]
+    },
+    {
+      "id": "auspuff",
+      "name": "Auspuff & Luftfilter",
+      "gruppe": "Antrieb",
+      "material": "auspuff",
+      "hinweis": "Krümmer, Auspuffrohr mit Regenklappe, Ölbadluftfilter mit Arbeitsleuchte.",
+      "explode": [
+        0,
+        0,
+        60
+      ],
+      "schichten": [
+        {
+          "material": "auspuff",
+          "ansicht": "ansicht/auspuff__auspuff.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/auspuff__blank.stl"
+        },
+        {
+          "material": "schwarz",
+          "ansicht": "ansicht/auspuff__schwarz.stl"
+        },
+        {
+          "material": "gummi",
+          "ansicht": "ansicht/auspuff__gummi.stl"
+        },
+        {
+          "material": "chrom",
+          "ansicht": "ansicht/auspuff__chrom.stl"
+        },
+        {
+          "material": "glas",
+          "ansicht": "ansicht/auspuff__glas.stl"
+        }
+      ],
+      "druck": "druck/auspuff.stl",
+      "druck_mb": 1.31,
+      "masse_mm": [
+        78.1,
+        77.4,
+        124.7
+      ],
+      "druck_koerper": 2,
+      "druck_bett_mm": [
+        112.5,
+        24.8,
+        124.7
+      ]
+    },
+    {
+      "id": "rumpf",
+      "name": "Rahmen & Getriebe",
+      "gruppe": "Fahrgestell",
+      "material": "lack",
+      "hinweis": "Längsträger, Querblattfeder, Getriebe, Endantriebe, Lenkbremsen, Plattform mit Riffelblech und gerollter Kante, Zugpendel.",
+      "explode": [
+        0,
+        0,
+        -10
+      ],
+      "schichten": [
+        {
+          "material": "lack",
+          "ansicht": "ansicht/rumpf__lack.stl"
+        },
+        {
+          "material": "schwarz",
+          "ansicht": "ansicht/rumpf__schwarz.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/rumpf__blank.stl"
+        }
+      ],
+      "druck": "druck/rumpf.stl",
+      "druck_mb": 6.08,
+      "masse_mm": [
+        359.0,
+        226.5,
+        96.2
+      ],
+      "druck_koerper": 6,
+      "druck_bett_mm": [
+        359.0,
+        239.0,
+        96.2
+      ]
+    },
+    {
+      "id": "laufwerk_links",
+      "name": "Laufwerk links",
+      "gruppe": "Fahrgestell",
+      "material": "lack",
+      "hinweis": "Kettenrahmen, Leitrad, Triebrad, 5 Laufrollen, Stützrolle, Spannfeder im Rohrgehäuse.",
+      "explode": [
+        0,
+        -45,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "lack",
+          "ansicht": "ansicht/laufwerk_links__lack.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/laufwerk_links__blank.stl"
+        }
+      ],
+      "druck": "druck/laufwerk_links.stl",
+      "druck_mb": 2.17,
+      "masse_mm": [
+        301.4,
+        49.0,
+        81.8
+      ],
+      "druck_koerper": 15,
+      "druck_bett_mm": [
+        286.0,
+        93.0,
+        81.8
+      ]
+    },
+    {
+      "id": "laufwerk_rechts",
+      "name": "Laufwerk rechts",
+      "gruppe": "Fahrgestell",
+      "material": "lack",
+      "hinweis": "Kettenrahmen, Leitrad, Triebrad, 5 Laufrollen, Stützrolle, Spannfeder im Rohrgehäuse.",
+      "explode": [
+        0,
+        45,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "lack",
+          "ansicht": "ansicht/laufwerk_rechts__lack.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/laufwerk_rechts__blank.stl"
+        }
+      ],
+      "druck": "druck/laufwerk_rechts.stl",
+      "druck_mb": 2.17,
+      "masse_mm": [
+        301.4,
+        49.0,
+        81.8
+      ],
+      "druck_koerper": 15,
+      "druck_bett_mm": [
+        286.0,
+        93.0,
+        81.8
+      ]
+    },
+    {
+      "id": "kette_links",
+      "name": "Kette links",
+      "gruppe": "Fahrgestell",
+      "material": "stahl",
+      "hinweis": "36 Bodenplatten 400 mm mit Greifer, Kettenglieder, Bolzen.",
+      "explode": [
+        0,
+        -75,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "stahl",
+          "ansicht": "ansicht/kette_links__stahl.stl"
+        }
+      ],
+      "druck": "druck/kette_links.stl",
+      "druck_mb": 2.17,
+      "masse_mm": [
+        320.8,
+        50.0,
+        100.0
+      ],
+      "druck_koerper": 1,
+      "druck_bett_mm": [
+        320.8,
+        50.0,
+        100.0
+      ]
+    },
+    {
+      "id": "kette_rechts",
+      "name": "Kette rechts",
+      "gruppe": "Fahrgestell",
+      "material": "stahl",
+      "hinweis": "36 Bodenplatten 400 mm mit Greifer, Kettenglieder, Bolzen.",
+      "explode": [
+        0,
+        75,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "stahl",
+          "ansicht": "ansicht/kette_rechts__stahl.stl"
+        }
+      ],
+      "druck": "druck/kette_rechts.stl",
+      "druck_mb": 2.17,
+      "masse_mm": [
+        320.8,
+        50.0,
+        100.0
+      ],
+      "druck_koerper": 1,
+      "druck_bett_mm": [
+        320.8,
+        50.0,
+        100.0
+      ]
+    },
+    {
+      "id": "tank",
+      "name": "Kraftstofftank",
+      "gruppe": "Fahrerstand",
+      "material": "zink",
+      "hinweis": "Verzinkter, gewölbter Tank mit Spannbändern, Flügelmutter-Deckel, Kanne und Kraftstoffhahn.",
+      "explode": [
+        0,
+        0,
+        35
+      ],
+      "schichten": [
+        {
+          "material": "zink",
+          "ansicht": "ansicht/tank__zink.stl"
+        },
+        {
+          "material": "lack",
+          "ansicht": "ansicht/tank__lack.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/tank__blank.stl"
+        }
+      ],
+      "druck": "druck/tank.stl",
+      "druck_mb": 2.3,
+      "masse_mm": [
+        46.2,
+        81.2,
+        61.5
+      ],
+      "druck_koerper": 1,
+      "druck_bett_mm": [
+        46.2,
+        81.2,
+        61.5
+      ]
+    },
+    {
+      "id": "fahrerstand",
+      "name": "Fahrerstand",
+      "gruppe": "Fahrerstand",
+      "material": "lack",
+      "hinweis": "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, einteilige Sitzschale auf Blattfeder, Werkzeugkästen, Batteriekasten, Rücklicht.",
+      "explode": [
+        20,
+        0,
+        20
+      ],
+      "schichten": [
+        {
+          "material": "lack",
+          "ansicht": "ansicht/fahrerstand__lack.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/fahrerstand__blank.stl"
+        },
+        {
+          "material": "chrom",
+          "ansicht": "ansicht/fahrerstand__chrom.stl"
+        },
+        {
+          "material": "zifferblatt",
+          "ansicht": "ansicht/fahrerstand__zifferblatt.stl"
+        },
+        {
+          "material": "schwarz",
+          "ansicht": "ansicht/fahrerstand__schwarz.stl"
+        },
+        {
+          "material": "ruecklicht",
+          "ansicht": "ansicht/fahrerstand__ruecklicht.stl"
+        },
+        {
+          "material": "gummi",
+          "ansicht": "ansicht/fahrerstand__gummi.stl"
+        },
+        {
+          "material": "leder",
+          "ansicht": "ansicht/fahrerstand__leder.stl"
+        }
+      ],
+      "druck": "druck/fahrerstand.stl",
+      "druck_mb": 4.1,
+      "masse_mm": [
+        226.4,
+        221.8,
+        141.3
+      ],
+      "druck_koerper": 12,
+      "druck_bett_mm": [
+        206.7,
+        140.7,
+        141.3
+      ]
+    },
+    {
+      "id": "planierschild",
+      "name": "Planierschild FRISCH 55 FH2",
+      "gruppe": "Planiereinrichtung",
+      "material": "anbau",
+      "hinweis": "Schild 2400 mm mit Bohrungsreihe, Schubbalken, A-Böcke, zwei Hubzylinder in den Endkästen der Traverse, Öltank, Schutzbügel, Pumpe vor der Maske mit Leitungen, Steuerschieber.",
+      "explode": [
+        -70,
+        0,
+        0
+      ],
+      "schichten": [
+        {
+          "material": "anbau",
+          "ansicht": "ansicht/planierschild__anbau.stl"
+        },
+        {
+          "material": "blank",
+          "ansicht": "ansicht/planierschild__blank.stl"
+        },
+        {
+          "material": "schwarz",
+          "ansicht": "ansicht/planierschild__schwarz.stl"
+        },
+        {
+          "material": "chrom",
+          "ansicht": "ansicht/planierschild__chrom.stl"
+        },
+        {
+          "material": "ruecklicht",
+          "ansicht": "ansicht/planierschild__ruecklicht.stl"
+        }
+      ],
+      "druck": "druck/planierschild.stl",
+      "druck_mb": 6.44,
+      "masse_mm": [
+        462.6,
+        302.0,
+        177.8
+      ],
+      "druck_koerper": 4,
+      "druck_bett_mm": [
+        462.6,
+        312.3,
+        177.8
+      ]
+    }
+  ],
+  "step": "hanomag-k55e_1-8.step.zip",
+  "vorschau": "vorschau.png",
+  "stand": "2026-10-12",
+  "build": "20261012080523",
+  "quellen": {
+    "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
+    "gruppen": [
+      {
+        "titel": "Fotos des Originals",
+        "eintraege": [
+          {
+            "titel": "Flickr – blaue K 55 mit FRISCH-Schild, Bj. 1956, Seite rechts",
+            "url": "https://live.staticflickr.com/783/40431489714_2beac27214_b.jpg",
+            "zeigt": "Fast senkrechte Seitenansicht: Laufwerk, Haube, Tank, A-Bock, Traverse",
+            "benutzt": "Haubenlänge, Lage von Tank und A-Bock zum Laufwerk, Maskenüberstand vor der Kettennase (Überlagerung mit dem Modell)"
+          },
+          {
+            "titel": "Flickr – blaue K 55 mit FRISCH-Schild, Bj. 1956, vorn",
+            "url": "https://live.staticflickr.com/810/26271249857_2dfb185633_b.jpg",
+            "zeigt": "Front fast senkrecht: Maske, Ölpumpe, Scheinwerfer, Schild",
+            "benutzt": "Maskenunterkante, Verhältnis Maskenhöhe zu Breite, Lage der Ölpumpe"
+          },
+          {
+            "titel": "Fahrzeugseiten.de – K 55, Seite links",
+            "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_01m.jpg",
+            "zeigt": "Ganze linke Seite: Laufwerk, Haube, Fahrerstand",
+            "benutzt": "Proportionen Seitenansicht, Lage von Leitrad, Triebrad und Laufrollen"
+          },
+          {
+            "titel": "Fahrzeugseiten.de – K 55, vorn",
+            "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_02m.jpg",
+            "zeigt": "Front fast senkrecht: Maske, Scheinwerfer, beide Ketten",
+            "benutzt": "Maßstab über Spur und Kettenbreite, Maskenmaße, Höhe der Maskenunterkante"
+          },
+          {
+            "titel": "Fahrzeugseiten.de – K 55, vorn (zweites Fahrzeug)",
+            "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_08m.jpg",
+            "zeigt": "Front fast senkrecht",
+            "benutzt": "Gegenprobe der Maskenbreite zur Spur"
+          },
+          {
+            "titel": "Fahrzeugseiten.de – K 55, schräg vorn rechts",
+            "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_07m.jpg",
+            "zeigt": "Haubenseite mit Schriftzug, Motorausschnitt, Tank",
+            "benutzt": "Schriftzug, Motorausschnitt, Tankform"
+          },
+          {
+            "titel": "Fahrzeugseiten.de – K 55, Heck",
+            "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_04m.jpg",
+            "zeigt": "Hochkant stehender Getriebekasten, Endantriebe, Zugpendel, Werkzeugkasten",
+            "benutzt": "Heckkasten, Endantriebsgehäuse, Zugpendel"
+          },
+          {
+            "titel": "Fahrzeugseiten.de – weitere Bilder der Galerie",
+            "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/k55.html",
+            "zeigt": "Fahrerstand, Motorausschnitt, Leitrad",
+            "benutzt": "Instrumente, Lenkung, Einspritzpumpe, Filter, Deckel HANOMAG DIESEL"
+          },
+          {
+            "titel": "Flickr – K 55 mit FRISCH-Schild, blau",
+            "url": "https://live.staticflickr.com/7120/7826381704_4064fa1e84_b.jpg",
+            "zeigt": "Schräg vorn links: Grill mit senkrechten Stäben, Scheinwerfer oben, Ölpumpe vor der Maske, A-Bock, Traverse",
+            "benutzt": "Fehlerliste: A-Bock, Ölpumpe, Hydraulikrohre, Scheinwerfer, Grill, Schild"
+          },
+          {
+            "titel": "Flickr – K 55 Kettenschlepper, rot (janbarnier)",
+            "url": "https://www.flickr.com/photos/janbarnier/7675519862",
+            "zeigt": "Schräg vorn links ohne Schild, Laufwerk gut sichtbar",
+            "benutzt": "Laufwerk, Spannfederrohr, Kotflügel"
+          },
+          {
+            "titel": "Wikimedia Commons – Hanomag Planierraupe",
+            "url": "https://commons.wikimedia.org/wiki/File:Hanomag_Planierraupe_(25398772708).jpg",
+            "zeigt": "Front mit hoch liegenden Scheinwerfern",
+            "benutzt": "Gegenprobe Scheinwerferlage"
+          },
+          {
+            "titel": "Alamy – Planierraupe Hanomag K55 (historisch)",
+            "url": "https://www.alamy.com/planierraupe-bulldozer-hanomag-k55-image261205232.html",
+            "zeigt": "Einsatzfoto mit Schild, A-Bock und liegendem Zylinder",
+            "benutzt": "Planiereinrichtung, Lage des Zylinders"
+          }
+        ]
+      },
+      {
+        "titel": "Prospekte und Werkszeichnungen",
+        "eintraege": [
+          {
+            "titel": "Prospekt Planierraupe K 55 E (AgRaritäten-Shop)",
+            "url": "https://www.agraritaeten-shop.com/shop/prospekte/prospekte-hanomag/hanomag-prospekt-planierraupe-k55e/",
+            "zeigt": "Werkszeichnung schräg hinten: Traverse, Zylinder, A-Bock, Schalensitz",
+            "benutzt": "Traverse auf dem Kotflügel, Sitz, Schubbalken"
+          },
+          {
+            "titel": "Prospekt K 55 E mit FRISCH-Schild, schräg vorn (jimcdn)",
+            "url": "https://image.jimcdn.com/app/cms/image/transf/none/path/s09647b1ddb9cad0e/image/iae9f569f7333eb0b/version/1605190382/image.jpg",
+            "zeigt": "Ganze Maschine von vorn rechts oben",
+            "benutzt": "Fehlerliste: K55E-Schrift, Grill, Scheinwerfer, Ölpumpe, Haubendach"
+          }
+        ]
+      },
+      {
+        "titel": "Modelle",
+        "eintraege": [
+          {
+            "titel": "Modellversium – Wiking 1:25 von Werner Jonczyk",
+            "url": "https://www.modellversium.de/galerie/20-lkw/13313-hanomag-raupe-k-55-.html",
+            "zeigt": "Laufwerk, Rahmen von unten, Motor, Kästen",
+            "benutzt": "Unterseite und verdeckte Teile, die auf keinem Originalfoto zu sehen sind"
+          },
+          {
+            "titel": "Wiking 1:87 mit Räumschild (Nick's Autos)",
+            "url": "https://www.nicks-autos.com/hanomag-k-55-raupenschlepper-mit-raumschild.html",
+            "zeigt": "Gesamtform mit Schild",
+            "benutzt": "Grobe Anordnung der Planiereinrichtung"
+          }
+        ]
+      },
+      {
+        "titel": "Technische Daten",
+        "eintraege": [
+          {
+            "titel": "Traktorenlexikon: Hanomag K 55 E",
+            "url": "https://de.wikibooks.org/wiki/Traktorenlexikon:_Hanomag_K_55_E",
+            "zeigt": "Maße, Gewicht, Motor, Getriebe",
+            "benutzt": "Länge, Breite, Höhe, Spur"
+          },
+          {
+            "titel": "Traktorenlexikon: Hanomag K 55",
+            "url": "https://de.wikibooks.org/wiki/Traktorenlexikon:_Hanomag_K_55",
+            "zeigt": "Daten der Ackerversion",
+            "benutzt": "Spur 1180 mm als Maßstab für die Fotos der K 55"
+          },
+          {
+            "titel": "Fahrzeugseiten.de – K 55, K 55 W, K 55 S, K 55 E",
+            "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/k55.html",
+            "zeigt": "Daten aller Varianten",
+            "benutzt": "Kettenbreite 400 mm, Motor D57, Stückzahlen"
+          }
+        ]
+      },
+      {
+        "titel": "Ohne Link",
+        "eintraege": [
+          {
+            "titel": "Eigene Fotos von zwei K 55, Oldtimertreffen 29.07.2023",
+            "url": "",
+            "zeigt": "Fahrerstand, Motor, Details",
+            "benutzt": "Gegenprobe; nicht veröffentlicht"
+          }
+        ]
+      }
+    ]
+  }
+}

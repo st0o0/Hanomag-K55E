@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Modellwerkstatt</title>
+<meta name="description" content="3D-Modelle im Maßstab ansehen, direkt am Modell messen und Druckdateien laden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Modellwerkstatt</span>
+    </div>
+    <label class="picker">
+      <span class="sr">Modell</span>
+      <select id="modell-wahl"></select>
+    </label>
+    <div class="titel">
+      <h1 id="modell-name">…</h1>
+      <p id="modell-unter"></p>
+    </div>
+    <span class="massstab" id="massstab">M 1:8</span>
+  </header>
+
+  <main class="stage" id="stage">
+    <div class="hud-top">
+      <div class="tools" role="toolbar" aria-label="Werkzeuge">
+        <button type="button" class="tool" id="t-messen" aria-pressed="false" title="Messen (M)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z M7 13l2 2 M10 10l2 2 M13 7l2 2"/></svg>
+          <span>Messen</span>
+        </button>
+        <button type="button" class="tool" id="t-schnitt" aria-pressed="false" title="Schnitt (S)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z M4 12h16" /></svg>
+          <span>Schnitt</span>
+        </button>
+        <button type="button" class="tool" id="t-raster" aria-pressed="true" title="Raster">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+          <span>Raster</span>
+        </button>
+      </div>
+      <div class="hint" id="hint" hidden></div>
+      <div class="seg mess-typ" id="mess-typ" role="group" aria-label="Messart für neue Messungen" hidden>
+        <button type="button" data-typ="direkt" aria-pressed="true" title="Taste 1">Abstand</button>
+        <button type="button" data-typ="x" aria-pressed="false" title="Taste 2">Länge X</button>
+        <button type="button" data-typ="y" aria-pressed="false" title="Taste 3">Breite Y</button>
+        <button type="button" data-typ="z" aria-pressed="false" title="Taste 4">Höhe Z</button>
+      </div>
+    </div>
+
+    <div class="schnitt" id="schnitt-panel" hidden>
+      <div class="seg" role="group" aria-label="Schnittrichtung">
+        <button type="button" data-achse="x" aria-pressed="true">Längs</button>
+        <button type="button" data-achse="y" aria-pressed="false">Quer</button>
+        <button type="button" data-achse="z" aria-pressed="false">Höhe</button>
+      </div>
+      <input type="range" id="schnitt-pos" min="0" max="1" step="0.001" value="0.5" aria-label="Schnittposition">
+      <output id="schnitt-out" class="mono">–</output>
+      <button type="button" class="link" id="schnitt-flip">Seite wechseln</button>
+    </div>
+
+    <div class="hud-bottom">
+      <div class="views" role="group" aria-label="Ansicht">
+        <button type="button" data-view="iso">Schräg</button>
+        <button type="button" data-view="front">Vorn</button>
+        <button type="button" data-view="left">Links</button>
+        <button type="button" data-view="right">Rechts</button>
+        <button type="button" data-view="rear">Hinten</button>
+        <button type="button" data-view="top">Oben</button>
+      </div>
+      <div class="explode">
+        <label for="explode">Auseinander</label>
+        <input type="range" id="explode" min="0" max="1" step="0.01" value="0">
+      </div>
+      <span class="raster-note mono" id="raster-note">Raster 10 mm = 80 mm Original</span>
+    </div>
+    <div class="labels" id="labels" aria-live="polite"></div>
+    <div class="loading" id="loading"><span>Lade Modell …</span><i id="loading-bar"></i></div>
+  </main>
+
+  <aside class="sheet">
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" id="tab-teile" aria-controls="p-teile" aria-selected="true">Teile</button>
+      <button type="button" role="tab" id="tab-messen" aria-controls="p-messen" aria-selected="false">Messungen <b id="mess-zahl">0</b></button>
+      <button type="button" role="tab" id="tab-dateien" aria-controls="p-dateien" aria-selected="false">Dateien</button>
+      <button type="button" role="tab" id="tab-info" aria-controls="p-info" aria-selected="false">Info</button>
+      <button type="button" role="tab" id="tab-quellen" aria-controls="p-quellen" aria-selected="false">Quellen</button>
+    </nav>
+
+    <section class="panel" id="p-teile" role="tabpanel" aria-labelledby="tab-teile">
+      <div class="auswahl" id="auswahl" hidden></div>
+      <div id="teile-liste"></div>
+      <div class="farbe">
+        <h2>Lackierung</h2>
+        <div class="seg" id="farben" role="group" aria-label="Lackierung">
+          <button type="button" data-farbe="rot" aria-pressed="true"><i style="background:#a8262b"></i>Hanomag-Rot</button>
+          <button type="button" data-farbe="orange" aria-pressed="false"><i style="background:#d9771f"></i>Orange</button>
+          <button type="button" data-farbe="grau" aria-pressed="false"><i style="background:#9aa1a6"></i>Druck-Grau</button>
+        </div>
+        <h2 class="abstand">Planiereinrichtung</h2>
+        <div class="seg" id="farben-anbau" role="group" aria-label="Farbe Planiereinrichtung">
+          <button type="button" data-farbe="lack" aria-pressed="true">Wie Lack</button>
+          <button type="button" data-farbe="gelb" aria-pressed="false"><i style="background:#d8ae1f"></i>FRISCH-Gelb</button>
+          <button type="button" data-farbe="grau" aria-pressed="false"><i style="background:#9aa1a6"></i>Druck-Grau</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="p-messen" role="tabpanel" aria-labelledby="tab-messen" hidden>
+      <p class="lead">Mit <b>Messen</b> zwei Punkte auf dem Modell antippen. In der Nähe einer Ecke rastet der Punkt dort ein. Oben wählst du, ob der direkte Abstand oder nur Länge, Breite oder Höhe gemessen wird.</p>
+      <p class="note">Bearbeiten: Beschriftung ziehen verschiebt die Maßlinie. Bei einer gewählten Messung lassen sich die Endpunkte auf dem Modell verschieben. Name und Messart stehen in der Liste. Gemessen wird immer am zusammengebauten Modell. Die Messungen bleiben in diesem Browser gespeichert.</p>
+      <ol class="messungen" id="messungen"></ol>
+      <p class="leer" id="mess-leer">Noch keine Messung.</p>
+      <button type="button" class="link" id="mess-loeschen" hidden>Alle Messungen löschen</button>
+    </section>
+
+    <section class="panel" id="p-dateien" role="tabpanel" aria-labelledby="tab-dateien" hidden>
+      <p class="lead">Druckdateien im Maßstab, Einheit mm. Jede Datei ist geschlossen und ohne Überschneidungen, die Einzelteile liegen flach nebeneinander auf dem Druckbett. In der App ist das Modell leicht vereinfacht; die Dateien hier sind fein aufgelöst.</p>
+      <ul class="dateien" id="dateien"></ul>
+      <p class="note" id="step-zeile"></p>
+    </section>
+
+    <section class="panel" id="p-info" role="tabpanel" aria-labelledby="tab-info" hidden>
+      <dl class="daten" id="daten"></dl>
+      <p class="note" id="genauigkeit"></p>
+      <h2>Farben im Modell</h2>
+      <ul class="legende" id="legende"></ul>
+      <h2>Bedienung</h2>
+      <ul class="bedienung">
+        <li><b>Drehen:</b> linke Maustaste oder ein Finger</li>
+        <li><b>Verschieben:</b> rechte Maustaste oder zwei Finger</li>
+        <li><b>Zoomen:</b> Mausrad oder zwei Finger auseinander</li>
+        <li><b>Teil auswählen:</b> Teil anklicken; Maße und Druckdatei erscheinen oben</li>
+        <li><b>Maß bearbeiten:</b> Beschriftung ziehen, Endpunkt einer gewählten Messung ziehen</li>
+        <li><b>Tasten:</b> M Messen · 1–4 Messart · S Schnitt · Esc abbrechen · Entf gewählte Messung löschen</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="p-quellen" role="tabpanel" aria-labelledby="tab-quellen" hidden>
+      <p class="lead">Diese Fotos, Prospekte und Daten wurden als Vorlage für das Modell benutzt.</p>
+      <div id="quellen"></div>
+      <p class="note" id="quellen-hinweis"></p>
+    </section>
+  </aside>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

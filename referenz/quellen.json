@@ -1,0 +1,150 @@
+{
+  "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
+  "gruppen": [
+    {
+      "titel": "Fotos des Originals",
+      "eintraege": [
+        {
+          "titel": "Flickr – blaue K 55 mit FRISCH-Schild, Bj. 1956, Seite rechts",
+          "url": "https://live.staticflickr.com/783/40431489714_2beac27214_b.jpg",
+          "zeigt": "Fast senkrechte Seitenansicht: Laufwerk, Haube, Tank, A-Bock, Traverse",
+          "benutzt": "Haubenlänge, Lage von Tank und A-Bock zum Laufwerk, Maskenüberstand vor der Kettennase (Überlagerung mit dem Modell)"
+        },
+        {
+          "titel": "Flickr – blaue K 55 mit FRISCH-Schild, Bj. 1956, vorn",
+          "url": "https://live.staticflickr.com/810/26271249857_2dfb185633_b.jpg",
+          "zeigt": "Front fast senkrecht: Maske, Ölpumpe, Scheinwerfer, Schild",
+          "benutzt": "Maskenunterkante, Verhältnis Maskenhöhe zu Breite, Lage der Ölpumpe"
+        },
+        {
+          "titel": "Fahrzeugseiten.de – K 55, Seite links",
+          "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_01m.jpg",
+          "zeigt": "Ganze linke Seite: Laufwerk, Haube, Fahrerstand",
+          "benutzt": "Proportionen Seitenansicht, Lage von Leitrad, Triebrad und Laufrollen"
+        },
+        {
+          "titel": "Fahrzeugseiten.de – K 55, vorn",
+          "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_02m.jpg",
+          "zeigt": "Front fast senkrecht: Maske, Scheinwerfer, beide Ketten",
+          "benutzt": "Maßstab über Spur und Kettenbreite, Maskenmaße, Höhe der Maskenunterkante"
+        },
+        {
+          "titel": "Fahrzeugseiten.de – K 55, vorn (zweites Fahrzeug)",
+          "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_08m.jpg",
+          "zeigt": "Front fast senkrecht",
+          "benutzt": "Gegenprobe der Maskenbreite zur Spur"
+        },
+        {
+          "titel": "Fahrzeugseiten.de – K 55, schräg vorn rechts",
+          "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_07m.jpg",
+          "zeigt": "Haubenseite mit Schriftzug, Motorausschnitt, Tank",
+          "benutzt": "Schriftzug, Motorausschnitt, Tankform"
+        },
+        {
+          "titel": "Fahrzeugseiten.de – K 55, Heck",
+          "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_04m.jpg",
+          "zeigt": "Hochkant stehender Getriebekasten, Endantriebe, Zugpendel, Werkzeugkasten",
+          "benutzt": "Heckkasten, Endantriebsgehäuse, Zugpendel"
+        },
+        {
+          "titel": "Fahrzeugseiten.de – weitere Bilder der Galerie",
+          "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/k55.html",
+          "zeigt": "Fahrerstand, Motorausschnitt, Leitrad",
+          "benutzt": "Instrumente, Lenkung, Einspritzpumpe, Filter, Deckel HANOMAG DIESEL"
+        },
+        {
+          "titel": "Flickr – K 55 mit FRISCH-Schild, blau",
+          "url": "https://live.staticflickr.com/7120/7826381704_4064fa1e84_b.jpg",
+          "zeigt": "Schräg vorn links: Grill mit senkrechten Stäben, Scheinwerfer oben, Ölpumpe vor der Maske, A-Bock, Traverse",
+          "benutzt": "Fehlerliste: A-Bock, Ölpumpe, Hydraulikrohre, Scheinwerfer, Grill, Schild"
+        },
+        {
+          "titel": "Flickr – K 55 Kettenschlepper, rot (janbarnier)",
+          "url": "https://www.flickr.com/photos/janbarnier/7675519862",
+          "zeigt": "Schräg vorn links ohne Schild, Laufwerk gut sichtbar",
+          "benutzt": "Laufwerk, Spannfederrohr, Kotflügel"
+        },
+        {
+          "titel": "Wikimedia Commons – Hanomag Planierraupe",
+          "url": "https://commons.wikimedia.org/wiki/File:Hanomag_Planierraupe_(25398772708).jpg",
+          "zeigt": "Front mit hoch liegenden Scheinwerfern",
+          "benutzt": "Gegenprobe Scheinwerferlage"
+        },
+        {
+          "titel": "Alamy – Planierraupe Hanomag K55 (historisch)",
+          "url": "https://www.alamy.com/planierraupe-bulldozer-hanomag-k55-image261205232.html",
+          "zeigt": "Einsatzfoto mit Schild, A-Bock und liegendem Zylinder",
+          "benutzt": "Planiereinrichtung, Lage des Zylinders"
+        }
+      ]
+    },
+    {
+      "titel": "Prospekte und Werkszeichnungen",
+      "eintraege": [
+        {
+          "titel": "Prospekt Planierraupe K 55 E (AgRaritäten-Shop)",
+          "url": "https://www.agraritaeten-shop.com/shop/prospekte/prospekte-hanomag/hanomag-prospekt-planierraupe-k55e/",
+          "zeigt": "Werkszeichnung schräg hinten: Traverse, Zylinder, A-Bock, Schalensitz",
+          "benutzt": "Traverse auf dem Kotflügel, Sitz, Schubbalken"
+        },
+        {
+          "titel": "Prospekt K 55 E mit FRISCH-Schild, schräg vorn (jimcdn)",
+          "url": "https://image.jimcdn.com/app/cms/image/transf/none/path/s09647b1ddb9cad0e/image/iae9f569f7333eb0b/version/1605190382/image.jpg",
+          "zeigt": "Ganze Maschine von vorn rechts oben",
+          "benutzt": "Fehlerliste: K55E-Schrift, Grill, Scheinwerfer, Ölpumpe, Haubendach"
+        }
+      ]
+    },
+    {
+      "titel": "Modelle",
+      "eintraege": [
+        {
+          "titel": "Modellversium – Wiking 1:25 von Werner Jonczyk",
+          "url": "https://www.modellversium.de/galerie/20-lkw/13313-hanomag-raupe-k-55-.html",
+          "zeigt": "Laufwerk, Rahmen von unten, Motor, Kästen",
+          "benutzt": "Unterseite und verdeckte Teile, die auf keinem Originalfoto zu sehen sind"
+        },
+        {
+          "titel": "Wiking 1:87 mit Räumschild (Nick's Autos)",
+          "url": "https://www.nicks-autos.com/hanomag-k-55-raupenschlepper-mit-raumschild.html",
+          "zeigt": "Gesamtform mit Schild",
+          "benutzt": "Grobe Anordnung der Planiereinrichtung"
+        }
+      ]
+    },
+    {
+      "titel": "Technische Daten",
+      "eintraege": [
+        {
+          "titel": "Traktorenlexikon: Hanomag K 55 E",
+          "url": "https://de.wikibooks.org/wiki/Traktorenlexikon:_Hanomag_K_55_E",
+          "zeigt": "Maße, Gewicht, Motor, Getriebe",
+          "benutzt": "Länge, Breite, Höhe, Spur"
+        },
+        {
+          "titel": "Traktorenlexikon: Hanomag K 55",
+          "url": "https://de.wikibooks.org/wiki/Traktorenlexikon:_Hanomag_K_55",
+          "zeigt": "Daten der Ackerversion",
+          "benutzt": "Spur 1180 mm als Maßstab für die Fotos der K 55"
+        },
+        {
+          "titel": "Fahrzeugseiten.de – K 55, K 55 W, K 55 S, K 55 E",
+          "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/k55.html",
+          "zeigt": "Daten aller Varianten",
+          "benutzt": "Kettenbreite 400 mm, Motor D57, Stückzahlen"
+        }
+      ]
+    },
+    {
+      "titel": "Ohne Link",
+      "eintraege": [
+        {
+          "titel": "Eigene Fotos von zwei K 55, Oldtimertreffen 29.07.2023",
+          "url": "",
+          "zeigt": "Fahrerstand, Motor, Details",
+          "benutzt": "Gegenprobe; nicht veröffentlicht"
+        }
+      ]
+    }
+  ]
+}
