@@ -75,7 +75,8 @@ def main(argv):
         for e in eintraege:
             if e["id"] == db["id"]:
                 e["druck_mb"] = round((DRUCK / f"{db['id']}.stl").stat().st_size / 1e6, 2)
-                e["druck_koerper"], e["druck_bett_mm"] = db["koerper"], db["bett_mm"]
+                e["druck_koerper"] = len(db.get("koerper_liste") or []) or db["koerper"]   # Stuecke nach dem Teilen
+                e["druck_bett_mm"] = db["bett_mm"]
                 # Kurzfassung des Pruefberichts fuer die Druckansicht der App
                 e["druck_pruefung"] = {
                     "dicht": db["dicht"],

@@ -240,10 +240,9 @@ def tank():
     t.mat("blank", box(xh - 14, xh + 14, yh + 12, yh + 24, zh - 14, zh + 14))  # Hahnkoerper
     t.mat("blank", Pos(xh, yh + 18, zh + 14) * Cylinder(5, 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("lack", Pos(xh, yh + 18, zh + 26) * box(-30, 30, -5, 5, 0, 8))   # Knebel
-    # Leitung (frei durch die Flanschbohrung) aussen an der Unterbau-Seitenwand hinab, Anschlussflansch liegt nur an
+    # Leitung bis auf den Flansch (Tankteil); unterhalb der Flanschbohrung geht sie im Unterbau weiter (_unterbau)
     yl = LTG_Y
-    t.mat("blank", rohr_glatt([(xh, yh + 18, zh - 8), (xh, yl, zh - 20), (xh, yl, UB_PLATTE_Z0 - 12)], 6))
-    t.mat("blank", box(xh - 10, xh + 10, UNTERBAU_Y, yl + 6, UB_PLATTE_Z0 - 22, UB_PLATTE_Z0 - 2))
+    t.mat("blank", rohr_glatt([(xh, yh + 18, zh - 8), (xh, yl, zh - 20), (xh, yl, TANK_Z0 + 0.5)], 6))
     return t
 
 
@@ -256,6 +255,9 @@ def _unterbau(t):
     yi = UNTERBAU_Y - UNTERBAU_S
     # Kastenblock bis unter den Flansch
     t.append(box(x0, x1, -UNTERBAU_Y, UNTERBAU_Y, UB_PLATTE_Z0, FL_Z0 + 1))
+    # Kraftstoffleitung unter der Flanschbohrung aussen an der Seitenwand hinab (oberes Stueck gehoert zum Tank)
+    t.mat("blank", rohr_glatt([(X_HAHN, LTG_Y, FL_Z0 - 0.5), (X_HAHN, LTG_Y, UB_PLATTE_Z0 - 12)], 6))
+    t.mat("blank", box(X_HAHN - 10, X_HAHN + 10, UNTERBAU_Y - 1, LTG_Y + 6, UB_PLATTE_Z0 - 22, UB_PLATTE_Z0 - 2))
     # Auflageflansch mit Bohrungen fuer die Kraftstoffleitung (Tank-Leitung laeuft frei hindurch)
     fl = box(x0, FL_X1, -FL_Y, FL_Y, FL_Z0, TANK_Z0)
     for s in (-1, 1):

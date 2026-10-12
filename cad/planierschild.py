@@ -10,8 +10,8 @@ Wirkprinzip (Prospekt K 55 E, Einsatzfoto):
   A-Bock-Scheitel an. Einfahren zieht den Scheitel nach hinten -> Schubbalken
   dreht um das hintere Gelenk -> Schild hebt. runde Zahnrad-Oelpumpe vor dem
   Maskensockel (Antrieb von der Kurbelwelle), je Seite eine Leitung nach hinten.
-  Steuerventil mit Kugelhebel und Schraegstab hinten auf der Plattform
-  rechts der Mitte (x 2475..2605, y 335..485, z 840..990). Hubhoehe 1120 mm ueber / 200 mm unter Fahrebene.
+  Steuerblock mit Kugelhebel oben auf dem rechten Endkasten (Foto 7826381704).
+  Hubhoehe 1120 mm ueber / 200 mm unter Fahrebene.
 
 Fotobefund (BS = blaue K55 senkrecht von rechts, BV = von vorn, FL, PK):
   * A-Bock fast symmetrisch: Fuesse ABOCK_FUESSE (920 / 1650) auf dem Schubbalken,
@@ -32,13 +32,13 @@ Fotobefund (BS = blaue K55 senkrecht von rechts, BV = von vorn, FL, PK):
   * Pumpe: runder Koerper (Ø ~150, x -225..-60) auf einer Frontplatte vor dem Maskensockel (BV, 26271249857,
     40431531504), seitlich je ein Anschluss etwas unter der Achse. JE SEITE NUR EINE LEITUNG (Ø ~36): um die
     Maskenecke, aussen an den Haubenseiten (|y| = Y_LTG) schraeg nach hinten oben (BS: x 0 / z 775 -> x 1050 /
-    z 1060), Schellen an Maske, Haube und Schriftband. Rechts = Foerderleitung zum Steuerventil, links = Saugleitung
-    aus dem Oeltank (beide Ø 36, wie im Foto); hinter dem Unterbau bei |y| 410 niedrig (z 960) mit Standschellen auf
-    der Plattform. Ventil: Rueckleitung in den Tank, zwei Steigleitungen (Schwanenhals) auf die zwei parallelen
-    Querrohre ueber der Traverse (z 1370 Stangenseite, z 1440 Kolbenseite/Buegel), die beide Zylinder parallel
-    versorgen; die Leitungen laufen verdeckt durch die hohlen Endkaesten zu den Zylinderenden. Das untere duenne Rohr
-    am Zylinder (BS, 39334013090) ist als Leckoelleitung des Kopfes gedeutet. Kein Gestaenge an der Haubenseite, kein
-    Ventilblock auf der Pumpe (39333958410: linke Haubenseite nur das Rohr). Traverse: Rueckwand durchgehend (Quertraeger buendig mit
+    z 1060), Schellen an Maske, Haube und Schriftband; hinter dem Unterbau (Halter an der Unterbauwand) herunter auf
+    Plattformhoehe und AM BODEN (z 885, |y| 440, Standschellen) nach hinten (7826381704). Rechts: Foerderleitung bis x 2250,
+    dann schwarzer Schlauch ueber den Werkzeugkasten zum Steuerblock oben auf dem rechten Endkasten (Kugelhebel);
+    links: Saugleitung in die Tankvorderwand. Steuerblock -> zwei Leitungen auf die zwei parallelen Querrohre ueber der
+    Traverse (z 1370 Stangenseite, z 1440 Kolbenseite/Buegel; versorgen beide Zylinder), Ruecklauf in den Tank. Das
+    untere duenne Rohr am Zylinder (BS, 39334013090) ist als Leckoelleitung gedeutet. Kein Gestaenge an der Haubenseite,
+    kein Ventilblock auf der Pumpe (39333958410: linke Haubenseite nur das Rohr). Traverse: Rueckwand durchgehend (Quertraeger buendig mit
     den Endkaesten), Schild "Frisch" links der Mitte, Langloch rechts, Einfuellstutzen Ø ~115 mit roter Kappe
     (26271221407); Querrohre ueber der Traverse bei z 1370 (Leitung) und 1440 (Buegel).
   * Schild glatt (die Bohrungsreihe auf FL gehoert zu einer anderen Maschine).
@@ -116,14 +116,14 @@ LTG_VORN = (0.0, 775.0)       # (x, z) Maskenecke: Beginn des Schraegstuecks (Fo
 LTG_HINTEN = (HAUBE_X1 - 30.0, 1060.0)   # Ende des Schraegstuecks am Haubenende
 Z_LTG = 1085.0                # waagerechter Lauf hinter der Haube: ueber Kastendeckel (1022) und
                               # Spannbuegel-Fluegel (bis 1060) der Kaesten vor dem Sitz (fahrerstand.py)
-X_LTG_AUS = 1580.0           # hinter Unterbau, Tank (bis x 1535) und Konsole: hier geht die Leitung nach aussen und herunter
-Y_HINT = 410.0                # |y| der Leitungen hinter dem Unterbau (zwischen Sitz |y| <= 250 und Werkzeugkasten |y| >= 580)
-Z_HINT = 960.0                # Hoehe dieses Laufs (120 ueber der Plattform, unter den Kastendeckeln)
-# Steuerventil (Foto 39334013090, 40431531504): Block hinten auf der Plattform, rechts der Mitte, vor der Traverse
-VB_X0, VB_X1 = 2475.0, 2605.0
-VB_Y0, VB_Y1 = 335.0, 485.0
-VB_Z1 = 990.0                 # Oberkante Block
-Y_ARM1, Y_ARM2 = 380.0, 440.0   # y der beiden Steigleitungen ("Schwanenhals") zu den Querrohren
+X_LTG_AB = 1620.0            # hier ist die Leitung hinter dem Unterbau herunter auf Plattformhoehe (Foto f7826)
+Y_HINT = 440.0                # |y| der Leitungen auf der Plattform (Gasse zwischen Sitz |y| <= 250 und Kaesten |y| >= 585)
+Z_HINT = 885.0                # Rohrachse am Boden (Unterkante 867, 27 ueber der Plattform), auf Standschellen
+X_SCHLAUCH = 2250.0           # hier geht das Rohr rechts in den Schlauch zum Steuerblock ueber
+# Steuerblock oben auf dem rechten Endkasten (Fotos f7826, 39334013090): innen vor den Fussplatten der Buegelschlaufe
+VB_X0, VB_X1 = 2470.0, 2560.0
+VB_Y0, VB_Y1 = 965.0, 1055.0
+VB_Z1 = EK_Z1 + 50.0          # Oberkante Block (1290)
 # Fuehrungsplatte mit Steckbolzen (kurz hinter dem Leitrad)
 FP_X0, FP_X1 = X_LEIT + 230.0, X_LEIT + 310.0
 X_STECK = X_LEIT + 350.0
@@ -558,66 +558,73 @@ def _schelle_haube(t, x, s, r):
 
 
 def ventil(t):
-    """Steuerventil (Fotos 39334013090, 40431531504, 26271221407): Block hinten auf der Plattform rechts der Mitte
-    vor der Traverse, mit Kugelhebel und Schraegstab. Steht auf der Plattform (z 840, 0,3 mm eingesenkt)."""
-    zb = DECK_Z - 0.3
-    xm, ym = (VB_X0 + VB_X1) / 2, (VB_Y0 + VB_Y1) / 2
-    t.append(box(VB_X0 - 10, VB_X1 + 10, VB_Y0 - 10, VB_Y1 + 10, zb, zb + 12))                 # Fussplatte
-    t += [sechskant((x, y, zb + 12), (0, 0, 1), 16, 7) for x in (VB_X0, VB_X1) for y in (VB_Y0 - 3, VB_Y1 + 3)]
-    t.append(kasten_rund(VB_X0 + 8, VB_X1 - 8, VB_Y0 + 8, VB_Y1 - 8, zb + 12, VB_Z1, 8, Axis.Z))   # Ventilkoerper
-    for yy in (VB_Y0 + 8, VB_Y1 - 8):                                                          # Schieberdeckel quer
-        t.append(rad_y(xm, yy + (-14 if yy < ym else 14) / 2, zb + 78, 34, 14))
-    t.append(rad_x(xm, ym, zb + 78, 22, VB_X1 - VB_X0 + 30))                                  # Schieberbohrungen / Anschlussbalken
-    for z in (zb + 112, zb + 144):
-        t.append(rad_x(xm, ym, z, 16, VB_X1 - VB_X0 + 14))
-    # Kugelhebel (Schaltstock) und Schraegstab
-    t.mat("blank", stab((xm - 30, ym, VB_Z1 - 4), (xm - 30, ym, VB_Z1 + 150), 8))
-    t.mat("schwarz", Pos(xm - 30, ym, VB_Z1 + 166) * Sphere(24))
-    t.append(Pos(xm - 30, ym, VB_Z1 + 6) * Cylinder(20, 14))
-    t.mat("blank", stab((VB_X0 + 25, VB_Y0 + 10, VB_Z1 - 20), (VB_X0 - 40, VB_Y0 + 10, VB_Z1 + 150), 7))
-    t.append(rad_y(VB_X0 + 25, VB_Y0 + 6, VB_Z1 - 20, 15, 16))
-    # Steigleitungen (Schwanenhaelse): Leitung 1 (Stangenseite) auf das Querrohr z Z_QL, Leitung 2 (Kolbenseite) auf das Buegelrohr
-    xq, xb = 2655.0, BG_X1
-    t.append(rohr_glatt([(xm + 30, Y_ARM1, VB_Z1 - 20), (xm + 30, Y_ARM1, Z_QL), (xq, Y_ARM1, Z_QL)], R_QL, 40))
-    t.append(rohr_glatt([(xb, Y_ARM2, VB_Z1 - 20), (xb, Y_ARM2, BG_Z)], R_QL, 40))
-    for (x, y, z) in ((xq, Y_ARM1, Z_QL), (xb, Y_ARM2, BG_Z)):                                  # Abzweig-Verschraubung
-        t.mat("blank", sechskant((x, y, z - 28), (0, 0, 1), 24, 10))
-    # Ruecklauf in den Oeltank (Querträger-Vorderwand)
-    t.append(rohr_glatt([(VB_X1 - 20, ym, zb + 112), (QT_X0 + 4, ym, zb + 112)], R_QL, 20))
-    t.append(rad_x(VB_X1 + 2, ym, zb + 112, 22, 12))
+    """Steuerblock oben auf dem rechten Endkasten (Fotos f7826/7826381704, 39334013090): kleiner Block mit durchgehendem
+    Schieber, Kugelhebel (Kugel Ø 90) darauf; Schlauch von der Plattform kommt von innen (-y), zwei Leitungen zu den
+    Querrohren, Rueckleitung in den Oeltank. Steht auf der Kastendecke (z 1240, bis 1 mm eingesenkt)."""
+    zt = EK_Z1
+    y0, y1, x0, x1 = VB_Y0, VB_Y1, VB_X0, VB_X1
+    xm, ym = (x0 + x1) / 2, (y0 + y1) / 2
+    t.append(box(x0 - 8, x1 + 8, y0 - 8, y1 + 8, zt - 1, zt + 10))                              # Fussplatte
+    t += [sechskant((x, y, zt + 10), (0, 0, 1), 14, 6) for x in (x0 - 2, x1 + 2) for y in (y0 - 3, y1 + 3)]
+    t.append(kasten_rund(x0, x1, y0, y1, zt + 10, VB_Z1, 8, Axis.Z))                              # Ventilkoerper
+    t.append(rad_x(xm, ym, zt + 32, 22, x1 - x0 + 30))                                            # Schieber
+    for x in (x0 - 15, x1 + 15):
+        t.mat("blank", rad_x(x, ym, zt + 32, 15, 9))
+    t.append(Pos(xm, ym, VB_Z1 + 7) * Cylinder(22, 14))                                           # Lagerbock Hebel
+    t.mat("blank", stab((xm, ym, VB_Z1), (xm, ym, VB_Z1 + 90), 8))
+    t.mat("schwarz", Pos(xm, ym, VB_Z1 + 90 + 35) * Sphere(45))                                   # Kugel, Oberkante 1420
+    t.append(rad_y(xm, y0 - 8, zt + 36, 26, 14))                                                  # Schlauchanschluss
+    rr = R_QL - 3
+    xq = 2655.0
+    t.append(rohr_glatt([(x1 - 4, 1022.0, zt + 30), (xq, 1022.0, zt + 30), (xq, EK_YI + 68, zt + 30)], rr, 25))   # -> Querrohr (Stangenseite)
+    t.append(rohr_glatt([(x1 - 4, 985.0, zt + 22), (BG_X1, 985.0, zt + 22), (BG_X1, EK_YI + 60, zt + 22)], rr, 25))  # -> Buegelrohr
+    t.append(rohr_glatt([(x1 - 4, 1052.0, zt + 30), (2700.0, 1052.0, zt + 30), (2700.0, 860.0, zt + 30),
+                         (2700.0, 860.0, zt - 4)], rr, 25))                                         # Ruecklauf in den Tank
 
 
 def leitungen(t):
-    """Hydraulikkreis (Fotos 26271249857, 40431531504, 39333958410, BS, 39334013090, 26271221407; Verdecktes plausibel):
-      * Pumpe -> je Seite EINE dicke Leitung (Ø 36) um die Maskenecke und schraeg an der Haubenseite nach hinten.
-        Rechts: Foerderleitung zum Steuerventil; links: Saugleitung aus dem Oeltank (gleicher Durchmesser, wie im Foto).
-        Hinter dem Unterbau laufen beide bei |y| = Y_HINT niedrig (Z_HINT) zum Ventil bzw. in den Tank.
-      * Ventil -> Ruecklauf (kurz) in den Tank; zwei Steigleitungen auf die zwei parallelen Querrohre ueber der Traverse
-        (Stangenseite z Z_QL, Kolbenseite im Buegelrohr z BG_Z). Beide Querrohre verbinden die Zylinder parallel.
-      * Stangenseite je Zylinder: duenne Leitung oben vom Kopfstueck in den Endkasten (hohl, dort verdeckt hoch zum
-        Querrohr). Kolbenseite: Buegelschlaufe ueber dem Endkasten in den Kasten (Boden, verdeckt).
-        Das untere duenne Rohr am Zylinder (Foto) ist die Leckoelleitung des Kopfes zum Tank."""
+    """Hydraulikkreis (Fotos f7826 = Flickr 7826381704, 26271249857, 40431531504, 39333958410, 40431489714, 39334013090,
+    26271221407; Verdecktes plausibel):
+      * Pumpe -> je Seite EINE dicke Leitung (Ø 36): um die Maskenecke, schraeg an der Haubenseite nach hinten,
+        hinter dem Unterbau herunter auf Plattformhoehe und AM BODEN (z 885, |y| 440, Standschellen) nach hinten.
+      * Rechts: Foerderleitung bis x 2250, dann schwarzer Schlauch (f7826) ueber den Werkzeugkasten zum Steuerblock oben auf
+        dem rechten Endkasten. Links: Saugleitung in die Vorderwand des Oeltanks (Querträger).
+      * Steuerblock -> zwei Leitungen auf die zwei parallelen Querrohre ueber der Traverse (Stangenseite z Z_QL,
+        Kolbenseite im Buegelrohr z BG_Z) = Querverbindung zu beiden Zylindern; Rueckleitung in den Tank.
+      * Zylinder: oberes duenne Rohr = Stangenseite (Kopf -> Endkasten), Kolbenseite ueber die Buegelschlaufe in den Kasten,
+        unteres Rohr = Leckoelleitung des Kopfes (gedeutet)."""
     for s in (-1, 1):
-        x_end = VB_X0 + 2 if s == 1 else QT_X0 + 4
         pts = [(PU_XPORT, s * 104, PU_ZPORT), (PU_XPORT, s * 300, PU_ZPORT), (-35.0, s * Y_LTG, 560.0),
                (LTG_VORN[0], s * Y_LTG, LTG_VORN[1]), (LTG_HINTEN[0], s * Y_LTG, LTG_HINTEN[1]),
-               (LTG_HINTEN[0] + 120, s * Y_LTG, Z_LTG), (X_LTG_AUS, s * Y_LTG, Z_LTG),
-               (X_LTG_AUS + 100, s * Y_HINT, Z_LTG - 60), (X_LTG_AUS + 200, s * Y_HINT, Z_HINT),
-               (x_end, s * Y_HINT, Z_HINT)]
+               (X_LTG_AB, s * Y_LTG, Z_HINT + 30), (X_LTG_AB + 90, s * Y_HINT, Z_HINT)]
+        if s == 1:
+            pts += [(X_SCHLAUCH, s * Y_HINT, Z_HINT)]
+        else:
+            pts += [(2540.0, s * Y_HINT, Z_HINT), (2590.0, s * Y_HINT, Z_HINT + 75), (QT_X0 + 4, s * Y_HINT, Z_HINT + 75)]
         t.append(rohr_glatt(pts, R_LTG, 70))
         for x in (100.0, 290.0, 980.0):
             _schelle_haube(t, x, s, R_LTG)
-        for x in (1850.0, 2150.0, 2350.0):                               # Standschellen auf der Plattform
+        # Halter am Unterbau (Seitenwand y = +-330) auf dem Schraegstueck
+        zx = LTG_HINTEN[1] + (1300.0 - LTG_HINTEN[0]) * (Z_HINT + 30 - LTG_HINTEN[1]) / (X_LTG_AB - LTG_HINTEN[0])
+        t.append(ring_x(1300.0, s * Y_LTG, zx, R_LTG + 8, R_LTG - 0.5, 26))
+        ya, yb = sorted((s * 331.0, s * (Y_LTG - R_LTG + 4)))
+        t.append(box(1285, 1315, ya, yb, zx - 14, zx + 14))
+        for x in (1800.0, 2000.0, 2200.0) if s == 1 else (1800.0, 2000.0, 2200.0, 2450.0):
             schelle_x(t, x, s * Y_HINT, Z_HINT, R_LTG, DECK_Z - 0.3)
-        t.append(rad_x(x_end - s * 0 + (-6 if s == 1 else 6), s * Y_HINT, Z_HINT, R_LTG + 8, 12))   # Verschraubung am Ende
-    # Querleitung (Stangenseite, gemeinsam fuer beide Zylinder) oben auf dem Traversen-Quertraeger
+    # Schlauch rechts: Plattform -> ueber die Werkzeugkaesten -> Steuerblock (von innen)
+    xm = (VB_X0 + VB_X1) / 2
+    t.mat("gummi", rohr_glatt([(X_SCHLAUCH - 6, Y_HINT, Z_HINT), (2300.0, Y_HINT, Z_HINT), (2300.0, Y_HINT, 1110.0),
+                               (2300.0, 862.0, 1110.0), (2300.0, 862.0, 1275.0), (xm, 862.0, 1275.0),
+                               (xm, VB_Y0 - 6, 1275.0)], 13.0, 45))
+    t.append(ring_x(X_SCHLAUCH, Y_HINT, Z_HINT, R_LTG + 6, R_LTG - 0.5, 14))                  # Uebergang Rohr/Schlauch
+    t.append(rad_x(X_SCHLAUCH + 12, Y_HINT, Z_HINT, R_LTG + 4, 14))
+    # Querleitung (Stangenseite, beide Zylinder parallel) oben auf dem Traversen-Quertraeger
     xa = 2655.0
     ye = EK_YI + 60
     t.append(rohr_glatt([(xa, -ye, EK_Z1 - 3), (xa, -ye, Z_QL), (xa, ye, Z_QL), (xa, ye, EK_Z1 - 3)], R_QL, 30))
     for y in (-ye, ye):                                                  # Verschraubungen auf der Decke
         t.mat("blank", sechskant((xa, y, EK_Z1), (0, 0, 1), 30, 14))
-    # Doppelschellen halten beide Querrohre (Querleitung z Z_QL, Buegelrohr z BG_Z) auf dem Quertraeger
-    for y in (-700, -350, 560, 700):
+    for y in (-700, -350, 350, 700):                                     # Doppelschellen halten beide Querrohre
         t.append(box(xa - 12, xa + 12, y - 14, y + 14, QT_Z1 - 2, Z_QL - R_QL + 2))
         t.append(box(BG_X1 - 10, xa + 12, y - 8, y + 8, Z_QL - R_QL, BG_Z + R_BUEGEL))
 

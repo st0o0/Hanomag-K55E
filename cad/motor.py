@@ -518,7 +518,8 @@ def _kuehler(t):
     t.mat("schwarz", Pos(KD_X, 0, ze - 24) * Cylinder(29, 24, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("schwarz", rad_x(K_X1 + 8, 0, 1240, 24, 16))                 # Zulaufstutzen
     # Ueberlaufrohr: vom Einfuellrohr nach rechts, hinter dem Seitenteil nach unten
-    t.mat("blank", rohr_glatt([(250, 15, zr), (250, 312, zr), (K_X1 + 7, 312, zr), (K_X1 + 7, 312, 560)], 4, 15))
+    zu = zr - 30                                                       # unter der gewoelbten Dachecke
+    t.mat("blank", rohr_glatt([(250, 15, zr), (250, 15, zu), (250, 312, zu), (K_X1 + 7, 312, zu), (K_X1 + 7, 312, 560)], 4, 15))
     # Unterer Wasserkasten: Mitte bis z = 480 zwischen den Traegern, aussen auf den Traegern
     t.mat("schwarz", kasten_rund(K_X0, K_X1, -K_Y, K_Y, Z_TRAEGER + 8, K_NETZ_Z0, 20, Axis.X))
     t.mat("schwarz", kasten_rund(K_X0 + 10, K_X1 - 10, -180, 180, K_Z0, Z_TRAEGER + 10, 20, Axis.X))
