@@ -30,12 +30,12 @@ DECK_Z = 840.0                # Plattform / Kotfluegel-Oberkante (Kette oben bis
 DECK_X0, DECK_X1, DECK_B = 1430.0, 2780.0, 1800.0
 MASKE_UK = 450.0              # Unterkante Kuehlermaske (Foto BV: Maske 897 hoch, h/b = 1,26)
 HAUBE_X0, HAUBE_X1, HAUBE_B = 210.0, 1080.0, 690.0   # Foto BS: Haube endet ~1080, dahinter Tank
-HAUBE_DACH_Z = 392.0 + 955.0  # 1347
+HAUBE_DACH_Z = 1410.0        # Review 2026-10-12: Video 165/167 + Flickr 1426..1441, Maske 450..1410 = 960 hoch (h/b 1,35, wie DSC04737)
 HAUBE_UNTEN_Z = 620.0         # Unterkante vorderes Haubenseitensegment (auf Hoehe Kettenoberkante)
 HAUBE_BAND_Z = 1125.0         # Oberkante Motorausschnitt = Unterkante Schriftband (Band 1125..Dach)
-SEG_X1 = 310.0                # vorderes Seitensegment x 210..310 (Foto BS), dann Bogen R ~220 in die Bandkante
+SEG_X1 = 370.0                # vorderes Seitensegment x 210..370 (Review 2026-10-12: Video 066/070/173 + DSC04742, 150..200 breit), dann flacher Ellipsenbogen in die Bandkante
 TANK_X0, TANK_X1, TANK_B = 1085.0, 1455.0, 680.0   # Tank in Haubenform: Unterkante bis x 1455, Oberkante bis ~1545 (Ueberhang)
-TANK_Z0, TANK_Z1 = 1125.0, 1335.0       # Unterkante = Oberkante Motorausschnitt (HAUBE_BAND_Z), Oberkante unter dem Haubendach 1347
+TANK_Z0, TANK_Z1 = 1125.0, 1398.0       # Unterkante = Oberkante Motorausschnitt (HAUBE_BAND_Z), Oberkante unter dem Haubendach 1410
 Y_SCHUB = 975.0               # Schubbalken-Mitte (aussen an der Kette)
 Z_SCHUB = 400.0
 TRAVERSE_X, TRAVERSE_Z = 2520.0, 1080.0           # Zylinder-Mittelzapfen (Foto BS: Deckel am Endkasten bei x ~2520), Achshoehe
@@ -48,7 +48,7 @@ AUSPUFF_XY = (700.0, 220.0)   # Durchbruch Auspuff im Haubendach (Fotos DSC04729
 AUSPUFF_D = 58.0              # Durchbruch Auspuff (Rohr Ø 48, 5 mm Luft rundum)
 ANSAUG_XY = (950.0, -236.0)   # Durchbruch Ansaugrohr (Ölbadtopf darunter im Motorraum, Fotos DSC04742/43/44)
 ANSAUG_D = 76.0               # Durchbruch Ansaugrohr (Rohr Ø 66)
-SCHEINWERFER = (110.0, 430.0, 1190.0)             # Lampenmitte x, |y|, z: oben an den Maskenseiten
+SCHEINWERFER = (230.0, 430.0, 1290.0)             # Lampenmitte x, |y|, z: an der Naht Maske/Haube, knapp unter der Dachkante (Review 2026-10-12: Video 165/172/196, Flickr 40431489714)
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
 Y_LTG = 392.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
 LENKRAD = (1830.0, 200.0, 1470.0)                 # Lenkradmitte

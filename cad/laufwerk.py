@@ -8,10 +8,10 @@ Aufbau je Seite (Fotobefund fz_01m, fz_09m, FL2, BS, Wiking-Modell, Prospekt):
     Die innere Gabelwange traegt bei x 560 das Joch der Querblattfeder (rumpf.py)
   - Spannfeder in einem geschlossenen Rohrgehaeuse (FL2, fz_01m: dickes Rohr zwischen Leitrad und
     Stuetzrollenbock), vorn Federteller + Stellmutter auf der Spannstange, hinten Widerlager (Sackloch); Rohr mit zwei Schellen auf dem Untergurt
-  - 5 Laufrollen mit Spurkraenzen in Lagerboecken unter dem Untergurt, gleich geteilt
-    (Foto BS: Achsdeckel bei x ~830..1740)
+  - 6 Laufrollen mit Spurkraenzen in Lagerboecken unter dem Untergurt, Teilung ~205
+    (Video 165/167 und Flickr 40431489714: Mitten x ~885 / 1080 / 1290 / 1500 / 1710 / 1910)
   - Stuetzrolle auf einem Bock mit Gabel (Foto BS: im A-Bock-Fenster bei x ~1365)
-  - Leitrad mit 5 profilierten Speichen, Laufkranz und Fuehrungsbund
+  - Leitrad mit 5 gekruemmten, breit gegossenen Speichen, grosser Nabe, Laufkranz und Fuehrungsbund
   - Triebrad: 13 Zaehne, geschlossene Scheibe, Nabendeckel mit Schraubenkranz
   - Schwinglager hinten um die Triebradnabe (Anschluss an das Endantriebsgehaeuse)
 Kette: Bodenplatte mit einem Greifer an der Hinterkante, gekroepfte Laschen (innen/aussen),
@@ -55,17 +55,16 @@ R_BUCHSE = 15.0
 PLATTE_L = TEILUNG - 7.0
 
 # ---------------- Raeder / Rahmen ----------------
-R_ROLLE = 100.0
+R_ROLLE = 90.0                   # Review: bei Teilung ~203 muessen die Spurkraenze (R_ROLLE + 10) freibleiben (vorher R 100 / Kranz 118)
 Z_ROLLE = Z_SCHIENE + R_ROLLE
 R_LEIT_KRANZ = 273.0             # Laufkranz (Polygoneffekt der Glieder beruecksichtigt)
 R_KOPF = 328.0                   # Zahnkopf Triebrad
-# Laufrollen (Foto BS: Achsdeckel unter dem Schubbalken bei x ~830, 1030, 1240, 1490, 1740):
-# 5 Rollen gleich geteilt. Erste Rolle: Mittenabstand zum Leitrad (Ist-Lage 456,6)
-# sqrt(383^2 + 185^2) = 426 > R_LEIT_KRANZ + R_ROLLE = 373 bzw. Bund 290 + Mittelnut 84 = 374 -> ~52 mm Luft.
-# Letzte Rolle: Abstand zum Triebrad sqrt(480^2 + 195^2) = 518 > Zahnkopf 328 + 84 = 412.
-X_ROLLE0 = X_LEIT + 390.0        # 840 (Lagerbockfuss 762.. liegt ganz unter dem Untergurt)
-X_ROLLE1 = X_TRIEB - 480.0       # 1770
-LAUFROLLEN_X = [X_ROLLE0 + i * (X_ROLLE1 - X_ROLLE0) / 4 for i in range(5)]   # Teilung 232,5
+# Laufrollen (Review 2026-10-12: Video 165/167 + Flickr 40431489714 zeigen SECHS Rollen, Mittenabstand
+# 200..215, Mitten x ~885 / 1080 / 1290 / 1500 / 1710 / 1910, +-25; Teilung 203). Erste Rolle: Abstand zum Leitrad
+# (Ist-Lage 456,6) ~ 430 > R_LEIT_KRANZ + R_ROLLE = 363. Letzte Rolle: Mitte nur 350 vor der Triebradnabe,
+# Abstand sqrt(350^2 + 205^2) = 406 > Zahnkopf 328 + Mittelnut 74 = 402 (Spurkraenze liegen bei u 128+, ausserhalb des Rades).
+LAUFROLLEN_X = [885.0, 1088.0, 1291.0, 1494.0, 1697.0, 1900.0]
+X_ROLLE0, X_ROLLE1 = LAUFROLLEN_X[0], LAUFROLLEN_X[-1]
 # Stuetzrolle: Foto BS zeigt sie im A-Bock-Fenster bei x ~1365, Mitte z ~600
 X_STUETZ, R_STUETZ = X_TRIEB - 890.0, 75.0   # 1360
 Z_STUETZ_BOLZEN = 717.0          # Bolzenhoehe des oberen Trums ueber der Stuetzrolle
@@ -278,23 +277,42 @@ def leitrad():
     t += [kranz, bund]
     # Innenwulst am Kranz
     t.append(rad_y(0, 0, 0, R_LEIT_KRANZ - 28, 60) - rad_y(0, 0, 0, R_LEIT_KRANZ - 48, 70))
-    # Nabe
-    nabe = rad_y(0, 0, 0, 88, 210)
+    # grosse Nabe (Video 165/196, Flickr: dicke Nabenbuechse mit Flansch, deutlich groesser als die Achse)
+    nabe = rad_y(0, 0, 0, 128, 210)
     t.append(_fas(nabe, nabe.edges(), 8))
-    t.append(rad_y(0, 0, 0, 105, 70))                                       # Nabenring
-    # 5 profilierte Speichen (Kreuzquerschnitt, verjuengt)
-    r0, r1 = 80.0, R_LEIT_KRANZ - 25
-    steg = _xz_poly([(r0, -36), (r1, -22), (r1, 22), (r0, 36)], -18, 18)
-    rippe = extrude(Plane.XY * Polygon((r0, -64), (r1, -40), (r1, 40), (r0, 64), align=None), amount=9, both=True)
-    speiche = steg + rippe
+    t.append(rad_y(0, 0, 0, 158, 70))                                       # Nabenring / Flansch
+    # 5 gekruemmte, breit gegossene Speichen (Flickr/Video: stark geschwungen, flacher Steg mit Randrippen)
+    r0, r1 = 110.0, R_LEIT_KRANZ - 24
+    sweep = math.radians(27)                  # Schwung der Speichenmitte zwischen Nabe und Kranz
+    n = 10
+    pm, pl, pr = [], [], []
+    for k in range(n + 1):
+        f = k / n
+        r = r0 + (r1 - r0) * f
+        th = sweep * f ** 1.3
+        hw = 60 - 22 * f                      # halbe Breite: 60 an der Nabe, 38 am Kranz
+        c, sn = math.cos(th), math.sin(th)
+        tx, tz = (-sn, c)                     # Quervektor
+        pm.append((r * c, r * sn))
+        pl.append((r * c + hw * tx, r * sn + hw * tz))
+        pr.append((r * c - hw * tx, r * sn - hw * tz))
+    kontur = pl + pr[::-1]
+    steg = _xz_poly(kontur, -14, 14)
+    rippen = None
+    for pk, sg in ((pl, 1), (pr, -1)):
+        # Randrippe: schmaler Streifen entlang der Kante, nach innen versetzt
+        rand = [(p[0] + (q[0] - p[0]) * 0.22, p[1] + (q[1] - p[1]) * 0.22) for p, q in zip(pk, pm)]
+        rp = _xz_poly(pk + rand[::-1], -34, 34)
+        rippen = rp if rippen is None else rippen + rp
+    speiche = steg + rippen
     for i in range(5):
         t.append(Rot(0, i * 72 + 18, 0) * speiche)
     # Nabendeckel aussen + innen mit Schrauben
-    t.append(rad_y(0, 112, 0, 66, 14))
-    t.append(rad_y(0, -112, 0, 66, 14))
+    t.append(rad_y(0, 112, 0, 96, 14))
+    t.append(rad_y(0, -112, 0, 96, 14))
     for i in range(6):
         a = math.radians(i * 60 + 30)
-        t.mat("blank", sechskant((42 * math.cos(a), 119, 42 * math.sin(a)), (0, 1, 0), 16, 5))
+        t.mat("blank", sechskant((68 * math.cos(a), 119, 68 * math.sin(a)), (0, 1, 0), 18, 6))
     t.mat("blank", rad_y(0, 0, 0, 36, 2 * 127))                              # Achse
     return t
 
@@ -359,7 +377,7 @@ def laufrolle():
     rolle = rolle + rad_y(0, 0, 0, R_ROLLE - 16, 2 * U_I0)                   # Mittelnut
     t.append(rolle)
     for s in (-1, 1):
-        sk = rad_y(0, s * 128, 0, R_ROLLE + 18, 16)
+        sk = rad_y(0, s * 128, 0, R_ROLLE + 10, 16)
         t.append(_fas(sk, sk.edges().group_by(Axis.Y)[-1 if s > 0 else 0], 5))
         t.append(rad_y(0, s * 139, 0, 52, 6))                                 # Dichtring
     t.mat("blank", rad_y(0, 0, 0, 30, 2 * 163))                             # Achse
@@ -429,6 +447,10 @@ def _rahmen_rechts():
     # --- Untergurt (breit, traegt die Lagerboecke) ---
     gurt = box(X_GURT0, X_KASTEN1, -GURT_B, GURT_B, Z0, Z0 + GURT_D)
     t.append(_fil(gurt, gurt.edges().filter_by(Axis.Z), 20))
+    # Verlaengerung nur aussen (u 100..175), damit der Lagerbock der sechsten Laufrolle (x 1885 +-78) aufliegt;
+    # weiter innen steht das Triebrad (Zahnkopf x = 1922)
+    ext = box(X_KASTEN1 - 20, LAUFROLLEN_X[-1] + 95.0, 100.0, GURT_B, Z0, Z0 + GURT_D)
+    t.append(_fil(ext, ext.edges().filter_by(Axis.Z).group_by(Axis.X)[-1], 15))
     # --- Kasten hinten ---
     kasten = box(X_KASTEN0, X_KASTEN1, -KASTEN_B, KASTEN_B, Z0 + GURT_D - 1, Z1)
     kasten = _fil(kasten, kasten.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 25)

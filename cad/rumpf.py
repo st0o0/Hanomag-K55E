@@ -382,10 +382,12 @@ def kotfluegel():
     t.append(box(DECK_X0, DECK_X1, yi, ya - BLECH, DECK_UK, DECK_UK + BLECH))
     t += riffelblech(DECK_X0 + 10, DECK_X1 - 20, Y_FLANSCH + 15, ya - 25, DECK_UK + BLECH,
                      oy=327.0, ny=11)   # Raster so, dass die Druck-Trennebene y 377 zwischen zwei Rippenreihen liegt
-    # Abkantung aussen mit gerolltem Rand
-    t.append(box(DECK_X0, DECK_X1, ya - BLECH, ya, DECK_UK - 90, DECK_Z - 2))
+    # Review 2026-10-12 (Video 116/165/167, Flickr 40431489714): die obere Kette ist ueber die ganze Laenge
+    # sichtbar, keine hohe Schuerze an der Plattformkante -> nur eine schmale Abkantung (10 mm unter dem
+    # Trittblech) mit gerolltem Rand; die frueheren 90 mm (z 686..838) verdeckten die obere Kettenbahn.
+    t.append(box(DECK_X0, DECK_X1, ya - BLECH, ya, DECK_UK - 10, DECK_Z - 2))
     t.append(stab((DECK_X0, ya - 2, DECK_Z - 2), (DECK_X1, ya - 2, DECK_Z - 2), 8))
-    t.append(stab((DECK_X0, ya - BLECH / 2, DECK_UK - 90), (DECK_X1, ya - BLECH / 2, DECK_UK - 90), 9))
+    t.append(stab((DECK_X0, ya - BLECH / 2, DECK_UK - 10), (DECK_X1, ya - BLECH / 2, DECK_UK - 10), 6))
     # Heckschuerze (hinten, bis zur Ecke), unten mit Wulst
     zs = DECK_UK - 140
     t.append(box(DECK_X1 - BLECH, DECK_X1, 215, ya, zs, DECK_UK + BLECH))

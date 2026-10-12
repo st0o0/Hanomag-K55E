@@ -14,23 +14,23 @@ Masse in ORIGINAL-mm (mit m() bzw. _z() umgerechnet), Hauptmasse aus cad/common.
 Druckparameter (Wandstaerke, Sickenhoehe ...) direkt in Modell-mm.
 
 Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
-  - Maske x 0..210, z 450..1347, 710 breit (h/b 1,26). Nach eigenen Fotos DSC04737/38 (Front), DSC04742 (Seite):
-    glatte Kappe ~135 (Vorderflaeche senkrecht, vorn oben R 35, Oberkante quer gewoelbt) mit Fluegellogo;
-    Grillfenster fast ueber die ganze Breite (Randstreifen 16), oben Querband 46, unten Abschlusswulst 48,
-    dazwischen 3 flache Querbaender 40 (gleiche Teilung, je zwei Wulste), schmaler Mittelsteg 70 mit
-    Randwulsten ueber alles, feines Drahtgitter dahinter. Sockel ~116 mit Kurbelloch D 54 (Pumpenachse).
+  - Maske x 0..210, z 450..1410, 710 breit (h/b 1,35; Review 2026-10-12: Video 165/167, Flickr, DSC04737). Glatte Kappe
+    ~115 (Vorderflaeche senkrecht, vorn oben R 35, Oberkante quer gewoelbt) mit Fluegellogo; durchgehendes
+    Kuehlerfenster 620 x 640 (Randstreifen 45; Video 010/046/058/172-176/194-200, Flickr 26271249857) mit
+    DREI senkrechten Staeben (4 Felder, keine Querbaender, kein Mittelsteg), dahinter senkrechte Lamellen
+    (Teil "gitter"). Sockel ~205 mit Kurbelloch D 54 (Pumpenachse).
     Kuehlerverschluss (rot) sitzt auf der Maskenkappe bei x ~100..180, gehoert also zur Maske.
-  - Haube x 210..1080 (dahinter Tank), Dach 1347 (Pfeilhoehe 36, Kantenradius R 70; Maske gleich), 690 breit, zwei Laengssicken auf dem Dach.
-    Seite: schmales vorderes Segment x 210..310 bis z 620 herunter, dann grosser, hinten offener
-    Motorausschnitt bis zum Haubenende, Oberkante 1125, vorn Bogen R ~220 in die senkrechte
-    Vorderkante. Darueber nur das Schriftband: untere Laengssicke (geht vorn in die Bogensicke
-    parallel zum Ausschnitt ueber), HANOMAG in normaler Laufweite (Mitte x ~745), obere Laengssicke.
+  - Haube x 210..1080 (dahinter Tank), Dach 1410 (Pfeilhoehe 42, Kantenradius R 85; Maske gleich), 690 breit, zwei Laengssicken auf dem Dach.
+    Seite: vorderes Segment x 210..370 bis z 620 herunter, dann grosser, hinten offener
+    Motorausschnitt bis zum Haubenende, Oberkante 1125, vorn flacher, elliptischer Bogen (340 breit x 200 hoch,
+    als zwei tangentiale Kreisbogen) in die senkrechte Vorderkante. Darueber nur das Schriftband: untere Laengssicke
+    (geht vorn in die Bogensicke parallel zum Ausschnitt ueber), HANOMAG (Mitte x ~630, Teilung 78), obere Laengssicke.
     Gebordelter Ausschnittrand, Nietreihe an der Vorderkante, Haubenhalter mit Oese im Band.
-    "K55E" in einem erhabenen, eingerahmten Feld vorn unten im Segment (PK).
+    "K55" (ohne E, ~38 hoch, Mitte x ~298, z ~980) als freie erhabene Schrift im Segment (DSC04742, Video 066/070/173).
     Kein ovales und kein helles Schild an der Seite (auf keinem Foto).
     Durchbrueche mit Kragen fuer Auspuff (rechts) und Ansaugrohr (links) im Dach.
-  - Scheinwerfer: oben an den Maskenseiten (BS, BV, PK, WC), Mitte x 110, |y| 430, z 1190 (BS massgeblich), D 150;
-    Topf mit gewoelbtem Ruecken, Chromring, Glas; Winkelhalter an der Maskenseite unter der Lampe.
+  - Scheinwerfer: an der Naht Maske/Haube oben (Video 165/172/196, Flickr 40431489714), Mitte x 230, |y| 430, z 1275, D 150;
+    Topf mit gewoelbtem Ruecken, Chromring, Glas; Winkelhalter an der Haubenvorderkante unter der Lampe.
 
 Hinweis zur Vernetzung: die Seitenwand ist eine einzige ebene Flaeche. Buchstaben, Schilder und
 Sicken werden als einzelne, EINSENK tief eingesenkte Koerper mit der Wand verschmolzen (keine
@@ -84,8 +84,8 @@ SCHRIFT_FETT = 0.1    # Konturversatz der Buchstaben
 SCHRIFT_FASE = 0.3    # 45-Grad-Fase an der Oberkante der Buchstaben (faengt Licht)
 EINSENK = 0.3         # Einsenktiefe aufgesetzter Teile (keine koplanaren Booleans)
 NIET_R = 0.75         # Nietkopf-Radius (Kugelkappe, 0.6 hoch)
-GITTER_TEILUNG = 1.8  # Gittereinsatz: Maschenteilung
-GITTER_STEG = 0.6     # Drahtstaerke (>= 0.5)
+GITTER_TEILUNG = 2.4  # Kuehlerlamellen: Teilung
+GITTER_STEG = 0.9     # Rippenbreite (>= 0.5)
 GITTER_DICKE = 0.8
 GITTER_X = 1.8        # Vorderseite Gittereinsatz (hinter der Maskenwand x 0..1.6)
 
@@ -99,23 +99,18 @@ SCHRIFT_FONT = r"C:\Windows\Fonts\GOTHICB.TTF"
 # Abschlusswulst, dazwischen 3 flache Querbaender (je zwei Wulste) und der schmale Mittelsteg ueber alles.
 KM_B = m(710)                         # Breite
 KM_Z0 = _z(MASKE_UK)                  # Unterkante (z = m(58))
-KM_H = _z(HAUBE_DACH_Z)               # Oberkante = Haubendach (z = m(955))
+KM_H = _z(HAUBE_DACH_Z)               # Oberkante = Haubendach (1410 -> Modell-z 127)
 KM_T = m(HAUBE_X0)                    # Tiefe (x 0..210)
 KM_R_OBEN = m(85)     # Radius Dachbogen -> senkrechte Seiten (Maske und Haube gleich; Fotos Flickr 26271249857/39333958410: runde Schulter ~85-90)
 KM_SAG = m(42)        # Pfeilhoehe des Dachbogens (Flickr-Frontfoto: Mitte zur senkrechten Seite ~75 inkl. Ecke, Bogen allein ~42)
 KM_R_KAPPE = m(35)    # Rundung Kappe vorn oben (Seitenprofil, DSC04742: Oberkante flach, kleine Ecke)
-KM_KAPPE = m(135)     # glatte Kappe ueber dem Grill (Fotoanteil 0,14)
-KM_SOCKEL = m(116)    # Sockel unter dem Abschlusswulst (Anteil 0,13), Kurbelloch hinter der Pumpe
-KM_RAND = m(16)       # schmaler seitlicher Randstreifen neben dem Grill (Foto: Gitter fast bis zum Maskenrand)
-GRILL_FELDER = 4      # Teilung zwischen den Mitten von oberem Querband und Abschlusswulst: 4 gleiche Felder
-BAND_O_H = m(46)      # oberes Querband (Hoehe)
-BAND_U_H = m(48)      # unterer Abschlusswulst (Hoehe)
-BAND_M_H = m(40)      # drei mittlere Querbaender (Hoehe)
-BAND_X = -0.7         # Vorderseite oberes/unteres Querband (Kappe bei x = 0)
-BAND_XM = -0.4        # Vorderseite der mittleren Querbaender
-STEG_B = m(70)        # Mittelsteg (Foto 70 breit), flacher Kanal mit Randwulsten
-STEG_X = -1.0         # Vorderseite des Mittelstegs (vor allen Querbaendern)
-STEG_WULST = m(8)     # Randwulst links/rechts, Mitte um 0.25 vertieft
+KM_KAPPE = m(115)     # glatte Kappe ueber dem Fenster (Flickr 26271249857: ~112)
+KM_SOCKEL = m(205)    # Sockel unter dem Kuehlerfenster (Flickr: ~205), Kurbelloch hinter der Pumpe
+KM_RAND = m(45)       # seitlicher Randstreifen neben dem Fenster (Denkmal 40..55)
+GRILL_STAEBE = 3      # senkrechte Staebe im durchgehenden Kuehlerfenster (4 Felder, Teilung ~155)
+STAB_B = m(18)        # Stabbreite (Flickr 26271249857: duenne Rundstaebe)
+STAB_X = -0.7         # Vorderseite der Staebe (Kappe/Maske bei x = 0)
+STAB_TIEFE = 1.2      # Staebe reichen bis x = STAB_TIEFE (in die Wand eingebunden)
 KURBEL_D = m(54)      # Kurbelloch (Foto 54; auf der Pumpenachse, von der Pumpe verdeckt)
 KURBEL_Z = _z(PUMPE[2])
 KD_X, KD_D = m(140), m(65)            # Kuehlerverschluss auf der Maskenkappe (BS: x ~100..180)
@@ -128,19 +123,23 @@ H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante vorderes Seitensegment (z 620
 H_R_DACH = m(85)                      # Radius Dachkanten (Dachbogen -> Seitenwand), gleich KM_R_OBEN
 SEG_L = m(SEG_X1) - H_X0              # vorderes Seitensegment x 210..310
 BOGEN_OBEN = _z(HAUBE_BAND_Z)         # Oberkante Motorausschnitt (z 1125)
-BOGEN_R = m(280)                      # Eckradius Motorausschnitt vorn oben (Foto: weicher grosser Bogen, 280..300)
+# Ausschnittbogen vorn oben: flach/elliptisch (DSC04742, Video 173/066: ~300..450 breit x 200 hoch, gewaehlt 340). Als zwei tangential
+# anschliessende Kreisbogen (analytische Flaechen): r1 an der senkrechten Vorderkante, r2 an der Oberkante.
+BOGEN_W, BOGEN_H = m(340), m(200)
+BOGEN_R1 = m(130)
+BOGEN_R2 = ((BOGEN_W - BOGEN_R1) ** 2 + BOGEN_H ** 2 - BOGEN_R1 ** 2) / (2 * (BOGEN_H - BOGEN_R1))
 SICKE_Z = _z(1145)                    # untere Laengssicke (geht vorn in die Bogensicke ueber)
-SICKE_OBEN_Z = _z(1228)               # obere Laengssicke (unter dem Dachradius, Wand eben bis 1287)
+SICKE_OBEN_Z = _z(1240)               # obere Laengssicke (unter dem Dachradius, Wand eben bis ~1285)
 SICKE_VORN_Z = _z(790)                # kurze Sicke im vorderen Segment = Ende der Bogensicke
 DACH_SICKE_Y = m(150)                 # Laengssicken auf dem Dach (|y|)
 SCHRIFT = "HANOMAG"
-SCHRIFT_X, SCHRIFT_Z = m(745), _z(1187)  # Mitte Schriftzug (zwischen den Sicken)
-SCHRIFT_TEILUNG = m(88)                  # Buchstabenteilung (normale Laufweite)
+SCHRIFT_X, SCHRIFT_Z = m(630), _z(1190)  # Mitte Schriftzug (zwischen den Sicken; Video 165/010: Mitte 615..650)
+SCHRIFT_TEILUNG = m(78)                  # Buchstabenteilung (Gesamtlaenge ~520)
 SCHRIFT_VERSAL = m(55)                   # Versalhoehe
 TYP = "K55"      # Fotos DSC04729/42: Schriftzug "K55" (kein E sichtbar)
-TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(250), _z(930), m(20), 3.2   # Mitte z 930 (Foto DSC04742: z 900..960); Versalhoehe 3.2 mm Modell = 26 Orig.
+TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(298), _z(980), m(38), m(38)   # Review 2026-10-12: Mitte x ~300, z 960..1000, Versalhoehe ~40
 TYP_ABSTAND = 0.6                        # lichter Abstand der Glyphen (Modell-mm, >= 0.5)
-TYP_FELD_B, TYP_FELD_H = m(72), m(40)    # erhabenes Feld (x 214..286, z 910..950): das Segment ist nur 100 breit, rechts liegt die Bogensicke
+TYP_FELD_B, TYP_FELD_H = m(120), m(50)   # nur Platzhalter fuer die Nietreihe (freie Schrift ohne Rahmen, DSC04742)
 TYP_RAHMEN = 0.55                        # Rahmenbreite (Modell-mm)
 TYP_FASE = 0.15                          # kleinere Fase: Strich ~1.0 mm, Deckflaeche >= 0.7 mm
 AUSPUFF = (m(AUSPUFF_XY[0]), m(AUSPUFF_XY[1]), m(AUSPUFF_D))   # x, y, Durchmesser (motor.py nutzt h.AUSPUFF)
@@ -403,20 +402,18 @@ def _maske_aussen(d=0.0):
     return seite & front
 
 
-def _querband(zu, h, x_vorn, laenge, r=0.8, x_hint=1.0):
-    """Flaches Querband (Box ueber die Breite) mit gerundeten Vorderkanten und feiner Mittelrille
-    (Foto: zwei Wulste uebereinander). zu = Unterkante, h = Hoehe."""
-    b = Pos(x_vorn, 0, zu) * Box(x_hint - x_vorn, laenge, h, align=(Align.MIN, Align.CENTER, Align.MIN))
-    kanten = b.edges().filter_by(Axis.Y).filter_by_position(Axis.X, x_vorn - 0.01, x_vorn + 0.01)
-    b = fillet(kanten, min(r, h / 2 - 0.3))
-    rille = Pos(x_vorn, 0, zu + h / 2) * Box(0.5, laenge + 2, 0.45)
-    return b - rille
+def _stab(z0, z1, y):
+    """Senkrechter Fensterstab (Rundprofil-artig): vorn verrundet, mit Laschen in Sockel und Kappe eingebunden."""
+    st = Pos(STAB_X, y, z0) * Box(STAB_TIEFE - STAB_X, STAB_B, z1 - z0, align=(Align.MIN, Align.CENTER, Align.MIN))
+    st = fillet(st.edges().filter_by(Axis.Z).filter_by_position(Axis.X, STAB_X - 0.01, STAB_X + 0.01), 0.6)
+    lasche = Pos(0.2, y, z0 - 0.5) * Box(1.0, STAB_B, z1 - z0 + 1.0, align=(Align.MIN, Align.CENTER, Align.MIN))
+    return st.fuse(lasche)
 
 
 def kuehlermaske():
-    """Maskenschale (z 450..1347): glatte Kappe, Grillfenster fast ueber die ganze Breite, oberes Querband,
-    drei mittlere Querbaender, unterer Abschlusswulst, schmaler Mittelsteg, Kurbelloch, Kuehlerverschluss.
-    Liefert (Solid, (Grillbreite, Grillhoehe, Grillunterkante))."""
+    """Maskenschale (z 450..1410): glatte Kappe, durchgehendes Kuehlerfenster mit drei senkrechten Staeben,
+    breiter Randstreifen, Kurbelloch, Kuehlerverschluss.
+    Liefert (Solid, (Fensterbreite, Fensterhoehe, Fensterunterkante))."""
     outer = _maske_aussen()
     km = outer - _maske_aussen(WAND)
 
@@ -427,23 +424,8 @@ def kuehlermaske():
                                                           align=(Align.CENTER, Align.CENTER, Align.MIN))
 
     teile = []
-    lb = KM_B - 0.8                                  # Baender enden 0.4 vor den Maskenseiten (liegen auf der Wand)
-    # unterer Abschlusswulst (0.5 in den Sockel eingesenkt) und oberes Querband (0.5 in die Kappe)
-    teile.append(_querband(g_z0 - 0.5, BAND_U_H + 0.5, BAND_X, lb))
-    teile.append(_querband(g_z1 - BAND_O_H, BAND_O_H + 0.5, BAND_X, lb))
-    zc_u, zc_o = g_z0 + BAND_U_H / 2, g_z1 - BAND_O_H / 2
-    # drei mittlere Querbaender, Teilung gleich zwischen den Mitten von Wulst und Querband
-    for i in range(1, GRILL_FELDER):
-        zc = zc_u + i * (zc_o - zc_u) / GRILL_FELDER
-        teile.append(_querband(zc - BAND_M_H / 2, BAND_M_H, BAND_XM, lb, r=0.7, x_hint=1.0))
-    # schmaler Mittelsteg ueber die ganze Grillhoehe (Mitte zu Mitte der Randbaender), davor gelegt:
-    # Randwulste, Mitte flach vertieft
-    sz0, sz1 = zc_u, zc_o
-    steg = Pos(STEG_X, 0, sz0) * Box(1.2 - STEG_X, STEG_B, sz1 - sz0, align=(Align.MIN, Align.CENTER, Align.MIN))
-    steg = fillet(steg.edges().filter_by(Axis.Z).filter_by_position(Axis.X, STEG_X - 0.01, STEG_X + 0.01), 0.5)
-    steg = fillet(steg.edges().filter_by(Axis.Y).filter_by_position(Axis.X, STEG_X - 0.01, STEG_X + 0.01), 0.5)
-    steg -= Pos(STEG_X, 0, (sz0 + sz1) / 2) * Box(0.5, STEG_B - 2 * STEG_WULST, sz1 - sz0 - 2 * STEG_WULST)
-    teile.append(steg)
+    for i in range(1, GRILL_STAEBE + 1):
+        teile.append(_stab(g_z0, g_z1, -g_b / 2 + i * g_b / (GRILL_STAEBE + 1)))
 
     teile += _kuehlerverschluss()
     km = km.fuse(*teile)
@@ -459,30 +441,18 @@ def maske_zier():
 
 
 def gitter(g_b, g_h, g_z0):
-    """Drahtgitter-Einsatz hinter den waagerechten Staeben und dem Mittelsteg (innen an der Maskenwand).
-    Zwei Lagen wie ein Drahtgewebe: vorn die senkrechten, dahinter die waagerechten Draehte,
-    jede Lage mit eigenem Rahmen (je ein Solid, Lagen liegen flaechig aneinander).
-    So entfallen die ~1700 Kreuzungs-Booleans (Bauzeit Sekunden statt Minuten)."""
+    """Kuehlerlamellen hinter dem Fenster: senkrechte Rippen in einem Rahmen (Video 058/173: Lamellen von der Seite
+    als senkrechte Rippen, kein Drahtgitter). Ein Solid, innen an der Maskenwand."""
     w, h = g_b + 1.0, g_h + 2.0   # Breite: bleibt 0.08 vor der Maskenseitenwand
-    lage = GITTER_DICKE / 2 + 0.1
-    ny = int((w - 2) / GITTER_TEILUNG)
-    nz = int((h - 2) / GITTER_TEILUNG)
+    n = int((w - 2) / GITTER_TEILUNG)
     zc = g_z0 + g_h / 2
-
-    def lage_bauen(x, senkrecht):
-        with BuildSketch(Plane.YZ.offset(x)) as sk:
-            with Locations((0, zc)):
-                Rectangle(w, h)
-                Rectangle(w - 2, h - 2, mode=Mode.SUBTRACT)
-                if senkrecht:
-                    with GridLocations(GITTER_TEILUNG, 0, ny, 1):
-                        Rectangle(GITTER_STEG, h - 1)
-                else:
-                    with GridLocations(0, GITTER_TEILUNG, 1, nz):
-                        Rectangle(w - 1, GITTER_STEG)
-        return extrude(sk.sketch, amount=lage)
-
-    return Compound(children=[lage_bauen(GITTER_X, True), lage_bauen(GITTER_X + lage, False)])
+    with BuildSketch(Plane.YZ.offset(GITTER_X)) as sk:
+        with Locations((0, zc)):
+            Rectangle(w, h)
+            Rectangle(w - 2, h - 2, mode=Mode.SUBTRACT)
+            with GridLocations(GITTER_TEILUNG, 0, n, 1):
+                Rectangle(GITTER_STEG, h - 1)
+    return extrude(sk.sketch, amount=GITTER_DICKE)
 
 
 # ------------------------------------------------------------------
@@ -504,15 +474,37 @@ def stirnwand():
     return Pos(0, 0, -d) * extrude(Pos(x0, 0, 0) * fl, amount=x1 - x0)
 
 
+def _bogen_geometrie():
+    """Lage des Ausschnittbogens (zwei tangentiale Kreisbogen): (xa, c1, c2, phi).
+    c1 = Mittelpunkt (x, z) des kleinen Bogens r1 (vorn, tangiert die senkrechte Vorderkante bei x = xa),
+    c2 = Mittelpunkt des grossen Bogens r2 (tangiert die Oberkante BOGEN_OBEN bei x = xa + BOGEN_W),
+    phi = Winkel des Uebergangspunkts (180 = -x, 90 = +z, wie in _sicke_bogen)."""
+    xa = H_X0 + SEG_L
+    c1 = (xa + BOGEN_R1, BOGEN_OBEN - BOGEN_H)
+    c2 = (xa + BOGEN_W, BOGEN_OBEN - BOGEN_R2)
+    phi = math.degrees(math.atan2(c1[1] - c2[1], c1[0] - c2[0]))
+    return xa, c1, c2, phi
+
+
+def _kp(c, r, ang):
+    """Punkt auf dem Kreis um c (x, z) mit Radius r bei Winkel ang (Grad)."""
+    return (c[0] + r * math.cos(math.radians(ang)), c[1] + r * math.sin(math.radians(ang)))
+
+
 def _ausschnitt():
     """Motorausschnitt beider Seiten als Werkzeugkoerper: von SEG_X1 bis hinter das Haubenende
-    (hinten offen), unten offen, Oberkante HAUBE_BAND_Z, Ecke vorn oben mit BOGEN_R."""
-    xa, x1 = H_X0 + SEG_L, H_X0 + H_L + 10
+    (hinten offen), unten offen, Oberkante HAUBE_BAND_Z, Ecke vorn oben als flacher Ellipsenbogen."""
+    xa, c1, c2, phi = _bogen_geometrie()
+    x1 = H_X0 + H_L + 10
     z0 = H_UNTEN - 10
+    pj = _kp(c1, BOGEN_R1, phi)
     with BuildSketch(Plane.XZ) as s:
-        with Locations(((xa + x1) / 2, (z0 + BOGEN_OBEN) / 2)):
-            Rectangle(x1 - xa, BOGEN_OBEN - z0)
-        fillet(s.vertices().group_by(Axis.X)[0].sort_by(Axis.Y)[-1], BOGEN_R)
+        with BuildLine():
+            Polyline((x1, z0), (xa, z0), (xa, c1[1]))
+            ThreePointArc((xa, c1[1]), _kp(c1, BOGEN_R1, (180 + phi) / 2), pj)
+            ThreePointArc(pj, _kp(c2, BOGEN_R2, (phi + 90) / 2), (c2[0], BOGEN_OBEN))
+            Polyline((c2[0], BOGEN_OBEN), (x1, BOGEN_OBEN), (x1, z0))
+        make_face()
     return extrude(s.sketch, amount=H_B, both=True)
 
 
@@ -545,27 +537,21 @@ def _sicke_gerade(profil, p0, p1, quer, side):
     return extrude(profil(pl), amount=d.length, dir=d.normalized())
 
 
-def _sicke_bogen(profil, cx, cz, r_bahn, y, w_ende, side):
-    """Profil auf dem Kreisbogen um (cx, cz) von 180 Grad (vorn) bis w_ende drehen.
+def _sicke_bogen(profil, c, r_bahn, y, w_start, w_ende, side):
+    """Profil auf dem Kreisbogen um c = (x, z) von Winkel w_start bis w_ende (Grad, 180 = vorn, 90 = oben) drehen.
     Lokales x zeigt zum Bogenmittelpunkt (= zur Ausschnittseite). Flaechen: Ebene/Kegel/Torus."""
     yn = Vector(0, side, 0)
     xd = Vector(1, 0, 0)
-    pl = Plane(origin=(cx - r_bahn, y, cz), x_dir=xd, z_dir=xd.cross(yn))
-    return revolve(profil(pl), axis=Axis((cx, y, cz), (0, 1, 0)), revolution_arc=180 - w_ende)
+    pl = Plane(origin=(c[0] - r_bahn, y, c[1]), x_dir=xd, z_dir=xd.cross(yn))
+    ax = Axis((c[0], y, c[1]), (0, 1, 0))
+    seg = revolve(profil(pl), axis=ax, revolution_arc=w_start - w_ende)
+    return seg.rotate(ax, 180 - w_start) if w_start < 179.99 else seg
 
 
 def _dachsicke(y, x0, x1):
     """Laengssicke auf dem Haubendach bei y (Trapezprofil, Normale +Z)."""
     pl = Plane(origin=(x0, y, z_dach(y)), x_dir=(0, 1, 0), z_dir=(1, 0, 0))
     return extrude(_profil_sicke(pl), amount=x1 - x0)
-
-
-def _bogen_geometrie():
-    """Lage des Ausschnittbogens: (xa, cx, cz, rs) mit rs = Radius der Bogensicke."""
-    xa = H_X0 + SEG_L
-    cx, cz = xa + BOGEN_R, BOGEN_OBEN - BOGEN_R
-    rs = BOGEN_R + (SICKE_Z - BOGEN_OBEN)          # Bogensicke laeuft tangential in die untere Laengssicke
-    return xa, cx, cz, rs
 
 
 def _typ_feld_z():
@@ -578,24 +564,27 @@ def _seitensicken(side):
     analytische Flaechen und kreisfoermige bzw. gerade Schnittkanten mit der Wand."""
     yw = side * H_B / 2                               # Wandaussenseite
     xe = H_X0 + H_L
-    xa, cx, cz, rs = _bogen_geometrie()
+    xa, c1, c2, phi = _bogen_geometrie()
+    d = SICKE_Z - BOGEN_OBEN                          # Abstand Bogensicke zur Ausschnittkante
     teile = []
 
-    # gebordelter Rand entlang des Motorausschnitts (senkrecht, Bogen, waagerecht bis hinten)
-    teile.append(_sicke_gerade(_profil_bordel, (xa, yw, H_UNTEN - 2), (xa, yw, cz), (1, 0, 0), side))
-    teile.append(_sicke_bogen(_profil_bordel, cx, cz, BOGEN_R, yw, 90, side))
-    teile.append(_sicke_gerade(_profil_bordel, (cx, yw, BOGEN_OBEN), (xe + 2, yw, BOGEN_OBEN), (0, 0, -1), side))
+    # gebordelter Rand entlang des Motorausschnitts (senkrecht, zwei Bogen, waagerecht bis hinten)
+    teile.append(_sicke_gerade(_profil_bordel, (xa, yw, H_UNTEN - 2), (xa, yw, c1[1]), (1, 0, 0), side))
+    teile.append(_sicke_bogen(_profil_bordel, c1, BOGEN_R1, yw, 180, phi, side))
+    teile.append(_sicke_bogen(_profil_bordel, c2, BOGEN_R2, yw, phi, 90, side))
+    teile.append(_sicke_gerade(_profil_bordel, (c2[0], yw, BOGEN_OBEN), (xe + 2, yw, BOGEN_OBEN), (0, 0, -1), side))
 
-    # Bogensicke parallel zum Ausschnitt; oben tangential in die untere Laengssicke, unten bis zur
-    # kurzen Quersicke ueber dem Typfeld
-    xs = cx - rs
-    teile.append(_sicke_gerade(_profil_sicke, (xs, yw, SICKE_VORN_Z - 0.3), (xs, yw, cz), (1, 0, 0), side))
-    teile.append(_sicke_bogen(_profil_sicke, cx, cz, rs, yw, 90, side))
+    # Bogensicke parallel zum Ausschnitt (gleiche Mittelpunkte, Radien + d); oben tangential in die untere
+    # Laengssicke, unten bis zur kurzen Quersicke ueber dem Typfeld
+    xs = xa - d
+    teile.append(_sicke_gerade(_profil_sicke, (xs, yw, SICKE_VORN_Z - 0.3), (xs, yw, c1[1]), (1, 0, 0), side))
+    teile.append(_sicke_bogen(_profil_sicke, c1, BOGEN_R1 + d, yw, 180, phi, side))
+    teile.append(_sicke_bogen(_profil_sicke, c2, BOGEN_R2 + d, yw, phi, 90, side))
 
     # Laengssicken im Schriftband: untere (vorn bis zur Bogensicke geteilt) und obere, hinten bis zur Kante
     x_v = H_X0 + 1.6
-    teile.append(_sicke_gerade(_profil_sicke, (x_v, yw, SICKE_Z), (cx, yw, SICKE_Z), (0, 0, 1), side))
-    teile.append(_sicke_gerade(_profil_sicke, (cx, yw, SICKE_Z), (xe + 2, yw, SICKE_Z), (0, 0, 1), side))
+    teile.append(_sicke_gerade(_profil_sicke, (x_v, yw, SICKE_Z), (c2[0], yw, SICKE_Z), (0, 0, 1), side))
+    teile.append(_sicke_gerade(_profil_sicke, (c2[0], yw, SICKE_Z), (xe + 2, yw, SICKE_Z), (0, 0, 1), side))
     teile.append(_sicke_gerade(_profil_sicke, (x_v, yw, SICKE_OBEN_Z), (xe + 2, yw, SICKE_OBEN_Z), (0, 0, 1), side))
     # kurze Quersicke im vorderen Segment, endet in der Bogensicke
     teile.append(_sicke_gerade(_profil_sicke, (x_v, yw, SICKE_VORN_Z), (xs + 0.3, yw, SICKE_VORN_Z), (0, 0, 1), side))
@@ -617,16 +606,10 @@ def _seitensicken(side):
 
 
 def _typfeld(side):
-    """Erhabenes, eingerahmtes Feld fuer "K55E" vorn unten im Seitensegment (PK):
-    Platte PRAEGE_H hoch mit TYP_RAHMEN breitem Rand, Feldboden 0.3 ueber der Wand,
+    """Schriftzug "K55" (ohne E) frei auf dem vorderen Seitensegment (DSC04742, Video 066/070/173: kein Rahmen),
     Buchstaben TYP_H ueber der Wand."""
     pl = plane_side(TYP_X, TYP_Z, side)
-    feld = extrude(pl.offset(-EINSENK) * RectangleRounded(TYP_FELD_B, TYP_FELD_H, 0.8),
-                   amount=PRAEGE_H + EINSENK)
-    feld -= extrude(pl.offset(0.3) * RectangleRounded(TYP_FELD_B - 2 * TYP_RAHMEN,
-                                                      TYP_FELD_H - 2 * TYP_RAHMEN, 0.4), amount=1.0)
-    return [feld] + buchstaben(pl, TYP, TYP_TEILUNG, TYP_VERSAL, TYP_H, fase=TYP_FASE,
-                              abstand=TYP_ABSTAND)
+    return buchstaben(pl, TYP, TYP_TEILUNG, TYP_VERSAL, TYP_H, fase=TYP_FASE, abstand=TYP_ABSTAND)
 
 
 def _haubenhalter(side):
@@ -653,7 +636,7 @@ def _fensterblech(side):
     pts = [(side * yi, z0), (side * yo, z0), (side * yo, z1), (side * yi, z2)]
     with BuildSketch(Plane.YZ) as sk:
         Polygon(*pts, align=None)
-    x0 = m(305.0)
+    x0 = m(SEG_X1 - 5.0)
     return extrude(Pos(x0, 0, 0) * sk.sketch, amount=H_X0 + H_L - x0)
 
 
@@ -760,7 +743,7 @@ def scheinwerfer(side):
     gehaeuse, ring, refl, birne, glas = (loc * s for s in (gehaeuse, ring, refl, birne, glas))
 
     # Winkelhalter: Fussplatte an der Maskenseite, Flachstahl-Arm unter die Lampe, Bolzen mit Muttern
-    wand_y = side * KM_B / 2
+    wand_y = side * H_B / 2                          # Halter sitzt an der Haubenvorderkante (Lampe an der Naht)
     z_arm = SW_Z - rt - 2.2                          # Oberkante Arm
     x_h = SW_X + 1.5                                 # Bolzenachse (unter der Nabe)
     fuss = Pos(x_h - 1.5, wand_y + side * (0.6 - EINSENK), z_arm - 0.8) * Box(5.0, 1.2 + 2 * EINSENK, 6.0)
@@ -777,7 +760,7 @@ def scheinwerfer(side):
                                        (0, side, 0), sw=1.6, hoehe=0.6))
 
     # Kabel vom Gehaeuseboden in einer Schlaufe in die Maskenseite
-    mw_y = side * (KM_B / 2 - WAND / 2)              # Kabel endet in der Maskenwand
+    mw_y = side * (H_B / 2 - WAND / 2)               # Kabel endet in der Haubenwand
     kabel = rohr_glatt([(SW_X + 5.0, y, SW_Z - rt * 0.8),
                         (SW_X + 5.8, y + side * 0.5, z_arm - 4.0),
                         (SW_X + 5.8, (y + mw_y) / 2, z_arm - 6.0),

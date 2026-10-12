@@ -102,9 +102,9 @@ TEILE = [
     Teil("rumpf", "Rahmen & Getriebe", "Fahrgestell", "lack", lambda: zu_modell(rumpf.rumpf()), (0, 0, -10),
          "Längsträger, Querblattfeder, Getriebe, Endantriebe, Lenkbremsen, Plattform mit Riffelblech und gerollter Kante, Zugpendel."),
     Teil("laufwerk_links", "Laufwerk links", "Fahrgestell", "lack", lambda: zu_modell(laufwerk.kettenrahmen(-1)), (0, -45, 0),
-         "Kettenrahmen, Leitrad, Triebrad, 5 Laufrollen, Stützrolle, Spannfeder im Rohrgehäuse."),
+         "Kettenrahmen, Leitrad, Triebrad, 6 Laufrollen, Stützrolle, Spannfeder im Rohrgehäuse."),
     Teil("laufwerk_rechts", "Laufwerk rechts", "Fahrgestell", "lack", lambda: zu_modell(laufwerk.kettenrahmen(1)), (0, 45, 0),
-         "Kettenrahmen, Leitrad, Triebrad, 5 Laufrollen, Stützrolle, Spannfeder im Rohrgehäuse."),
+         "Kettenrahmen, Leitrad, Triebrad, 6 Laufrollen, Stützrolle, Spannfeder im Rohrgehäuse."),
     Teil("kette_links", "Kette links", "Fahrgestell", "stahl", lambda: zu_modell(laufwerk.kette(-1), "stahl"), (0, -75, 0),
          "36 Bodenplatten 400 mm mit Greifer, Kettenglieder, Bolzen."),
     Teil("kette_rechts", "Kette rechts", "Fahrgestell", "stahl", lambda: zu_modell(laufwerk.kette(1), "stahl"), (0, 75, 0),
@@ -113,7 +113,7 @@ TEILE = [
          "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, flache gelochte Sitzschale auf Blattfeder, Werkzeugkästen, Batteriekasten."),
     Teil("planierschild", "Planierschild FRISCH 55 FH2", "Planiereinrichtung", "anbau",
          lambda: zu_modell(planierschild.planierschild(), "anbau"), (-70, 0, 0),
-         "Schild 2400 mm mit Bohrungsreihe, Schubbalken, A-Böcke, zwei Hubzylinder in den Endkästen der Traverse, Öltank, Schutzbügel, Pumpe vor der Maske mit Leitungen, Steuerschieber."),
+         "Gewölbtes Schild 2200 mm mit Sichel-Endblechen, Querträger und stehender Platte, Schubbalken mit Zahnsegment, A-Böcke, zwei Hubzylinder in den Endkästen der Traverse (Langlöcher, Arbeitsscheinwerfer), Pumpe vor der Maske mit Leitungen über die Haubenseiten, Steuerschieber."),
 ]
 
 INFO = {

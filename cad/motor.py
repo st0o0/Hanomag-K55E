@@ -14,8 +14,8 @@ Pumpe vorn unten, Deckel "HANOMAG DIESEL" unten dahinter, Filterglocke oben.
 Zylinderabstand ZYL_T = 155 (frueher 230): Block x 400..1030, Steuergehaeuse/Riementrieb davor
 (x 364..402), Schwungradgehaeuse x 1030..FLANSCH_GLOCKE_X.
 
-Raumgrenzen (common.py, Stand Umbau 2026-10): Maske x 0..210, z 450..1347; Haube x 210..1080,
-Dach aussen z 1347, Wand innen y = +-332; Motorausschnitt offen x ~360..1080, z 620..1125.
+Raumgrenzen (common.py, Stand Umbau 2026-10): Maske x 0..210, z 450..1410; Haube x 210..1080,
+Dach aussen z 1410, Wand innen y = +-332; Motorausschnitt offen x ~360..1080, z 620..1125.
 Motor innerhalb y +-325, x 225 (Kuehler) .. FLANSCH_GLOCKE_X = 1090; Tank x 1085..1455 ab z 1000
 (Schwungradgehaeuse bleibt darunter, Oberkante <= 950); Kupplungsglocke (rumpf.py) ab x 1090.
 Laengstraeger y = +-(195..285), z = 380..520, Querblattfeder x = 505..615 bis z = 580.
@@ -28,11 +28,11 @@ from .common import (box, stab, rohr_glatt, rad_x, rad_y, ring_x, sechskant,
                      HAUBE_DACH_Z, FLANSCH_GLOCKE_X, AUSPUFF_XY, ANSAUG_XY, AUSPUFF_D, ANSAUG_D, TRAEGER_Z1, TANK_Z0)
 
 # ---------------- Hauptmasse Motor ----------------
-HAUBE_TOP = HAUBE_DACH_Z                # Dach aussen (1347)
+HAUBE_TOP = HAUBE_DACH_Z                # Dach aussen (1410)
 HAUBE_KRAGEN = HAUBE_TOP + 6.4          # Oberkante Kragen der Haubendurchbrueche (0,8 mm Modell)
 KD_X = 140.0                            # Muendung Kuehlerverschluss auf der Maskenkappe (lokal, = haube.KD_X;
                                         # Deckel x 108..172 gehoert zur kuehlermaske, Unterseite Maskendach)
-KD_Z = HAUBE_DACH_Z - 13.0              # Unterseite Maskendach innen (~1334, Wand 1,6 mm Modell)
+KD_Z = HAUBE_DACH_Z - 13.0              # Unterseite Maskendach innen (~1397, Wand 1,6 mm Modell)
 ZYL_T = 155.0                           # Zylinderabstand (Bohrung ~110)
 ZYL_X = [480.0 + i * ZYL_T for i in range(4)]   # Zylindermitten 480, 635, 790, 945
 X_VORN, X_HINTEN = 380.0, 1030.0        # Block inkl. Steuergehaeuse
@@ -59,8 +59,9 @@ HAUBE_BLECH = 10.0                      # Luefterhaube (>= 1,2 mm Modell)
 # Kuehler (hinter der Maske, z innerhalb MASKE_UK 450 .. Dach)
 K_X0, K_X1 = 225.0, 335.0
 K_Y = 320.0
-K_Z0, K_Z1 = 480.0, 1270.0   # Oberkante unter der gewoelbten Dachecke
-K_NETZ_Z0, K_NETZ_Z1 = 580.0, 1180.0
+K_Z0, K_Z1 = 480.0, HAUBE_DACH_Z - 77.0   # Oberkante unter der gewoelbten Dachecke (1333, folgt dem Dach)
+K_NETZ_Z0, K_NETZ_Z1 = 580.0, HAUBE_DACH_Z - 167.0   # Netz bis 1243 (Maske ist 63 hoeher als frueher)
+K_ZULAUF_Z = K_NETZ_Z1 + 60.0         # Hoehe Zulaufstutzen/Oberschlauch (1303)
 
 # Einspritzanlage (linke Seite, vorn)
 Y_ESP = -228.0                          # Mittelebene Einspritzpumpe und Druckleitungen
@@ -73,7 +74,7 @@ DL_R = 3.5                              # Radius der Druckleitungen
 FILTER_X = (525.0, 756.0)               # zwei getrennte Kraftstofffilter mit Glasbirnen (DSC04742)
 FILTER_Y = -270.0
 FILTER_Z = 1095.0                       # Mitte der Glasbirnen (Ø 100); Oberteil liegt hinter dem Haubenband (z > 1125)
-Z_KRUEMMER = Z_KOPF1 + 29.0             # Achse Abgassammelrohr (ueber der Lichtmaschine, unter dem Ausschnittrand 1125)
+Z_KRUEMMER = Z_KOPF1 + 29.0             # Achse Abgassammelrohr (ueber der Lichtmaschine, unter dem Ausschnittrand 1125; tiefer schneidet es Einspritzleitungen/Raeder, Video 177-182: dunkler Spalt = Material schwarz)
 RK_KRUEMMER = 36.0
 FP_DX = 121.0                           # Foerderpumpe: Mitte hinter ESP_X0
 VR_X = 765.0                            # Vorreiniger mit Glasschale hinter dem Regler
@@ -385,10 +386,12 @@ def _seitendeckel(t):
 def _links_zusatz(t):
     """Linke Seite (DSC04742): Oelschild an der Kopfwand ueber dem Pumpenkasten, Gusszylinder vorn im Fenster
     mit Flansch und Gestaenge zum Kasten."""
-    # ebene Wand mit Oelschild (statt Kopfleiste): 120 x 28, z 999..1027, am Kopf y -185
-    t.mat("blank", box(716, 836, -189, -185, 999, 1027))
-    for x in (722, 830):
-        for z in (1005, 1021):
+    # ebene Wand mit Oelschild (statt Kopfleiste): 150 x 70, z 965..1035, am Kopf y -185
+    # Review 2026-10: Schild rot (Video 095/100/108, DSC04644), ~150 x 70 statt 120 x 28
+    t.mat("raeder", box(700, 850, -189, -185, 965, 1035))
+    t.mat("blank", box(706, 844, -190, -189, 971, 975))
+    for x in (708, 842):
+        for z in (972, 1028):
             t.mat("blank", Pos(x, -189, z) * Sphere(3))
     # Gusszylinder: senkrecht, Ø 90, z 838..1000, unterer Flansch Ø 106, Deckel, Anschluss zum Wassereinlass
     x, y = 416.0, -262.0
@@ -553,42 +556,42 @@ def _lichtmaschine(t):
 def _kuehler(t):
     """Kuehler: Lamellenblock, Wasserkaesten, Seitenteile, Fuesse, Einfuellstutzen, Schlaeuche."""
     # Netz mit Lamellen vorn und hinten
-    t.mat("schwarz", box(K_X0 + 10, K_X1 - 10, -300, 300, K_NETZ_Z0, K_NETZ_Z1))
+    t.mat("auspuff", box(K_X0 + 10, K_X1 - 10, -300, 300, K_NETZ_Z0, K_NETZ_Z1))
     z = K_NETZ_Z0 + 12
     while z < K_NETZ_Z1 - 8:
         for x0, x1 in ((K_X0 + 6, K_X0 + 10), (K_X1 - 10, K_X1 - 6)):
             t.mat("blank", box(x0, x1, -298, 298, z, z + 5))
         z += 20
     for y in range(-270, 271, 90):                                    # senkrechte Stuetzbleche
-        t.mat("schwarz", box(K_X0 + 4, K_X0 + 10, y - 3, y + 3, K_NETZ_Z0, K_NETZ_Z1))
+        t.mat("auspuff", box(K_X0 + 4, K_X0 + 10, y - 3, y + 3, K_NETZ_Z0, K_NETZ_Z1))
     # Oberer Wasserkasten; Einfuellrohr vom Kasten nach vorn in die (hinten offene) Maske gekroepft,
     # Muendung unter dem Verschluss auf der Maskenkappe (KD_X), 0,5 mm Luft zum Maskendach
-    t.mat("schwarz", kasten_rund(K_X0, K_X1, -K_Y, K_Y, K_NETZ_Z1, K_Z1, 25, Axis.X))
-    xs, ze, zr = 280.0, KD_Z - 0.5, 1298.0                           # Abgang, Muendungsoberkante, Rohrhoehe
-    t.mat("schwarz", Pos(xs, 0, K_Z1 - 5) * Cylinder(32, 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    t.mat("schwarz", rohr_glatt([(xs, 0, K_Z1 - 5), (xs, 0, zr), (KD_X, 0, zr), (KD_X, 0, ze - 20)], 22, 40))
-    t.mat("schwarz", Pos(KD_X, 0, ze - 24) * Cylinder(29, 24, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    t.mat("schwarz", rad_x(K_X1 + 8, 0, 1240, 24, 16))                 # Zulaufstutzen
+    t.mat("auspuff", kasten_rund(K_X0, K_X1, -K_Y, K_Y, K_NETZ_Z1, K_Z1, 25, Axis.X))
+    xs, ze, zr = 280.0, KD_Z - 0.5, HAUBE_DACH_Z - 112.0                           # Abgang, Muendungsoberkante, Rohrhoehe
+    t.mat("auspuff", Pos(xs, 0, K_Z1 - 5) * Cylinder(32, 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("auspuff", rohr_glatt([(xs, 0, K_Z1 - 5), (xs, 0, zr), (KD_X, 0, zr), (KD_X, 0, ze - 20)], 22, 40))
+    t.mat("auspuff", Pos(KD_X, 0, ze - 24) * Cylinder(29, 24, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("auspuff", rad_x(K_X1 + 8, 0, K_ZULAUF_Z, 24, 16))                 # Zulaufstutzen
     # Ueberlaufrohr: vom Einfuellrohr nach rechts, hinter dem Seitenteil nach unten
     zu = zr - 30                                                       # unter der gewoelbten Dachecke
     t.mat("blank", rohr_glatt([(250, 15, zr), (250, 15, zu), (250, 312, zu), (K_X1 + 7, 312, zu), (K_X1 + 7, 312, 560)], 4, 15))
     # Unterer Wasserkasten: Mitte bis z = 480 zwischen den Traegern, aussen auf den Traegern
-    t.mat("schwarz", kasten_rund(K_X0, K_X1, -K_Y, K_Y, Z_TRAEGER + 8, K_NETZ_Z0, 20, Axis.X))
-    t.mat("schwarz", kasten_rund(K_X0 + 10, K_X1 - 10, -180, 180, K_Z0, Z_TRAEGER + 10, 20, Axis.X))
+    t.mat("auspuff", kasten_rund(K_X0, K_X1, -K_Y, K_Y, Z_TRAEGER + 8, K_NETZ_Z0, 20, Axis.X))
+    t.mat("auspuff", kasten_rund(K_X0 + 10, K_X1 - 10, -180, 180, K_Z0, Z_TRAEGER + 10, 20, Axis.X))
     t.mat("blank", sechskant((280, 0, K_Z0), (0, 0, -1), 22, 12))     # Ablasshahn
-    t.mat("schwarz", rad_x(K_X1 + 8, -300, 552, 22, 16))               # Ablaufstutzen links
+    t.mat("auspuff", rad_x(K_X1 + 8, -300, 552, 22, 16))               # Ablaufstutzen links
     # Seitenteile (U-Profil) und Fuesse auf den Laengstraegern
     for s in (-1, 1):
-        t.mat("schwarz", box(K_X0, K_X1, s * 300, s * K_Y, Z_TRAEGER + 8, K_Z1 - 20))
-        t.mat("schwarz", box(K_X0 + 15, K_X1 - 15, s * 196, s * 290, Z_TRAEGER, Z_TRAEGER + 10))
+        t.mat("auspuff", box(K_X0, K_X1, s * 300, s * K_Y, Z_TRAEGER + 8, K_Z1 - 20))
+        t.mat("auspuff", box(K_X0 + 15, K_X1 - 15, s * 196, s * 290, Z_TRAEGER, Z_TRAEGER + 10))
         for x in (250, 310):
             t += schraube((x, s * 245, Z_TRAEGER + 10), (0, 0, 1), 20, 10)
         # Stehbolzen der Wasserkastenverschraubung
-        t.mat("schwarz", schraubenreihe((K_X0, s * 260, K_NETZ_Z1 + 10), (K_X0, s * 260, K_Z1 - 30), 2, (-1, 0, 0), 16, 6))
+        t.mat("auspuff", schraubenreihe((K_X0, s * 260, K_NETZ_Z1 + 10), (K_X0, s * 260, K_Z1 - 30), 2, (-1, 0, 0), 16, 6))
     # Schlaeuche mit Schellen
-    oben = [(K_X1 + 14, 0, 1240), (362, 0, 1222), (378, 0, 1130), (388, 0, Z_KOPF1 + 60), (392, 0, Z_KOPF1 + 24)]
+    oben = [(K_X1 + 14, 0, K_ZULAUF_Z), (362, 0, K_ZULAUF_Z - 18), (378, 0, 1130), (388, 0, Z_KOPF1 + 60), (392, 0, Z_KOPF1 + 24)]
     t.mat("gummi", rohr_glatt(oben, 27, 45))
-    _gummi_schelle(t, (K_X1 + 18, 0, 1240), (1, 0, 0), 27)
+    _gummi_schelle(t, (K_X1 + 18, 0, K_ZULAUF_Z), (1, 0, 0), 27)
     _gummi_schelle(t, (390, 0, Z_KOPF1 + 40), (0.1, 0, -1), 27, schloss=(0, 1, 0))
     unten = [(K_X1 + 14, -300, 552), (395, -300, 560), (412, -300, 760), (440, -232, 800)]
     t.mat("gummi", rohr_glatt(unten, 25, 50))
@@ -721,7 +724,7 @@ def _block_rechts(t):
 # ======================================================================================
 def auspuff():
     """Abgaskruemmer rechts -> offenes glattes Auspuffrohr Ø 48 (ohne Klappe, Gewicht, Schelle; DSC04729/30);
-    Ansaugrohr links: Oelbadtopf mit Spannring unter der Haube, Rohr Ø 66 durch das Dach, Kragen, Pilzhut, Leuchte."""
+    Ansaugrohr links: Oelbadtopf mit Spannring unter der Haube, Rohr Ø 66 durch das Dach, Kragen, gerippte Kappe, Leuchte."""
     t = Sammler("auspuff")
     _auspuff(t)
     _ansaugung(t)
@@ -733,18 +736,18 @@ def _auspuff(t):
     r_rohr = AUSPUFF_D / 2 - 5                         # 5 mm Luft im Haubendurchbruch
     yk, zk, rk = 255.0, Z_KRUEMMER, RK_KRUEMMER                      # Sammelrohr (ueber der Lichtmaschine)
     # Sammelrohr mit runden Enden, 4 Stutzen mit Flanschen
-    t.append(stab((ZYL_X[0] - 40, yk, zk), (ZYL_X[-1] + 40, yk, zk), rk))
+    t.mat("schwarz", stab((ZYL_X[0] - 40, yk, zk), (ZYL_X[-1] + 40, yk, zk), rk))
     for x in (ZYL_X[0] - 40, ZYL_X[-1] + 40):
-        t.append(Pos(x, yk, zk) * Sphere(rk))
+        t.mat("schwarz", Pos(x, yk, zk) * Sphere(rk))
     for x in ZYL_X:
-        t.append(stab((x, 196, zk), (x, yk, zk), 30))
-        t.append(kasten_rund(x - 42, x + 42, 185, 197, zk - 42, zk + 42, 12, Axis.Y))
+        t.mat("schwarz", stab((x, 196, zk), (x, yk, zk), 30))
+        t.mat("schwarz", kasten_rund(x - 42, x + 42, 185, 197, zk - 42, zk + 42, 12, Axis.Y))
         for dx, dz in ((-31, -31), (31, 31)):
             t.mat("blank", sechskant((x + dx, 197, zk + dz), (0, 1, 0), 18, 9))
-        t.append(box(x - 8, x + 8, 205, yk, zk - rk - 2, zk - rk + 14))    # Gussrippe
+        t.mat("schwarz", box(x - 8, x + 8, 205, yk, zk - rk - 2, zk - rk + 14))    # Gussrippe
     # Auslassflansch oben, Rohr mit S-Kroepfung durch die Haube
     zf = zk + math.sqrt(rk ** 2 - 5 ** 2)
-    t.append(kasten_rund(ax - 45, ax + 45, yk - 45, yk + 45, zf - 3, zf + 10, 10))
+    t.mat("schwarz", kasten_rund(ax - 45, ax + 45, yk - 45, yk + 45, zf - 3, zf + 10, 10))
     for dx in (-33, 33):
         for dy in (-33, 33):
             t.mat("blank", sechskant((ax + dx, yk + dy, zf + 10), (0, 0, 1), 16, 8))
@@ -755,8 +758,8 @@ def _auspuff(t):
 
 def _ansaugung(t):
     """Oelbadluftfilter: Topf Ø 184 (z 1054..1244) mit Spannring und 2 Buegelverschluessen UNTER der Haube
-    (Foto DSC04742), Rohr Ø 66 durch das Dach (Manschette), Kragen mit 2 Ohren, Trichter, Pilzhut Ø 236
-    (DSC04743/44), Arbeitsleuchte mit Glasdom am Rohr (DSC04729)."""
+    (Foto DSC04742), Rohr Ø 66 durch das Dach (Manschette), Kragen mit 2 Ohren, schlanke gerippte Kappe Ø 130 mit flachem Deckel
+    (Video 165/172, DSC04729/37), Arbeitsleuchte mit Glasdom am Rohr (DSC04729)."""
     ix, iy = ANSAUG_XY
     r_rohr = ANSAUG_D / 2 - 5                                          # 33
     zp0, zp1 = 1054.0, 1244.0                                          # Topf
@@ -773,7 +776,7 @@ def _ansaugung(t):
     t.mat("zink", deckel)
     t.mat("zink", Pos(ix, iy, 1240) * Cylinder(44, 10, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     # Ansaugrohr durch das Haubendach
-    t.mat("schwarz", stab((ix, iy, 1244), (ix, iy, 1705), r_rohr))
+    t.mat("schwarz", stab((ix, iy, 1244), (ix, iy, 1720), r_rohr))
     zs = HAUBE_KRAGEN - 0.5                                            # Gummimanschette auf dem Kragen
     t.mat("gummi", Pos(ix, iy, zs) * Cylinder(r_rohr + 10, 22, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("blank", Pos(ix, iy, zs + 14) * (Cylinder(r_rohr + 13, 8) - Cylinder(r_rohr + 5, 10)))
@@ -781,14 +784,16 @@ def _ansaugung(t):
     for z0, z1 in ((1478.0, 1508.0), (1512.0, 1540.0)):
         t.mat("schwarz", Pos(ix, iy, z0) * Cylinder(r_rohr + 8, z1 - z0, align=(Align.CENTER, Align.CENTER, Align.MIN)))
         t.mat("schwarz", Pos(ix, iy + r_rohr + 14, (z0 + z1) / 2) * Box(16, 22, z1 - z0 - 6))
-    # Trichter (Ø 125) und Pilzhut: Krempe Ø 236, Haube Ø 220, Oberkante z 1840
-    t.mat("schwarz", Pos(ix, iy, 1690) * Cylinder(62, 45, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    krempe = Pos(ix, iy, 1735) * Cylinder(118, 14, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    krempe = fillet(krempe.edges().group_by(Axis.Z)[0], 6)
-    t.mat("schwarz", krempe)
-    kappe = Pos(ix, iy, 1749) * Cylinder(110, 91, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    kappe = fillet(kappe.edges().group_by(Axis.Z)[-1], 14)
-    t.mat("schwarz", kappe)
+    # Schlanke Kappe (Video 054/135-140/165/172, DSC04729/37): Anschlussstutzen, Zylinderkopf mit 5 Kuehlrippen
+    # (Ø 130) und flachem Deckel (Ø 136), Oberkante z 1840
+    t.mat("schwarz", Pos(ix, iy, 1690) * Cylinder(48, 56, align=(Align.CENTER, Align.CENTER, Align.MIN)))   # Stutzen
+    kern = Pos(ix, iy, 1746) * Cylinder(56, 76, align=(Align.CENTER, Align.CENTER, Align.MIN))
+    t.mat("schwarz", kern)
+    for i in range(5):                                                 # Rippen Ø 130, 8 hoch, Teilung 15
+        t.mat("schwarz", Pos(ix, iy, 1752 + i * 15) * Cylinder(65, 8, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    deckel = Pos(ix, iy, 1822) * Cylinder(68, 18, align=(Align.CENTER, Align.CENTER, Align.MIN))
+    deckel = fillet(deckel.edges().group_by(Axis.Z)[-1], 5)
+    t.mat("schwarz", deckel)
     # Arbeitsleuchte an Konsole am Rohr, ~90 vor der Rohrachse: Gehaeuse, Metallring, Glasdom Ø 80 / ~85 hoch
     lx, zr = ix - 90, 1612.0
     t.mat("schwarz", stab((ix - r_rohr + 4, iy, 1650), (lx, iy, 1650), 6))
