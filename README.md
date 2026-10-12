@@ -3,7 +3,7 @@
 Parametric CAD model of the **Hanomag K 55 E** crawler dozer (built 1950–1956) with the FRISCH 55 FH2 dozer blade
 at 1:8 scale, plus the **Modellwerkstatt** ("model workshop"): a web app to view and measure the model and to download the print files.
 
-**Live:** https://st0o0.github.io/Hanomag-K55E/
+**Live:** https://hanomag.st0o0.net/
 
 The web app and the CAD sources are in German. Dimensions are in mm throughout.
 
