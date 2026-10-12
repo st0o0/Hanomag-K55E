@@ -34,8 +34,8 @@ HAUBE_DACH_Z = 392.0 + 955.0  # 1347
 HAUBE_UNTEN_Z = 620.0         # Unterkante vorderes Haubenseitensegment (auf Hoehe Kettenoberkante)
 HAUBE_BAND_Z = 1125.0         # Oberkante Motorausschnitt = Unterkante Schriftband (Band 1125..Dach)
 SEG_X1 = 310.0                # vorderes Seitensegment x 210..310 (Foto BS), dann Bogen R ~220 in die Bandkante
-TANK_X0, TANK_X1, TANK_B = 1085.0, 1455.0, 620.0   # direkt hinter der Haube, Oberkante in der Dachflucht
-TANK_Z0, TANK_Z1 = 1000.0, 1335.0
+TANK_X0, TANK_X1, TANK_B = 1085.0, 1455.0, 680.0   # Tank in Haubenform: Unterkante bis x 1455, Oberkante bis ~1545 (Ueberhang)
+TANK_Z0, TANK_Z1 = 1125.0, 1335.0       # Unterkante = Oberkante Motorausschnitt (HAUBE_BAND_Z), Oberkante unter dem Haubendach 1347
 Y_SCHUB = 975.0               # Schubbalken-Mitte (aussen an der Kette)
 Z_SCHUB = 400.0
 TRAVERSE_X, TRAVERSE_Z = 2520.0, 1080.0           # Zylinder-Mittelzapfen (Foto BS: Deckel am Endkasten bei x ~2520), Achshoehe
@@ -48,7 +48,7 @@ AUSPUFF_XY = (640.0, 220.0)   # Durchbruch Auspuff im Haubendach
 ANSAUG_XY = (900.0, -220.0)   # Durchbruch Ansaugrohr Luftfilter im Haubendach
 SCHEINWERFER = (110.0, 430.0, 1190.0)             # Lampenmitte x, |y|, z: oben an den Maskenseiten
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
-Y_LTG = 380.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
+Y_LTG = 392.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
 LENKRAD = (1830.0, 200.0, 1470.0)                 # Lenkradmitte
 SITZ_X = 2150.0               # Mitte Sitzschale
 GESAMT_HOEHE = 1840.0

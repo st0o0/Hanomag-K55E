@@ -80,7 +80,7 @@ def _haube_tank():
                                           align=(Align.MIN, Align.CENTER, Align.MIN))
     wand = fillet(wand.edges().filter_by(Axis.X).group_by(Axis.Z)[-1], 59.0)
     stirn = zu_modell([wand])["lack"]
-    lack = [h.haube(), stirn] + list(teile.pop("lack", Compound(children=[])).children)
+    lack = [h.haube(), stirn] + list(teile.pop("lack", Compound(children=[])).solids())
     out = _d(lack=lack)
     out.update(teile)
     return out

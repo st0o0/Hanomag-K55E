@@ -71,24 +71,25 @@ Ansaug/Luftfilter: Durchbruch bei x = 900, y = −220, Ø 90 (ANSAUG_XY); Ölbad
 
 | | Original-mm |
 |---|---|
-| Maske | 710 breit, 897 hoch, 210 tief, Unterkante z = 450 (MASKE_UK, Foto BV: h/b 1,26); Kappe 125, Grill 597 × 622, Sockel 175 |
+| Maske | 710 breit, 897 hoch, 210 tief, Unterkante z = 450 (MASKE_UK, Foto BV: h/b 1,26); Kappe 160 (kissenförmig: obere Ecken R 70, Vorderkante rollt mit R 80 ins Dach; erhabenes Querband 15 hoch über dem Grill, Flügellogo), Grill 597 × 612, Sockel 125 (Foto g38, DSC04738) |
 | Haube | x = 210 … 1080 (Foto BS), 690 breit, Dach z = 1347 mit zwei Längssicken bei y = ±150 |
-| Motorausschnitt | vorderes Seitensegment x = 210 … 310 (SEG_X1, Foto BS) bis z = 620 herunter, dann Ausschnitt bis hinten offen, Oberkante z = 1125, Bogen R 220; darüber nur das Schriftband |
+| Motorausschnitt | vorderes Seitensegment x = 210 … 310 (SEG_X1, Foto BS) bis z = 620 herunter, dann Ausschnitt bis hinten offen, Oberkante z = 1125, Bogen R 280 (weich auslaufend, Foto DSC04742), gebordelter Rand folgt Bogen und läuft unter dem Schriftband waagerecht nach hinten; darüber nur das Schriftband |
 | Schriftzug HANOMAG | Mitte x = 745, z = 1212, Teilung 88, Versalhöhe 55, zwischen den Sicken bei z = 1152 und 1272 |
 | Typfeld K55E | erhaben eingerahmt, x = 215 … 305, z = 678 … 722; Schrift Versalhöhe ≈ 21 mm (2,6 mm im Modell), Strich ≈ 0,7 mm |
 | Scheinwerfer | oben an den Maskenseiten, Mitte x = 110, y = ±430, z = 1190 (SCHEINWERFER; Foto BS, senkrecht und kalibriert, ist maßgeblich), Ø 150, Winkelhalter an der Maskenseite |
-| Grill | 3 senkrechte Rundstäbe (der mittlere statt Mittelsteg) vor dem Drahtgitter, Rollwulst und Eckzwickel |
+| Grill | breiter flacher Mittelsteg (80 breit, Mittelrippe) über die ganze Höhe vor 3 waagerechten Rundstäben (14 hoch; mit Rollwulst oben/unten 4 gleiche Felder, Teilung ≈ 155) vor dem Drahtgitter, Rollwulst und Eckzwickel |
 
-Fotobefund (BS, BV): Maske mit 3 senkrechten Stäben, Drahtgitter dahinter, Flügellogo und Kühlerverschluss auf der Kappe,
+Fotobefund (BS, BV): Maske mit breitem Mittelsteg und waagerechten Stäben (Foto g38), Drahtgitter dahinter, Flügellogo und Kühlerverschluss auf der Kappe,
 Kurbelloch im Sockel auf der Pumpenachse. Haubenseite nur als Schriftband, Motor von der Seite sichtbar.
 
 ## Fahrerstand (fahrerstand.py)
 
 | | Wert |
 |---|---|
-| Tank (verzinkt, trommelförmig) | x = 1085 … 1455 direkt hinter der Haube, 620 breit, z = 1000 … 1335, 2 Spannbänder; Unterbau auf den Längsträgern, frei über der Kupplungsglocke |
-| Armaturenkonsole (rot) | Wand x = 1452 … 1480, z = 962 … 1250, Instrumente an der Rückseite |
-| Lenksäule | aus der Konsole bei (1480, 200, 1240) unter ≈ 33° nach hinten oben, Lenkrad Ø 450 bei (1830, 200, 1470) |
+| Tank (verzinkt, Haubenform) | Seitenprofil: Stirn senkrecht bei x = 1085, Unterkante z = 1125 bis x = 1455, Oberkante z = 1335 (Dachflucht) bis x ≈ 1535, schräge Rückwand mit R 75 oben (Überhang über dem Armaturenbrett), 680 breit (Seiten ±340), Oberseite quer gewölbt (13 mm), obere Längskanten R 115; umlaufende Falz an der Stirn, zwei Spannbänder bei x = 1150 und 1400 mit Gewindestangen durch den Auflageflansch, hinten unten Lippe mit Schraubenreihe |
+| Tankunterbau | Blechkasten x = 1085 … 1455, y = ±330, von der Plattform bis z = 1116, frei über der Kupplungsglocke (z > 962); oben Auflageflansch z = 1116 … 1125, x bis 1488, y = ±355 mit Knotenblechen; der Tank liegt nur auf (Haube + Tank = ein abnehmbares Teil) |
+| Armaturenkonsole (rot) | Rückseite des Unterbaus x = 1455 … 1480, z = 962 … 1116, unter dem Tanküberhang; ovale Tafel links, Oeldruck/Thermometer bei y = 45, Instrumente an der Rückseite |
+| Lenksäule | aus dem Unterbau bei (1510, 200, 1062) unter ≈ 51° nach hinten oben, auf ganzer Länge ≥ 34 mm vom Tank; Lenkrad Ø 450 bei (1830, 200, 1470) |
 | Sitz | einteilige tiefe Schale mit hochgezogenem Rücken, Mitte x = 2150, Hülle x ≈ 1925 … 2405, Rücken bis z ≈ 1345, auf Blattfeder-Arm im Mittelsockel |
 | Werkzeugkästen | hinten auf den Kotflügeln x = 2360 … 2618, |y| ≤ 873; vorn links Werkzeugkasten x = 1620 … 1890 |
 | Batteriekasten | rechts vor dem Sitz, x = 1620 … 1890 |
@@ -103,10 +104,10 @@ Aus Prospekt K 55 E und Einsatzfoto:
 | Schubbalken | Kastenprofil ≈ 120 × 170, **außen** an den Ketten bei y = ±975, Höhe z ≈ 400 |
 | Hinteres Gelenk | am Ende des Kettenrahmens, x ≈ 2250, z ≈ 400 |
 | A-Bock | je Seite auf dem Schubbalken, fast symmetrisch (senkrechtes Seitenfoto BS): Füße x = 920 / 1650, Scheitel x = 1270, z = 1080; Stegblech mit dreieckigem Ausschnitt |
-| Ölpumpe | vor dem Maskensockel bei (−70, 0, 530) auf einer Frontplatte; zwei Leitungen (Ø 40 … 44) um die Maskenecken, dann bei |y| = 380 schräg an der Haubenseite von (0, 775) nach (1050, 1060), neben dem Tank waagerecht, ab x = 1560 auf der Plattform |
-| Hubzylinder | liegend bei y = ±975, Achse z = 1080, Mittelzapfen x = 2520 im Endkasten (Foto BS, TRAVERSE_X), Rohr 1770 … 2740, Kolbenstange zum Scheitel bei 1270; |SZ| 1250 (Arbeitsstellung), Hub 315; doppeltwirkend: Leitung 1 oben in den Zylinderkopf, Leitung 2 (parallel, 52 weiter außen und 52 tiefer, dann dünn unter dem Zylinder) in den Endkasten |
-| Traverse | zwei Endkästen außen (x = 2395 … 2830, z = 900 … 1240, |y| 880 … 1070) mit den Zylindern, schlanker Querträger als Öltank (x = 2630 … 2810, z = 1060 … 1240), darunter frei; Schutzbügel bis z = 1400 |
-| Steuerschieber | rechts neben dem Sitz, Hebel |
+| Ölpumpe | runder Körper Ø 150 (x −225 … −60) vor dem Maskensockel bei (−70, 0, 530) auf einer Frontplatte, seitlich je ein Anschluss (z ≈ 490); je Seite EINE Leitung (Ø ≈ 36, Fotos 26271249857, 40431531504, 39333958410, BS) um die Maskenecke, bei |y| = 392 schräg an der Haubenseite von (0, 775) nach (1050, 1060), neben Tank und Unterbau waagerecht (z 1085, Rohraußenkante ≥ 374), vor dem Zylinder außerhalb der Kästen (|y| 912) nach außen, unter dem Zylinderkopf hindurch und von unten ins Kopfstück; keine Leitung auf der Plattform |
+| Hubzylinder | liegend bei y = ±975, Achse z = 1080, Mittelzapfen x = 2520 im Endkasten (Foto BS, TRAVERSE_X), Rohr 1770 … 2740, Kolbenstange zum Scheitel bei 1270; |SZ| 1250 (Arbeitsstellung), Hub 315; doppeltwirkend: die eine Hauptleitung steigt unter dem Kopfstück ein, vom Kopfstück laufen zwei dünne Rohre (oben z 1175, unten z 985) in den Endkasten (BS, 39334013090; ob Rohre oder Zuganker, ist offen) |
+| Traverse | zwei Endkästen außen (x = 2395 … 2830, z = 900 … 1240, |y| 880 … 1070) mit den Zylindern, dazwischen Querträger als Öltank (x = 2630 … 2830, Rückwand bündig mit den Endkästen, z = 900 … 1240) mit Schild „Frisch“ (y −570 … −130), Langloch rechts (y ≈ +620, ≈ 240 × 125), Einfüllstutzen Ø 115 rot gekappt bei y = −300 (26271221407); darüber zwei parallele Querrohre (z 1370 Leitung, z 1440 Bügel, Ø 28 / 32) mit Doppelschellen; Schutzbügel bis z = 1440 |
+| Steuerschieber | im Foto (BS, 26271221407, 40431531504) ein olivgrüner Ventilblock mit Kugelhebel, Schrägstab und Rohrschwanenhals hinten auf der Plattform vor der Traverse, rechts der Mitte; Lage und Anbindung nicht sicher, daher nicht modelliert (Pumpe ohne Ventilblock, kein Gestänge an der Haubenseite) |
 
 Wirkprinzip: der Zylinder schiebt den A-Bock-Scheitel vor/zurück, der Schubbalken dreht um das hintere
 Gelenk, das Schild hebt/senkt (Hub 1120 über / 200 unter Fahrebene).

@@ -142,34 +142,34 @@
         }
       ],
       "druck": "druck/haube_tank.stl",
-      "druck_mb": 6.78,
+      "druck_mb": 7.51,
       "masse_mm": [
-        155.6,
+        165.5,
         91.2,
-        102.0
+        103.3
       ],
       "druck_koerper": 1,
       "druck_bett_mm": [
-        155.6,
+        165.5,
         91.2,
-        102.0
+        103.2
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Passung zu fahrerstand: 1 Ansatzstellen buendig gekuerzt",
-          "Passung zu planierschild: 6 Ansatzstellen buendig gekuerzt"
+          "Passung zu planierschild: 4 Ansatzstellen buendig gekuerzt",
+          "3 eingeschlossene Hohlraeume gefuellt"
         ],
         "koerper": [
           {
             "masse_mm": [
-              155.6,
+              165.5,
               91.2,
-              102.0
+              103.2
             ],
-            "volumen_mm3": 162612.7,
-            "wand_min": 1.1,
-            "ueberhang": 0.21
+            "volumen_mm3": 148869.6,
+            "wand_min": 0.4,
+            "ueberhang": 0.242
           }
         ]
       }
@@ -196,15 +196,15 @@
         }
       ],
       "druck": "druck/kuehlermaske.stl",
-      "druck_mb": 1.71,
+      "druck_mb": 1.65,
       "masse_mm": [
-        27.7,
+        27.9,
         89.7,
         117.9
       ],
       "druck_koerper": 1,
       "druck_bett_mm": [
-        27.6,
+        27.9,
         89.6,
         117.9
       ],
@@ -213,18 +213,18 @@
         "hinweise": [
           "Passung zu scheinwerfer_links: 2 Ansatzstellen buendig gekuerzt",
           "Passung zu scheinwerfer_rechts: 2 Ansatzstellen buendig gekuerzt",
-          "Passung zu planierschild: 6 Ansatzstellen buendig gekuerzt"
+          "Passung zu planierschild: 3 Ansatzstellen buendig gekuerzt"
         ],
         "koerper": [
           {
             "masse_mm": [
-              27.6,
+              27.9,
               89.6,
               117.9
             ],
-            "volumen_mm3": 19995.2,
+            "volumen_mm3": 20346.5,
             "wand_min": 1.0,
-            "ueberhang": 0.087
+            "ueberhang": 0.094
           }
         ]
       }
@@ -247,31 +247,31 @@
         }
       ],
       "druck": "druck/gitter.stl",
-      "druck_mb": 0.92,
+      "druck_mb": 0.94,
       "masse_mm": [
         1.0,
         79.8,
-        76.6
+        78.5
       ],
       "druck_koerper": 1,
       "druck_bett_mm": [
         1.0,
         79.8,
-        76.6
+        78.5
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Koerper 0 (bei [18, 0, 924]): 134/400 Proben duenner als 0.5 mm"
+          "Koerper 0 (bei [18, 0, 881]): 138/400 Proben duenner als 0.5 mm"
         ],
         "koerper": [
           {
             "masse_mm": [
               1.0,
               79.8,
-              76.6
+              78.5
             ],
-            "volumen_mm3": 2022.5,
+            "volumen_mm3": 2070.9,
             "wand_min": 0.5,
             "ueberhang": 0.118
           }
@@ -640,7 +640,7 @@
         "dicht": true,
         "hinweise": [
           "Passung zu fahrerstand: 19 Ansatzstellen buendig gekuerzt",
-          "Passung zu planierschild: 4 Ansatzstellen buendig gekuerzt"
+          "Passung zu planierschild: 2 Ansatzstellen buendig gekuerzt"
         ],
         "koerper": [
           {
@@ -649,7 +649,7 @@
               226.5,
               96.2
             ],
-            "volumen_mm3": 923795.5,
+            "volumen_mm3": 923796.0,
             "wand_min": 1.12,
             "ueberhang": 0.251
           },
@@ -1240,36 +1240,35 @@
         }
       ],
       "druck": "druck/fahrerstand.stl",
-      "druck_mb": 6.3,
+      "druck_mb": 6.44,
       "masse_mm": [
-        226.4,
+        228.9,
         221.8,
-        142.7
+        137.1
       ],
       "druck_koerper": 12,
       "druck_bett_mm": [
         206.7,
-        140.8,
-        142.7
+        142.7,
+        137.1
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Passung zu haube_tank: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu rumpf: 19 Ansatzstellen buendig gekuerzt",
-          "Passung zu planierschild: 6 Ansatzstellen buendig gekuerzt",
-          "38 eingeschlossene Hohlraeume gefuellt"
+          "Passung zu planierschild: 2 Ansatzstellen buendig gekuerzt",
+          "54 eingeschlossene Hohlraeume gefuellt"
         ],
         "koerper": [
           {
             "masse_mm": [
               166.4,
-              95.9,
-              142.7
+              97.8,
+              137.1
             ],
-            "volumen_mm3": 63068.8,
-            "wand_min": 0.02,
-            "ueberhang": 0.269
+            "volumen_mm3": 122597.1,
+            "wand_min": 0.01,
+            "ueberhang": 0.277
           },
           {
             "masse_mm": [
@@ -1287,7 +1286,7 @@
               40.9,
               27.8
             ],
-            "volumen_mm3": 27875.9,
+            "volumen_mm3": 27876.2,
             "wand_min": 1.25,
             "ueberhang": 0.222
           },
@@ -1324,32 +1323,32 @@
           {
             "masse_mm": [
               1.5,
-              7.5,
-              7.5
+              6.8,
+              6.8
             ],
-            "volumen_mm3": 47.7,
+            "volumen_mm3": 39.9,
             "wand_min": 0.62,
             "ueberhang": 0.084
           },
           {
             "masse_mm": [
               1.5,
-              6.5,
-              6.5
+              6.0,
+              6.0
             ],
-            "volumen_mm3": 37.5,
+            "volumen_mm3": 32.7,
             "wand_min": 0.62,
             "ueberhang": 0.085
           },
           {
             "masse_mm": [
-              8.8,
-              6.8,
-              2.5
+              8.6,
+              6.2,
+              2.2
             ],
-            "volumen_mm3": 35.0,
+            "volumen_mm3": 27.6,
             "wand_min": 1.25,
-            "ueberhang": 0.19
+            "ueberhang": 0.195
           },
           {
             "masse_mm": [
@@ -1418,67 +1417,37 @@
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 12.39,
+      "druck_mb": 10.09,
       "masse_mm": [
-        462.6,
+        461.9,
         302.0,
-        177.8
+        182.0
       ],
-      "druck_koerper": 4,
+      "druck_koerper": 1,
       "druck_bett_mm": [
-        462.6,
-        312.3,
-        177.8
+        461.9,
+        302.0,
+        182.0
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Passung zu haube_tank: 6 Ansatzstellen buendig gekuerzt",
-          "Passung zu kuehlermaske: 6 Ansatzstellen buendig gekuerzt",
-          "Passung zu rumpf: 4 Ansatzstellen buendig gekuerzt",
-          "Passung zu fahrerstand: 6 Ansatzstellen buendig gekuerzt",
-          "48 eingeschlossene Hohlraeume gefuellt"
+          "Passung zu haube_tank: 4 Ansatzstellen buendig gekuerzt",
+          "Passung zu kuehlermaske: 3 Ansatzstellen buendig gekuerzt",
+          "Passung zu rumpf: 2 Ansatzstellen buendig gekuerzt",
+          "Passung zu fahrerstand: 2 Ansatzstellen buendig gekuerzt",
+          "52 eingeschlossene Hohlraeume gefuellt"
         ],
         "koerper": [
           {
             "masse_mm": [
-              462.6,
+              461.9,
               302.0,
-              177.8
+              182.0
             ],
-            "volumen_mm3": 945752.3,
-            "wand_min": 1.0,
-            "ueberhang": 0.148
-          },
-          {
-            "masse_mm": [
-              3.3,
-              6.3,
-              24.5
-            ],
-            "volumen_mm3": 148.5,
-            "wand_min": 0.75,
-            "ueberhang": 0.078
-          },
-          {
-            "masse_mm": [
-              3.3,
-              6.0,
-              3.8
-            ],
-            "volumen_mm3": 40.1,
-            "wand_min": 0.55,
-            "ueberhang": 0.202
-          },
-          {
-            "masse_mm": [
-              3.3,
-              4.8,
-              3.8
-            ],
-            "volumen_mm3": 30.7,
-            "wand_min": 0.75,
-            "ueberhang": 0.194
+            "volumen_mm3": 950528.3,
+            "wand_min": 1.25,
+            "ueberhang": 0.145
           }
         ]
       }
@@ -1487,7 +1456,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-12",
-  "build": "20261012092727",
+  "build": "20261012103716",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [
@@ -1505,6 +1474,30 @@
             "url": "https://live.staticflickr.com/810/26271249857_2dfb185633_b.jpg",
             "zeigt": "Front fast senkrecht: Maske, Ölpumpe, Scheinwerfer, Schild",
             "benutzt": "Maskenunterkante, Verhältnis Maskenhöhe zu Breite, Lage der Ölpumpe"
+          },
+          {
+            "titel": "Flickr – blaue K 55 mit FRISCH-Schild, schräg hinten links",
+            "url": "https://www.flickr.com/photo.gne?id=26271221407",
+            "zeigt": "Heck der Planiereinrichtung: durchgehende Traverse mit Schild „Frisch“, Einfüllstutzen mit roter Kappe, zwei parallele Querrohre mit Schlaufe, Ventilblock dahinter",
+            "benutzt": "Form der Traverse (Rückwand bündig), Schild, Einfüllstutzen, Querrohre, Lage des Ventilblocks (nur Vermutung)"
+          },
+          {
+            "titel": "Flickr – blaue K 55 mit FRISCH-Schild, schräg vorn links",
+            "url": "https://www.flickr.com/photo.gne?id=39333958410",
+            "zeigt": "Linke Haubenseite mit einer Leitung von der Pumpe, Pumpe vor der Maske, Zylinder hinten",
+            "benutzt": "je Seite nur eine Leitung, kein Gestänge an der linken Haubenseite"
+          },
+          {
+            "titel": "Flickr – blaue K 55 mit FRISCH-Schild, rechte Seite schräg",
+            "url": "https://www.flickr.com/photo.gne?id=39334013090",
+            "zeigt": "Rechte Seite: Leitung an der Haube, Zylinder mit Rohren oben und unten, Rohrbogen unter dem Zylinderkopf, Ventilblock und Sitzschale dahinter",
+            "benutzt": "Anschluss der Leitung am Zylinderkopf von unten, Rohre am Zylinder, Heckaufbau"
+          },
+          {
+            "titel": "Flickr – blaue K 55 mit FRISCH-Schild, schräg vorn rechts",
+            "url": "https://www.flickr.com/photo.gne?id=40431531504",
+            "zeigt": "Pumpe und rechte Leitung nah, Seitenansicht des rechten Zylinders und des Ventilblocks",
+            "benutzt": "runde Pumpe mit Frontdeckel, Leitung seitlich unter der Pumpenachse, Leitungsdurchmesser"
           },
           {
             "titel": "Fahrzeugseiten.de – K 55, Seite links",

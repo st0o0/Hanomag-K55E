@@ -17,6 +17,30 @@
           "benutzt": "Maskenunterkante, Verhältnis Maskenhöhe zu Breite, Lage der Ölpumpe"
         },
         {
+          "titel": "Flickr – blaue K 55 mit FRISCH-Schild, schräg hinten links",
+          "url": "https://www.flickr.com/photo.gne?id=26271221407",
+          "zeigt": "Heck der Planiereinrichtung: durchgehende Traverse mit Schild „Frisch“, Einfüllstutzen mit roter Kappe, zwei parallele Querrohre mit Schlaufe, Ventilblock dahinter",
+          "benutzt": "Form der Traverse (Rückwand bündig), Schild, Einfüllstutzen, Querrohre, Lage des Ventilblocks (nur Vermutung)"
+        },
+        {
+          "titel": "Flickr – blaue K 55 mit FRISCH-Schild, schräg vorn links",
+          "url": "https://www.flickr.com/photo.gne?id=39333958410",
+          "zeigt": "Linke Haubenseite mit einer Leitung von der Pumpe, Pumpe vor der Maske, Zylinder hinten",
+          "benutzt": "je Seite nur eine Leitung, kein Gestänge an der linken Haubenseite"
+        },
+        {
+          "titel": "Flickr – blaue K 55 mit FRISCH-Schild, rechte Seite schräg",
+          "url": "https://www.flickr.com/photo.gne?id=39334013090",
+          "zeigt": "Rechte Seite: Leitung an der Haube, Zylinder mit Rohren oben und unten, Rohrbogen unter dem Zylinderkopf, Ventilblock und Sitzschale dahinter",
+          "benutzt": "Anschluss der Leitung am Zylinderkopf von unten, Rohre am Zylinder, Heckaufbau"
+        },
+        {
+          "titel": "Flickr – blaue K 55 mit FRISCH-Schild, schräg vorn rechts",
+          "url": "https://www.flickr.com/photo.gne?id=40431531504",
+          "zeigt": "Pumpe und rechte Leitung nah, Seitenansicht des rechten Zylinders und des Ventilblocks",
+          "benutzt": "runde Pumpe mit Frontdeckel, Leitung seitlich unter der Pumpenachse, Leitungsdurchmesser"
+        },
+        {
           "titel": "Fahrzeugseiten.de – K 55, Seite links",
           "url": "http://fahrzeugseiten.de/Traktoren/Hanomag/K55/Hanomag_K55_Raupe_01m.jpg",
           "zeigt": "Ganze linke Seite: Laufwerk, Haube, Fahrerstand",
