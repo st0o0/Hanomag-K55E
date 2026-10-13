@@ -176,7 +176,7 @@
               111.8
             ],
             "volumen_mm3": 223911.8,
-            "wand_min": 0.75,
+            "wand_min": 0.6,
             "ueberhang": 0.189
           }
         ]
@@ -1358,7 +1358,7 @@
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 9.88,
+      "druck_mb": 8.76,
       "masse_mm": [
         459.6,
         277.2,
@@ -1375,8 +1375,9 @@
         "hinweise": [
           "Passung zu kuehlermaske: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu rumpf: 7 Ansatzstellen buendig gekuerzt",
-          "6 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0 geteilt in 7 Stuecke bei x=-265 / x=1121 / x=1129 / y=-590 / y=-32 (Original-mm, Einbaulage), 10 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)",
+          "5 eingeschlossene Hohlraeume gefuellt",
+          "Koerper 0 geteilt in 7 Stuecke bei x=-265 / x=1121 / x=1129 / y=-32 / y=590 (Original-mm, Einbaulage), 10 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)",
+          "Koerper 2: 2/849 Proben duenner als 0.5 mm: 0.02 mm (1 Probe) bei x/y/z [1129, -978, 952] Original-mm, Solid 97 (650x44x528 Original-mm); 0.49 mm (1 Probe) bei x/y/z [1129, -958, 946] Original-mm, Solid 97 (650x44x528 Original-mm)",
           "Koerper 7 sehr klein (0.75 mm, 34.86 mm3) bei x/y/z [2764, -935, 1305] Original-mm, geht beim Druck evtl. verloren"
         ],
         "koerper": [
@@ -1402,33 +1403,13 @@
           },
           {
             "masse_mm": [
-              173.3,
-              34.6,
-              81.7
-            ],
-            "volumen_mm3": 85301.1,
-            "wand_min": 0.75,
-            "ueberhang": 0.099
-          },
-          {
-            "masse_mm": [
-              218.0,
-              62.4,
-              133.5
-            ],
-            "volumen_mm3": 126011.9,
-            "wand_min": 0.75,
-            "ueberhang": 0.125
-          },
-          {
-            "masse_mm": [
               174.3,
               34.6,
               83.4
             ],
-            "volumen_mm3": 86262.3,
-            "wand_min": 1.0,
-            "ueberhang": 0.101
+            "volumen_mm3": 86043.9,
+            "wand_min": 0.02,
+            "ueberhang": 0.098
           },
           {
             "masse_mm": [
@@ -1444,11 +1425,31 @@
             "masse_mm": [
               218.0,
               209.8,
-              120.1
+              133.5
             ],
-            "volumen_mm3": 261550.5,
+            "volumen_mm3": 263561.5,
             "wand_min": 0.63,
-            "ueberhang": 0.172
+            "ueberhang": 0.169
+          },
+          {
+            "masse_mm": [
+              173.3,
+              34.6,
+              81.7
+            ],
+            "volumen_mm3": 85519.5,
+            "wand_min": 0.87,
+            "ueberhang": 0.101
+          },
+          {
+            "masse_mm": [
+              218.0,
+              62.4,
+              108.9
+            ],
+            "volumen_mm3": 120948.9,
+            "wand_min": 1.0,
+            "ueberhang": 0.128
           },
           {
             "masse_mm": [
@@ -1467,7 +1468,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-13",
-  "build": "20261013085319",
+  "build": "20261013092238",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [

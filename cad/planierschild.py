@@ -76,7 +76,7 @@ from .common import (
     sechskant,
     stab,
 )
-from .hydraulik import Rohrzug, hydraulik, wanddurchfuehrungen
+from .hydraulik import Rohrzug, durchfuehrungen, hydraulik
 from .planiermasse import (
     EK_DY,
     EK_SCHR_DX,
@@ -662,8 +662,10 @@ def _endkasten_hohlkoerper(t: Sammler, s: int) -> None:
     k -= ki
     k -= box(EK_X0 - 5, EK_X0 + EK_T + 5, y - R_ZYL - 12, y + R_ZYL + 12, Z_AUSS, Z_AUSS_O)
     k -= _langloch_schraege(s, y)
-    for xl, yl, zl, rl in wanddurchfuehrungen(s):
-        k -= Pos(xl, yl, zl) * Rot(90, 0, 0) * Cylinder(rl, EK_T + 6)
+    for d in durchfuehrungen(s):                                     # Leitungsdurchfuehrungen (hydraulik.py)
+        a = Vector(*d.ort)
+        n = Vector(*d.achse)
+        k -= stab(tuple(a - n * (EK_T + 6) / 2), tuple(a + n * (EK_T + 6) / 2), d.radius)
     t.append(k)
     t.append(box(EK_X0 - 8, EK_X0 + 2, y - R_ZYL - 24, y - R_ZYL - 12, Z_AUSS - 12, Z_AUSS_O))
     t.append(box(EK_X0 - 8, EK_X0 + 2, y + R_ZYL + 12, y + R_ZYL + 24, Z_AUSS - 12, Z_AUSS_O))

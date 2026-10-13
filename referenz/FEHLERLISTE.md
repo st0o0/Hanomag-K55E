@@ -52,6 +52,12 @@ Zylinder; rechter Zylinder kurz direkt vom Block durch die Endkasten-Innenwand; 
 Fahrerstand nach Short: Sitzschale mit dickem Rollrand, geschlitzte Klinke vor dem Sitz, Zündschlüssel, dünner Schalthebel,
 dicker Getriebedeckel mit großen Schrauben.
 
+Runde 14 (2026-10-13, Short IApSZg9dphk Frame für Frame): Steuerblock dicht hinter dem Sitz rechts der Sitzmitte
+(x 2480..2620, y 430..560), die beiden Querrohre stehen direkt auf der Blockdecke, steigen senkrecht auf, laufen als enges
+Paar (x 2540/2600, z 1230) nach links und tauchen über dem linken Endkasten senkrecht in dessen Decke; rechter Zylinder über
+zwei kurze Rohre aus der Blockseite durch die Endkasten-Innenwand. Im Short ist das Ganze seitenverkehrt (Block links der
+Sitzmitte, Rohre nach rechts); Nordhorn 2:09/2:22 bestätigt die Spiegelung (Block rechts, Rohre links abwärts).
+
 Offen:
 - Sitzvorderkante nur ~170 hinter dem Lenkradkranz (Messung 2300..2350), ergonomisch knapp.
 - Rundes Speichen-Verstellrad unter dem hinteren Sitzrand (Short) nicht verortet.
