@@ -28,5 +28,5 @@ LL_L, LL_H = 200.0, 110.0      # Langloch in der Schraegflaeche beider Endkaeste
 Y_FRISCH = 0.0                 # Schild "Frisch" mittig in der Rueckwand
 EK_DY, EK_T = 95.0, 12.0       # halbe Breite (y), Wandstaerke
 EK_YI = Y_SCHUB - EK_DY        # Innenseite des Endkastens zur Fahrzeugmitte hin (880)
-QT_X0, QT_X1 = 2630.0, EK_X1   # Quertraeger = Oeltank, Rueckwand buendig mit den Endkaesten (Flickr 26271221407)
+QT_X0, QT_X1 = 2530.0, EK_X1   # Oeltank 300 tief, Vorderwand direkt hinter dem Sitz (Nordhorn 2:09), Rueckwand buendig
 QT_Z0, QT_Z1 = EK_Z0, EK_Z1    # so hoch wie die Endkaesten (zoom_heck_l)

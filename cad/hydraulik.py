@@ -204,24 +204,24 @@ Z_PL = DECK_Z + 45.0                     # Rohrmitte auf der Plattform, 27 ueber
 X_SCHELLE0, DX_SCHELLE = 1500.0, 160.0   # Schellenraster ab DECK_X0, links wie rechts gleich
 BIEGUNG_PUMPE = 60.0
 BIEGUNG_P = 30.0                         # Bogen zum Anschluss P
-X_P_BOGEN = 2400.0                       # rechts: Abbiegen nach innen (vor dem Lagerbock des Hebels)
-X_P_STEIGER = 2455.0                     # kurzes senkrechtes Stueck vor dem Anschluss P
+X_P_BOGEN = 2310.0                       # rechts: Abbiegen nach innen (vor dem Lagerbock des Hebels)
+X_P_STEIGER = 2365.0                     # kurzes senkrechtes Stueck vor dem Anschluss P
 
-# Steuerblock dicht hinter dem Sitz (Sitz x 2162..2518, y bis 425), Rueckwand an der Tank-Vorderwand 2630
-VB_X0, VB_X1 = 2480.0, 2620.0
+# Steuerblock neben dem Sitz (Sitz x 2162..2518, y bis 425), Rueckwand an der Tank-Vorderwand QT_X0 = 2530 (Short 0:16)
+VB_X0, VB_X1 = 2390.0, 2530.0
 VB_Y0, VB_Y1 = 430.0, 560.0
 VB_Z0, VB_Z1 = DECK_Z + 70.0, DECK_Z + 200.0   # Oberkante 1115, knapp unter dem Sitzschalenrand (1105..1130)
-VB_PL_X = (2500.0, 2600.0)               # Blechbock (Konsole) unter dem Block
+VB_PL_X = (2410.0, 2510.0)               # Blechbock (Konsole) unter dem Block
 Y_HEBEL = 470.0                          # Ebene des Hebels und des Gestaenges
-HEBEL_DREH = (2350.0, Y_HEBEL, 1000.0)   # Drehpunkt (Bolzen) im Lagerbock vor dem Block
-HEBEL_KUGEL = (2390.0, Y_HEBEL, 1240.0)  # Kugel neben dem hinteren Sitzrand, ueber dem Polster
+HEBEL_DREH = (2260.0, Y_HEBEL, 1000.0)   # Drehpunkt (Bolzen) im Lagerbock vor dem Block
+HEBEL_KUGEL = (2300.0, Y_HEBEL, 1240.0)  # Kugel neben dem hinteren Sitzrand, ueber dem Polster
 R_KUGEL = 25.0
 Z_SCHIEBER = 1000.0                      # Schieberstange Ø 14 tritt hier aus der Blockfront
 Z_PL_P = Z_PL + 50.0                     # Hoehe des Anschlusses P an der Blockfront
 P_ANSCHLUSS = (VB_X0, 530.0, Z_PL_P)     # Druckanschluss P an der Vorderseite des Blocks
 
 # Zylinderleitungen
-X_STEIGER = (2540.0, 2600.0)             # zwei Steiger Ø 30 aus der Blockdecke (Rohr 1 / 2) ...
+X_STEIGER = (2450.0, 2510.0)             # zwei Steiger Ø 30 aus der Blockdecke (Rohr 1 / 2) ...
 Y_STEIGER = 500.0                        # ... bei y 500
 Y_QUER = (810.0, 860.0)                  # |y| der Querlaeufe; hinteres Rohr 2 aussen (kreuzungsfrei)
 X_VOR = (2360.0, 2300.0)                 # x der senkrechten Abwaerts-Laeufe vor der Endkastenwand (2395, Kantenschutz 2387..2397)
@@ -231,7 +231,7 @@ BIEGUNG_QUER = 45.0                      # 1,5 x Ø
 R_T = 22.0                               # T-Stueck-Koerper Ø 44, 70 lang
 SW_ANSCHLUSS = 30.0                      # Schluesselweite der Verschraubungen
 H_ANSCHLUSS = 14.0                       # Hoehe der Winkel-/Stutzenverschraubung am Zylinderrohr
-X_HALTER = 2640.0                        # senkrechter Buegel auf der Tankdecke, der Tragarm greift nach vorn unter die Rohre
+X_HALTER = 2560.0                        # senkrechter Buegel auf der Tankdecke, der Tragarm greift nach vorn unter die Rohre
 X_PFOSTEN = 2810.0                       # Pfosten hinter den Querrohren (Kappe und Platte ragen etwas ueber die Tank-Rueckwand)
 
 # Pfosten auf dem Oeltank (Frame 144 / Short): Flachstahlbuegel links-mittig, Rundpfosten (Entlueftung) rechts-mittig
@@ -376,7 +376,7 @@ def pumpenleitungen(t: Sammler) -> None:
 # Zylinderleitungen
 # ---------------------------------------------------------------------------------------------------------------
 def zylinderrohr(t: Sammler, i: int) -> None:
-    """Rohr ``i`` (0 = x 2540, 1 = x 2600): Steiger aus der Blockdecke senkrecht hoch auf Z_QUER, dort ein T-Stueck (Achse y), aus
+    """Rohr ``i`` (0 = x 2450, 1 = x 2510): Steiger aus der Blockdecke senkrecht hoch auf Z_QUER, dort ein T-Stueck (Achse y), aus
     dem je ein Zweig nach links und rechts abgeht (Spiegelbild): quer bei Z_QUER, 90 Grad nach vorn (-x) ueber die Endkasten-
     decke, 90 Grad nach unten vor der Endkastenwand, 90 Grad nach aussen direkt in den Zylinder (Verschraubung an der
     Zylinder-Innenseite). Die Anschluesse liegen uebereinander. Das hintere Rohr (2) laeuft aussen (|y| 860 statt 810),
