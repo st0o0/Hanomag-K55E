@@ -4,6 +4,8 @@
 
 Ausgabe: stdout und out/kollision.md. Koordinaten in Original-mm.
 """
+from __future__ import annotations
+
 import sys
 import time
 from itertools import combinations
@@ -12,7 +14,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from build123d import Compound  # noqa: E402
-from cad.modell import TEILE, INFO  # noqa: E402
+
+from cad.modell import INFO, TEILE  # noqa: E402
 
 TOL = 0.05          # bbox-Toleranz (Modell-mm)
 V_MIN = 0.5         # Durchdringung ab diesem Volumen (Modell-mm3)
@@ -22,17 +25,20 @@ S = INFO["massstab"]
 BZ = INFO["boden_z"]
 
 
-def orig(c):
+def orig(c) -> tuple[float, float, float]:
+    """Modell-mm-Punkt -> Original-mm (x, y, z ab Boden)."""
     return (c.X * S, c.Y * S, (c.Z - BZ) * S)
 
 
-def bb_hit(a, b, tol=TOL):
+def bb_hit(a, b, tol: float = TOL) -> bool:
+    """Ueberlappen sich zwei Huellquader (mit Toleranz)?"""
     return (a.min.X - tol <= b.max.X and b.min.X - tol <= a.max.X and
             a.min.Y - tol <= b.max.Y and b.min.Y - tol <= a.max.Y and
             a.min.Z - tol <= b.max.Z and b.min.Z - tol <= a.max.Z)
 
 
-def main():
+def main() -> None:
+    """Alle (oder die genannten) Teile bauen, paarweise schneiden, Bericht schreiben."""
     nur = set(sys.argv[1:])
     t0 = time.time()
     teile = []
@@ -98,7 +104,7 @@ def main():
         L += ["| Teil A | Teil B | Schnittvolumen Modell-mm3 | Solidpaare |", "|---|---|---:|---:|"]
         for ia, ib, vol, hits in sorted(paare, key=lambda p: -p[2]):
             L.append(f"| {ia} | {ib} | {vol:.2f} | {len(hits)} |")
-        for ia, ib, vol, hits in sorted(paare, key=lambda p: -p[2]):
+        for ia, ib, _vol, hits in sorted(paare, key=lambda p: -p[2]):
             L += ["", f"### {ia} / {ib}", "",
                   "| Volumen | Material A | Material B | Mitte x, y, z (Orig.-mm) |", "|---:|---|---|---|"]
             for v, ma, mb, c in hits[:5]:

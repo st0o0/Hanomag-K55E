@@ -4,9 +4,12 @@
   python tools/render.py --vorschau      # zusaetzlich docs/.../vorschau.png
   python tools/render.py seite detail_motor
 """
+from __future__ import annotations
+
 import json
 import sys
 from pathlib import Path
+
 import pyvista as pv
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,7 +31,8 @@ VIEWS = {
 PARALLEL = {"seite", "vorn", "oben"}
 
 
-def main(argv):
+def main(argv: list[str]) -> None:
+    """Rendert die genannten (sonst alle) Ansichten nach out/."""
     info = json.loads((MODELL / "modell.json").read_text(encoding="utf-8"))
     pal = info["materialien"]
     meshes = [(pv.read(MODELL / sch["ansicht"]), pal[sch["material"]])
@@ -43,7 +47,9 @@ def main(argv):
                         metallic=mt["metall"] * 0.6, roughness=mt["rauheit"], smooth_shading=False)
         pl.camera_position = VIEWS[name]
         if name in PARALLEL:
-            pl.enable_parallel_projection(); pl.reset_camera(); pl.camera.zoom(1.25)
+            pl.enable_parallel_projection()
+            pl.reset_camera()
+            pl.camera.zoom(1.25)
         pl.enable_anti_aliasing("ssaa")
         pl.screenshot(OUT / f"{name}.png")
         if name == "schraeg_vorn" and "--vorschau" in argv:

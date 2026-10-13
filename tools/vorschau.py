@@ -9,6 +9,8 @@ Schreibt NICHT nach docs/ (kein Konflikt mit anderen Baustellen). Die neu gebaut
 liegen als STL im Zielordner, der Kontext kommt aus docs/modelle/<id>/ansicht/*.stl.
 Ausgabe: <out>/<teil>__<material>.stl, <out>/<ansicht>.png, Pruefbericht auf stdout.
 """
+from __future__ import annotations
+
 import json
 import sys
 import time
@@ -19,12 +21,14 @@ sys.path.insert(0, str(ROOT))
 
 import pyvista as pv  # noqa: E402
 from build123d import Compound, export_stl  # noqa: E402
-from cad.modell import TEILE, INFO, MATERIALIEN  # noqa: E402
+
+from cad.modell import INFO, TEILE  # noqa: E402
 
 MODELL = ROOT / "docs" / "modelle" / INFO["id"]
 
 
-def bauen(ids, out):
+def bauen(ids: set[str], out: Path) -> dict[tuple[str, str], Path]:
+    """Baut die Teile, prueft die Solids und schreibt je Material eine STL; Rueckgabe {(teil, material): Pfad}."""
     out.mkdir(parents=True, exist_ok=True)
     neu = {}
     for t in TEILE:
@@ -53,13 +57,15 @@ def bauen(ids, out):
               f"[{bb.min.Y:7.1f}..{bb.max.Y:7.1f}] [{bb.min.Z:7.1f}..{bb.max.Z:7.1f}]  "
               f"{n_solids} Solids  {time.time() - t0:5.1f}s")
         print(f"{'':22s} Original-mm x {bb.min.X*8:7.0f}..{bb.max.X*8:7.0f}  "
-              f"y {bb.min.Y*8:7.0f}..{bb.max.Y*8:7.0f}  z {(bb.min.Z-INFO['boden_z'])*8:7.0f}..{(bb.max.Z-INFO['boden_z'])*8:7.0f}")
+              f"y {bb.min.Y*8:7.0f}..{bb.max.Y*8:7.0f}  "
+              f"z {(bb.min.Z-INFO['boden_z'])*8:7.0f}..{(bb.max.Z-INFO['boden_z'])*8:7.0f}")
         for f in fehler:
             print("   FEHLER:", f)
     return neu
 
 
-def rendern(ids, neu, out, kontext, ansichten):
+def rendern(ids: set[str], neu: dict[tuple[str, str], Path], out: Path, kontext: set[str] | None, ansichten: list[str]) -> None:
+    """Rendert die neuen Teile (deckend) mit dem Rest des Modells als Kontext (transparent)."""
     info = json.loads((MODELL / "modell.json").read_text(encoding="utf-8"))
     pal = info["materialien"]
     meshes = []
@@ -72,7 +78,7 @@ def rendern(ids, neu, out, kontext, ansichten):
             p = MODELL / sch["ansicht"]
             if p.exists():
                 meshes.append((pv.read(p), pal[sch["material"]], False))
-    for (tid, mat), p in neu.items():
+    for (_tid, mat), p in neu.items():
         meshes.append((pv.read(p), pal.get(mat, {"farbe": "#ff00ff", "metall": 0, "rauheit": 0.5}), True))
     if not meshes:
         return
@@ -113,8 +119,10 @@ def rendern(ids, neu, out, kontext, ansichten):
         print("ok", out / f"{name}.png")
 
 
-def main(argv):
-    ids = [a for a in argv if not a.startswith("--") and not (argv.index(a) > 0 and argv[argv.index(a) - 1] in ("--out", "--kontext", "--ansichten"))]
+def main(argv: list[str]) -> None:
+    """Kommandozeile siehe Modul-Docstring."""
+    optionen_mit_wert = ("--out", "--kontext", "--ansichten")
+    ids = [a for i, a in enumerate(argv) if not a.startswith("--") and not (i > 0 and argv[i - 1] in optionen_mit_wert)]
     out = ROOT / "out" / "vorschau"
     kontext = None
     ansichten = ["iso_vl", "iso_hr", "links", "vorn", "oben"]

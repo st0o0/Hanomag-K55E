@@ -1,23 +1,27 @@
 """Baugruppen-Register der Hanomag K 55 E (1:8).
 
-Jedes Teil liefert {material: Compound} im Modellsystem (mm, 1:8,
-x=0 Maskenfront, z=0 Maskenunterkante). tools/build.py schreibt daraus
+WAS: Liste TEILE (id, Name, Gruppe, Baufunktion, Explosionsversatz, Hinweis), Farbpalette MATERIALIEN und
+Steckbrief INFO. Jedes Teil liefert {material: Compound} im Modellsystem (mm, 1:8,
+x=0 Maskenfront, z=0 Nullebene MASKE_UNTEN). tools/build.py schreibt daraus
 je Material eine Ansicht-STL (Farbe in der App) und je Teil eine Druck-STL.
 """
+from __future__ import annotations
+
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable
+
 from build123d import Compound, Plane, mirror
 
+from . import fahrerstand, laufwerk, motor, planierschild, rumpf
 from . import haube as h
-from . import laufwerk, rumpf, motor, fahrerstand, planierschild
-from .common import zu_modell, MASSSTAB, BODEN_Z_MODELL
+from .common import BODEN_Z_MODELL, MASSSTAB, zu_modell
 
 # Farbpalette (App und Renderer). Lack, Motor und Anbau sind in der App umschaltbar.
 MATERIALIEN = {
     # Hanomag ab 1953 (Inland): dunkles Gruen aus 50 % RAL 5010, 40 % RAL 6002, 8 % RAL 7001, 2 % RAL 9010,
     # Raeder rot (Felgenrot RAL 3002). Weitere Lackierungen (Dunkelblau, Export-Rot) in der App umschaltbar.
     "lack":        {"name": "Lack (Hanomag-Grün)", "farbe": "#3b5a55", "rauheit": 0.55, "metall": 0.15},
-    "motor":       {"name": "Motorlack",          "farbe": "#304a46", "rauheit": 0.6,  "metall": 0.2},
+    "motor":       {"name": "Motorlack",          "farbe": "#6f9f8e", "rauheit": 0.6,  "metall": 0.2},
     "anbau":       {"name": "Planiereinrichtung", "farbe": "#3b5a55", "rauheit": 0.55, "metall": 0.15},
     "raeder":      {"name": "Räder (Felgenrot)",  "farbe": "#9b2321", "rauheit": 0.55, "metall": 0.15},
     "stahl":       {"name": "Kettenstahl",        "farbe": "#3b3d3f", "rauheit": 0.5,  "metall": 0.6},
@@ -31,6 +35,7 @@ MATERIALIEN = {
     "ruecklicht":  {"name": "Rücklicht",          "farbe": "#c0121c", "rauheit": 0.2,  "metall": 0.0, "leuchten": 0.35},
     "zifferblatt": {"name": "Zifferblatt",        "farbe": "#efeadb", "rauheit": 0.6,  "metall": 0.0},
     "bosch":       {"name": "Bosch-Blau",         "farbe": "#2f6e86", "rauheit": 0.5,  "metall": 0.3},
+    "tuerkis":     {"name": "Türkisgrün (Armaturen, Zugmaul)", "farbe": "#5f9a8c", "rauheit": 0.5, "metall": 0.1},
     "auspuff":     {"name": "Auspuff, rostig",    "farbe": "#5b3b2b", "rauheit": 0.9,  "metall": 0.4},
 }
 
@@ -41,47 +46,50 @@ class Teil:
     name: str
     gruppe: str
     material: str                     # Hauptmaterial (Farbpunkt in der Liste)
-    bauen: Callable[[], dict]         # -> {material: Compound}
+    bauen: Callable[[], dict[str, Compound]]  # -> {material: Compound}
     explode: tuple = (0.0, 0.0, 0.0)  # Modell-mm beim Auseinanderziehen
     hinweis: str = ""
     druck: bool = True
     druck_rot: tuple = (0.0, 0.0, 0.0)  # Drehung (Grad um x, y, z) fuer die Drucklage, siehe tools/druck.py
 
 
-def _d(**schichten):
+def _d(**schichten) -> dict[str, Compound]:
+    """Wandelt {material: Teileliste} in {material: Compound}."""
     return {k: (v if isinstance(v, Compound) else Compound(children=list(v))) for k, v in schichten.items()}
 
 
-_km_cache = {}
+_km_cache: dict = {}
 
 
-def _km():
+def _km() -> tuple:
+    """Kuehlermaske und Gitterparameter einmal bauen (von mehreren Teilen genutzt)."""
     if not _km_cache:
         _km_cache["km"], _km_cache["g"] = h.kuehlermaske()
     return _km_cache["km"], _km_cache["g"]
 
 
-def _sw(seite):
+def _sw(seite: int) -> dict[str, Compound]:
+    """Scheinwerfer links (-1) oder rechts (+1)."""
     sw = h.scheinwerfer(-1)
     if seite > 0:
         sw = {k: [mirror(s, about=Plane.XZ) for s in v] for k, v in sw.items()}
     return _d(**sw)
 
 
-def _haube_tank():
+def _haube_tank() -> dict[str, Compound]:
     """Haube und Tank als ein abnehmbares Teil (Wunsch Modellbau: Zugang zum Innenraum durch Abheben).
     Verbunden durch eine Stirnwand im Haubenquerschnitt oberhalb des Motorausschnitts, die vorn in die
     Haubenwaende und hinten in die Tankstirn greift."""
     teile = zu_modell(fahrerstand.tank())               # {material: Compound} im Modellsystem
     stirn = h.stirnwand()                                # Haubenquerschnitt (Dachbogen), schon im Modellsystem
-    lack = [h.haube(), stirn] + list(teile.pop("lack", Compound(children=[])).solids())
+    lack = [h.haube(), stirn, *teile.pop("lack", Compound(children=[])).solids()]
     out = _d(lack=lack)
     out.update(teile)
     return out
 
 
 TEILE = [
-    Teil("haube_tank", "Motorhaube mit Tank", "Haube & Maske", "lack", lambda: _haube_tank(), (0, 0, 45),
+    Teil("haube_tank", "Motorhaube mit Tank", "Haube & Maske", "lack", _haube_tank, (0, 0, 45),
          "Ein Teil zum Abnehmen: Haube mit Dachsicken, vordere Seitenteile mit rundem Motorausschnitt, Schriftband "
          "HANOMAG, Typfeld K55E, Stirnwand hinten und verzinkter Tank mit Spannbändern, Deckel und Kanne. "
          "Abgenommen ist der Motorraum von oben und von der Seite frei."),
@@ -100,7 +108,8 @@ TEILE = [
     Teil("auspuff", "Auspuff & Luftfilter", "Antrieb", "auspuff", lambda: zu_modell(motor.auspuff()), (0, 0, 60),
          "Krümmer, Auspuffrohr mit Regenklappe, Ölbadluftfilter mit Arbeitsleuchte."),
     Teil("rumpf", "Rahmen & Getriebe", "Fahrgestell", "lack", lambda: zu_modell(rumpf.rumpf()), (0, 0, -10),
-         "Längsträger, Querblattfeder, Getriebe, Endantriebe, Lenkbremsen, Plattform mit Riffelblech und gerollter Kante, Zugpendel."),
+         "Längsträger, Querblattfeder, Getriebe, Endantriebe, Lenkbremsen, Plattform mit Riffelblech und "
+         "gerollter Kante, Zugpendel."),
     Teil("laufwerk_links", "Laufwerk links", "Fahrgestell", "lack", lambda: zu_modell(laufwerk.kettenrahmen(-1)), (0, -45, 0),
          "Kettenrahmen, Leitrad, Triebrad, 6 Laufrollen, Stützrolle, Spannfeder im Rohrgehäuse."),
     Teil("laufwerk_rechts", "Laufwerk rechts", "Fahrgestell", "lack", lambda: zu_modell(laufwerk.kettenrahmen(1)), (0, 45, 0),
@@ -110,10 +119,13 @@ TEILE = [
     Teil("kette_rechts", "Kette rechts", "Fahrgestell", "stahl", lambda: zu_modell(laufwerk.kette(1), "stahl"), (0, 75, 0),
          "36 Bodenplatten 400 mm mit Greifer, Kettenglieder, Bolzen."),
     Teil("fahrerstand", "Fahrerstand", "Fahrerstand", "lack", lambda: zu_modell(fahrerstand.fahrerstand()), (20, 0, 20),
-         "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, flache gelochte Sitzschale auf Blattfeder, Werkzeugkästen, Batteriekasten."),
+         "Armaturenkonsole mit ovaler Instrumententafel, Lenkrad, Pedale, Hebel, flache gelochte Sitzschale "
+         "auf Blattfeder, Werkzeugkästen."),
     Teil("planierschild", "Planierschild FRISCH 55 FH2", "Planiereinrichtung", "anbau",
          lambda: zu_modell(planierschild.planierschild(), "anbau"), (-70, 0, 0),
-         "Gewölbtes Schild 2200 mm mit Sichel-Endblechen, Querträger und stehender Platte, Schubbalken mit Zahnsegment, A-Böcke, zwei Hubzylinder in den Endkästen der Traverse (Langlöcher, Arbeitsscheinwerfer), Pumpe vor der Maske mit Leitungen über die Haubenseiten, Steuerschieber."),
+         "Gewölbtes Schild 2200 mm mit Sichel-Endblechen, Querträger und stehender Platte, Schubbalken mit "
+         "Zahnsegment, A-Böcke, zwei Hubzylinder in den Endkästen der Traverse (Langlöcher, Arbeitsscheinwerfer), "
+         "Pumpe vor der Maske mit Leitungen über die Haubenseiten, Steuerschieber."),
 ]
 
 INFO = {

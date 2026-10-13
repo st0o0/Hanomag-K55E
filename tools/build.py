@@ -6,6 +6,8 @@
 
 Ausgabe: docs/modelle/<id>/{ansicht,druck}/*.stl, <id>_1-8.step.zip, modell.json
 """
+from __future__ import annotations
+
 import json
 import sys
 import time
@@ -15,15 +17,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from build123d import Compound, export_stl, export_step  # noqa: E402
-from cad.modell import TEILE, INFO  # noqa: E402
+from build123d import Compound, export_step, export_stl  # noqa: E402
+
 import druck  # noqa: E402  (tools/druck.py: druckfertige STLs)
+from cad.modell import INFO, TEILE  # noqa: E402
 
 ZIEL = ROOT / "docs" / "modelle" / INFO["id"]
 ANSICHT, DRUCK = ZIEL / "ansicht", ZIEL / "druck"
 
 
-def main(argv):
+def main(argv: list[str]) -> None:
+    """Kommandozeile: Teile bauen und Web-App-Dateien schreiben."""
     nur = [a for a in argv if not a.startswith("--")]
     ohne_step = "--ohne-step" in argv
     for d in (ANSICHT, DRUCK):

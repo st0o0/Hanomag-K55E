@@ -7,15 +7,57 @@ stehende Platte, Sichel-Endbleche, Zahnsegment, Schubbalken-Spitzbleche), A5 (Gr
 A7 (Dach 1410), A8 (Luftfilterkappe), Heck (2 Langlöcher, Lampe links, „Frisch“ mittig), Hubzylinderkopf, Schriftzug, Segment/K55,
 Scheinwerfer, Leitrad-Speichen, Abgassammelrohr schwarz, Kühler rotbraun, Ölschild.
 
+Runde 2/3 (nicht committet, Nutzer prüft manuell): Hydraulik nach Video 1:56/2:09/2:17 (links Saugleitung Traverse→Pumpe,
+rechts Druckleitung Pumpe→Steuerblock mit Kugelhebel rechts neben dem Sitz, Querrohre über der Traverse = Zylinderleitungen,
+Ventil vom Endkasten entfernt); C-Rahmen hinter dem Schild nach 2:51 (Heben bis 24° frei); Schild nach 3:13 neu
+(tiefe Mulde, ausgerollte Lippe, spitze Endbleche, ohne stehende Platte, ohne Löcher — Nutzerwunsch); Triebrad 12 Zähne
+R 315,7, Z_LEIT 372, Z_PIN 58, Leitrad-Ist x 393 (36 Glieder), Gabel folgt; HAUBE_BAND_Z/TANK_Z0 1090; Ölbad-Topf, Motor blassgrün,
+Anlasser schwarz; Armaturenbrett türkis nach Video, Lenksäule Ø 35, Sitz Schale + Polster, Tankkästen links/rechts, Deck glatt,
+Zugmaul mit Schäkel; Kollisionen rumpf/fahrerstand und haube/fahrerstand beseitigt.
+
+Runde 4/5 (2026-10-13, nicht committet): Spikes (Stützschrägen) unter den Traversen-Endkästen entfernt; Hydraulikleitungen
+ohne Halter an Haube/Maske, nur Plattform: links Saugleitung hinter dem Tankkasten abwärts, auf der Plattform an der
+Fußraum-Innenkante zum Öltank (Video 128/129), rechts Druckleitung frei über der Plattform auf Standrohren zum Steuerblock,
+A/B auf Sitzkantenhöhe zur Schlaufe; Batteriekasten, Werkzeugkasten vorn und Werkzeugkästen hinten entfernt; Konsolen unter
+den Tankkästen in Lack; Fußraum abgesenkt (x 1485..2050, y −218..160, z 654, türkise Seitenwände; Kupplungsglocke/Getriebe
+oben 640), Armaturenkasten breiter, Sitz breiter (y 14), Handgas als lange dünne Stange.
+
+Runde 6–9 (2026-10-13, nicht committet): Traversenleitungen nach Video 2:00–2:30 (zwei Rohre auf Pfosten, links je 90°-Bogen
+abwärts, rechts flacher Bogen nach vorn, flach zum Steuerblock; kein Rücklauf zum Öltank); Saugleitung links gerade auf z 1030
+bis zum Öltank (1:54); Fußraum y −300..220; Spalt Kette↔Aufbau (2:54): DECK_Z 915, Greifer 28, Stützrolle 665, Fußraumboden
+730, Tankkästen auf der Plattformkante, Endkästen ab 927; HAUBE_UNTEN_Z 800, Fensterblech 830..905 (Nordhorn, nicht Denkmal).
+
+Runde 10 (2026-10-13, nicht committet): Hydraulik logisch als doppeltwirkender 2-Zylinder-Kreis (Steuerblock → zwei
+Steigleitungen schräg nach hinten-oben → je ein T-Stück auf den Querrohren → links/rechts gleich zu Zylinderboden bzw.
+unterem Zylinderrohr, letztes Stück Schlauch wegen Schwenken); Querrohre z 1290/1230 (Seitenansicht 2:44, ±30);
+Steuerblock + Kugelhebel außen rechts (y 610..740, Knopf (1835, 620, 1210), Kamera-Fit 2:09); Pumpenleitungen beidseitig
+gleich: z 1030 bis x 1500, S-Bogen auf DECK_Z+40, kurze Schellenböcke (x 1860+160k) statt Standrohre. Kette/Rahmen vorn
+(2:44/2:53/2:58): oberer Trum höher (Z_STUETZ_BOLZEN 698, SAG 5), Fensterblech z 695..808 reicht hinter den Trum.
+Anlasser ANL_Z 870. Fußraum nach Kamera-Fit 2:09 (RMS ~10 px): Trogmaße bestätigt; Sitz x 1920 / y 170, Armaturenkasten
+375 breit, Schalthebel aus Gummibalg bei (1600, −15), Sechskantstutzen (1894, −118), Bodenplatten mit Fugen.
+
+Runde 11 (2026-10-13, nicht committet, Nutzerhinweise): Pumpenleitungen nur noch EIN Bogen vorn am Motor auf
+Schellenhöhe z 960, dann gerade bei |y| 392 bis hinten (kein S-Bogen), kurze Schellen ab x 1500; Querrohr-Enden beidseitig
+enger 90°-Bogen über der Zylinderachse (|y| 975) senkrecht durch die Endkastendecke direkt auf den Zylinder (Short IApSZg9dphk 0:14–0:16; oberes Rohr auf den Zapfenring, unteres auf den Boden); Rundpfosten
+= Tank-Einfüllstutzen bei y +250, braunen Stutzen entfernt; Steuerblock x 2085..2195 / y 532..662, Knopf (2000, 542, 1300).
+Sitz nach hinten: Mitte (2340, 200) unter dem Lenkrad (Seitenansicht 2:44); Fußraum x 1440..2050, y −300..+345
+(Rahmenbreite); Pedale unter dem Lenkrad (Kupplung y 112, zwei Bremspedale y 218/298, x 1640..1750) mit
+Kupplungsgestänge/Gabelkopf (Video 2:09). Rücklauf: bleibt weg (Nutzer). DECK_X0 bleibt 1430 (Fit-Wert 1280 in der
+Tiefenunsicherheit, sichtbarer Boden = Fußraumboden).
+
+Runde 12 (2026-10-13, nicht committet, Short IApSZg9dphk + Nutzer): Steuerblock (gerippter Sektionsblock) rechts hinter dem
+Sitz x 2480..2620 / y 465..595, Hebel kurz mit Kugel (2385, 485, 1190) neben dem hinteren Sitzrand; die zwei Querrohre
+steigen am Block senkrecht auf, laufen nur nach links und gehen dort senkrecht durch die Endkastendecke auf den linken
+Zylinder; rechter Zylinder kurz direkt vom Block durch die Endkasten-Innenwand; Steigleitungen/T-Stücke entfallen.
+Fahrerstand nach Short: Sitzschale mit dickem Rollrand, geschlitzte Klinke vor dem Sitz, Zündschlüssel, dünner Schalthebel,
+dicker Getriebedeckel mit großen Schrauben.
+
 Offen:
-- **Hydraulik-Steuerhebel**: Modell hat Ventilblock mit 2 Hebeln auf dem rechten Endkasten; im Video dort nichts, vermutlich
-  die lange Kugelstange links vor dem Armaturenbrett (Frames 122, 131, 137, 138) → Nutzer fragen.
-- Triebrad 12 statt 13 Zähne / R_TRIEB ≈ 316 (Kettenoberkante ≈ 30 zu hoch, Greifer stoßen 28 mm ins Trittblech); Kettenschluss neu.
-- Leitradnabe ≈ 30 tiefer als Triebradnabe (Z_LEIT ≈ 372).
-- Oberkante Motorausschnitt HAUBE_BAND_Z ≈ 1090 statt 1125 (mittel sicher; hängt an Tank und Motor).
-- Schild: Knoten der Streben unter der Pumpe kollidiert beim Heben (Kinematik), Lage der stehenden Platte ±100.
-- Kasten links hinten an der Haube, Armaturenbrett-Layout, Lenksäule, Sitz (Exemplar), Zugmaul-Schäkel, Ölbad-Topf, Riffelblech.
-- Kollisionsprüfung: rumpf/fahrerstand 55 mm³ (Deck z 839, Träger z 519) prüfen.
+- Sitzvorderkante nur ~170 hinter dem Lenkradkranz (Messung 2300..2350), ergonomisch knapp.
+- Rundes Speichen-Verstellrad unter dem hinteren Sitzrand (Short) nicht verortet.
+- Pedal-Details/Kupplungsgestänge plausibel, aber bis auf den Gabelkopf nicht fotografisch belegt.
+- Vorderes Haubensegment Unterkante (HAUBE_UNTEN_Z 620) im Video eher 650..720, unsicher.
+- MASSKONZEPT.md auf Runde 2–11 nachziehen.
 
 Methode: Web-Viewer in Chrome mit Kamera auf die Video-Frames abgestimmt, fünf Bereichs-Reviews,
 Hauptpunkte vom Koordinator selbst gegen die Frames geprüft (✔). Frame-Nr. = Sekunde im Video.

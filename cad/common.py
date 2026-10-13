@@ -1,13 +1,50 @@
 """Gemeinsame Konstanten und Geometrie-Helfer fuer das K 55 E Modell.
 
+WAS: HAUPTMASSE (Schnittstellen zwischen den Baugruppen, Herleitung in referenz/MASSKONZEPT.md),
+Geometrie-Helfer (Quader, Staebe, Rohre, Schrauben, Ringe), der Material-Sammler und die
+Umrechnung ins Modellsystem.
+
 Konvention fuer alle Baugruppen ausser haube.py:
   Original-mm, X von Vorderkante Kuehlermaske nach hinten,
   Y nach rechts (in Fahrtrichtung), Z ab Boden.
-zu_modell() rechnet in das Modellsystem (1:8, z=0 = Maskenunterkante) um,
+zu_modell() rechnet in das Modellsystem (1:8, z=0 = Nullebene MASKE_UNTEN) um,
 in dem auch haube.py arbeitet.
+
+Umbau-Historie der Masse: referenz/historie/common.md.
 """
+from __future__ import annotations
+
 import math
-from build123d import *
+from collections.abc import Iterable, Sequence
+from itertools import pairwise
+
+from build123d import (
+    Align,
+    Axis,
+    Box,
+    Circle,
+    Compound,
+    Cylinder,
+    Line,
+    Plane,
+    Pos,
+    Rectangle,
+    RegularPolygon,
+    Rot,
+    Solid,
+    Sphere,
+    Text,
+    ThreePointArc,
+    Transition,
+    Vector,
+    Wire,
+    extrude,
+    fillet,
+    scale,
+    sweep,
+)
+
+Punkt = Sequence[float]
 
 MASSSTAB = 8.0
 MASKE_UNTEN = 392.0                       # Nullebene des Modellsystems (z=0), historisch Maskenunterkante;
@@ -20,22 +57,25 @@ FONT = r"C:\Windows\Fonts\GOTHICB.TTF"    # Century Gothic Bold
 SPUR = 1270.0                 # Kettenmitte zu Kettenmitte
 KETTE_B = 400.0               # Bodenplattenbreite
 Y_KETTE = SPUR / 2            # Kettenmitte
-X_LEIT, Z_LEIT, R_LEIT = 450.0, 392.0, 330.0      # Leitrad (Teilkreis); Foto BS: Maske steht ~100 mm vor der Kettennase
-X_TRIEB, Z_TRIEB, R_TRIEB = 2250.0, 402.0, 340.0  # Triebrad (Teilkreis)
-Z_PIN = 62.0                  # Kettenbolzen im unteren Trum
+X_LEIT, Z_LEIT, R_LEIT = 450.0, 372.0, 330.0      # Leitrad (Teilkreis); Foto BS: Maske steht ~100 mm vor der Kettennase
+X_TRIEB, Z_TRIEB, R_TRIEB = 2250.0, 402.0, 315.7  # Triebrad (Teilkreis)
+Z_PIN = 58.0                  # Kettenbolzen im unteren Trum
 RAHMEN_Z0, RAHMEN_Z1 = 327.0, 467.0               # Kettenrahmen-Kasten
 Y_TRAEGER = 240.0             # Laengstraeger-Mitte
 TRAEGER_Z0, TRAEGER_Z1 = 380.0, 520.0
-DECK_Z = 840.0                # Plattform / Kotfluegel-Oberkante (Kette oben bis z~804 am Triebrad)
+DECK_Z = 915.0                # Plattform / Kotfluegel-Oberkante (Spalt Kette/Aufbau ~120..150 wie Video 165/174 + Flickr,
+                              # Unterkante Plattformrand 891, Greifer oben 738..768; Tankkasten steht auf der Plattformkante)
 DECK_X0, DECK_X1, DECK_B = 1430.0, 2780.0, 1800.0
 MASKE_UK = 450.0              # Unterkante Kuehlermaske (Foto BV: Maske 897 hoch, h/b = 1,26)
 HAUBE_X0, HAUBE_X1, HAUBE_B = 210.0, 1080.0, 690.0   # Foto BS: Haube endet ~1080, dahinter Tank
-HAUBE_DACH_Z = 1410.0        # Review 2026-10-12: Video 165/167 + Flickr 1426..1441, Maske 450..1410 = 960 hoch (h/b 1,35, wie DSC04737)
-HAUBE_UNTEN_Z = 620.0         # Unterkante vorderes Haubenseitensegment (auf Hoehe Kettenoberkante)
-HAUBE_BAND_Z = 1125.0         # Oberkante Motorausschnitt = Unterkante Schriftband (Band 1125..Dach)
-SEG_X1 = 370.0                # vorderes Seitensegment x 210..370 (Review 2026-10-12: Video 066/070/173 + DSC04742, 150..200 breit), dann flacher Ellipsenbogen in die Bandkante
+HAUBE_DACH_Z = 1410.0        # Video 165/167 + Flickr 1426..1441, Maske 450..1410 = 960 hoch (h/b 1,35, wie DSC04737)
+HAUBE_UNTEN_Z = 620.0         # Unterkante vorderes Haubenseitensegment: hinter dem oberen Trum bis etwa Leitrad-Oberkante
+                              # (Nordhorn-Video 2:54 / Frame 174, Segment steht innen hinter der Kette)
+HAUBE_BAND_Z = 1090.0         # Oberkante Motorausschnitt = Unterkante Schriftband (Video 165/173, DSC04742 1070..1095)
+SEG_X1 = 370.0                # vorderes Seitensegment x 210..370 (Video 066/070/173 + DSC04742, 150..200 breit),
+                              # dann flacher Ellipsenbogen in die Bandkante
 TANK_X0, TANK_X1, TANK_B = 1085.0, 1455.0, 680.0   # Tank in Haubenform: Unterkante bis x 1455, Oberkante bis ~1545 (Ueberhang)
-TANK_Z0, TANK_Z1 = 1125.0, 1398.0       # Unterkante = Oberkante Motorausschnitt (HAUBE_BAND_Z), Oberkante unter dem Haubendach 1410
+TANK_Z0, TANK_Z1 = 1090.0, 1398.0       # Unterkante = Oberkante Motorausschnitt (HAUBE_BAND_Z), Oberkante unter Haubendach 1410
 Y_SCHUB = 975.0               # Schubbalken-Mitte (aussen an der Kette)
 Z_SCHUB = 400.0
 TRAVERSE_X, TRAVERSE_Z = 2520.0, 1080.0           # Zylinder-Mittelzapfen (Foto BS: Deckel am Endkasten bei x ~2520), Achshoehe
@@ -48,49 +88,76 @@ AUSPUFF_XY = (700.0, 220.0)   # Durchbruch Auspuff im Haubendach (Fotos DSC04729
 AUSPUFF_D = 58.0              # Durchbruch Auspuff (Rohr Ø 48, 5 mm Luft rundum)
 ANSAUG_XY = (950.0, -236.0)   # Durchbruch Ansaugrohr (Ölbadtopf darunter im Motorraum, Fotos DSC04742/43/44)
 ANSAUG_D = 76.0               # Durchbruch Ansaugrohr (Rohr Ø 66)
-SCHEINWERFER = (230.0, 430.0, 1290.0)             # Lampenmitte x, |y|, z: an der Naht Maske/Haube, knapp unter der Dachkante (Review 2026-10-12: Video 165/172/196, Flickr 40431489714)
+SCHEINWERFER = (230.0, 430.0, 1290.0)             # Lampenmitte x, |y|, z: an der Naht Maske/Haube, knapp unter der Dachkante
+                                                  # (Video 165/172/196, Flickr 40431489714)
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
 Y_LTG = 392.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
 LENKRAD = (1830.0, 200.0, 1470.0)                 # Lenkradmitte
-SITZ_X = 2150.0               # Mitte Sitzschale
+SITZ_X = 2340.0               # Mitte Sitzschale (Seitenansicht Video 2:44, s164: x = 1031 + 1168*f, f 1.10..1.13 -> 2316..2351)
+SITZ_Y = 200.0                # Sitzachse y, unter dem Lenkrad ausgerichtet (LENKRAD y 200)
+KD_X = 140.0                  # Kuehlerverschluss auf der Maskenkappe, Mitte x (Foto BS: x ~100..180)
 GESAMT_HOEHE = 1840.0
 
+# Fussraum (Video 121-140, 128/129/132): Boden deutlich unter den Plattformen, senkrechte Seitenwaende.
+# rumpf.py baut die Waende, fahrerstand.py das Bodenblech.
+# vorn hinter dem Zwischenflansch der Glocke (Flansch 1400..1426, Schraubenkoepfe bis 1434), 10 hinter DECK_X0;
+# hinten stuft die Plattform wieder auf DECK_Z (Hinterachsflansch ab 2056)
+FW_X0, FW_X1 = 1440.0, 2050.0
+# Bodenblech y, 645 breit (>= Haubenbreite 690: |y| 345); links bis y -300 belegt, rechts Wand innen y 345
+# (Aussenseite 355, die Pumpenleitung bei |y| 392 bleibt auf der Plattform)
+FW_Y0, FW_Y1 = -300.0, 345.0
+FW_Z0 = DECK_Z - 185.0 - 14.0   # Unterkante Bodenblech = Oberkante Kupplungs-/Wechselgetriebe 716 (Fit Frame 128)
+FW_Z1 = FW_Z0 + 14.0            # Oberkante Bodenblech 730
+X_BREMSE = 1870.0               # Bremstrommel-Achse x (rumpf.py baut die Bremse, fahrerstand.py die Pedale/Gestaenge)
 
-def m(v):
-    """Original-mm -> Modell-mm"""
+# Haubendach (Original-mm): Dachbogen quer ueber die Maskenbreite, Kantenradius zur Seitenwand
+MASKE_B = 710.0               # Maskenbreite
+DACH_SAG = 42.0               # Pfeilhoehe des Dachbogens (Flickr-Frontfoto: Mitte zur Seite ~75 inkl. Ecke, Bogen allein ~42)
+DACH_R_KANTE = 85.0           # Radius Dachbogen -> senkrechte Seiten (Flickr 26271249857/39333958410: Schulter ~85-90)
+
+
+def m(v: float) -> float:
+    """Original-mm -> Modell-mm."""
     return v / MASSSTAB
 
 
-def box(x0, x1, y0, y1, z0, z1):
+def z_dach_orig(y: float) -> float:
+    """Haubendach-Hoehe (Original-mm ab Boden) bei Querlage y (Original-mm): Kreisbogen mit Pfeilhoehe DACH_SAG
+    ueber MASKE_B, Mitte = HAUBE_DACH_Z. haube.py nutzt die Modell-mm-Fassung z_dach()."""
+    hb = MASKE_B / 2
+    r = (hb * hb + DACH_SAG * DACH_SAG) / (2 * DACH_SAG)
+    return HAUBE_DACH_Z - (r - math.sqrt(r * r - y * y))
+
+
+def box(x0: float, x1: float, y0: float, y1: float, z0: float, z1: float) -> Solid:
     """Quader aus Grenzen."""
     return Pos((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2) * Box(abs(x1 - x0), abs(y1 - y0), abs(z1 - z0))
 
 
-def stab(p1, p2, r):
+def stab(p1: Punkt, p2: Punkt, r: float) -> Solid:
     """Zylinder von p1 nach p2."""
-    p1, p2 = Vector(*p1), Vector(*p2)
-    d = p2 - p1
-    return extrude(Plane(origin=p1, z_dir=d) * Circle(r), amount=d.length)
+    v1, v2 = Vector(*p1), Vector(*p2)
+    d = v2 - v1
+    return extrude(Plane(origin=v1, z_dir=d) * Circle(r), amount=d.length)
 
 
-def rohr(punkte, r):
+def rohr(punkte: Sequence[Punkt], r: float) -> list[Solid]:
     """Rohr entlang eines Polygonzugs (Segmente + Kugeln in den Knicken)."""
-    teile = []
-    for a, b in zip(punkte, punkte[1:]):
-        teile.append(stab(a, b, r))
-    for p in punkte[1:-1]:
-        teile.append(Pos(*p) * Sphere(r))
+    teile = [stab(a, b, r) for a, b in pairwise(punkte)]
+    teile += [Pos(*p) * Sphere(r) for p in punkte[1:-1]]
     return teile
 
 
-def rohr_glatt(punkte, r, rb=None):
+def rohr_glatt(punkte: Sequence[Punkt], r: float, rb: float | None = None) -> Solid:
     """Glattes Rohr entlang eines Polygonzugs; Knicke mit Biegeradius rb (Standard 2.5 r) verrundet.
-    Liefert einen einzelnen Solid (Sweep), besser als rohr() fuer sichtbare Leitungen."""
+
+    Liefert einen einzelnen Solid (Sweep), besser als rohr() fuer sichtbare Leitungen.
+    """
     rb = rb or 2.5 * r
-    P = [Vector(*p) for p in punkte]
-    edges, cur = [], P[0]
-    for i in range(1, len(P) - 1):
-        a, b, c = P[i - 1], P[i], P[i + 1]
+    pts = [Vector(*p) for p in punkte]
+    edges, cur = [], pts[0]
+    for i in range(1, len(pts) - 1):
+        a, b, c = pts[i - 1], pts[i], pts[i + 1]
         d1, d2 = (b - a).normalized(), (c - b).normalized()
         ang = math.acos(max(-1.0, min(1.0, d1.dot(d2))))
         if ang < 1e-3:
@@ -104,36 +171,36 @@ def rohr_glatt(punkte, r, rb=None):
         center = b + bis * (rr / math.cos(ang / 2))
         edges.append(ThreePointArc(p1, center - bis * rr, p2))
         cur = p2
-    edges.append(Line(cur, P[-1]))
-    return sweep(Plane(origin=P[0], z_dir=(P[1] - P[0])) * Circle(r), path=Wire(edges),
-                 transition=Transition.ROUND)
+    edges.append(Line(cur, pts[-1]))
+    return sweep(Plane(origin=pts[0], z_dir=(pts[1] - pts[0])) * Circle(r), path=Wire(edges), transition=Transition.ROUND)
 
 
-def kasten_rund(x0, x1, y0, y1, z0, z1, r, achse=Axis.Z):
+def kasten_rund(x0: float, x1: float, y0: float, y1: float, z0: float, z1: float, r: float, achse: Axis = Axis.Z) -> Solid:
     """Quader mit verrundeten Kanten parallel zu `achse`."""
     b = box(x0, x1, y0, y1, z0, z1)
     return fillet(b.edges().filter_by(achse), r)
 
 
-def schraube(p, normal, sw=24, hoehe=14, scheibe=True):
+def schraube(p: Punkt, normal: Punkt, sw: float = 24, hoehe: float = 14, scheibe: bool = True) -> list[Solid]:
     """Sechskantkopf mit Unterlegscheibe (realistischer als sechskant())."""
     out = [sechskant(p, normal, sw, hoehe)]
     if scheibe:
         pl = Plane(origin=Vector(*p), z_dir=Vector(*normal))
-        out.append(extrude(pl * Circle(sw * 0.95), amount=max(hoehe * 0.2, 5.0)))   # >= 0.6 mm im Modell
+        out.append(extrude(pl * Circle(sw * 0.95), amount=max(hoehe * 0.2, 5.0)))  # >= 0.6 mm im Modell
     return out
 
 
-def ring_y(x, y, z, r_aussen, r_innen, b):
+def ring_y(x: float, y: float, z: float, r_aussen: float, r_innen: float, b: float) -> Solid:
     """Ring (Hohlzylinder) mit Querachse Y."""
     return rad_y(x, y, z, r_aussen, b) - rad_y(x, y, z, r_innen, b + 2)
 
 
-def ring_x(x, y, z, r_aussen, r_innen, b):
+def ring_x(x: float, y: float, z: float, r_aussen: float, r_innen: float, b: float) -> Solid:
+    """Ring (Hohlzylinder) mit Laengsachse X."""
     return rad_x(x, y, z, r_aussen, b) - rad_x(x, y, z, r_innen, b + 2)
 
 
-def pruefen(name, obj):
+def pruefen[T: (Solid, Compound)](name: str, obj: T) -> T:
     """Gueltigkeits- und Volumenpruefung eines Solids/Compounds; wirft bei Fehlern."""
     if not obj.is_valid:
         raise ValueError(f"{name}: ungueltige Geometrie")
@@ -142,32 +209,34 @@ def pruefen(name, obj):
     return obj
 
 
-def balken(p1, p2, b, hh):
+def balken(p1: Punkt, p2: Punkt, b: float, hh: float) -> Solid:
     """Rechteckbalken von p1 nach p2 (b quer, hh hoch)."""
-    p1, p2 = Vector(*p1), Vector(*p2)
-    d = p2 - p1
+    v1, v2 = Vector(*p1), Vector(*p2)
+    d = v2 - v1
     x_dir = Vector(0, 0, 1).cross(d)
     if x_dir.length < 1e-6:
         x_dir = Vector(1, 0, 0)
-    return extrude(Plane(origin=p1, x_dir=x_dir, z_dir=d) * Rectangle(b, hh), amount=d.length)
+    return extrude(Plane(origin=v1, x_dir=x_dir, z_dir=d) * Rectangle(b, hh), amount=d.length)
 
 
-def rad_y(x, y, z, r, b):
+def rad_y(x: float, y: float, z: float, r: float, b: float) -> Solid:
     """Zylinder mit Querachse (Y), mittig bei y."""
     return Pos(x, y, z) * Rot(90, 0, 0) * Cylinder(r, b)
 
 
-def rad_x(x, y, z, r, b):
+def rad_x(x: float, y: float, z: float, r: float, b: float) -> Solid:
     """Zylinder mit Laengsachse (X), mittig bei x."""
     return Pos(x, y, z) * Rot(0, 90, 0) * Cylinder(r, b)
 
 
-def sechskant(p, normal, sw=24, hoehe=14):
+def sechskant(p: Punkt, normal: Punkt, sw: float = 24, hoehe: float = 14) -> Solid:
     """Sechskant-Schraubenkopf auf einer Flaeche (normal zeigt nach aussen)."""
     return extrude(Plane(origin=Vector(*p), z_dir=Vector(*normal)) * RegularPolygon(sw / math.sqrt(3), 6), amount=hoehe)
 
 
-def schraubenkreis(mitte, normal, r, n, sw=22, hoehe=12, start=0.0):
+def schraubenkreis(
+    mitte: Punkt, normal: Punkt, r: float, n: int, sw: float = 22, hoehe: float = 12, start: float = 0.0
+) -> list[Solid]:
     """n Sechskantkoepfe auf einem Kreis in der Ebene senkrecht zu normal."""
     pl = Plane(origin=Vector(*mitte), z_dir=Vector(*normal))
     out = []
@@ -178,12 +247,14 @@ def schraubenkreis(mitte, normal, r, n, sw=22, hoehe=12, start=0.0):
     return out
 
 
-def schraubenreihe(p0, p1, n, normal, sw=20, hoehe=10):
-    p0, p1 = Vector(*p0), Vector(*p1)
-    return [sechskant(p0 + (p1 - p0) * (i / (n - 1)), normal, sw, hoehe) for i in range(n)]
+def schraubenreihe(p0: Punkt, p1: Punkt, n: int, normal: Punkt, sw: float = 20, hoehe: float = 10) -> list[Solid]:
+    """n Sechskantkoepfe gleichmaessig auf der Strecke p0..p1."""
+    v0, v1 = Vector(*p0), Vector(*p1)
+    return [sechskant(v0 + (v1 - v0) * (i / (n - 1)), normal, sw, hoehe) for i in range(n)]
 
 
-def text_auf(pl: Plane, txt, groesse, hoehe):
+def text_auf(pl: Plane, txt: str, groesse: float, hoehe: float) -> Solid:
+    """Erhabener Text (FONT) mittig auf der Ebene `pl`."""
     return extrude(pl * Text(txt, font_size=groesse, font_path=FONT, align=(Align.CENTER, Align.CENTER)), amount=hoehe)
 
 
@@ -194,17 +265,18 @@ class Sammler(list):
     anderen. += mit einem anderen Sammler uebernimmt dessen Materialien.
     """
 
-    def __init__(self, standard="lack"):
+    def __init__(self, standard: str = "lack") -> None:
         super().__init__()
         self.standard = standard
-        self.extra = {}
+        self.extra: dict[str, list] = {}
 
-    def mat(self, name, obj):
-        if name == self.standard:
-            self.extend(obj) if isinstance(obj, (list, tuple)) else self.append(obj)
+    def mat(self, name: str, obj):
+        """Haengt `obj` (Teil oder Liste von Teilen) ans Material `name`; gibt `obj` zurueck."""
+        ziel = self if name == self.standard else self.extra.setdefault(name, [])
+        if isinstance(obj, (list, tuple)):
+            ziel.extend(obj)
         else:
-            lst = self.extra.setdefault(name, [])
-            lst.extend(obj) if isinstance(obj, (list, tuple)) else lst.append(obj)
+            ziel.append(obj)
         return obj
 
     def __iadd__(self, other):
@@ -215,7 +287,8 @@ class Sammler(list):
             return self
         return super().__iadd__(other)
 
-    def schichten(self):
+    def schichten(self) -> dict[str, list]:
+        """Material -> Teileliste (Standardmaterial zuerst, leere Materialien entfallen)."""
         d = {self.standard: list(self)} if len(self) else {}
         for k, v in self.extra.items():
             if v:
@@ -223,9 +296,11 @@ class Sammler(list):
         return d
 
 
-def zu_modell(teile, standard="lack"):
+def zu_modell(teile: Iterable | Sammler, standard: str = "lack") -> dict[str, Compound]:
     """Original-mm (Z ab Boden) -> Modell-mm im System von haube.py.
-    Liefert {material: Compound}."""
+
+    Liefert {material: Compound}.
+    """
     if not isinstance(teile, Sammler):
         s = Sammler(standard)
         s += list(teile)
