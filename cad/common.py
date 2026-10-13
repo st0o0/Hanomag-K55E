@@ -92,7 +92,7 @@ SCHEINWERFER = (230.0, 430.0, 1290.0)             # Lampenmitte x, |y|, z: an de
                                                   # (Video 165/172/196, Flickr 40431489714)
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
 Y_LTG = 392.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
-LENKRAD = (1830.0, 200.0, 1470.0)                 # Lenkradmitte
+LENKRAD = (1930.0, 200.0, 1440.0)   # Lenkradmitte: hinterer Kranzrand ueber der Sitzvorderkante (Nordhorn 2:15/2:21)
 SITZ_X = 2340.0               # Mitte Sitzschale (Seitenansicht Video 2:44, s164: x = 1031 + 1168*f, f 1.10..1.13 -> 2316..2351)
 SITZ_Y = 200.0                # Sitzachse y, unter dem Lenkrad ausgerichtet (LENKRAD y 200)
 KD_X = 140.0                  # Kuehlerverschluss auf der Maskenkappe, Mitte x (Foto BS: x ~100..180)

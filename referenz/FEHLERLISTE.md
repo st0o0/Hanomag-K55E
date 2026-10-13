@@ -58,8 +58,23 @@ Paar (x 2540/2600, z 1230) nach links und tauchen über dem linken Endkasten sen
 zwei kurze Rohre aus der Blockseite durch die Endkasten-Innenwand. Im Short ist das Ganze seitenverkehrt (Block links der
 Sitzmitte, Rohre nach rechts); Nordhorn 2:09/2:22 bestätigt die Spiegelung (Block rechts, Rohre links abwärts).
 
+Runde 15 (2026-10-13, Short 0:13–0:16 + Nutzerbeschreibung + Nordhorn): Traversenleitungen neu: je Seite EIN Ø42-Rohr aus der
+Blockseitenfläche (2570, 430/560, 1010), drei 90°-Bögen (zur Seite, hoch auf z 1230, nach hinten bis x 2700, zur Seite),
+Querrohre nebeneinander über dem Öltank, senkrecht mit Tülle in die Endkastendecke (±960), innen Schlauch + Hohlschraube zum
+Zylinder; keine Haarnadeln, keine T-Stücke, keine Ø28-Rohre durch die Innenwand (die scheinbare „Haarnadel“ im Short ist das
+perspektivisch verkürzte Stück nach hinten). Motor: Kastenpumpe HANOMAG DIESEL nach Nordhorn 1:37–1:49 höher (z 785..936,
+Deckel bis 978 mit Einfüllkappe) und 95 statt 30 vom Block, Messing-Förderpumpe mit Handpumpe (x 516..606, z 800..850),
+Vorreiniger vorn (x 505), Geflechtleitung über das Schriftfeld. Laufwerk: Z_STUETZ_BOLZEN 698 → 680 (oberer Trum ~60–70
+unter der Blechlippe 808, Nordhorn 2:53). Fahrerstand: Lenkrad dicker Kranz Ø30/Ø450, drei Speichen, Nabe Ø70; Säule Ø45
+mit Gestängeführung, Fuß x 1560; LENKRAD (1930, 200, 1440) mit Kranz über der Sitzvorderkante (2:15/2:21). Farben: Palette auf
+Auslieferungszustand (Hanomag-Grün, Motor = Lack·0,82, Räder rot nur am Laufwerk, Auspuff hitzefest schwarz, Schilder
+Messing/Emaille „schild“, Armaturen „messing“; Türkis/Bosch-Blau/Video-Rot entfernt).
+
 Offen:
-- Sitzvorderkante nur ~170 hinter dem Lenkradkranz (Messung 2300..2350), ergonomisch knapp.
+- Haltestange (dünnes Rohr quer über dem Sitz, Short 0:15/Nordhorn 2:15) nicht modelliert; rechtes Querrohr ohne Pfosten.
+- Kastenpumpen-Deckel nur 39 tief (Druckleitungen bei y −228 im Weg); Vorreiniger-Lage geschätzt.
+- Spalt Kette/Rahmen am Triebrad bleibt ~40 (Z_TRIEB 402 belegt); mehr nur über tieferes Triebrad oder höhere Blechlippe.
+- Sitzvorderkante nur ~230 hinter dem Lenkradkranz, ergonomisch knapp.
 - Rundes Speichen-Verstellrad unter dem hinteren Sitzrand (Short) nicht verortet.
 - Pedal-Details/Kupplungsgestänge plausibel, aber bis auf den Gabelkopf nicht fotografisch belegt.
 - Vorderes Haubensegment Unterkante (HAUBE_UNTEN_Z 620) im Video eher 650..720, unsicher.

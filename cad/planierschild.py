@@ -724,20 +724,20 @@ def _oeltank(t: Sammler) -> None:
 
 
 def _firmenschild(t: Sammler) -> None:
-    """Firmenschild "Frisch": dunkelblaue Platte, weisser Rand und weisse Blockschrift (26271221407), 410 x 215 mittig in der
+    """Firmenschild "Frisch": Messing-/Emailleschild (26271221407), 410 x 215 mittig in der
     Rueckwand des Quertraegers."""
     zm = (QT_Z0 + QT_Z1) / 2
     zs0, zs1 = zm - 90, zm + 125
     ys0, ys1 = Y_FRISCH - 205, Y_FRISCH + 205
-    t.mat("bosch", box(QT_X1, QT_X1 + 6, ys0, ys1, zs0, zs1))
+    t.mat("schild", box(QT_X1, QT_X1 + 6, ys0, ys1, zs0, zs1))
     rahmen = ((ys0, ys1, zs0, zs0 + 12), (ys0, ys1, zs1 - 12, zs1), (ys0, ys0 + 12, zs0, zs1), (ys1 - 12, ys1, zs0, zs1))
     for a, b, c, d in rahmen:
-        t.mat("zifferblatt", box(QT_X1 + 6, QT_X1 + 10, a, b, c, d))
+        t.mat("schild", box(QT_X1 + 6, QT_X1 + 10, a, b, c, d))
     try:
         # Blick von hinten: rechts = +y
         pl = Plane(origin=(QT_X1 + 6, Y_FRISCH, (zs0 + zs1) / 2), x_dir=(0, 1, 0), z_dir=(1, 0, 0))
         tx = extrude(pl * Text("Frisch", 95, font_style=FontStyle.BOLD, align=(Align.CENTER, Align.CENTER)), amount=4)
-        t.mat("zifferblatt", tx)
+        t.mat("schild", tx)
     except Exception as e:                                          # Schriftart nicht verfuegbar
         print("Frisch-Schrift entfaellt:", e)
 

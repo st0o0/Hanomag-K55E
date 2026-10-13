@@ -19,9 +19,10 @@ from .common import BODEN_Z_MODELL, MASSSTAB, zu_modell
 # Farbpalette (App und Renderer). Lack, Motor und Anbau sind in der App umschaltbar.
 MATERIALIEN = {
     # Hanomag ab 1953 (Inland): dunkles Gruen aus 50 % RAL 5010, 40 % RAL 6002, 8 % RAL 7001, 2 % RAL 9010,
-    # Raeder rot (Felgenrot RAL 3002). Weitere Lackierungen (Dunkelblau, Export-Rot) in der App umschaltbar.
+    # Raeder rot (Felgenrot RAL 3002).
+    # Alles Original-Auslieferungszustand, keine Alterung. Weitere Lackierungen (Dunkelblau, Export-Rot) in der App umschaltbar.
     "lack":        {"name": "Lack (Hanomag-Grün)", "farbe": "#3b5a55", "rauheit": 0.55, "metall": 0.15},
-    "motor":       {"name": "Motorlack",          "farbe": "#6f9f8e", "rauheit": 0.6,  "metall": 0.2},
+    "motor":       {"name": "Motorlack",          "farbe": "#304a46", "rauheit": 0.6,  "metall": 0.2},
     "anbau":       {"name": "Planiereinrichtung", "farbe": "#3b5a55", "rauheit": 0.55, "metall": 0.15},
     "raeder":      {"name": "Räder (Felgenrot)",  "farbe": "#9b2321", "rauheit": 0.55, "metall": 0.15},
     "stahl":       {"name": "Kettenstahl",        "farbe": "#3b3d3f", "rauheit": 0.5,  "metall": 0.6},
@@ -34,9 +35,9 @@ MATERIALIEN = {
     "glas":        {"name": "Glas",               "farbe": "#d9e8f0", "rauheit": 0.05, "metall": 0.1, "deckkraft": 0.35},
     "ruecklicht":  {"name": "Rücklicht",          "farbe": "#c0121c", "rauheit": 0.2,  "metall": 0.0, "leuchten": 0.35},
     "zifferblatt": {"name": "Zifferblatt",        "farbe": "#efeadb", "rauheit": 0.6,  "metall": 0.0},
-    "bosch":       {"name": "Bosch-Blau",         "farbe": "#2f6e86", "rauheit": 0.5,  "metall": 0.3},
-    "tuerkis":     {"name": "Türkisgrün (Armaturen, Zugmaul)", "farbe": "#5f9a8c", "rauheit": 0.5, "metall": 0.1},
-    "auspuff":     {"name": "Auspuff, rostig",    "farbe": "#5b3b2b", "rauheit": 0.9,  "metall": 0.4},
+    "schild":      {"name": "Typenschilder (Messing/Emaille)", "farbe": "#b08d4a", "rauheit": 0.4, "metall": 0.6},
+    "messing":     {"name": "Messing (Armaturen)", "farbe": "#c49a3c", "rauheit": 0.35, "metall": 0.8},
+    "auspuff":     {"name": "Auspuff (hitzefest schwarz)", "farbe": "#2a2a2a", "rauheit": 0.8, "metall": 0.3},
 }
 
 

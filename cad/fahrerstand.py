@@ -22,8 +22,9 @@ Aufbau und Technik (Fotos t39/t42/t46 des Nutzers, K 55; dazu fz_05/10/11, fz_01
   * Armaturenkasten (tuerkis): Rueckseite des Unterbaus unter dem Tankueberhang, schraege Front mit grossem
     Rundinstrument links, drei kleinen Knoepfen, Zuendschloss mit Hebel und rechts zwei Instrumenten
     uebereinander (Video 121-126, 128, 131, 137, 138, 2:09).
-  * Lenksaeule steil (~50 Grad) aus dem Unterbau unter dem Tankueberhang, Vierspeichen-Lenkrad mit Hupenknopf;
-    Handgashebel neben der Saeule.
+  * Lenksaeule steil (~55 Grad) aus einer Lagerkonsole neben dem Armaturenkasten (Nordhorn 2:15), duenne
+    Gestaengefuehrung parallel dahinter mit Klemmschelle; Dreispeichen-Lenkrad (Nordhorn 2:15/2:21/2:53) mit dickem
+    Kranz, geraden blanken Speichen und kleiner Nabe mit flacher Kappe; Handgashebel neben der Saeule.
   * Fussraum: Schalthebel mit Gummimanschette aus dem Bodenblech, drei Pendelpedale unter dem Lenkrad
     (Kupplung links neben der Saeule, zwei Bremspedale rechts) mit Riffel-Trittflaechen, verschraubte
     Bodenbleche (Anordnung nach Traktorenlexikon Hanomag K 55).
@@ -162,9 +163,15 @@ DASH_XU, DASH_XO = 1510.0, 1472.0      # Frontflaeche: unten / oben (schraege Fr
 
 # --- Lenkung und Handgas ---
 LENK_MITTE = Vector(*LENKRAD)                       # Lenkradmitte (common.py)
-# Schneckengetriebe-Gehaeuse rechts neben dem Armaturenkasten; Saeule steigt unter ~50 Grad
-LENK_FUSS = Vector(XK + 30.0, LENKRAD[1], 1062.0)
-R_KRANZ, R_KRANZ_Q = 207.0, 17.0      # Kranz Mitte / Querschnitt (aussen 448)
+# Schneckengetriebe-Gehaeuse rechts neben dem Armaturenkasten; Saeule steigt unter ~56 Grad (Nordhorn 2:15: ~60 Grad, die
+# Lenkradmitte liegt fest, daher flacher)
+LENK_FUSS = Vector(XK + 80.0, LENKRAD[1], 1062.0)
+R_KRANZ, R_KRANZ_Q = 210.0, 15.0      # Kranz Mitte / Querschnitt Ø 30 (aussen 450), Nordhorn 2:15/2:21
+R_SPEICHE = 6.0                       # Speichen Ø 12, blank, 3 x 120 Grad (Nordhorn 2:15/2:53)
+SPEICHE_SENK = 15.0                   # Speichen zur Nabe nach unten geschuesselt (Nordhorn 2:15)
+R_NABE, H_NABE = 35.0, 40.0           # Nabe Ø 70 x 40 mit flacher Kappe (Nordhorn 2:15)
+R_SAEULE, R_FUEHRUNG = 22.5, 12.5     # Saeulenrohr Ø 45 / Gestaengefuehrung Ø 25 parallel dahinter (Nordhorn 2:15)
+FUEHRUNG_ABST = 40.0                  # Achsabstand Fuehrung zur Saeule
 Y_HANDGAS = 118.0                     # Handgashebel neben der Saeule
 HANDGAS_FUSS = (1486.0, 1030.0)       # Drehpunkt Handgashebel (x, z), am Lenksaeulenwinkel
 HANDGAS_OBEN = (1556.0, 1236.0)       # Kopf der Handgasstange (x, z): ueber der Armaturenkasten-OK, hinter der Tankrueckwand
@@ -505,8 +512,8 @@ def _dash_kasten(t: Sammler) -> None:
     yc = (DASH_Y0 + DASH_Y1) / 2
     w2 = (DASH_Y1 - DASH_Y0) / 2
     prof = make_face(Polyline((DASH_X0, DASH_ZU), (DASH_XU, DASH_ZU), (DASH_XO, DASH_ZO), (DASH_X0, DASH_ZO), close=True))
-    t.mat("tuerkis", Pos(0, yc, 0) * extrude(Plane.XZ * prof, amount=w2, both=True))
-    t.mat("tuerkis", Pos(0, yc, 0) * box(DASH_XU - 8, DASH_XU + 3, -w2 - 4, w2 + 4, DASH_ZU, DASH_ZU + 14))
+    t.mat("lack", Pos(0, yc, 0) * extrude(Plane.XZ * prof, amount=w2, both=True))
+    t.mat("lack", Pos(0, yc, 0) * box(DASH_XU - 8, DASH_XU + 3, -w2 - 4, w2 + 4, DASH_ZU, DASH_ZU + 14))
     for y in (DASH_Y0 + 25, DASH_Y1 - 25):
         t.mat("blank", sechskant((DASH_XU - 12, y, DASH_ZU), (0, 0, -1), 14, 5))
 
@@ -514,15 +521,15 @@ def _dash_kasten(t: Sammler) -> None:
 def _zuendschloss(t: Sammler, loc: Location) -> None:
     """Zuendschloss mit Hebel mittig rechts; der Schluessel steckt und haengt nach unten (Short 0:45..0:50)."""
     uz, vz = -26.0, -4.0
-    t.mat("chrom", loc * (Pos(uz, vz, 0) * (_zyl(19, 6) - _zyl(12, 8))))
+    t.mat("messing", loc * (Pos(uz, vz, 0) * (_zyl(19, 6) - _zyl(12, 8))))
     t.mat("schwarz", loc * (Pos(uz, vz, 1) * _zyl(12, 6)))
     t.mat("blank", loc * (Pos(uz, vz, 6) * box(-3, 3, -9, 9, 0, 8)))                        # Schluesselbart
     t.mat("blank", loc * (Pos(uz, vz - 8, 11) * box(-3.5, 3.5, -34, 0, -1.5, 1.5)))                # Schaft/Reide
     t.mat("blank", loc * (Pos(uz + 5, vz - 30, 11) * box(-2, 2, -4, 4, -1.5, 1.5)))                # Bart
     t.mat("blank", loc * (Pos(uz, vz - 50, 11) * (_zyl(9, 3) - _zyl(5, 4))))                         # Griff-Ring
     # Hebel nach rechts unten bis zum Instrument (Video 2:09)
-    t.mat("chrom", loc * stab((uz, vz, 8), (uz + 64, vz - 10, 12), 3.6))
-    t.mat("chrom", loc * (Pos(uz + 64, vz - 10, 12) * Sphere(6)))
+    t.mat("messing", loc * stab((uz, vz, 8), (uz + 64, vz - 10, 12), 3.6))
+    t.mat("messing", loc * (Pos(uz + 64, vz - 10, 12) * Sphere(6)))
 
 
 def _dash_front(t: Sammler) -> None:
@@ -532,11 +539,11 @@ def _dash_front(t: Sammler) -> None:
     loc = Location(_dash_ebene())
     # Frontplatte mit Rundkanten (leicht erhoben)
     plat = extrude(Pos(yc, 0) * RectangleRounded(2 * w2 - 24, 128, 20), amount=3)
-    t.mat("tuerkis", loc * (Pos(0, 0, -1) * plat))
+    t.mat("lack", loc * (Pos(0, 0, -1) * plat))
     _instrument(t, loc, -236, -4, 38, marke=True, winkel=20)          # grosses Rundinstrument links unten (Video 128)
     # kleine Knoepfe oben
     for u, r in ((-186, 10), (-148, 11), (-112, 13), (-74, 14)):
-        t.mat("chrom", loc * (Pos(u, 40, 2) * _zyl(r, 5)))
+        t.mat("messing", loc * (Pos(u, 40, 2) * _zyl(r, 5)))
         t.mat("schwarz", loc * (Pos(u, 40, 6) * _zyl(r - 5, 7)))
     _zuendschloss(t, loc)
     # rechts zwei Instrumente uebereinander
@@ -567,40 +574,52 @@ def _konsole(t: Sammler) -> None:
 
 # ---------------- Lenkung ----------------
 def _lenkrad(t: Sammler, b: Vector, d: Vector) -> None:
-    """Vierspeichen-Lenkrad mit Hupenknopf im lokalen System (z = Saeulenachse d, Mitte b)."""
+    """Dreispeichen-Lenkrad im lokalen System (z = Saeulenachse d, Mitte b): dicker schwarzer Kranz, gerade blanke
+    Speichen, kleine zylindrische Nabe mit flacher Kappe (Nordhorn 2:15/2:21/2:53)."""
     xd = (Vector(0, 1, 0) - d * d.Y).normalized()
     loc = Location(Plane(origin=b, x_dir=xd, z_dir=d))
     rad = Sammler("schwarz")
     rad.append(Torus(R_KRANZ, R_KRANZ_Q))
-    rad.append(Pos(0, 0, -40) * _zyl(32, 72))  # Nabe
-    for k in range(4):                                         # Speichen (Rundstahl, gekroepft)
-        w = math.radians(45 + k * 90)
+    rad.append(Pos(0, 0, -H_NABE + 5) * _zyl(R_NABE, H_NABE))  # Nabe, Oberkante 5 ueber der Kranzebene
+    for k in range(3):                                         # Speichen (blank), zur Nabe geschuesselt
+        w = math.radians(90 + k * 120)
         cw, sw = math.cos(w), math.sin(w)
-        rad.mat("blank", stab((28 * cw, 28 * sw, 20), (120 * cw, 120 * sw, 4), 8))
-        rad.mat("blank", stab((120 * cw, 120 * sw, 4), ((R_KRANZ - 4) * cw, (R_KRANZ - 4) * sw, 0), 8))
-        rad.mat("blank", Pos(120 * cw, 120 * sw, 4) * Sphere(8))
-    rad.mat("chrom", Pos(0, 0, 18) * _zyl(44, 16))  # Nabenstern
-    rad.mat("chrom", Pos(0, 0, 34) * (_zyl(36, 8) - _zyl(28, 20)))
-    knopf = Pos(0, 0, 34) * _zyl(28, 14)
-    rad.mat("schwarz", fillet(knopf.edges().group_by(Axis.Z)[-1], 8))   # Hupenknopf
+        rad.mat("blank", stab((R_NABE * 0.6 * cw, R_NABE * 0.6 * sw, -SPEICHE_SENK),
+                              ((R_KRANZ - R_KRANZ_Q * 0.5) * cw, (R_KRANZ - R_KRANZ_Q * 0.5) * sw, 0), R_SPEICHE))
+    rad.mat("blank", Pos(0, 0, 5) * _zyl(R_NABE - 4, 4))       # flache Kappe
     for mat, lst in rad.schichten().items():
         t.mat(mat, [loc * s for s in lst])
 
 
+def _saeule(t: Sammler, a: Vector, b: Vector, d: Vector) -> None:
+    """Saeulenrohr Ø 45 (lackiert) mit duenner Gestaengefuehrung parallel dahinter und Klemmschelle (Nordhorn 2:15)."""
+    t.append(stab(a + d * 50, b - d * 70, R_SAEULE))
+    n = Vector(d.Z, 0, -d.X).normalized()                      # senkrecht zur Saeule, nach hinten unten (zum Fahrer)
+    f0, f1 = a + d * 70 + n * FUEHRUNG_ABST, b - d * 150 + n * FUEHRUNG_ABST
+    t.mat("blank", stab(f0, f1, R_FUEHRUNG))
+    mitte = (f0 + f1) / 2 - n * FUEHRUNG_ABST                  # Punkt auf der Saeulenachse
+    h = d * 9
+    t.mat("blank", stab(mitte - h, mitte + h, R_SAEULE + 4) - stab(mitte - h * 1.2, mitte + h * 1.2, R_SAEULE))   # Klemmschelle
+    t.mat("blank", stab(mitte + n * FUEHRUNG_ABST - h, mitte + n * FUEHRUNG_ABST + h, R_FUEHRUNG + 4))     # Fuehrungsring
+    t.mat("blank", sechskant(mitte + n * (R_SAEULE + 2), n, 16, 8))                                     # Klemmschraube
+    t.mat("lack", stab(a + d * 60 + n * FUEHRUNG_ABST, a + d * 60 + n * 5, 6))                       # Fuehrungsfuss
+
+
 def _lenkung(t: Sammler) -> None:
-    """Winkelblech mit Schneckengetriebe-Gehaeuse, duenne Saeule (Mantelrohr Ø 35), Lenkspindel und Lenkrad."""
+    """Lagerkonsole mit Schneckengetriebe-Gehaeuse, Saeule (Rohr Ø 45) mit Gestaengefuehrung, Lenkspindel, Lenkrad."""
     a, b = LENK_FUSS, LENK_MITTE
     d = (b - a).normalized()
     # Winkelblech am Mittelblock rechts neben dem Armaturenkasten, Schneckengetriebe-Gehaeuse
     px = XW0 + 16
     t.append(box(XW0, px, 150.0, 255.0, 985.0, DASH_ZO))
+    t.append(box(px - 1, a.X + 34, a.Y - 40, a.Y + 40, 1042.0, 1066.0))   # Lagerkonsole auf dem Winkelblech
     for dy in (-42, 42):
         for zz in (1005.0, 1060.0):
             t.mat("blank", sechskant((px, a.Y + dy, zz), (1, 0, 0), 16, 7))
-    t.append(stab((px - 1, a.Y, a.Z), a + d * 30, 24))        # Lagerstutzen / Gehaeuse (unter der Tankkante 1090)
-    t.append(stab(a + d * 24, a + d * 52, 36))                 # Gehaeuseabschluss
-    t.append(stab(a + d * 50, b - d * 70, 17.5))               # Mantelrohr
-    t.mat("blank", stab(b - d * 72, b - d * 40, 8))            # Lenkspindel
+    t.append(stab(a - d * 12, a + d * 30, 26))                # Lagerstutzen / Gehaeuse
+    t.append(stab(a + d * 24, a + d * 52, 33))                 # Gehaeuseabschluss
+    _saeule(t, a, b, d)
+    t.mat("blank", stab(b - d * 72, b - d * 36, 8))            # Lenkspindel
     _lenkrad(t, b, d)
 
 
@@ -818,7 +837,7 @@ def _sitz_schale(t: Sammler) -> None:
         t.append(neig * k)
     t.mat("leder", neig * polster)
     t.mat("leder", neig * sichel)
-    t.mat("zifferblatt", neig * biese)
+    t.mat("leder", neig * biese)
 
 
 def _sitz_sockel(t: Sammler) -> None:

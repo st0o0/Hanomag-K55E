@@ -681,9 +681,9 @@ def rumpf() -> Sammler:
     t += getriebe()
     pm, wand = plattform_mitte()
     t += pm
-    t.mat("tuerkis", wand)
+    t.mat("lack", wand)
     tuerkis, zink, blank, schwarz = zugpendel()
-    t.mat("tuerkis", tuerkis)
+    t.mat("lack", tuerkis)
     t.mat("zink", zink)
     t.mat("blank", blank)
     t.mat("schwarz", schwarz)

@@ -131,9 +131,11 @@ Z_ROLLE = Z_SCHIENE + R_ROLLE
 # --- Stuetzrolle ---
 # Foto BS zeigt sie im A-Bock-Fenster bei x ~1365, Mitte z ~600
 X_STUETZ, R_STUETZ = X_TRIEB - 890.0, 75.0   # 1360
-# Bolzenhoehe des oberen Trums ueber der Stuetzrolle: Flickr-Seitenfoto Greifer oben 720..745, Video 2:44 (s164)
-# Greiferspitzen vorn ~750..765, hinten ~760..770 -> Trum auf der Geraden Leitrad-Oberkante (669) -> Triebrad-Oberkante (701)
-Z_STUETZ_BOLZEN = 698.0
+# Bolzenhoehe des oberen Trums ueber der Stuetzrolle: Der Trum laeuft auf der Geraden Leitrad-Oberkante (669) ->
+# Triebrad-Oberkante (701) und liegt nur leicht durchhaengend auf der Stuetzrolle (Gerade bei x 1360: 685, minus
+# SAG = 680). Greiferspitzen = Bolzen + HP + PLATTE_D + GREIFER_H = Bolzen + 67 -> ~ 735..750; Nordhorn-Video 2:53/2:56
+# (n173, n179, n115): Spalt Greiferoberkante -> Unterkante Seitenblech/Lippe (808) etwa eine Plattenhoehe, 60..70.
+Z_STUETZ_BOLZEN = 680.0
 
 # --- Kettenrahmen (Untergurt, Kasten) ---
 Z0, Z1 = RAHMEN_Z0, RAHMEN_Z1      # Kettenrahmen 327..467
