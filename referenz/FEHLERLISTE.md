@@ -87,6 +87,20 @@ auf Greiferhöhe 763), Fensterblech 780..808. Schubrahmen: SB_XV 560 → 300, X_
 Druckstrebe, Anschlussbock mit Bolzen/Deckel am Balkenende, Längssteg (n160/n167/n172). Höhenabgleich 2:44 (eigene Messung,
 2,46 mm/px): Greifer 763 ✓, Plattform ≈ ✓, Zylinderachse ✓ – Aufbau NICHT angehoben.
 
+Runde 18 (2026-10-13, Short 0:08/0:16/0:44–0:51, Nordhorn 0:08/2:09/2:44, Frame-Analyse aller Seitenansichten):
+Öltank 300 tief (QT_X0 2630 → 2530, Vorderwand direkt hinter dem Sitz, das „fehlende Stück“ auf der Traverse); Steuerblock
+mit Rückwand an der Tank-Vorderwand (2390..2530), Hebel/Steiger/T-Stücke/Rohrhalter 90 mm nach vorn, Zylinderanschlüsse
+unverändert. Haube: Seitenwand NICHT bei 780 offen – Motorfenster mit gerader Unterkante 745 (Bördelrand), Sicke 715,
+geschlossener Sockelstreifen bis HAUBE_UNTEN_Z 620 (n164/n179/0:08: Stollen überlappen den Sockel); „K55“ zwischen zwei kurzen
+Sicken (1035 / 885 = Bogenfuß, Short 0:08), TYP_Z 960; Fensterblech entfernt. Plattform: Kotflügelstreifen + Wange ab
+KOT_X0 1090 (Haubenende) statt DECK_X0 1430 – kein Durchblick mehr unter dem Tankkasten (n164: Schürze bis x ≈ 1040–1110).
+Fahrerstand (Kamera-Fit n129, Short c48/c49/p48.5): Armaturenkasten y −290..90 mit Ammeter/Steckdosen/Kontrollleuchte/Schalter
+statt Messingknöpfe, Lenksäule Ø 28 mit Gusslagerung und Winkelblech rechts am Kasten, Handgas fast senkrecht bei y 105,
+Trittstufe vorn rechts (x 1442..1590) mit Rohr, Getriebedeckel x 1740..2010 / y 95..335 (28 hoch, 6 Schrauben), Schaltmanschette
+direkt auf dem Boden, Kupplungsarm quer bei x 1680, Pedale tief (40 über Boden), Sitz 410×456 fast rund, Mitte (2240, 125),
+SITZ_ZB 1070, Kissen 36 über dem Rand mit weißer Biese (SITZ_X/SITZ_Y in common nachgezogen). Rahmen: kein Träger sichtbar,
+Spalt Plattform–Kette 133–146 passt (n164), RAHMEN_Z unverändert.
+
 Offen:
 - Haltestange (dünnes Rohr quer über dem Sitz, Short 0:15/Nordhorn 2:15) nicht modelliert.
 - Kein Rücklauf zum Öltank (Nutzerentscheidung). Pumpendeckel-Tiefe 39 wegen Druckleitungen.
@@ -96,7 +110,10 @@ Offen:
 - Innere Bauteile unter der Plattform (Fußraumwand, Getriebe) wirken als geschlossene Fläche – ggf. dunkles Material.
 - Rundes Speichen-Verstellrad unter dem hinteren Sitzrand (Short) nicht verortet.
 - Pedal-Details/Kupplungsgestänge plausibel, aber bis auf den Gabelkopf nicht fotografisch belegt.
-- Vorderes Haubensegment Unterkante (HAUBE_UNTEN_Z 620) im Video eher 650..720, unsicher.
+- Haubenunterkante 620 ±30 (Stollen verdecken); vorderes Segment reicht evtl. tiefer mit gerundeter Vorderecke (0:08).
+- Sitz-x unsicher (n129 ≈ 2240, n164 eher 2340 ±100); hohes schwarzes Blech rechts hinter dem Sitz (n129, x 2100..2300,
+  z 1250..1330) nicht verortet; Haltebügel hinter dem Sitz (n164/c51) fehlt; Bremspedal-Lage geraten; FW_STUFE 225 evtl. 150..190.
+- Kasten hinter der Kette (n164, x 1890..2150, Oberkante ≈ 650) optional.
 - MASSKONZEPT.md auf Runde 2–11 nachziehen.
 
 Methode: Web-Viewer in Chrome mit Kamera auf die Video-Frames abgestimmt, fünf Bereichs-Reviews,

@@ -22,8 +22,8 @@ Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
     Kuehlerverschluss (rot) sitzt auf der Maskenkappe bei x ~100..180, gehoert also zur Maske.
   - Haube x 210..1080 (dahinter Tank), Dach 1410 (Pfeilhoehe 42, Kantenradius R 85; Maske gleich), 690 breit,
     zwei Laengssicken auf dem Dach.
-    Seite: vorderes Segment x 210..370 bis z 620 herunter, dann grosser, hinten offener
-    Motorausschnitt bis zum Haubenende, Oberkante 1090 (Schriftband 1090..1410), vorn flacher, elliptischer
+    Seite: vorderes Segment x 210..370, dann grosser, hinten offener
+    Motorausschnitt (Unterkante 745) bis zum Haubenende, Oberkante 1090 (Schriftband 1090..1410), vorn flacher, elliptischer
     Bogen (340 breit x 200 hoch, als zwei tangentiale Kreisbogen) in die senkrechte Vorderkante. Darueber nur
     das Schriftband: untere Laengssicke (geht vorn in die Bogensicke parallel zum Ausschnitt ueber), HANOMAG
     (Mitte x ~630, Teilung 78), obere Laengssicke.
@@ -32,9 +32,10 @@ Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
     (DSC04742, Video 066/070/173).
     Kein ovales und kein helles Schild an der Seite (auf keinem Foto).
     Durchbrueche mit Kragen fuer Auspuff (rechts) und Ansaugrohr (links) im Dach.
-  - Seitenblech unter dem Motorausschnitt (Nordhorn-Video 2:44/2:53/2:58, DSC04729/42): Oberkante
-    (= Unterkante des Motorfensters, Buerdel) bei z ~805..810; seitlich hinter den Greifern nur bis knapp ueber
-    die Plattenoberseite (z ~660..680) gezogen, die Greiferspitzen (~735..750) ragen davor auf.
+  - Bodenstreifen unter dem Motorfenster (Nordhorn-Video n164/n179/n36): die Seitenwand endet NICHT am Fenster. Das
+    Fenster hat eine gerade Unterkante bei z ~745 (gebordelt); darunter laeuft ein geschlossener Streifen ueber die
+    ganze Haubenlaenge (x 210..1080) mit waagerechter Sicke bei z ~715 bis zur Haubenunterkante z ~620 (Ketten-
+    greifer ueberdecken ihn in der Seitenansicht, daher +-30 unsicher).
   - Scheinwerfer: an der Naht Maske/Haube oben (Video 165/172/196, Flickr 40431489714), Mitte x 230,
     |y| 430, z 1275, D 150; Topf mit gewoelbtem Ruecken, Chromring, Glas; Winkelhalter an der Haubenvorderkante
     unter der Lampe.
@@ -173,7 +174,7 @@ GITTER_X = 1.8        # Vorderseite Gittereinsatz (hinter der Maskenwand x 0..1.
 H_X0 = KM_T                           # Haube beginnt direkt hinter der Maske (x = 210)
 H_L = m(HAUBE_X1) - H_X0              # bis x = 1080 (dahinter Tank)
 H_B = m(HAUBE_B)                      # Breite 690
-H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante vorderes Seitensegment (z 780)
+H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante Haubenseitenwand (z 620, Nordhorn n164)
 H_R_DACH = m(DACH_R_KANTE)                      # Radius Dachkanten (Dachbogen -> Seitenwand), gleich KM_R_OBEN
 SEG_L = m(SEG_X1) - H_X0              # vorderes Seitensegment
 DACH_SICKE_Y = m(150)                 # Laengssicken auf dem Dach (|y|)
@@ -190,7 +191,11 @@ BOGEN_R1 = m(130)
 BOGEN_R2 = ((BOGEN_W - BOGEN_R1) ** 2 + BOGEN_H ** 2 - BOGEN_R1 ** 2) / (2 * (BOGEN_H - BOGEN_R1))
 SICKE_Z = _z(1135)                    # untere Laengssicke (geht vorn in die Bogensicke ueber)
 SICKE_OBEN_Z = _z(1240)               # obere Laengssicke (unter dem Dachradius, Wand eben bis ~1285)
-SICKE_VORN_Z = _z(790)                # kurze Sicke im vorderen Segment = Ende der Bogensicke
+SICKE_VORN_Z = _z(885)                # untere kurze Sicke unter dem Typschild (Video 0:08, Nordhorn s164 z ~895..900):
+#                                       mit dem Fuss der Bogensicke (z 890) verbunden; ersetzt die alte Sicke bei z 790
+SICKE_UNTEN_Z = _z(715)               # gerade Sicke im Bodenstreifen unter dem Motorfenster (Nordhorn n164: z ~710..720)
+AUSSCHNITT_UNTEN_Z = _z(745)          # gerade Unterkante des Motorfensters (Nordhorn n164: z ~745), darunter geschlossen
+SICKE_TYP_Z = _z(1035)                # obere kurze Sicke ueber dem Typschild (Nordhorn s164 z ~1025..1035)
 
 # --- Beschriftung ---
 SCHRIFT = "HANOMAG"
@@ -198,16 +203,11 @@ SCHRIFT_X, SCHRIFT_Z = m(630), _z(1190)  # Mitte Schriftzug (zwischen den Sicken
 SCHRIFT_TEILUNG = m(78)                  # Buchstabenteilung (Gesamtlaenge ~520)
 SCHRIFT_VERSAL = m(55)                   # Versalhoehe
 TYP = "K55"                              # Fotos DSC04729/42: Schriftzug "K55" (kein E sichtbar)
-TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(298), _z(980), m(38), m(38)   # Mitte x ~300, z 960..1000, Versalhoehe ~40
+TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(298), (SICKE_TYP_Z + SICKE_VORN_Z) / 2, m(38), m(38)
+#   Mitte x ~300, mittig zwischen den kurzen Sicken (z ~960), Versalhoehe ~40
 TYP_ABSTAND = 0.6                        # lichter Abstand der Glyphen (Modell-mm, >= 0.5)
 TYP_FELD_H = m(50)                       # Hoehe des Platzhalters fuer die Nietreihe (freie Schrift ohne Rahmen)
 TYP_FASE = 0.15                          # kleinere Fase: Strich ~1.0 mm, Deckflaeche >= 0.7 mm
-
-# --- Seitenblech unter dem Motorausschnitt (Original-mm) ---
-# Oberkante des Blechs (= Unterkante des Motorfensters, Buerdel) bei z ~805..810; direkt darunter reicht das Blech
-# bis an die Kette (Nordhorn-Video 2:44 s164, Ausrichtung an 6 Laufrollen + Triebradnabe, Video 2:53/2:58).
-BLECH_Z0, BLECH_Z1, BLECH_Z2 = 780.0, 800.0, 808.0
-# Unterkante = Haubenkante auf Greiferhoehe (Nordhorn 2:44); Oberkante aussen / innen (schraege Lippe)
 
 # --- Scheinwerfer (je Seite, separat drucken) ---
 SW_D = m(150)                                # Aussendurchmesser
@@ -555,10 +555,11 @@ def _kp(c: tuple[float, float], r: float, ang: float) -> tuple[float, float]:
 
 def _ausschnitt() -> Part:
     """Motorausschnitt beider Seiten als Werkzeugkoerper: von SEG_X1 bis hinter das Haubenende
-    (hinten offen), unten offen, Oberkante HAUBE_BAND_Z, Ecke vorn oben als flacher Ellipsenbogen."""
+    (hinten offen), gerade Unterkante AUSSCHNITT_UNTEN_Z (darunter geschlossener Bodenstreifen),
+    Oberkante HAUBE_BAND_Z, Ecke vorn oben als flacher Ellipsenbogen."""
     xa, c1, c2, phi = _bogen_geometrie()
     x1 = H_X0 + H_L + 10
-    z0 = H_UNTEN - 10
+    z0 = AUSSCHNITT_UNTEN_Z
     pj = _kp(c1, BOGEN_R1, phi)
     with BuildSketch(Plane.XZ) as s:
         with BuildLine():
@@ -628,7 +629,8 @@ def _bordelrand(side: int) -> list[Part]:
     xe = H_X0 + H_L
     xa, c1, c2, phi = _bogen_geometrie()
     return [
-        _sicke_gerade(_profil_bordel, (xa, yw, H_UNTEN - 2), (xa, yw, c1[1]), (1, 0, 0), side),
+        _sicke_gerade(_profil_bordel, (xa, yw, AUSSCHNITT_UNTEN_Z - 1.2), (xa, yw, c1[1]), (1, 0, 0), side),
+        _sicke_gerade(_profil_bordel, (xa, yw, AUSSCHNITT_UNTEN_Z), (xe + 2, yw, AUSSCHNITT_UNTEN_Z), (0, 0, 1), side),
         _sicke_bogen(_profil_bordel, c1, BOGEN_R1, yw, 180, phi, side),
         _sicke_bogen(_profil_bordel, c2, BOGEN_R2, yw, phi, 90, side),
         _sicke_gerade(_profil_bordel, (c2[0], yw, BOGEN_OBEN), (xe + 2, yw, BOGEN_OBEN), (0, 0, -1), side),
@@ -654,21 +656,30 @@ def _laengssicken(side: int) -> list[Part]:
     und kurze Quersicke im vorderen Segment, die in der Bogensicke endet."""
     yw = side * H_B / 2
     xe = H_X0 + H_L
-    xa, _c1, c2, _phi = _bogen_geometrie()
-    xs = xa - (SICKE_Z - BOGEN_OBEN)
+    xa, c1, c2, phi = _bogen_geometrie()
+    d = SICKE_Z - BOGEN_OBEN
+    xs = xa - d
     x_v = H_X0 + 1.6
+    # obere kurze Sicke endet auf der Mittellinie der Bogensicke (Bogen 1 bis Winkel phi, danach Bogen 2)
+    z_phi = c1[1] + (BOGEN_R1 + d) * math.sin(math.radians(180 - phi))
+    if z_phi > SICKE_TYP_Z:
+        x_bogen = c1[0] - math.sqrt((BOGEN_R1 + d) ** 2 - (SICKE_TYP_Z - c1[1]) ** 2)
+    else:
+        x_bogen = c2[0] - math.sqrt((BOGEN_R2 + d) ** 2 - (SICKE_TYP_Z - c2[1]) ** 2)
     return [
         _sicke_gerade(_profil_sicke, (x_v, yw, SICKE_Z), (c2[0], yw, SICKE_Z), (0, 0, 1), side),
         _sicke_gerade(_profil_sicke, (c2[0], yw, SICKE_Z), (xe + 2, yw, SICKE_Z), (0, 0, 1), side),
         _sicke_gerade(_profil_sicke, (x_v, yw, SICKE_OBEN_Z), (xe + 2, yw, SICKE_OBEN_Z), (0, 0, 1), side),
+        _sicke_gerade(_profil_sicke, (x_v, yw, SICKE_UNTEN_Z), (xe + 2, yw, SICKE_UNTEN_Z), (0, 0, 1), side),
         _sicke_gerade(_profil_sicke, (x_v, yw, SICKE_VORN_Z), (xs + 0.3, yw, SICKE_VORN_Z), (0, 0, 1), side),
+        _sicke_gerade(_profil_sicke, (x_v, yw, SICKE_TYP_Z), (x_bogen + 0.3, yw, SICKE_TYP_Z), (0, 0, 1), side),
     ]
 
 
 def _nietreihe_seite(side: int) -> list[Part]:
     """Nietreihe an der Vorderkante (Anschluss Maske); frei bleiben Haubenhalter, Typfeld, Sicken."""
     yn = side * (H_B / 2 + 0.6 - NIET_R)
-    n = 13
+    n = 16
     z_a, z_e = H_UNTEN + 3, z_dach(H_B / 2) - H_R_DACH - 2
     z_halter = (SICKE_Z + SICKE_OBEN_Z) / 2
     f0, f1 = _typ_feld_z()
@@ -677,7 +688,7 @@ def _nietreihe_seite(side: int) -> list[Part]:
         z = z_a + i * (z_e - z_a) / (n - 1)
         if abs(z - z_halter) < 5.5 or f0 - 1.0 < z < f1 + 1.0:
             continue
-        if any(abs(z - zs) < 1.6 for zs in (SICKE_Z, SICKE_OBEN_Z, SICKE_VORN_Z)):
+        if any(abs(z - zs) < 1.6 for zs in (SICKE_Z, SICKE_OBEN_Z, SICKE_VORN_Z, SICKE_TYP_Z, SICKE_UNTEN_Z)):
             continue
         teile.append(Pos(H_X0 + 1.8, yn, z) * Sphere(NIET_R))
     return teile
@@ -709,27 +720,6 @@ def _haubenhalter(side: int) -> list[Part]:
     arm += Pos(x, (y0 + yb) / 2 + side * 0.3, z + 2.5) * Box(1.2, abs(yb - y0) + 0.4, 1.0)
     oese = Pos(x, yb, z + 3.0 + 1.1) * Rot(90, 0, 0) * Torus(1.0, 0.4)
     return [lasche, arm, bolzen, oese]
-
-
-def _fensterblech(side: int) -> Part:
-    """Seitenblech unter dem Motorfenster (Fotos DSC04729/42, Nordhorn-Video 2:44/2:53/2:58): durchgehender Blechstreifen,
-    buendig mit der Haubenaussenkante (y 332..345), Oberkante mit schraeger Aussenlippe (innen z 808 -> aussen z 800),
-    Unterkante BLECH_Z0 = 780 = HAUBE_UNTEN_Z (Haubenkante auf Greiferhoehe, Greifer oben 738..768) ueber dem oberen Kettentrum;
-    die Greifer (Spitzen ~ 735..750) stehen davor; hintere Unterecke R 60.
-    Beginnt bei x 365 (ueberlappt die Segmentkante, sonst schwebt das Blech) und endet am Haubenende x 1080 (im Video
-    endet die Unterkante des Motorfensters dort an der Kupplungsglocke/dem A-Bock)."""
-    yo, yi = H_B / 2, H_B / 2 - WAND
-    z0, z1, z2 = _z(BLECH_Z0), _z(BLECH_Z1), _z(BLECH_Z2)
-    pts = [(side * yi, z0), (side * yo, z0), (side * yo, z1), (side * yi, z2)]
-    with BuildSketch(Plane.YZ) as sk:
-        Polygon(*pts, align=None)
-    x0 = m(SEG_X1 - 5.0)
-    xe = H_X0 + H_L
-    blech = extrude(Pos(x0, 0, 0) * sk.sketch, amount=xe - x0)
-    r = m(60.0)                                       # hintere Unterecke gerundet
-    ecke = Pos(xe - r / 2 + 0.05, side * H_B / 2, z0 + r / 2 - 0.05) * Box(r + 0.1, 4 * WAND, r + 0.1)
-    ecke -= Pos(xe - r, side * H_B / 2, z0 + r) * Rot(90, 0, 0) * Cylinder(r, 6 * WAND)
-    return blech - ecke
 
 
 def _haubenschale() -> tuple[Part, Part]:
@@ -788,7 +778,6 @@ def haube() -> Part:
         teile += buchstaben(plane_side(SCHRIFT_X, SCHRIFT_Z, side), SCHRIFT, SCHRIFT_TEILUNG,
                             SCHRIFT_VERSAL, SCHRIFT_H)
         teile += _typfeld(side)
-        teile.append(_fensterblech(side))
 
     # zwei Laengssicken auf dem Dach (PK), hinter der vorderen Nietreihe bis zur Hinterkante
     for sy in (-1, 1):

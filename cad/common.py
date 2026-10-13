@@ -69,7 +69,7 @@ DECK_X0, DECK_X1, DECK_B = 1430.0, 2780.0, 1800.0
 MASKE_UK = 525.0              # Unterkante Kuehlermaske (Nordhorn-Video n160/n167, Overlay: 520..560; Maske 525..1410 = 885 hoch)
 HAUBE_X0, HAUBE_X1, HAUBE_B = 210.0, 1080.0, 690.0   # Foto BS: Haube endet ~1080, dahinter Tank
 HAUBE_DACH_Z = 1410.0        # Video 165/167 + Flickr 1426..1441, Maske 525..1410 = 885 hoch
-HAUBE_UNTEN_Z = 780.0         # Unterkante vorderes Haubenseitensegment: Nordhorn 2:44 (s164), Haubenkante auf Greiferhoehe
+HAUBE_UNTEN_Z = 620.0         # Unterkante Haubenseitenwand (Bodenstreifen unter dem Motorfenster): Nordhorn n164 (+-30)
                               # (Greifer oben 738..768)
 HAUBE_BAND_Z = 1090.0         # Oberkante Motorausschnitt = Unterkante Schriftband (Video 165/173, DSC04742 1070..1095)
 SEG_X1 = 370.0                # vorderes Seitensegment x 210..370 (Video 066/070/173 + DSC04742, 150..200 breit),
@@ -93,8 +93,8 @@ SCHEINWERFER = (230.0, 430.0, 1290.0)             # Lampenmitte x, |y|, z: an de
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
 Y_LTG = 392.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
 LENKRAD = (1850.0, 140.0, 1440.0)   # Lenkradmitte: Saeule gerade aus der Kastenfront, ~47 Grad (Short 0:47, Nordhorn 2:15)
-SITZ_X = 2340.0               # Mitte Sitzschale (Seitenansicht Video 2:44, s164: x = 1031 + 1168*f, f 1.10..1.13 -> 2316..2351)
-SITZ_Y = 200.0                # Sitzachse y, unter dem Lenkrad ausgerichtet (LENKRAD y 200)
+SITZ_X = 2240.0               # Mitte Sitzschale (Kamera-Fit n129 2:09; n164 unsicher +-100)
+SITZ_Y = 125.0                # Sitzachse y (n129: linke Schalenspitze bei y ~ -100)
 KD_X = 140.0                  # Kuehlerverschluss auf der Maskenkappe, Mitte x (Foto BS: x ~100..180)
 GESAMT_HOEHE = 1840.0
 

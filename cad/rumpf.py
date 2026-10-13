@@ -109,6 +109,7 @@ Y_KETTE_INNEN = Y_KETTE - KETTE_B / 2      # 435: hier beginnt die Kette
 Y_WANGE = Y_KETTE_INNEN - 5                # Aussenseite der Kotfluegel-Innenwange 430
 X_KETTE_HINTEN = X_TRIEB + 402.0           # hinterster Punkt der Greifer am Triebrad
 KOT_YA = DECK_B / 2                        # Aussenkante der Plattform
+KOT_X0 = 1090.0                            # Kotfluegelstreifen ab Haubenende (Nordhorn 2:44, 0:08: Schuerze unterm Tank zu)
 KOT_XQ0 = X_KETTE_HINTEN + 40              # Querkonsole hinten: Vorderkante
 KOT_XQ1 = DECK_X1 - BLECH                  # Querkonsole hinten: Hinterkante (vor der Heckschuerze)
 
@@ -569,14 +570,14 @@ def _kot_blech() -> Teile:
     t = []
     yi = Y_FLANSCH - 2
     yfw = FW_Y1 + FW_WAND
-    for xa, xb, yy in ((DECK_X0, FW_X0, yi), (FW_X0, FW_X1, yfw), (FW_X1, DECK_X1, yi)):
+    for xa, xb, yy in ((KOT_X0, FW_X0, yi), (FW_X0, FW_X1, yfw), (FW_X1, DECK_X1, yi)):
         if xb > xa:
             t.append(box(xa, xb, yy, KOT_YA - BLECH, DECK_UK, DECK_Z))
     # nur eine schmale Abkantung (5 mm unter dem Trittblech), die obere Kette bleibt ueber die ganze Laenge sichtbar;
     # Unterkante Rand DECK_UK - 10 = 891, Spalt zu den Greifern 123 (ueber dem Triebrad) .. 146 (Mitte)
-    t.append(box(DECK_X0, DECK_X1, KOT_YA - BLECH, KOT_YA, DECK_UK - 5, DECK_Z - 2))
-    t.append(stab((DECK_X0, KOT_YA - 2, DECK_Z - 2), (DECK_X1, KOT_YA - 2, DECK_Z - 2), 8))
-    t.append(stab((DECK_X0, KOT_YA - BLECH / 2, DECK_UK - 5), (DECK_X1, KOT_YA - BLECH / 2, DECK_UK - 5), 5))
+    t.append(box(KOT_X0, DECK_X1, KOT_YA - BLECH, KOT_YA, DECK_UK - 5, DECK_Z - 2))
+    t.append(stab((KOT_X0, KOT_YA - 2, DECK_Z - 2), (DECK_X1, KOT_YA - 2, DECK_Z - 2), 8))
+    t.append(stab((KOT_X0, KOT_YA - BLECH / 2, DECK_UK - 5), (DECK_X1, KOT_YA - BLECH / 2, DECK_UK - 5), 5))
     return t
 
 
@@ -593,8 +594,8 @@ def _kot_schuerze() -> Teile:
 def _kot_wange_konsolen() -> Teile:
     """Kotfluegel-Innenwange (Winkel) entlang der Kette, Querkonsole hinten und dreieckige Knotenbleche."""
     ya = KOT_YA
-    t = [box(DECK_X0, X_KETTE_HINTEN, Y_WANGE - 12, Y_WANGE, DECK_UK - 60, DECK_UK)]
-    t += schraubenreihe((DECK_X0 + 60, Y_WANGE, DECK_UK - 30), (X_KETTE_HINTEN - 50, Y_WANGE, DECK_UK - 30),
+    t = [box(KOT_X0, X_KETTE_HINTEN, Y_WANGE - 12, Y_WANGE, DECK_UK - 60, DECK_UK)]
+    t += schraubenreihe((KOT_X0 + 60, Y_WANGE, DECK_UK - 30), (X_KETTE_HINTEN - 50, Y_WANGE, DECK_UK - 30),
                         12, (0, 1, 0), 18, 8)
     # Querkonsole hinten (hinter dem Triebrad), volle Breite bis zur Abkantung
     t.append(box(KOT_XQ0, KOT_XQ0 + 12, 205, ya - BLECH, DECK_UK - 70, DECK_UK))

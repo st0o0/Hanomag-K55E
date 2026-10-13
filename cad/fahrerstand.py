@@ -30,7 +30,7 @@ Aufbau und Technik (Fotos t39/t42/t46 des Nutzers, K 55; dazu fz_05/10/11, fz_01
     Bodenbleche (Anordnung nach Traktorenlexikon Hanomag K 55).
 Prospekt K 55 E (PK, PH = prospekt_heck):
   * Sitz: laut Fotos (DSC04745, c_sl_box) und Video 128-140 tiefe Blechschale mit Kunstlederpolster auf
-    Sitztraeger und Blattfeder-Arm im Mittelsockel hinter dem Getriebedeckel, Mitte SITZ_X.
+    Sitztraeger und Blattfeder-Arm im Mittelsockel hinter dem Getriebedeckel, Mitte SITZ_MX.
 Werkzeugkaesten gibt es nur neben dem Tank; hinten auf den Kotfluegeln ist die Plattform frei (Video 116/130/137/157).
 """
 
@@ -54,6 +54,7 @@ from build123d import (
     Rectangle,
     RectangleRounded,
     Rot,
+    SlotOverall,
     Solid,
     Sphere,
     ThreePointArc,
@@ -154,9 +155,9 @@ X_STUTZEN, Y_STUTZEN = 1275.0, -140.0   # Einfuellstutzen mit Fluegelmutter-Deck
 X_KANNE, Y_KANNE = 1275.0, 140.0        # kleine Kanne rechts oben
 
 # --- Armaturenkasten (tuerkis), haengt an der Rueckseite des Mittelblocks unter dem Tankueberhang ---
-# y von / bis: 375 breit (Review Fussraum: Kamera-Fit Video 2:09, Frontbreite 350 px = 372 mm statt 436; Lenkgetriebe-Winkel
-# rechts daneben ab y 150)
-DASH_Y0, DASH_Y1 = -290.0, 175.0
+# y von / bis: 380 breit (Kamera-Fit Nordhorn 2:09 / n129: Frontplatte 355 px = 372..385 mm, Instrumente Ø 54 ~45 mm vor dem
+# rechten Ende; vorher 465 breit bis y 175). Rechts daneben folgen Winkelblech und Lenkgetriebe-Gehaeuse (y ~85..170)
+DASH_Y0, DASH_Y1 = -290.0, 90.0
 DASH_X0 = XW0                          # Rueckwand am Mittelblock
 DASH_ZU, DASH_ZO = 925.0, 1078.0       # Unterkante / Oberkante (Tankflansch beginnt bei 1081)
 DASH_XU, DASH_XO = 1510.0, 1472.0      # Frontflaeche: unten / oben (schraege Front, kippt nach hinten oben)
@@ -167,15 +168,18 @@ LENK_MITTE = Vector(*LENKRAD)                       # Lenkradmitte (common.py)
 # Durchtritt mit Flanschring. Die Lenkradmitte liegt fest, daher ~40 Grad statt der ~60 Grad im Short
 LENK_FUSS_Z, LENK_FUSS_Y = 1040.0, LENKRAD[1]
 LENK_FUSS = Vector(DASH_XU + (LENK_FUSS_Z - DASH_ZU) / (DASH_ZO - DASH_ZU) * (DASH_XO - DASH_XU), LENK_FUSS_Y, LENK_FUSS_Z)
-R_FLANSCH, H_FLANSCH = 35.0, 6.0      # Flanschring am Durchtritt Ø 70 x 6 (Short c47)
+R_GETRIEBE = 27.0                     # Lenkgetriebe-Gehaeuse Ø 54 am Saeulenfuss (n129, col129)
 R_KRANZ, R_KRANZ_Q = 210.0, 15.0      # Kranz Mitte / Querschnitt Ø 30 (aussen 450), Nordhorn 2:15/2:21
 R_SPEICHE = 6.0                       # Speichen Ø 12, blank, 3 x 120 Grad (Nordhorn 2:15/2:53)
 SPEICHE_SENK = 15.0                   # Speichen zur Nabe nach unten geschuesselt (Nordhorn 2:15)
 R_NABE, H_NABE = 35.0, 40.0           # Nabe Ø 70 x 40 mit flacher Kappe (Nordhorn 2:15)
-R_SAEULE = 22.5                       # Saeulenrohr Ø 45, ein Rohr bis in den Kasten (Nordhorn 2:15, Short c47)
-Y_HANDGAS = 195.0                     # Handgashebel neben der Saeule
-HANDGAS_FUSS = (1486.0, 1030.0)       # Drehpunkt Handgashebel (x, z), am Lenksaeulenwinkel
-HANDGAS_OBEN = (1556.0, 1236.0)       # Kopf der Handgasstange (x, z): ueber der Armaturenkasten-OK, hinter der Tankrueckwand
+R_SAEULE = 14.0                       # Saeulenrohr Ø 28 (n129: 28 px x 0,87 mm = 24..28; vorher Ø 45), endet im Lenkgetriebe
+# Handgashebel (n129 2:09, Kamera-Fit): senkrechte Stange bei y ~105 (nicht 195), direkt rechts neben dem Armaturenkasten und
+# links vor dem Lenkgetriebe; unten weisse Zugstange, oben gruenblauer Hebel mit Zapfen, dazwischen ein waagerechter Lagerzylinder
+Y_HANDGAS = 105.0
+HANDGAS_FUSS = (1500.0, 955.0)        # Fuss der Zugstange (x, z), unter dem Kastenrand
+HANDGAS_OBEN = (1565.0, 1310.0)       # Kopf des Hebels (x, z): parallel zur schraegen Tankrueckwand davor
+HANDGAS_LAGER_Z = 1185.0              # Lagerzylinder (Achse in y) auf dieser Hoehe
 
 # --- Pedale (Fussraum, relativ zur Konsolenrueckseite) ---
 # Review 2 (Nutzer: "Unter dem Lenkrad befinden sich die Pedale"): drei Pendelpedale unter dem Lenkrad (Saeule y 200), Hebel durch
@@ -184,18 +188,29 @@ HANDGAS_OBEN = (1556.0, 1236.0)       # Kopf der Handgasstange (x, z): ueber der
 # Bremspedale;
 # gelenkt wird ueber das Lenkrad auf die Lenkbremsen) und Konvention: Kupplung links neben der Saeule, Bremsen rechts / unter dem
 # Rad.
-PED_X0 = 1468.0              # Durchtritt der Bremspedalhebel im Bodenblech
-PED_DX, PED_DZ = 100.0, 160.0   # Hebel: Schlitz -> Trittplatte (nach hinten oben)
+# Neu (Review 18, Short c48/p48.5 + Nordhorn n129 Kamera-Fit): die Pedale stehen NICHT unter dem Armaturenkasten, sondern niedrig
+# auf dem Fussraumboden hinter dem rechten Stufenabsatz (siehe STUFE_*): die geriffelte Trittplatte steht knapp ueber dem Boden
+# (Unterkante ~40 mm) vor dem Kupplungsgestaenge, der Hebel ist kurz.
+PED_DX, PED_DZ = 60.0, 85.0     # Hebel: Boden -> Trittplatte (nach hinten oben)
 PED_B = 56.0                 # Breite der Trittplatten (y), Short c48: ~90 x 60
-PED_X1 = PED_X0 + PED_DX     # Trittflaechen ~1568, z ~858 (unter dem Armaturenkasten, Short 0:48)
-# Kupplungspedal (x, y): Gabelkopf des Gestaenges Video 2:09 (Kamera-Fit t020: Boden x ~1665..1720, y ~10..105)
-PED_KUPPLUNG = (1480.0, 195.0)
-PED_KUPPLUNG_DURCHTRITT = (1537.0, 140.0)   # Durchtritt der Kupplungs-Zugstange im Blech (x, y)
-PED_BREMSE = (1468.0, 290.0)   # Bremspedal neben dem Kupplungspedal (Short 0:48)
+# Kupplungsgestaenge: waagerechter Arm in y bei x ~1680 (n129: Kugelgelenk-Ende y 155, linkes Ende y 62, ~35 ueber dem Boden;
+# Fit t020 hatte x 1665..1720, y 10..105)
+PED_KUPPLUNG = (1675.0, 155.0)              # Gabelkopf mit Kugelgelenk (rechtes Ende)
+PED_KUPPLUNG_DURCHTRITT = (1693.0, 62.0)    # linkes Ende des Arms (hier setzt der Pedalhebel an)
+PED_KUPPLUNG_PAD = (1632.0, 90.0, 775.0)    # Mitte der Trittplatte: vor dem Arm (Short p48.5), rechts neben dem Gummibalg
+PED_BREMSE = (1590.0, 290.0)   # Bremspedal rechts davon (Lage nicht aus den Frames ablesbar, Hebelweg unter dem Blech y > 255)
+
+# --- Stufe vorn rechts im Fussraum (Short c48/c49/c50/p48/p48.5): rechts neben dem Armaturenkasten steigt der Boden mit einer
+# rueckwaertigen Stirnflaeche auf Plattformhoehe; auf dem Absatz laeuft vor dem Werkzeugkasten ein Rohr Ø ~35 (rostig) ---
+STUFE_X1 = 1590.0            # Hinterkante der Stufe (Stirnflaeche, zeigt zum Fahrer); Tiefe ~150 (c48: Trittflaeche + Rohr)
+STUFE_Y0 = 135.0             # links endet sie am Winkelblech des Armaturenkastens
+STUFE_ROHR_R, STUFE_ROHR_X = 17.0, 1472.0
 
 # --- Getriebedeckel im Fussraumboden (Short c48/c50: erhabene, rechteckige Platte mit gerundeten Ecken, 6 Schrauben) ---
-DECKEL_X, DECKEL_Y = (1480.0, 1780.0), (-145.0, 105.0)   # 300 x 250, Schalthebel steht darauf
-DECKEL_H = 10.0
+# Lage neu (Review 18): die Platte liegt HINTER und RECHTS vom Schalthebel-Balg (c48/c49/p48.5: vordere linke Ecke rechts hinter
+# dem Balg und dem Gestaenge-Arm; n129: Laengskante bei y ~75..85 rechts vom Balg), nicht um ihn herum. Seite dunkel, hoch ~28.
+DECKEL_X, DECKEL_Y = (1740.0, 2010.0), (95.0, 335.0)   # 270 x 240
+DECKEL_H = 28.0
 
 # --- Schalthebel ---
 # Fuss Schalthebel (Gummibalg). Kamera-Fit Video 2:09: Strahl durch den Balg trifft den Boden (z 745) bei x 1561..1596, y -14;
@@ -217,23 +232,22 @@ KLINKE_BODEN = (2108.0, 95.0)
 
 # --- Sitz: tiefe Blechschale mit Polster ---
 # Randellipse x/y, Mulde als Ausschnitt eines Ellipsoids, umgebordelter Rand, Sitztraeger unter der Mitte, Blattfeder-Arm
-SITZ_A, SITZ_B = 178.0, 225.0        # Halbachsen der Randellipse (Tiefe x 356, Breite y 450, Video 128: breiter als lang)
-# Review 2 (Nutzer: "Der Sitz muss viel weiter nach hinten"): unter dem Lenkrad ausgerichtet (Lenkrad y 200); die Kamera-Fits y
-# 170/195 hatten +-100 mm Tiefenunsicherheit
-                                      # Seitenrand y -25..425, Sitz bleibt zwischen Fussraum (Wand y 345) und der Innenwange des
-                                      # Kotfluegels (y 430)
-# Mitte der Sitzschale, Review 2: Seitenansicht Video 2:44 (s164, Schale px ~365..555) -> x = 1031 + 1168*f, Perspektivfaktor f
-# 1.10..1.13 (Sitz ~800 mm hinter der Spurebene) = 2316..2351; vordere Kante 2162, hinterer Rand 2518 (Querrohre der Traverse ab x
-# 2519, z >= 1209 weit ueber der Schale)
+# Review 18 (Nordhorn n129, Kamera-Fit aus Armaturenkasten + Lenkrad; Seitenansicht n164): die Schale ist ungefaehr RUND
+# (Ø ~430..456, Short/Nordhorn "runde Schale"), steht weiter vorn und ~65 hoeher als zuvor (Vorderkante x ~2035 statt 2162,
+# Kissenoberkante ~1212). Sitzmitte aus common.SITZ_X/SITZ_Y
+# (+-100 mm Tiefenunsicherheit des Einzelbild-Fits; Seitenansicht n164: Vorderkante 1990..2085, Hinterkante 2430..2570)
+# Halbachsen der Randellipse (Tiefe x 410, Breite y 456; Kissenlaenge n129 ~310..340, n164 ~440..490)
+SITZ_A, SITZ_B = 205.0, 228.0
+SITZ_MX, SITZ_MY = SITZ_X, SITZ_Y     # Mitte der Sitzschale, Schnittstelle in common.py
 SITZ_T = 6.0                          # Blechstaerke
 SITZ_TIEFE = 100.0                    # tiefe Mulde: Rand liegt so viel ueber dem Schalenboden (Video 128-140)
-SITZ_EA, SITZ_EB = 270.0, 341.0       # Halbachsen des Muldenellipsoids x/y
-SITZ_ZB = 1005.0                      # Unterkante Schale in der Mitte (absolut, Polster ~1105 nach Video)
+SITZ_EA, SITZ_EB = 312.0, 347.0       # Halbachsen des Muldenellipsoids x/y (1,52 x Randellipse)
+SITZ_ZB = 1070.0                      # Unterkante Schale in der Mitte (absolut; Rand ~1176, Kissenoberkante ~1212)
 SITZ_NEIG = 3.0                       # Schale nach hinten geneigt (Grad, um den Boden)
 SITZ_RAND_H = 14.0                    # umgebordelter Rand nach unten
-SITZ_TRAEGER = (-45.0, 50.0, 45.0)    # Sitztraeger-Block unter der Mitte: x von/bis (rel. SITZ_X), halbe Breite y
+SITZ_TRAEGER = (-45.0, 50.0, 45.0)    # Sitztraeger-Block unter der Mitte: x von/bis (rel. SITZ_MX), halbe Breite y
 SITZ_TRAEGER_UNTEN = 50.0             # Sitztraeger reicht so weit unter die Schalenunterseite
-SOCKEL_X = SITZ_X + 100               # Mittelsockel hinter dem Getriebedeckel 2440 (Fussplatte auf dem Hinterachs-/Heckkasten)
+SOCKEL_X = SITZ_MX + 100               # Mittelsockel hinter dem Getriebedeckel 2440 (Fussplatte auf dem Hinterachs-/Heckkasten)
 SOCKEL_Z1 = 972.0                     # Oberkante Sockel (Federeinspannung)
 
 
@@ -467,15 +481,15 @@ def _tankkasten(t: Sammler, s: int) -> None:
         t.mat("blank", rad_x(xs, yi, TK_Z1 + 4, 7, 60))
     t += schraubenreihe((TK_X0 + 35, yo, TK_Z0 + 22), (TK_X1 - 35, yo, TK_Z0 + 22), 5, (0, s, 0), 14, 5)
     # Konsolenblech (Lack) unter dem Kasten und seitlicher Bord, vorn und hinten ueberstehend
-    c0, c1 = sorted((s * KB_Y, s * (UNTERBAU_Y + 10)))
+    c0, c1 = sorted((s * KB_Y, s * 326.0))                      # endet vor dem Kotfluegelstreifen (rumpf, |y| >= 328)
     # endet vor der Plattform (DECK_X0): der Kasten steht hinten mit ~20 mm auf der Plattformkante
     t.append(box(TK_X0 - 15, DECK_X0, c0, c1, TK_Z0 - TK_SHELF, TK_Z0))
-    b0, b1 = sorted((s * (UNTERBAU_Y + 10), s * (UNTERBAU_Y + 16)))
+    b0, b1 = sorted((s * 320.0, s * 326.0))
     t.append(box(TK_X0 - 15, DECK_X0, b0, b1, TK_Z0 - TK_SHELF - 30, TK_Z0))
     # Knotenbleche zwischen Konsolenblech und Stuetze
     for xs in STUETZEN_X:
         kn = Polyline((s * (GLOCKE_Y + 22), TK_Z0 - TK_SHELF), (s * (GLOCKE_Y + 22), TK_Z0 - TK_SHELF - 50),
-                      (s * (GLOCKE_Y + 120), TK_Z0 - TK_SHELF), close=True)
+                      (s * 326.0, TK_Z0 - TK_SHELF), close=True)
         t.append(extrude(Plane.YZ.offset(xs - 5) * make_face(kn), amount=10))
 
 
@@ -525,7 +539,7 @@ def _dash_kasten(t: Sammler) -> None:
 
 def _zuendschloss(t: Sammler, loc: Location) -> None:
     """Zuendschloss mit Hebel mittig rechts; der Schluessel steckt und haengt nach unten (Short 0:45..0:50)."""
-    uz, vz = -26.0, -4.0
+    uz, vz = -32.0, 4.0
     t.mat("messing", loc * (Pos(uz, vz, 0) * (_zyl(19, 6) - _zyl(12, 8))))
     t.mat("schwarz", loc * (Pos(uz, vz, 1) * _zyl(12, 6)))
     t.mat("blank", loc * (Pos(uz, vz, 6) * box(-3, 3, -9, 9, 0, 8)))                        # Schluesselbart
@@ -537,37 +551,55 @@ def _zuendschloss(t: Sammler, loc: Location) -> None:
     t.mat("messing", loc * (Pos(uz + 64, vz - 10, 12) * Sphere(6)))
 
 
+def _kontrolle(t: Sammler, loc: Location, u: float, v: float, r: float, linse: bool = False) -> None:
+    """Kleine Chromfassung mit dunkler Mitte (Kontrollleuchte, Zugknopf-Loch) auf der Front."""
+    t.mat("chrom", loc * (Pos(u, v, 1) * (_zyl(r, 5) - _zyl(r - 2.5, 7))))
+    t.mat("schwarz", loc * (Pos(u, v, 1) * _zyl(r - 2.5, 3)))
+    if linse:
+        t.mat("zifferblatt", loc * (Pos(u - r * 0.25, v + r * 0.25, 4) * _zyl(r * 0.22, 1.5)))
+
+
 def _dash_front(t: Sammler) -> None:
-    """Frontplatte mit Rundinstrument links, drei kleinen Knoepfen, Zuendschloss und zwei Instrumenten rechts."""
+    """Frontplatte (n129/z129 2:09, Short c46/c48): links Amperemeter, darum eine erhabene, stadionfoermige Sicke (Rennbahn)
+    mit Kontrollleuchte, zwei kleinen Fassungen, blinder Scheibe, Kippschalter-Zuendschloss mit Hebel nach rechts; rechts
+    ausserhalb der Sicke zwei Rundinstrumente uebereinander."""
     yc = (DASH_Y0 + DASH_Y1) / 2
     w2 = (DASH_Y1 - DASH_Y0) / 2
     loc = Location(_dash_ebene())
     # Frontplatte mit Rundkanten (leicht erhoben)
     plat = extrude(Pos(yc, 0) * RectangleRounded(2 * w2 - 24, 128, 20), amount=3)
     t.mat("lack", loc * (Pos(0, 0, -1) * plat))
-    _instrument(t, loc, -236, -4, 38, marke=True, winkel=20)          # grosses Rundinstrument links unten (Video 128)
-    # kleine Knoepfe oben
-    for u, r in ((-186, 10), (-148, 11), (-112, 13), (-74, 14)):
-        t.mat("messing", loc * (Pos(u, 40, 2) * _zyl(r, 5)))
-        t.mat("schwarz", loc * (Pos(u, 40, 6) * _zyl(r - 5, 7)))
+    # Sicke: Stadion u -282..10, v -62..67 (Frontbreite 380 -> 0,55 mm je Bildpunkt in n129)
+    sicke = SlotOverall(292, 129) - SlotOverall(285, 122)
+    t.mat("lack", loc * (Pos(-136, 2, 1.5) * extrude(sicke, amount=2.5)))
+    _instrument(t, loc, -233, -15, 37, marke=True, winkel=20)          # Amperemeter links (Ø 73)
+    _kontrolle(t, loc, -188, 26, 8.5)                                   # kleine Fassung oben links
+    _kontrolle(t, loc, -139, 21, 9.5)                                   # Fassung mit weissem Punkt
+    _kontrolle(t, loc, -84, 34, 15.0, linse=True)                       # Kontrollleuchte mit Glaslinse
+    t.mat("lack", loc * (Pos(-173, -34, 1.5) * extrude(Circle(23) - Circle(20.5), amount=2.5)))   # blinde Scheibe (Abdeckung)
+    t.mat("blank", loc * (Pos(-173, -34, 2) * _zyl(3, 3)))
+    t.mat("schwarz", loc * (Pos(-86, 2, 1.5) * box(-3, 3, -8, 8, 0, 3)))                         # kleiner schwarzer Schalter
+    t.mat("blank", loc * (Pos(-84, -27, 1.5) * _zyl(3, 2.5)))
     _zuendschloss(t, loc)
-    # rechts zwei Instrumente uebereinander
-    _instrument(t, loc, 47, 38, 25, winkel=-25)          # Messung Video 2:09: Instrumente bei y ~ +47 (nicht +106)
-    _instrument(t, loc, 47, -24, 25, winkel=30)
+    # rechts zwei Instrumente uebereinander (Ø 54, ~45 mm vor dem rechten Kastenende)
+    _instrument(t, loc, 44, 45, 26, winkel=-25)
+    _instrument(t, loc, 44, -15, 26, winkel=30)
 
 
 def _handgas(t: Sammler) -> None:
-    """Handgashebel mit Rastsegment rechts neben dem Armaturenkasten (am Lenksaeulenwinkel, siehe _lenkung)."""
+    """Handgashebel (n129 2:09): senkrechte, leicht nach hinten geneigte Stange bei y ~105 direkt rechts vom Armaturenkasten:
+    unten weisse Zugstange, oben duenner gruenblauer Hebel mit Zapfenkopf, dazwischen ein waagerechter Lagerzylinder
+    (Achse in y, zeigt zum Kasten)."""
     yh = Y_HANDGAS
-    xh, zh = HANDGAS_FUSS
-    seg = Plane.XZ.offset(-yh) * Pos(xh, zh - 10) * (Circle(62) - Circle(45))
-    seg = extrude(seg, amount=4, both=True) & box(xh - 4, xh + 80, yh - 10, yh + 10, zh - 10, zh + 45)
-    t.append(seg)
-    # lange duenne Stange (Video 122/128), reicht ueber den Kastenrand
+    fx, fz = HANDGAS_FUSS
     gx, gz = HANDGAS_OBEN
-    t.mat("blank", stab((xh + 6, yh, zh), (gx, yh, gz), 4))
-    t.mat("schwarz", Pos(gx, yh, gz) * Sphere(10))               # kleiner Knopf oben
-    t.mat("blank", rad_y(xh + 6, yh, zh, 10, 12))
+    zl = HANDGAS_LAGER_Z
+    xl = fx + (gx - fx) * (zl - fz) / (gz - fz)
+    t.mat("blank", stab((fx, yh, fz), (xl, yh, zl), 3.5))                   # Zugstange unten (weiss)
+    t.append(stab((xl, yh, zl), (gx, yh, gz), 6))                          # Hebel oben (lackiert)
+    t.mat("blank", Pos(gx, yh, gz) * _zyl(7, 8))                           # Zapfenkopf
+    t.mat("zink", Pos(xl, yh - 6, zl) * Rot(90, 0, 0) * _zyl(16, 62))       # Lagerzylinder, ragt nach -y
+    t.mat("blank", Pos(fx, yh, fz) * Sphere(6))
 
 
 def _konsole(t: Sammler) -> None:
@@ -597,12 +629,15 @@ def _lenkrad(t: Sammler, b: Vector, d: Vector) -> None:
 
 
 def _lenkung(t: Sammler) -> None:
-    """Saeule Ø 45 als ein Rohr vom Lenkrad bis in den Armaturenkasten, Flanschring am Durchtritt (Short c47), Lenkspindel."""
+    """Saeule Ø 28 vom Lenkrad bis in das Lenkgetriebe-Gehaeuse (n129: Gussgehaeuse oben rechts neben dem Armaturenkasten,
+    dahinter nach unten ein Winkel hinter der Kastenkante), Lenkspindel, Lenkrad."""
     a, b = LENK_FUSS, LENK_MITTE
     d = (b - a).normalized()
-    t.append(stab(a - d * 40, b - d * 70, R_SAEULE))
-    nf = Vector(DASH_ZO - DASH_ZU, 0, DASH_XU - DASH_XO).normalized()      # Normale der schraegen Front
-    t.append(stab(a - nf * 1.0, a + nf * H_FLANSCH, R_FLANSCH))             # Flanschring auf der Front
+    t.append(stab(a - d * 10, b - d * 70, R_SAEULE))
+    t.append(stab(a - d * 55, a + d * 45, R_GETRIEBE))                      # Gehaeuse (Guss) um den Saeulenfuss
+    t.mat("schwarz", box(a.X - 28, a.X + 34, a.Y - 24, a.Y + 24, DASH_ZU, a.Z - 14))   # Bein hinter dem Gehaeuse nach unten
+    # Winkelblech am rechten Kastenende
+    t.mat("schwarz", box(DASH_XO + 8, DASH_XU + 14, DASH_Y1, DASH_Y1 + 12, DASH_ZU - 18, DASH_ZO + 22))   # hinter dem Tank (1455)
     t.mat("blank", stab(b - d * 72, b - d * 36, 8))            # Lenkspindel
     _lenkrad(t, b, d)
 
@@ -638,11 +673,22 @@ def _fussraumboden(t: Sammler) -> None:
             t.append(box(FW_X0, FW_X1, y0, y1, zf - FUGE_T - 1, zf))
 
 
+def _stufe(t: Sammler) -> None:
+    """Stufe rechts vorn im Fussraum (Short c48/c49/c50/p48/p48.5): Block vom Boden bis zur Bodenblech-Oberkante, Stirnflaeche
+    zum Fahrer, davor/dahinter ein Rohr Ø 35 quer vor dem Werkzeugkasten (rostig, zink)."""
+    y1 = FW_Y1
+    t.append(box(FW_X0 + 12, STUFE_X1, STUFE_Y0, y1, FW_Z1 - 1, BODEN_Z))      # hinter der Stirnwand (FW_WAND 10)
+    t.mat("zink", rad_y(STUFE_ROHR_X, (STUFE_Y0 + y1) / 2 + 4, BODEN_Z + STUFE_ROHR_R, STUFE_ROHR_R, y1 - STUFE_Y0 - 8))
+
+
 def _getriebedeckel(t: Sammler) -> None:
-    """Erhabene Deckelplatte des Wechselgetriebes im Fussraumboden mit sechs Sechskantschrauben (Short c48/c50)."""
+    """Erhabene Deckelplatte im Fussraumboden: dunkle, hohe Seitenwand, Oberseite in Bodenfarbe, sechs Sechskantschrauben
+    (Short c48/c49/c50, p48.5)."""
     zf = FW_Z1
-    t.mat("zink", kasten_rund(*DECKEL_X, *DECKEL_Y, zf - 1, zf + DECKEL_H, 25))
-    xs, ys = (DECKEL_X[0] + 24, DECKEL_X[1] - 24), (DECKEL_Y[0] + 24, DECKEL_Y[1] - 24)
+    t.mat("schwarz", kasten_rund(*DECKEL_X, *DECKEL_Y, zf - 1, zf + DECKEL_H - 5, 25))
+    x0, x1, y0, y1 = DECKEL_X[0] + 2, DECKEL_X[1] - 2, DECKEL_Y[0] + 2, DECKEL_Y[1] - 2
+    t.mat("lack", kasten_rund(x0, x1, y0, y1, zf + DECKEL_H - 6, zf + DECKEL_H, 23))
+    xs, ys = (DECKEL_X[0] + 30, DECKEL_X[1] - 30), (DECKEL_Y[0] + 30, DECKEL_Y[1] - 30)
     for x in (xs[0], (xs[0] + xs[1]) / 2, xs[1]):
         for y in ys:
             t.mat("blank", sechskant((x, y, zf + DECKEL_H), (0, 0, 1), 18, 7))
@@ -660,7 +706,8 @@ def _bodenschrauben(t: Sammler) -> None:
     for yb, x0b, dx in ((-190.0, 1561.0, 140.0), (-160.0, 1540.0, 78.0), (-98.0, 1552.0, 140.0), (FW_Y1 - 22, FW_X0 + 30, 62.0)):
         x = x0b
         while x < (1955.0 if yb < 100 else FW_X1 - 20):      # links endet die Reihe vor dem Getriebedeckel (rumpf.py, x ab 1975)
-            if not (yb > 100 and 1440.0 < x < 1600.0) and not _auf_deckel(x, yb):   # rechts Luecke fuer Bremspedale; Deckel frei
+            # rechts Luecke fuer Stufe/Bremspedal, Deckel frei
+            if not (yb > 100 and 1440.0 < x < 1760.0) and not _auf_deckel(x, yb):
                 t += schraube((x, yb, zf), (0, 0, 1), 18, 6)
             x += dx
     zb = BODEN_Z
@@ -688,14 +735,13 @@ def _oel_stutzen(t: Sammler) -> None:
 
 # ---------------- Schalthebel ----------------
 def _schalthebel(t: Sammler) -> None:
-    """Schalthebel (Short c48/c50, Video 2:09/131/137/138): flacher Gummibalg auf der Getriebedeckel-Platte, Rohr Ø 20
-    steigt unten schraeg zum Armaturenkasten und knickt in die Senkrechte, schwarze Kugel Ø 45 oben."""
-    zf = FW_Z1 + DECKEL_H
+    """Schalthebel (Short c48/c49/p48.5, Nordhorn n129/z129): flacher Gummibalg direkt auf dem Fussraumboden (nicht auf einer
+    Platte), Rohr Ø 20 steigt unten schraeg zum Armaturenkasten und knickt in die Senkrechte, schwarze Kugel Ø 45 oben."""
+    zf = FW_Z1
     fx, fy = SCHALT
-    t.append(Pos(fx, fy, zf) * _zyl(64, 6))     # Abdeckplatte unter dem Balg
-    t.mat("gummi", Pos(fx, fy, zf + 6 + 16) * Torus(44, 16))                                       # Wulst (flacher Balg)
-    t.mat("gummi", Pos(fx, fy, zf + 6 + 16) * Cone(46, 22, 40, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    t.mat("gummi", Pos(fx, fy, zf + 6 + 54) * Torus(22, 6))                                        # Spannring oben
+    t.mat("gummi", Pos(fx, fy, zf + 16) * Torus(44, 16))                                       # Wulst (flacher Balg)
+    t.mat("gummi", Pos(fx, fy, zf + 16) * Cone(46, 22, 40, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("gummi", Pos(fx, fy, zf + 54) * Torus(22, 6))                                        # Spannring oben
     knauf = SCHALT_KNAUF
     kx, ky, kz = knauf
     knick = (kx + 4, ky, zf + 190.0)                      # Knick: darunter schraeg, darueber senkrecht
@@ -705,8 +751,8 @@ def _schalthebel(t: Sammler) -> None:
 
 # ---------------- Pedale ----------------
 def _pedal(t: Sammler, x: float, y: float) -> None:
-    """Pendelpedal: runder Hebel (Ø 30) steigt aus einem Schlitz mit Gummimanschette im Fussraumboden schraeg nach
-    hinten oben zu einer geneigten, geriffelten Trittplatte (Normale zum Fahrer)."""
+    """Pendelpedal: kurzer runder Hebel steigt aus einem Schlitz mit Gummimanschette im Fussraumboden schraeg nach hinten oben
+    zu einer geneigten, geriffelten Trittplatte (Normale zum Fahrer), die knapp ueber dem Boden steht (Short c48/p48.5)."""
     zf = FW_Z1
     t.mat("gummi", box(x - 16, x + 30, y - 27, y + 27, zf, zf + 8))               # Durchfuehrungsmanschette
     _trittplatte(t, Vector(x, y, zf + 8), Vector(x + PED_DX, y, zf + 8 + PED_DZ))
@@ -760,9 +806,9 @@ def _kupplungspedal(t: Sammler) -> None:
     t.mat("gummi", box(B.X - 26, B.X + 26, B.Y - 26, B.Y + 26, zf, zf + 8))                 # Durchtritt Zugstange
     # Gegenmutter
     t.mat("blank", Pos(*(A + u * 44)) * Rot(0, 0, math.degrees(math.atan2(u.Y, u.X))) * box(-5, 5, -10, 10, -10, 10))
-    # Kupplungshebel: Zunge in der Gabel -> Pedalhebel
-    t.append(box(kx - 17, kx + 1, ky - 4.5, ky + 4.5, za - 12, za + 40))                    # Zunge in der Gabel
-    _trittplatte(t, Vector(kx - 8, ky, za + 34), Vector(kx + PED_DX, ky, zf + 8 + PED_DZ + 20))
+    # Kupplungshebel: kurzer Hebel vom linken Ende des Arms nach vorn oben zur Trittplatte (Short p48.5: Pad vor dem Arm)
+    t.mat("zink", Pos(B.X, B.Y, za) * Sphere(9))
+    _trittplatte(t, Vector(B.X, B.Y, za), Vector(*PED_KUPPLUNG_PAD))
 
 
 def _fussraum(t: Sammler) -> None:
@@ -770,6 +816,7 @@ def _fussraum(t: Sammler) -> None:
     _bodenblech(t)
     _fussraumboden(t)
     _getriebedeckel(t)
+    _stufe(t)
     _bodenschrauben(t)
     _oel_stutzen(t)
     _schalthebel(t)
@@ -791,10 +838,10 @@ def _sitz_schale(t: Sammler) -> None:
 
     def ell(dz: float = 0.0) -> Solid:
         """Muldenellipsoid, um dz nach oben verschoben; der Boden der Schale liegt auf seiner Unterseite."""
-        return _ellipsoid((SITZ_X, 0, zc + dz), ea, eb, ec)
+        return _ellipsoid((SITZ_MX, 0, zc + dz), ea, eb, ec)
 
     def prisma(ra: float, rb: float, z0: float, z1: float) -> Solid:
-        return Pos(SITZ_X, 0, (z0 + z1) / 2) * scale(Cylinder(1, z1 - z0), by=(ra, rb, 1))
+        return Pos(SITZ_MX, 0, (z0 + z1) / 2) * scale(Cylinder(1, z1 - z0), by=(ra, rb, 1))
 
     ze = zb + SITZ_TIEFE + tt                                      # Oberkante Blechrand
     schale = (ell() - ell(tt)) & prisma(A, B, zb - 1, ze + 4)
@@ -803,45 +850,46 @@ def _sitz_schale(t: Sammler) -> None:
     ring = prisma(A, B, zb - 30, ze + 4) - prisma(A - tt, B - tt, zb - 31, ze + 5)
     schuerze = ring & (ell(-SITZ_RAND_H) - ell(tt))
     zw = ze - 0.5
-    wulst_pfad = Wire([Pos(SITZ_X, 0, zw) * Edge.make_ellipse(A - 5, B - 5)])
-    wulst = sweep(Plane(origin=(SITZ_X + A - 5, 0, zw), z_dir=(0, 1, 0)) * Circle(9.0), path=wulst_pfad)
-    # Polster (Kunstleder): fuellt die Mulde bis zu einer flacheren Oberflaeche, Rand 8 ueber dem Blechrand
-    za = ze + 8
-    dish = 25.0                                                    # Muldentiefe der Polsteroberflaeche
+    wulst_pfad = Wire([Pos(SITZ_MX, 0, zw) * Edge.make_ellipse(A - 5, B - 5)])
+    wulst = sweep(Plane(origin=(SITZ_MX + A - 5, 0, zw), z_dir=(0, 1, 0)) * Circle(9.0), path=wulst_pfad)
+    # Polster (Kunstleder): fuellt die Mulde, steht als Kissen ~36 ueber dem Blechrand (n164: Kissen ~55 ueber dem Rand,
+    # n129/z129: umlaufende senkrechte Kissenwand mit Naht, ueberhaengend) und hat oben eine weisse Biese
+    za = ze + 36
+    dish = 18.0                                                    # Muldentiefe der Polsteroberflaeche
     ea2 = 520.0
     eb2 = ea2 * B / A
     ec2 = dish / (1 - math.sqrt(1 - (A / ea2) ** 2))
-    top = _ellipsoid((SITZ_X, 0, za - dish + ec2), ea2, eb2, ec2)
-    polster = (ell(tt) & prisma(A - tt - 1, B - tt - 1, zb, za)) - top
+    top = _ellipsoid((SITZ_MX, 0, za - dish + ec2), ea2, eb2, ec2)
+    polster = ((ell(tt) & prisma(A - tt - 1, B - tt - 1, zb, za)) + prisma(A - 14, B - 14, ze + 1, za)) - top
     # Rueckenwulst: hochgezogener Polsterrand hinten (Sichel)
     sichel = (prisma(A - tt - 1, B - tt - 1, za - 12, za + 58)
               - Pos(-62, 0, 0) * prisma(A - tt - 1, B - tt - 1, za - 13, za + 59))
-    sichel = sichel & box(SITZ_X + 15, SITZ_X + A + 5, -B, B, za - 12, za + 59)
+    sichel = sichel & box(SITZ_MX + 15, SITZ_MX + A + 5, -B, B, za - 12, za + 59)
     with contextlib.suppress(Exception):
         sichel = fillet(sichel.edges().group_by(Axis.Z)[-1], 10)
-    biese_pfad = Wire([Pos(SITZ_X, 0, za - 3) * Edge.make_ellipse(A - 12, B - 12)])
-    biese = sweep(Plane(origin=(SITZ_X + A - 12, 0, za - 3), z_dir=(0, 1, 0)) * Circle(4.0), path=biese_pfad)
+    biese_pfad = Wire([Pos(SITZ_MX, 0, za - 4) * Edge.make_ellipse(A - 10, B - 10)])
+    biese = sweep(Plane(origin=(SITZ_MX + A - 10, 0, za - 4), z_dir=(0, 1, 0)) * Circle(4.0), path=biese_pfad)
     # Sitztraeger: Block unter der Mitte (an die Schalenunterseite angepasst), seitlich Schrauben
     tx0, tx1, ty = SITZ_TRAEGER
     kz0 = zb - SITZ_TRAEGER_UNTEN
-    traeger = box(SITZ_X + tx0, SITZ_X + tx1, -ty, ty, kz0, zb + 8) - ell(1)
-    schrauben = [sechskant((SITZ_X + dx, s_ * ty, zb - 25), (0, s_, 0), 14, 6) for dx in (-25, 25) for s_ in (-1, 1)]
+    traeger = box(SITZ_MX + tx0, SITZ_MX + tx1, -ty, ty, kz0, zb + 8) - ell(1)
+    schrauben = [sechskant((SITZ_MX + dx, s_ * ty, zb - 25), (0, s_, 0), 14, 6) for dx in (-25, 25) for s_ in (-1, 1)]
 
-    neig = Pos(0, SITZ_Y, 0) * Pos(SITZ_X, 0, zb) * Rot(0, SITZ_NEIG, 0) * Pos(-SITZ_X, 0, -zb)
+    neig = Pos(0, SITZ_MY, 0) * Pos(SITZ_MX, 0, zb) * Rot(0, SITZ_NEIG, 0) * Pos(-SITZ_MX, 0, -zb)
     for k in [schale, schuerze, wulst, traeger, *schrauben]:
         t.append(neig * k)
     t.mat("leder", neig * polster)
     t.mat("leder", neig * sichel)
-    t.mat("leder", neig * biese)
+    t.mat("zifferblatt", neig * biese)                            # weisse Biese (n129/z129)
 
 
 def _sitz_sockel(t: Sammler) -> None:
-    """Mittelsockel hinter dem Getriebedeckel (gepresster Kasten mit Fussplatte, unter der Sitzachse y = SITZ_Y) und
+    """Mittelsockel hinter dem Getriebedeckel (gepresster Kasten mit Fussplatte, unter der Sitzachse y = SITZ_MY) und
     Blattfeder-Arm: hinten im Sockel eingespannt, nach vorn unter die Sitzkonsole (zwei Lagen), Klemmplatte mit
     Buegelschrauben."""
     zb_s = BODEN_Z                                            # auf dem Bodenblech
     sx = SOCKEL_X
-    ys = SITZ_Y
+    ys = SITZ_MY
     t.append(kasten_rund(sx - 40, sx + 40, ys - 55, ys + 55, zb_s - 2, SOCKEL_Z1, 15))
     t.append(kasten_rund(sx - 60, sx + 60, ys - 75, ys + 75, zb_s - 2, zb_s + 10, 12))
     for dx in (-48, 48):
@@ -850,7 +898,7 @@ def _sitz_sockel(t: Sammler) -> None:
     # Blattfeder-Arm: hinten im Sockel eingespannt, nach vorn unter die Sitzkonsole (zwei Lagen)
     kz0 = SITZ_ZB - SITZ_TRAEGER_UNTEN
     p0 = Vector(sx + 30, ys, SOCKEL_Z1 + 5)
-    p1 = Vector(SITZ_X - 40, ys, kz0 + 4)
+    p1 = Vector(SITZ_MX - 40, ys, kz0 + 4)
     pm = (p0 + p1) * 0.5 + Vector(0, 0, -5)
     arc = ThreePointArc(p0, pm, p1)
     for fl, dz in ((1.0, 0.0), (0.55, -14.0)):
