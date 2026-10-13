@@ -156,23 +156,24 @@ X_KANNE, Y_KANNE = 1275.0, 140.0        # kleine Kanne rechts oben
 # --- Armaturenkasten (tuerkis), haengt an der Rueckseite des Mittelblocks unter dem Tankueberhang ---
 # y von / bis: 375 breit (Review Fussraum: Kamera-Fit Video 2:09, Frontbreite 350 px = 372 mm statt 436; Lenkgetriebe-Winkel
 # rechts daneben ab y 150)
-DASH_Y0, DASH_Y1 = -290.0, 85.0
+DASH_Y0, DASH_Y1 = -290.0, 175.0
 DASH_X0 = XW0                          # Rueckwand am Mittelblock
 DASH_ZU, DASH_ZO = 925.0, 1078.0       # Unterkante / Oberkante (Tankflansch beginnt bei 1081)
 DASH_XU, DASH_XO = 1510.0, 1472.0      # Frontflaeche: unten / oben (schraege Front, kippt nach hinten oben)
 
 # --- Lenkung und Handgas ---
 LENK_MITTE = Vector(*LENKRAD)                       # Lenkradmitte (common.py)
-# Schneckengetriebe-Gehaeuse rechts neben dem Armaturenkasten; Saeule steigt unter ~56 Grad (Nordhorn 2:15: ~60 Grad, die
-# Lenkradmitte liegt fest, daher flacher)
-LENK_FUSS = Vector(XK + 80.0, LENKRAD[1], 1062.0)
+# Saeule tritt direkt aus der schraegen Front des Armaturenkastens rechts neben den Instrumenten aus (Short 0:47, c47);
+# Durchtritt mit Flanschring. Die Lenkradmitte liegt fest, daher ~40 Grad statt der ~60 Grad im Short
+LENK_FUSS_Z, LENK_FUSS_Y = 1040.0, LENKRAD[1]
+LENK_FUSS = Vector(DASH_XU + (LENK_FUSS_Z - DASH_ZU) / (DASH_ZO - DASH_ZU) * (DASH_XO - DASH_XU), LENK_FUSS_Y, LENK_FUSS_Z)
+R_FLANSCH, H_FLANSCH = 35.0, 6.0      # Flanschring am Durchtritt Ø 70 x 6 (Short c47)
 R_KRANZ, R_KRANZ_Q = 210.0, 15.0      # Kranz Mitte / Querschnitt Ø 30 (aussen 450), Nordhorn 2:15/2:21
 R_SPEICHE = 6.0                       # Speichen Ø 12, blank, 3 x 120 Grad (Nordhorn 2:15/2:53)
 SPEICHE_SENK = 15.0                   # Speichen zur Nabe nach unten geschuesselt (Nordhorn 2:15)
 R_NABE, H_NABE = 35.0, 40.0           # Nabe Ø 70 x 40 mit flacher Kappe (Nordhorn 2:15)
-R_SAEULE, R_FUEHRUNG = 22.5, 12.5     # Saeulenrohr Ø 45 / Gestaengefuehrung Ø 25 parallel dahinter (Nordhorn 2:15)
-FUEHRUNG_ABST = 40.0                  # Achsabstand Fuehrung zur Saeule
-Y_HANDGAS = 118.0                     # Handgashebel neben der Saeule
+R_SAEULE = 22.5                       # Saeulenrohr Ø 45, ein Rohr bis in den Kasten (Nordhorn 2:15, Short c47)
+Y_HANDGAS = 195.0                     # Handgashebel neben der Saeule
 HANDGAS_FUSS = (1486.0, 1030.0)       # Drehpunkt Handgashebel (x, z), am Lenksaeulenwinkel
 HANDGAS_OBEN = (1556.0, 1236.0)       # Kopf der Handgasstange (x, z): ueber der Armaturenkasten-OK, hinter der Tankrueckwand
 
@@ -183,15 +184,14 @@ HANDGAS_OBEN = (1556.0, 1236.0)       # Kopf der Handgasstange (x, z): ueber der
 # Bremspedale;
 # gelenkt wird ueber das Lenkrad auf die Lenkbremsen) und Konvention: Kupplung links neben der Saeule, Bremsen rechts / unter dem
 # Rad.
-PED_X0 = 1640.0              # Durchtritt der Bremspedalhebel im Bodenblech
-PED_DX, PED_DZ = 105.0, 112.0   # Hebel: Schlitz -> Trittplatte (nach hinten oben)
-PED_B = 60.0                 # Breite der Trittplatten (y), Short c48: ~90 x 60
-PED_X1 = PED_X0 + PED_DX     # Trittflaechen 1745
+PED_X0 = 1468.0              # Durchtritt der Bremspedalhebel im Bodenblech
+PED_DX, PED_DZ = 100.0, 160.0   # Hebel: Schlitz -> Trittplatte (nach hinten oben)
+PED_B = 56.0                 # Breite der Trittplatten (y), Short c48: ~90 x 60
+PED_X1 = PED_X0 + PED_DX     # Trittflaechen ~1568, z ~858 (unter dem Armaturenkasten, Short 0:48)
 # Kupplungspedal (x, y): Gabelkopf des Gestaenges Video 2:09 (Kamera-Fit t020: Boden x ~1665..1720, y ~10..105)
-PED_KUPPLUNG = (1665.0, 112.0)
-PED_KUPPLUNG_DURCHTRITT = (1722.0, 52.0)   # Durchtritt der Kupplungs-Zugstange im Blech (x, y)
-PED_BREMSE = ((1640.0, 218.0), (1640.0, 298.0))   # zwei Bremspedale (links/rechts Lenkbremse), unter dem Lenkrad
-PED_KLINKE_Y = 258.0         # Verbindungsklinke zwischen den Bremspedalplatten
+PED_KUPPLUNG = (1480.0, 195.0)
+PED_KUPPLUNG_DURCHTRITT = (1537.0, 140.0)   # Durchtritt der Kupplungs-Zugstange im Blech (x, y)
+PED_BREMSE = (1468.0, 290.0)   # Bremspedal neben dem Kupplungspedal (Short 0:48)
 
 # --- Getriebedeckel im Fussraumboden (Short c48/c50: erhabene, rechteckige Platte mit gerundeten Ecken, 6 Schrauben) ---
 DECKEL_X, DECKEL_Y = (1480.0, 1780.0), (-145.0, 105.0)   # 300 x 250, Schalthebel steht darauf
@@ -474,7 +474,7 @@ def _tankkasten(t: Sammler, s: int) -> None:
     t.append(box(TK_X0 - 15, DECK_X0, b0, b1, TK_Z0 - TK_SHELF - 30, TK_Z0))
     # Knotenbleche zwischen Konsolenblech und Stuetze
     for xs in STUETZEN_X:
-        kn = Polyline((s * (GLOCKE_Y + 22), TK_Z0 - TK_SHELF), (s * (GLOCKE_Y + 22), TK_Z0 - TK_SHELF - 90),
+        kn = Polyline((s * (GLOCKE_Y + 22), TK_Z0 - TK_SHELF), (s * (GLOCKE_Y + 22), TK_Z0 - TK_SHELF - 50),
                       (s * (GLOCKE_Y + 120), TK_Z0 - TK_SHELF), close=True)
         t.append(extrude(Plane.YZ.offset(xs - 5) * make_face(kn), amount=10))
 
@@ -596,34 +596,13 @@ def _lenkrad(t: Sammler, b: Vector, d: Vector) -> None:
         t.mat(mat, [loc * s for s in lst])
 
 
-def _saeule(t: Sammler, a: Vector, b: Vector, d: Vector) -> None:
-    """Saeulenrohr Ø 45 (lackiert) mit duenner Gestaengefuehrung parallel dahinter und Klemmschelle (Nordhorn 2:15)."""
-    t.append(stab(a + d * 50, b - d * 70, R_SAEULE))
-    n = Vector(d.Z, 0, -d.X).normalized()                      # senkrecht zur Saeule, nach hinten unten (zum Fahrer)
-    f0, f1 = a + d * 70 + n * FUEHRUNG_ABST, b - d * 150 + n * FUEHRUNG_ABST
-    t.mat("blank", stab(f0, f1, R_FUEHRUNG))
-    mitte = (f0 + f1) / 2 - n * FUEHRUNG_ABST                  # Punkt auf der Saeulenachse
-    h = d * 9
-    t.mat("blank", stab(mitte - h, mitte + h, R_SAEULE + 4) - stab(mitte - h * 1.2, mitte + h * 1.2, R_SAEULE))   # Klemmschelle
-    t.mat("blank", stab(mitte + n * FUEHRUNG_ABST - h, mitte + n * FUEHRUNG_ABST + h, R_FUEHRUNG + 4))     # Fuehrungsring
-    t.mat("blank", sechskant(mitte + n * (R_SAEULE + 2), n, 16, 8))                                     # Klemmschraube
-    t.mat("lack", stab(a + d * 60 + n * FUEHRUNG_ABST, a + d * 60 + n * 5, 6))                       # Fuehrungsfuss
-
-
 def _lenkung(t: Sammler) -> None:
-    """Lagerkonsole mit Schneckengetriebe-Gehaeuse, Saeule (Rohr Ø 45) mit Gestaengefuehrung, Lenkspindel, Lenkrad."""
+    """Saeule Ø 45 als ein Rohr vom Lenkrad bis in den Armaturenkasten, Flanschring am Durchtritt (Short c47), Lenkspindel."""
     a, b = LENK_FUSS, LENK_MITTE
     d = (b - a).normalized()
-    # Winkelblech am Mittelblock rechts neben dem Armaturenkasten, Schneckengetriebe-Gehaeuse
-    px = XW0 + 16
-    t.append(box(XW0, px, 150.0, 255.0, 985.0, DASH_ZO))
-    t.append(box(px - 1, a.X + 34, a.Y - 40, a.Y + 40, 1042.0, 1066.0))   # Lagerkonsole auf dem Winkelblech
-    for dy in (-42, 42):
-        for zz in (1005.0, 1060.0):
-            t.mat("blank", sechskant((px, a.Y + dy, zz), (1, 0, 0), 16, 7))
-    t.append(stab(a - d * 12, a + d * 30, 26))                # Lagerstutzen / Gehaeuse
-    t.append(stab(a + d * 24, a + d * 52, 33))                 # Gehaeuseabschluss
-    _saeule(t, a, b, d)
+    t.append(stab(a - d * 40, b - d * 70, R_SAEULE))
+    nf = Vector(DASH_ZO - DASH_ZU, 0, DASH_XU - DASH_XO).normalized()      # Normale der schraegen Front
+    t.append(stab(a - nf * 1.0, a + nf * H_FLANSCH, R_FLANSCH))             # Flanschring auf der Front
     t.mat("blank", stab(b - d * 72, b - d * 36, 8))            # Lenkspindel
     _lenkrad(t, b, d)
 
@@ -681,7 +660,7 @@ def _bodenschrauben(t: Sammler) -> None:
     for yb, x0b, dx in ((-190.0, 1561.0, 140.0), (-160.0, 1540.0, 78.0), (-98.0, 1552.0, 140.0), (FW_Y1 - 22, FW_X0 + 30, 62.0)):
         x = x0b
         while x < (1955.0 if yb < 100 else FW_X1 - 20):      # links endet die Reihe vor dem Getriebedeckel (rumpf.py, x ab 1975)
-            if not (yb > 100 and 1590.0 < x < 1800.0) and not _auf_deckel(x, yb):   # rechts Luecke fuer Bremspedale; Deckel frei
+            if not (yb > 100 and 1440.0 < x < 1600.0) and not _auf_deckel(x, yb):   # rechts Luecke fuer Bremspedale; Deckel frei
                 t += schraube((x, yb, zf), (0, 0, 1), 18, 6)
             x += dx
     zb = BODEN_Z
@@ -729,23 +708,17 @@ def _pedal(t: Sammler, x: float, y: float) -> None:
     """Pendelpedal: runder Hebel (Ø 30) steigt aus einem Schlitz mit Gummimanschette im Fussraumboden schraeg nach
     hinten oben zu einer geneigten, geriffelten Trittplatte (Normale zum Fahrer)."""
     zf = FW_Z1
-    t.mat("gummi", box(x - 30, x + 30, y - 38, y + 38, zf, zf + 8))               # Durchfuehrungsmanschette
+    t.mat("gummi", box(x - 16, x + 30, y - 27, y + 27, zf, zf + 8))               # Durchfuehrungsmanschette
     _trittplatte(t, Vector(x, y, zf + 8), Vector(x + PED_DX, y, zf + 8 + PED_DZ))
 
 
 def _bremspedale(t: Sammler) -> None:
-    """Bremspedale (links / rechts Lenkbremse) unter dem Lenkrad; Verbindungsklinke (Sperrstange) zwischen den
-    Platten. Darunter (nur dort, wo unter dem Blech Luft ist, also |y| > 255 neben dem Getriebegehaeuse) laufen
-    Hebel und Zugstange zum Lenkbremsgehaeuse; ueber dem Getriebe sind sie verdeckt."""
+    """Bremspedal (neben dem Kupplungspedal, Short 0:48); unter dem Blech laufen Hebel und Zugstange zum
+    Lenkbremsgehaeuse (nur dort, wo unter dem Blech Luft ist, |y| > 255 neben dem Getriebegehaeuse)."""
     zf = FW_Z1
-    for xb_, yb_ in PED_BREMSE:
-        _pedal(t, xb_, yb_)
-    pl_k = Plane(origin=Vector(PED_X1, PED_KLINKE_Y, zf + 8 + PED_DZ), x_dir=(0, 1, 0), z_dir=(0.5, 0, 0.866))
-    # Klinke zwischen den Platten (Luecke 255..261 -> Bolzen)
-    t.mat("blank", pl_k * Pos(0, 0, 4) * Box(30, 8, 8))
-    # rechtes Bremspedal (y 298): Hebel durch das Blech nach unten, Gabelkopf, Zugstange z 676 nach hinten zum Hebel am
-    # Lenkbremsgehaeuse
-    xr, yr = PED_BREMSE[1]
+    _pedal(t, *PED_BREMSE)
+    # Hebel durch das Blech nach unten, Gabelkopf, Zugstange z 636 nach hinten zum Hebel am Lenkbremsgehaeuse
+    xr, yr = PED_BREMSE
     # Achse der Zugstange 676 (Gehaeuse oben 628, Blech unten 716)
     zr = FW_Z0 - 40.0
     t.append(stab((xr, yr, zr), (xr, yr, zf + 8), 12))

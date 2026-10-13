@@ -8,13 +8,13 @@ Koordinaten (Modell-mm, anders als die uebrigen Module direkt im Modellsystem):
   X = Laengsrichtung, Vorderkante Kuehlermaske bei x=0, nach hinten positiv
   Y = Querrichtung, +Y = rechte Fahrzeugseite (in Fahrtrichtung)
   Z = Hoehe, z=0 = MASKE_UNTEN (392 mm ueber Boden im Original, Nullebene des Modellsystems);
-      die Maske selbst beginnt erst bei MASKE_UK = 450 (z = m(58)).
+      die Maske selbst beginnt erst bei MASKE_UK = 525 (z = m(133)).
 
 Masse in ORIGINAL-mm (mit m() bzw. _z() umgerechnet), Hauptmasse aus cad/common.py.
 Druckparameter (Wandstaerke, Sickenhoehe ...) direkt in Modell-mm.
 
 Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
-  - Maske x 0..210, z 450..1410, 710 breit (h/b 1,35; Video 165/167, Flickr, DSC04737). Glatte Kappe
+  - Maske x 0..210, z 525..1410, 710 breit (h/b 1,35; Video 165/167, Flickr, DSC04737). Glatte Kappe
     ~115 (Vorderflaeche senkrecht, vorn oben R 35, Oberkante quer gewoelbt) mit Fluegellogo; durchgehendes
     Kuehlerfenster 620 x 640 (Randstreifen 45; Video 010/046/058/172-176/194-200, Flickr 26271249857) mit
     DREI senkrechten Staeben (4 Felder, keine Querbaender, kein Mittelsteg), dahinter senkrechte Lamellen
@@ -148,7 +148,7 @@ KM_SAG = m(DACH_SAG)        # Pfeilhoehe des Dachbogens (Flickr-Frontfoto: Mitte
 # --- Kuehlermaske (Original-mm, in Modell-mm umgerechnet) ---
 # Fotos DSC04737/38 (frontal) und DSC04742 (Seite): Maske 710 x 897; Kappe glatt (Vorderflaeche senkrecht,
 # Oberkante quer gewoelbt, vorn oben kleine Rundung); darunter das Grillfenster fast ueber die ganze Breite.
-KM_Z0 = _z(MASKE_UK)  # Unterkante (z = m(58))
+KM_Z0 = _z(MASKE_UK)  # Unterkante (z = m(133))
 KM_T = m(HAUBE_X0)    # Tiefe (x 0..210)
 KM_R_KAPPE = m(35)    # Rundung Kappe vorn oben (Seitenprofil, DSC04742: Oberkante flach, kleine Ecke)
 KM_KAPPE = m(115)     # glatte Kappe ueber dem Fenster (Flickr 26271249857: ~112)
@@ -173,7 +173,7 @@ GITTER_X = 1.8        # Vorderseite Gittereinsatz (hinter der Maskenwand x 0..1.
 H_X0 = KM_T                           # Haube beginnt direkt hinter der Maske (x = 210)
 H_L = m(HAUBE_X1) - H_X0              # bis x = 1080 (dahinter Tank)
 H_B = m(HAUBE_B)                      # Breite 690
-H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante vorderes Seitensegment (z 620)
+H_UNTEN = _z(HAUBE_UNTEN_Z)           # Unterkante vorderes Seitensegment (z 780)
 H_R_DACH = m(DACH_R_KANTE)                      # Radius Dachkanten (Dachbogen -> Seitenwand), gleich KM_R_OBEN
 SEG_L = m(SEG_X1) - H_X0              # vorderes Seitensegment
 DACH_SICKE_Y = m(150)                 # Laengssicken auf dem Dach (|y|)
@@ -206,7 +206,8 @@ TYP_FASE = 0.15                          # kleinere Fase: Strich ~1.0 mm, Deckfl
 # --- Seitenblech unter dem Motorausschnitt (Original-mm) ---
 # Oberkante des Blechs (= Unterkante des Motorfensters, Buerdel) bei z ~805..810; direkt darunter reicht das Blech
 # bis an die Kette (Nordhorn-Video 2:44 s164, Ausrichtung an 6 Laufrollen + Triebradnabe, Video 2:53/2:58).
-BLECH_Z0, BLECH_Z1, BLECH_Z2 = 695.0, 800.0, 808.0     # Unterkante; Oberkante aussen / innen (schraege Lippe)
+BLECH_Z0, BLECH_Z1, BLECH_Z2 = 780.0, 800.0, 808.0
+# Unterkante = Haubenkante auf Greiferhoehe (Nordhorn 2:44); Oberkante aussen / innen (schraege Lippe)
 
 # --- Scheinwerfer (je Seite, separat drucken) ---
 SW_D = m(150)                                # Aussendurchmesser
@@ -476,7 +477,7 @@ def _stab(z0: float, z1: float, y: float) -> Part:
 
 
 def kuehlermaske() -> tuple[Part, tuple[float, float, float]]:
-    """Maskenschale (z 450..1410): glatte Kappe, durchgehendes Kuehlerfenster mit drei senkrechten Staeben,
+    """Maskenschale (z 525..1410): glatte Kappe, durchgehendes Kuehlerfenster mit drei senkrechten Staeben,
     breiter Randstreifen, Kurbelloch, Kuehlerverschluss.
     Liefert (Solid, (Fensterbreite, Fensterhoehe, Fensterunterkante))."""
     outer = _maske_aussen()
@@ -713,7 +714,7 @@ def _haubenhalter(side: int) -> list[Part]:
 def _fensterblech(side: int) -> Part:
     """Seitenblech unter dem Motorfenster (Fotos DSC04729/42, Nordhorn-Video 2:44/2:53/2:58): durchgehender Blechstreifen,
     buendig mit der Haubenaussenkante (y 332..345), Oberkante mit schraeger Aussenlippe (innen z 808 -> aussen z 800),
-    Unterkante BLECH_Z0 = 695, ~ 25..30 ueber der Plattenoberseite des oberen Kettentrums (laufwerk: Bolzen 668..700 - HP),
+    Unterkante BLECH_Z0 = 780 = HAUBE_UNTEN_Z (Haubenkante auf Greiferhoehe, Greifer oben 738..768) ueber dem oberen Kettentrum;
     die Greifer (Spitzen ~ 735..750) stehen davor; hintere Unterecke R 60.
     Beginnt bei x 365 (ueberlappt die Segmentkante, sonst schwebt das Blech) und endet am Haubenende x 1080 (im Video
     endet die Unterkante des Motorfensters dort an der Kupplungsglocke/dem A-Bock)."""

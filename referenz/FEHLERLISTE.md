@@ -70,11 +70,30 @@ mit Gestängeführung, Fuß x 1560; LENKRAD (1930, 200, 1440) mit Kranz über de
 Auslieferungszustand (Hanomag-Grün, Motor = Lack·0,82, Räder rot nur am Laufwerk, Auspuff hitzefest schwarz, Schilder
 Messing/Emaille „schild“, Armaturen „messing“; Türkis/Bosch-Blau/Video-Rot entfernt).
 
+Runde 16/17 (2026-10-13, Besitzer-Beschreibung + Fotos „Steuerblock“/„Anschluss rechts“ aus dem Short, Nordhorn): Zylinderleitungen
+endgültig: Steuerblock direkt an der Traverse (x 2480..2620, z 985..1115 auf Konsole), Druckleitung von der Plattform in P,
+eigener Kugelhebel auf Lagerbock mit Gabelkopf-Gestänge zum Schieber; zwei Ø30-Steiger aus der Blockdecke (x 2540/2600) auf
+z 1230 mit T-Stück, je Zweig nach links/rechts spiegelgleich: quer → 90° vor (x 2360/2300) → 90° runter vor der Endkastenwand →
+90° außen direkt in den Zylinder, Anschlüsse übereinander (z 1100/1060); keine Decken-/Wandlöcher mehr; Halter = Flachstahl-
+Bügel mit Fußplatte auf dem Tank + Tragarm/Schellen (Nordhorn 2:09/2:24). Fahrerstand: Fußraum-Stufe 225 (Boden 690),
+Getriebedeckel-Platte mit Balg-Schalthebel, nur ZWEI Pedale vorn rechts unter dem Armaturenkasten (x ~1530..1610,
+y 195/290; Short 0:48), Lenksäule Ø45 direkt aus der Kastenfront ohne Konsole, LENKRAD (1850, 140, 1440). Motor: Kasten
+HANOMAG DIESEL = Einspritzpumpe (Händlerfotos traktorteile-maier R40-94): 4 Druckventilhalter oben, Rahmendeckel, runder
+Reglerkopf vorn, Stopfenleiste, Messing-Förderpumpe; Bosch-Pumpe entfernt; Geflechtschläuche (moderne Ersatzteile) entfernt;
+Größen nach Nordhorn: Luftfilterkappe (Oberkante 1740, Ø92/140), Arbeitsleuchte, Auspuff 1850, Filterbirnen-Abstand 115,
+Vorreiniger, Reglerkopf, Ölfilter kurz/fast senkrecht, Kühler-Unterkante 520 bündig unter der Maske. Maske: MASKE_UK 450 → 525
+(Overlay n160/n167), Pumpen-Frontplatte an PUMPE[2] gekoppelt. Haube: HAUBE_UNTEN_Z 620 → 780 (Nordhorn 2:44: Haubenkante
+auf Greiferhöhe 763), Fensterblech 780..808. Schubrahmen: SB_XV 560 → 300, X_STUFE0 −160 → −100, Z_RAHMEN 515,
+Druckstrebe, Anschlussbock mit Bolzen/Deckel am Balkenende, Längssteg (n160/n167/n172). Höhenabgleich 2:44 (eigene Messung,
+2,46 mm/px): Greifer 763 ✓, Plattform ≈ ✓, Zylinderachse ✓ – Aufbau NICHT angehoben.
+
 Offen:
-- Haltestange (dünnes Rohr quer über dem Sitz, Short 0:15/Nordhorn 2:15) nicht modelliert; rechtes Querrohr ohne Pfosten.
-- Kastenpumpen-Deckel nur 39 tief (Druckleitungen bei y −228 im Weg); Vorreiniger-Lage geschätzt.
-- Spalt Kette/Rahmen am Triebrad bleibt ~40 (Z_TRIEB 402 belegt); mehr nur über tieferes Triebrad oder höhere Blechlippe.
-- Sitzvorderkante nur ~230 hinter dem Lenkradkranz, ergonomisch knapp.
+- Haltestange (dünnes Rohr quer über dem Sitz, Short 0:15/Nordhorn 2:15) nicht modelliert.
+- Kein Rücklauf zum Öltank (Nutzerentscheidung). Pumpendeckel-Tiefe 39 wegen Druckleitungen.
+- Ölfilter im Video am Handlochdeckel (x ~890, z ~970), Modell nach Fotos bei x 720 – Lage nicht geändert.
+- Auspuff-Ø widersprüchlich (n10 ~40, n167 ~62), bleibt 48.
+- Seitliche Befestigungsfüße des Pumpenkastens zum Block fehlen; Anlasser-Länge (~290 im Video) wegen Ölmessstab bei 235.
+- Innere Bauteile unter der Plattform (Fußraumwand, Getriebe) wirken als geschlossene Fläche – ggf. dunkles Material.
 - Rundes Speichen-Verstellrad unter dem hinteren Sitzrand (Short) nicht verortet.
 - Pedal-Details/Kupplungsgestänge plausibel, aber bis auf den Gabelkopf nicht fotografisch belegt.
 - Vorderes Haubensegment Unterkante (HAUBE_UNTEN_Z 620) im Video eher 650..720, unsicher.

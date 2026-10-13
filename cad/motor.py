@@ -3,9 +3,12 @@ Luefter, Riementrieb, Einspritzanlage, Lichtmaschine, Anlasser und Schwungradgeh
 Auspuffanlage und Ansaugung.
 
 Original-mm, X ab Vorderkante Kuehlermaske nach hinten, Y nach rechts, Z ab Boden.
-Linke Seite (y < 0): Einspritzpumpe vorn (Antrieb aus dem Steuergehaeuse), Vorreiniger mit
-Glasschale hinter der Pumpe, Kraftstoff-Doppelfilter oben, Seitendeckel "HANOMAG DIESEL" unten
-hinter der Pumpe, Stoesselkammerdeckel, Anlasser am Schwungradgehaeuse, Ansaugkruemmer.
+Linke Seite (y < 0): Der Kasten "HANOMAG DIESEL" ist die Einspritzpumpe (Hanomag-Eigenbau, es gibt keine
+Bosch-Reihenpumpe): Gusskasten mit Schriftplatte, Rahmendeckel mit den 4 Druckventilhaltern, runder Reglerkopf an
+der Stirn (Antrieb ueber ein Gehaeuse vom Steuergehaeuse), Elementverschluesse unten, Foerderpumpe (Messing) mit
+Handpumpe. Dazu Vorreiniger, Kraftstoff-Doppelfilter oben, Stoesselkammerdeckel, Anlasser am Schwungradgehaeuse,
+Ansaugkruemmer. Belege: Haendlerfotos traktorteile-maier R40-94 (ausgebaute Pumpe D52/D57), Nordhorn 1:37-1:49
+(eingebaut, linke Seite).
 Rechte Seite (y > 0): Lichtmaschine vorn oben, Oelfilter, Oelmessstab, Abgaskruemmer.
 
 Fotobefund: Foto BS (rechte Seite): Haube endet bei x ~1080, Auspuffrohr steht bei x ~640 aus
@@ -110,35 +113,36 @@ SCHEIBE_LIMA = (255.0, 960.0, 46.0)     # Lichtmaschine Mitte z 960 (Fotos DSC04
 LUEFTER_X, LUEFTER_R = 354.0, 245.0
 HAUBE_BLECH = 10.0                      # Luefterhaube (>= 1,2 mm Modell)
 
-# --- Kuehler (hinter der Maske, z innerhalb MASKE_UK 450 .. Dach) ---
+# --- Kuehler (hinter der Maske, z innerhalb MASKE_UK 525 .. Dach) ---
 K_X0, K_X1 = 225.0, 335.0
 K_Y = 320.0
-K_Z0, K_Z1 = 480.0, HAUBE_DACH_Z - 77.0   # Oberkante unter der gewoelbten Dachecke (1333, folgt dem Dach)
+K_Z0, K_Z1 = 520.0, HAUBE_DACH_Z - 77.0   # Unterkante Wasserkasten = MASKE_UK 525 - 5 (Nordhorn 0:10-0:30: kein Kuehler
+                                          # sichtbar, Querblech/Traeger darunter); Oberkante unter der gewoelbten Dachecke (1333)
 K_NETZ_Z0, K_NETZ_Z1 = 580.0, HAUBE_DACH_Z - 167.0   # Netz bis 1243
 K_ZULAUF_Z = K_NETZ_Z1 + 60.0           # Hoehe Zulaufstutzen/Oberschlauch (1303)
 KD_Z = HAUBE_DACH_Z - 13.0              # Unterseite Maskendach innen (~1397, Wand 1,6 mm Modell)
 
-# --- Einspritzanlage (linke Seite, vorn) ---
-Y_ESP = -228.0                          # Mittelebene Einspritzpumpe und Druckleitungen
-ESP_X0, ESP_X1 = 440.0, 670.0
-ESP_Z0, ESP_Z1 = 640.0, 745.0
-ESP_Y0, ESP_Y1 = Y_ESP - 36, Y_ESP + 36   # Pumpengehaeuse quer
-DV_X = [ESP_X0 + 30 + 50 * i for i in range(4)]   # Druckventilhalter 470..620
-DL_Z = [Z_DUESE - 20 - 9 * i for i in range(4)]   # Hoehe der waagerechten Leitungsabschnitte (neben dem Deckel)
+# --- Einspritzanlage (linke Seite): der Kasten SD_* ist die Pumpe ---
+DV_TEILUNG = 55.0                       # Teilung der Druckventilhalter (Haendlerfotos R40-94)
+DV_Y = -262.0                           # Druckventilhalter auf dem Rahmendeckel
 DL_R = 3.5                              # Radius der Druckleitungen
-FILTER_X = (525.0, 756.0)               # zwei getrennte Kraftstofffilter mit Glasbirnen (DSC04742)
+DL_H = 1006.0                           # waagerechte Leitungsabschnitte (unter dem Ansaugtopf z 1020, neben dem Kruemmer)
+DL_Y = [-270.0 - 10.0 * i for i in range(4)]   # gestaffelt nach aussen (i = vorderster Zylinder innen), keine Kreuzung
+FILTER_X = (655.0, 770.0)               # zwei Kraftstofffilter (Nordhorn 1:34/1:43: Zylinder Ø ~105 stehen fast aneinander,
+                                        # Mittenabstand ~115 statt 231; Massstab Kasten 360 = 745 px)
 FILTER_Y = -270.0
 FILTER_Z = 1095.0                       # Mitte der Glasbirnen (Ø 100); Oberteil liegt hinter dem Haubenband (z > 1090)
 FILTER_KOPF_Z = FILTER_Z + 58.0         # Mitte Anschlusskopf (1153)
-FP_DX = 121.0                           # Foerderpumpe: Mitte hinter ESP_X0
 VR_X = 765.0                            # Vorreiniger mit Glasschale hinter dem Regler
-# Nordhorn 1:37-1:49: messingfarbene Foerderpumpe mit Handpumpe vor dem Kasten (Oberkante ~850), Vorreiniger weiter vorn
-FP_X0, FP_X1 = ESP_X0 + FP_DX - 45, ESP_X0 + FP_DX + 45   # Pumpenkoerper 516..606 (Lageransatz beginnt bei x 627)
-FP_Y0, FP_Y1 = -302.0, -250.0           # Pumpenkoerper quer
-FP_Z0, FP_Z1 = 800.0, 850.0             # Pumpenkoerper senkrecht
-FP_KNOPF_H = 60.0                       # Handpumpe: Raendelstange ueber dem Koerper (Oe 20)
-VF_X, VF_Y = 505.0, -262.0              # Vorreiniger (Glasschale Oe 56, Mitte x 420..505 / z 830..845)
-VF_Z0, VF_Z1 = 815.0, 872.0             # Glasschale; darueber Kopf bis 888 (unter dem Gestaenge z 900)
+# Nordhorn 1:37-1:49 / Haendlerfotos R40-94: messingfarbene Foerderpumpe mit Handpumpe unten vor dem Kasten
+FP_X0, FP_X1 = 545.0, 650.0             # Pumpenkoerper (Nordhorn 1:34: Messingblock ~115 lang, x 535..650)
+FP_Y0, FP_Y1 = -302.0, -252.0           # Pumpenkoerper quer
+FP_Z0, FP_Z1 = 735.0, 785.0             # Pumpenkoerper senkrecht (unter dem Reglerkopf)
+FP_KNOPF_X, FP_KNOPF_Y = 562.0, -288.0  # Handpumpe: Raendelstange (Oe 20) vor dem Regler
+FP_KNOPF_H = 60.0                       # Hoehe der Stange ueber dem Koerper
+VF_X, VF_Y = 505.0, -268.0              # Vorreiniger (Glasschale Oe 56, Mitte x 420..505 / z 830..845)
+VF_Z0, VF_Z1 = 826.0, 872.0             # Glasschale Ø 36 x 46 (Nordhorn 1:34); Kopf bis 888
+VF_R = 18.0                             # Radius der Glasschale
 
 # --- Seitendeckel / Kastenpumpe "HANOMAG DIESEL" (unten hinter der Pumpe, ueber dem Anlasser) ---
 # Nordhorn 1:37-1:49 (linke Seite, Kamera seitlich; Massstab Kastenbreite 360, Fensterblech-Lippe z 808): Gussgehaeuse mit
@@ -148,11 +152,16 @@ SD_X0, SD_X1 = 665.0, 1025.0                                   # Gussgehaeuse (N
 SD_Z0, SD_ZF0, SD_Z1 = 785.0, 912.0, 936.0                     # Unterkante / Flansch-Unterkante / Flansch-Oberkante (Deckelfuge)
 SD_Y0, SD_Y1 = -184.0, -285.0                                  # Block-Seite (leicht eingesenkt) bis Gehaeuse-Aussenflaeche
 SD_Y_OBEN = -238.0                                             # Flansch/Deckel nur aussen (Druckleitungen y -228 daneben)
-SD_DK_Z1 = 978.0                                               # Oberkante Blechdeckel (Nordhorn ~970..985)
+SD_DK_Z1 = 958.0                                               # Deckelplatte (flach), Rahmenrand 8 hoeher
+SD_RAHMEN_H = 8.0
 SD_XM, SD_ZM = (SD_X0 + SD_X1) / 2, (SD_Z0 + SD_ZF0) / 2       # Mitte Schriftfeld 845 / 848,5
 SD_Y_PLATTE = SD_Y1 - 8.0                                      # Plattenflaeche
 SD_Y_ERHABEN = SD_Y_PLATTE - 6.0                               # erhabenes Kissenfeld
-SK_X0, SK_X1, SK_Z0, SK_Z1 = 495.0, 625.0, 795.0, 865.0        # Stoesselkammerdeckel (vorn, hinter den Druckleitungen)
+DV_X = [SD_XM + (i - 1.5) * DV_TEILUNG for i in range(4)]      # Druckventilhalter 762..927 auf dem Deckel
+# Reglerkopf an der Stirn (Haendlerfotos: rund, Oe ~104, ~80 lang), Achse x
+REG_X0, REG_X1 = SD_X0 - 60.0, SD_X0
+REG_Y, REG_Z, REG_R = -243.0, 840.0, 44.0   # Nordhorn 1:34: Reglerkopf Ø ~88, ~60 lang (Massstab Kasten 360)
+SK_X0, SK_X1, SK_Z0, SK_Z1 = 495.0, 580.0, 795.0, 865.0        # Stoesselkammerdeckel (vorn, hinter den Druckleitungen)
 
 # --- Schwungradgehaeuse ---
 SG_X0, SG_X1, SG_X2 = X_HINTEN, FLANSCH_GLOCKE_X - 12, FLANSCH_GLOCKE_X   # SG_X2 = Flansch Glocke
@@ -164,6 +173,7 @@ ANL_Y, ANL_Z = 272.0, 870.0             # Video 2:44/2:58: Unterkante ~812 direk
 
 # --- Rechte Seite: Oelfilter, Oelmessstab ---
 OELF_X, OELF_Z = 720.0, 840.0           # Oelfilter-Flanschplatte am Block (Spec 650/930 kollidiert mit Lichtmaschine/Kruemmer)
+OELF_R, OELF_L = 34.0, 52.0                # Kanister Ø 68, Zylinderlaenge zwischen den Kugelenden (Gesamt 120)
 MESS_X = 790.0                          # Oelmessstab (vor dem Anlasser)
 
 # --- Auspuff (Abgaskruemmer rechts) ---
@@ -172,13 +182,17 @@ Z_KRUEMMER = Z_KOPF1 + 49.0             # Achse Abgassammelrohr 1084 (ueber der 
                                         # tiefer schneidet es Einspritzleitungen/Raeder; Material schwarz)
 RK_KRUEMMER = 36.0
 YK_KRUEMMER = 255.0                     # Sammelrohr-Lage in y (ueber der Lichtmaschine)
-AUSPUFF_Z_TOP = 1985.0                  # Rohrende
+AUSPUFF_Z_TOP = 1850.0                  # Rohrende (Nordhorn 2:46 / Foto 0:10: ~440 ueber dem Dach, ~110 ueber der Ansaugkappe)
 
 # --- Ansaugung (Oelbadluftfilter links) ---
 ANSAUG_R_ROHR = ANSAUG_D / 2 - 5        # 33
 ANSAUG_ZP0, ANSAUG_ZP1 = 1020.0, 1194.0  # Topf (Unterkante ~1020, Ø 190..210)
 ANSAUG_R_TOPF = 95.0                    # y = iy - 95 = -331 bleibt innerhalb der Wand (-332)
 ANSAUG_ZS = HAUBE_KRAGEN - 0.5          # Gummimanschette auf dem Kragen
+# Kappe (Nordhorn 0:10/2:46, Massstab Deckel Ø 140): glatter Becher Ø 92 x 115, Deckel Ø 140 x 44
+ANSAUG_Z_TOP = 1740.0
+ANSAUG_KAPPE_DECKEL_H, ANSAUG_KAPPE_BECHER_H = 44.0, 115.0
+ANSAUG_KAPPE_Z0 = ANSAUG_Z_TOP - ANSAUG_KAPPE_DECKEL_H - ANSAUG_KAPPE_BECHER_H   # Becher-Unterkante 1581
 
 
 # ======================================================================================
@@ -263,7 +277,6 @@ def _gehaeuse(t: Sammler) -> None:
         t.append(box(405, X_HINTEN - 15, s * Y_BLOCK - 4, s * Y_BLOCK + 4, Z_KOPF0 - 10, Z_KOPF0))  # Leiste oben
     # Steuergehaeuse vorn mit Auge fuer den Pumpenantrieb
     t.append(kasten_rund(X_VORN, 402, -170, 170, 490, 820, 40, Axis.X))
-    t.append(rad_x(391, Y_ESP, 690, 46, 22))
     t += schraubenreihe((X_VORN, -150, 510), (X_VORN, 150, 510), 5, (-1, 0, 0), 16, 6)
 
 
@@ -430,19 +443,26 @@ def _pumpenkasten(t: Sammler) -> None:
 
 
 def _pumpendeckel(t: Sammler) -> None:
-    """Aufgesetzter Blechdeckel (Haube mit gerundeten Kanten, oben flach) mit Einfuellkappe und Verschraubung (Nordhorn)."""
+    """Rahmendeckel (flache Platte mit Rahmenrand, Haendlerfotos) mit Einfuellkappe und Verschraubung; die 4 Druckventilhalter
+    sitzen im Deckel (Sechskant SW 24, Anschlussverschraubung darauf)."""
     xm = SD_XM
     y0, y1 = SD_Y1 + 6.0, SD_Y_OBEN - 2.0
     ym = (y0 + y1) / 2
-    dk = box(xm - 152, xm + 152, y0, y1, SD_Z1, SD_DK_Z1)
-    dk = fillet(dk.edges().filter_by(Axis.Z), 14)
-    dk = fillet(dk.edges().group_by(Axis.Z)[-1], 8)
+    dk = box(xm - 160, xm + 160, y0, y1, SD_Z1, SD_DK_Z1)
+    dk = fillet(dk.edges().filter_by(Axis.Z), 8)
+    dk = fillet(dk.edges().group_by(Axis.Z)[-1], 3)
     t.append(dk)
-    xk = xm - 60                                                              # Einfuellkappe (Oe 30, Raendelrand)
+    rahmen = box(xm - 160, xm + 160, y0, y1, SD_DK_Z1, SD_DK_Z1 + SD_RAHMEN_H) - box(
+        xm - 152, xm + 152, y0 + 8, y1 - 8, SD_DK_Z1 - 1, SD_DK_Z1 + SD_RAHMEN_H + 1)
+    t.append(rahmen)
+    for x in DV_X:                                                            # Druckventilhalter
+        t.mat("blank", sechskant((x, DV_Y, SD_DK_Z1), (0, 0, 1), 24, 14))
+        t.mat("blank", Pos(x, DV_Y, SD_DK_Z1 + 14) * Cylinder(9, 16, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    xk = xm - 135                                                             # Einfuellkappe (Oe 30, Raendelrand)
     t.append(Pos(xk, ym, SD_DK_Z1 - 1) * Cylinder(11, 8, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("blank", Pos(xk, ym, SD_DK_Z1 + 6) * Cylinder(15, 18, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("blank", Pos(xk, ym, SD_DK_Z1 + 22) * Cylinder(13, 4, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    xv = xm - 2                                                               # kleine Verschraubung daneben
+    xv = xm + 135                                                             # kleine Verschraubung
     t.mat("blank", Pos(xv, ym, SD_DK_Z1 - 1) * Cylinder(6, 8, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("blank", sechskant((xv, ym, SD_DK_Z1 + 7), (0, 0, 1), 16, 7))
 
@@ -455,21 +475,6 @@ def _kraftstoffleitung(t: Sammler) -> None:
     t.mat("blank", rohr_glatt(pts, 4.0, 24))
     t.mat("blank", sechskant((VF_X + 14, VF_Y, VF_Z1 + 8), (1, 0, 0), 16, 8))
     t.mat("blank", sechskant((1015.0, SD_Y1 - 1.0, 797.0), (0, -1, 0), 14, 7))
-
-
-def _lageransatz(t: Sammler) -> None:
-    """Lageransatz links: Gussbuckel mit senkrechtem Reglerhebel (Rundkopf oben, Rippenleiste), Kugelkopf unten."""
-    ans = box(SD_X0 - 38, SD_X0 + 2, SD_Y0, SD_Y1 + 6, SD_Z0 + 6, SD_Z1 - 12)
-    ans = fillet(ans.edges().filter_by(Axis.Y), 12)
-    t.append(ans)
-    yh, xh = SD_Y1 - 1.0, SD_X0 - 22
-    t.append(Pos(xh, yh + 3, SD_Z1 - 52) * Rot(90, 0, 0) * Cylinder(15, 14))                    # Lagernabe oben
-    t.mat("blank", stab((xh, yh - 4, SD_Z1 - 52), (xh, yh - 4, SD_Z0 + 40), 8))                # Hebel
-    t.mat("blank", Pos(xh, yh - 4, SD_Z0 + 38) * Sphere(10))
-    for z in (SD_Z0 + 30, SD_Z0 + 44, SD_Z0 + 58):                                              # Rippenleiste
-        t.mat("blank", box(SD_X0 - 8, SD_X0 - 2, SD_Y1 - 1, SD_Y1 + 6, z, z + 5))
-    # Schraubstutzen links unten am Ansatz
-    t.append(Pos(SD_X0 - 30, SD_Y1 - 4, SD_Z0 + 12) * Rot(90, 0, 0) * Cylinder(10, 12))
 
 
 def _reglerwelle(t: Sammler) -> None:
@@ -508,7 +513,6 @@ def _seitendeckel(t: Sammler) -> None:
     _pumpenkasten(t)
     _pumpendeckel(t)
     _kraftstoffleitung(t)
-    _lageransatz(t)
     _reglerwelle(t)
     _typenschild_und_stoesseldeckel(t)
 
@@ -543,65 +547,44 @@ def _links_zusatz(t: Sammler) -> None:
 # Einspritzanlage
 # ======================================================================================
 def _einspritzpumpe(t: Sammler) -> None:
-    """Bosch-Reiheneinspritzpumpe mit Antrieb, Regler, Foerderpumpe."""
-    y0, y1 = ESP_Y0, ESP_Y1
-    # Antriebsgehaeuse vom Steuergehaeuse zur Pumpe
-    t.append(rad_x((402 + ESP_X0) / 2, Y_ESP, 690, 38, ESP_X0 - 402 + 4))
-    t.append(rad_x(ESP_X0 - 6, Y_ESP, 690, 50, 12))
-    # Konsole am Kurbelgehaeuse
-    t.append(box(ESP_X0 + 20, ESP_X1 - 20, -196, y1 + 2, ESP_Z0 - 22, ESP_Z0 + 2))
-    # Pumpengehaeuse (Nockenwellenteil unten, Elementteil oben)
-    t.append(kasten_rund(ESP_X0, ESP_X1, y0, y1, ESP_Z0, ESP_Z0 + 55, 10))       # im Motorlack (Foto)
-    t.append(kasten_rund(ESP_X0 + 5, ESP_X1 - 5, y0 + 6, y1 - 6, ESP_Z0 + 55, ESP_Z1, 8))
-    # Verschlussschrauben der Elemente (seitlich) und Druckventilhalter oben
-    for x in DV_X:
-        t.mat("blank", sechskant((x, y0 + 6, ESP_Z0 + 75), (0, -1, 0), 16, 6))
-        t.mat("blank", sechskant((x, Y_ESP, ESP_Z1), (0, 0, 1), 26, 14))
-        t.mat("blank", Pos(x, Y_ESP, ESP_Z1 + 14) * Cylinder(10, 20, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    # Regler hinten mit Deckel und Stellhebel
-    t.append(rad_x(ESP_X1 + 25, Y_ESP, 690, 48, 50))
-    t.append(rad_x(ESP_X1 + 55, Y_ESP, 690, 40, 10))
-    t += schraubenkreis((ESP_X1 + 60, Y_ESP, 690), (1, 0, 0), 32, 4, 12, 5, 45)
-    t.mat("blank", stab((ESP_X1 + 30, y0 - 10, 735), (ESP_X1 + 30, Y_ESP, 735), 7))
-    t.mat("blank", box(ESP_X1 + 22, ESP_X1 + 38, y0 - 14, y0 - 4, 700, 780))
-    # Foerderpumpe aussen: Antriebsgehaeuse (Motorlack) mit Stiel, darauf messingfarbener Pumpenkoerper mit Handpumpe
-    xf = ESP_X0 + FP_DX                                               # Mitte Foerderpumpe
+    """Hanomag-Einspritzpumpe = Kasten SD_*: Reglerkopf mit Deckel und Stellhebel an der Stirn, Antriebsgehaeuse zum
+    Steuergehaeuse, Elementverschluesse unten, Foerderpumpe (Messing) mit Handpumpe (Haendlerfotos R40-94, Nordhorn)."""
+    xr = (REG_X0 + REG_X1) / 2
+    t.append(rad_x(xr, REG_Y, REG_Z, REG_R, REG_X1 - REG_X0))
+    t.append(rad_x(REG_X0 - 5, REG_Y, REG_Z, REG_R - 8, 10))                      # Reglerdeckel
+    t += schraubenkreis((REG_X0 - 10, REG_Y, REG_Z), (-1, 0, 0), REG_R - 18, 4, 12, 5, 45)
+    t.mat("blank", rad_x(REG_X0 - 12, REG_Y, REG_Z, 12, 8))                       # Nabe Stellhebel
+    t.mat("blank", stab((REG_X0 - 12, REG_Y, REG_Z), (558.0, -262.0, 795.0), 4))
+    t.mat("blank", Pos(558.0, -262.0, 795.0) * Sphere(7))
+    # Antriebsgehaeuse: Auge am Steuergehaeuse, Rohr nach hinten in den Reglerkopf
+    t.append(stab((391.0, -170.0, 800.0), (391.0, -218.0, 800.0), 22))
+    t.append(stab((391.0, -218.0, 800.0), (REG_X0 + 15, -218.0, 800.0), 14))
+    # Elementverschluesse: Leiste unter dem Kasten mit 5 Stopfen
+    xm = SD_XM
+    t.append(box(xm - 150, xm + 150, SD_Y1 + 2, SD_Y1 + 24, SD_Z0 - 10, SD_Z0))
+    for i in range(5):
+        t.mat("blank", sechskant((xm - 120 + 60 * i, SD_Y1 + 13, SD_Z0 - 10), (0, 0, -1), 16, 8))
+    # Foerderpumpe unter dem Regler: Messingkoerper mit Anschluessen, Handpumpe (Raendelstange)
     yf = (FP_Y0 + FP_Y1) / 2
     zm = (FP_Z0 + FP_Z1) / 2
-    t.append(kasten_rund(xf - 31, xf + 31, y0 - 28, y0 + 2, 650, 705, 8))
-    t.append(Pos(xf, y0 - 14, 705) * Cylinder(14, FP_Z0 - 705 + 4, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    t.append(rad_y(xf, y0 - 14, 722, 26, 30))                          # halbrunder Antriebsflansch (Nordhorn)
     t.mat("messing", fillet(box(FP_X0, FP_X1, FP_Y0, FP_Y1, FP_Z0, FP_Z1).edges(), 8))
-    t.mat("messing", rad_x((FP_X0 + FP_X1) / 2, yf, zm, 11, FP_X1 - FP_X0 + 34))   # zwei seitliche Anschluesse
-    t.mat("messing", sechskant((FP_X0 - 17, yf, zm), (-1, 0, 0), 20, 8))
-    t.mat("messing", sechskant((FP_X1 + 17, yf, zm), (1, 0, 0), 20, 8))
-    t.mat("messing", Pos(xf, yf, FP_Z1) * Cylinder(14, 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))   # Buchse
-    t.mat("messing", Pos(xf, yf, FP_Z1 + 12) * Cylinder(10, FP_KNOPF_H - 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    t.mat("messing", Pos(xf, yf, FP_Z1 + FP_KNOPF_H - 4) * Cylinder(12, 4, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    # Typschild BOSCH (gruen-blau) auf der Pumpe
-    t.mat("schild", box(ESP_X0 + 145, ESP_X0 + 195, y0 - 4, y0 + 1, ESP_Z0 + 12, ESP_Z0 + 40))
+    t.append(box(575.0, 625.0, -286.0, -262.0, FP_Z1, 815.0))                      # Stuetze zum Reglerkopf
+    t.mat("messing", rad_x((FP_X0 + FP_X1) / 2, yf, zm, 9, FP_X1 - FP_X0 + 30))   # zwei seitliche Anschluesse
+    t.mat("messing", sechskant((FP_X0 - 15, yf, zm), (-1, 0, 0), 20, 8))
+    t.mat("messing", sechskant((FP_X1 + 15, yf, zm), (1, 0, 0), 20, 8))
+    xk, yk = FP_KNOPF_X, FP_KNOPF_Y
+    t.mat("messing", Pos(xk, yk, FP_Z1) * Cylinder(14, 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))     # Buchse
+    t.mat("messing", Pos(xk, yk, FP_Z1 + 12) * Cylinder(10, FP_KNOPF_H - 12, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("messing", Pos(xk, yk, FP_Z1 + FP_KNOPF_H - 4) * Cylinder(12, 4, align=(Align.CENTER, Align.CENTER, Align.MIN)))
 
 
 def _druckleitungen(t: Sammler) -> None:
-    """Druckleitungen: senkrecht hoch, waagerecht gestaffelt, senkrecht zum Duesenstutzen; Leitungsschellen am Block
-    und duenne Leckoel-Ruecklaufleitung. Gestaffelte Hoehen DL_Z (hohe Leitung = vorderster Zylinder) -> keine Kreuzung."""
-    z_ende = Z_DUESE - 14.0                                            # Unterkante Duesenstutzen
-    for xo, xt, zh in zip(DV_X, ZYL_X, DL_Z, strict=True):
-        if abs(xt - xo) < 40:                                          # kurzer Versatz: S-Schlag
-            pts = [(xo, Y_ESP, ESP_Z1 + 28), (xo, Y_ESP, zh - 60), (xt, Y_ESP, zh), (xt, Y_ESP, z_ende)]
-        else:
-            pts = [(xo, Y_ESP, ESP_Z1 + 28), (xo, Y_ESP, zh), (xt, Y_ESP, zh), (xt, Y_ESP, z_ende)]
-        t.mat("blank", rohr_glatt(pts, DL_R, 18))
-    # Leitungsschellen am Block (zwischen Filterkonsole und Seitendeckel)
-    # (liegen ueber der Kastenpumpe, halten die beiden laengsten Leitungen)
-    zc = (DL_Z[2] + DL_Z[3]) / 2
-    for x in (ZYL_X[2] - 30, ZYL_X[3] - 60):
-        t.append(box(x - 9, x + 9, Y_ESP - 6, Y_ESP + 6, DL_Z[3] - 9, DL_Z[2] + 9))
-        t.append(box(x - 5, x + 5, Y_ESP + 6, -189, zc - 6, zc + 6))
-    # duenne Kraftstoffleitung (Leckoel-Ruecklauf) laengs ueber der Kastenpumpe, hinter den Druckleitungen
-    zr = DL_Z[0] + 10.0
-    t.mat("blank", rohr_glatt([(SD_X0 + 25, -205, zr), (SD_X1 - 25, -205, zr), (SD_X1 - 25, -192, zr + 14)], DL_R, 12))
-    t.mat("blank", sechskant((SD_X0 + 25, -205, zr), (-1, 0, 0), 14, 6))
+    """Druckleitungen: senkrecht aus den Druckventilhaltern im Deckel, jede auf eigener y-Bahn (DL_Y) waagerecht auf
+    DL_H zum Duesenhalter, dort senkrecht herunter und von aussen in den Anschlusssechskant."""
+    z_ende = Z_DUESE
+    for xo, xt, y in zip(DV_X, ZYL_X, DL_Y, strict=True):
+        pts = [(xo, DV_Y, SD_DK_Z1 + 26), (xo, DV_Y, DL_H), (xo, y, DL_H), (xt, y, DL_H), (xt, y, z_ende), (xt, -253.0, z_ende)]
+        t.mat("blank", rohr_glatt(pts, DL_R, 12))
 
 
 def _kraftstofffilter(t: Sammler) -> None:
@@ -622,25 +605,23 @@ def _kraftstofffilter(t: Sammler) -> None:
 
 
 def _kraftstoffleitungen(t: Sammler) -> None:
-    """Kraftstoffleitungen: Vorreiniger -> Foerderpumpe -> Filter 1 -> Filter 2 -> Pumpe (aussen bei y ~ -300)."""
-    y0 = ESP_Y0
+    """Kraftstoffleitungen: Foerderpumpe -> Filter 1 -> Filter 2 -> Pumpenkasten (aussen bei y ~ -314/-322)."""
     zh = FILTER_KOPF_Z
-    xf = ESP_X0 + FP_DX
     x1, x2 = FILTER_X
     xs = x1 - 47                                                      # Steigleitung vor dem ersten Filter
-    t.mat("blank", rohr_glatt([(xf + 20, y0 - 26, 690), (xs, -300, 700), (xs, -300, zh), (x1 - 35, FILTER_Y, zh)], 4, 14))
+    t.mat("blank", rohr_glatt([(FP_X0 + 12, FP_Y0 + 1, 760.0), (FP_X0 + 12, -314.0, 760.0), (xs, -314.0, 760.0),
+                               (xs, -314.0, zh), (x1 - 35, FILTER_Y, zh)], 4, 14))
     t.mat("blank", stab((x1 + 35, FILTER_Y, zh), (x2 - 35, FILTER_Y, zh), 4))                      # Filter 1 -> 2
-    # aussen um den breiteren Pumpenkasten herum (y -322), unter dem Gehaeuse (z 770) zur Pumpe
+    # aussen um den Kasten herum (y -322), unter dem Gehaeuse (z 770), dann hoch zur Flanschfront
     t.mat("blank", rohr_glatt([(x2 + 35, FILTER_Y, zh), (810, FILTER_Y, zh), (810, -322, zh), (810, -322, 770),
-                               (690, -322, 770), (ESP_X1 - 15, -252, 760), (ESP_X1 - 15, -252, ESP_Z1 - 3)], 4, 14))
+                               (709, -322, 770), (709, -322, 924), (709, SD_Y1 - 2, 924)], 4, 14))
     t.mat("blank", sechskant((x1 - 35, FILTER_Y, zh), (-1, 0, 0), 16, 8))
     t.mat("blank", sechskant((x2 + 35, FILTER_Y, zh), (1, 0, 0), 16, 8))
+    t.mat("blank", sechskant((709, SD_Y1, 924), (0, -1, 0), 14, 6))
 
 
 def _vorreiniger(t: Sammler) -> None:
-    """Vorreiniger mit Glasschale hinter dem Regler (fz_06m: Glasschale unten am Pumpenende)."""
-    y0 = ESP_Y0
-    xf = ESP_X0 + FP_DX
+    """Zweiter Vorreiniger mit Glasschale hinter dem Regler (fz_06m), Leitung zur Foerderpumpe."""
     t.append(kasten_rund(VR_X - 20, VR_X + 20, -312, -262, 690, 722, 8))
     t.append(box(VR_X - 10, VR_X + 10, -262, -194, 696, 716))         # Halter zum Block
     t.mat("glas", Pos(VR_X, -290, 632) * Cylinder(19, 58, align=(Align.CENTER, Align.CENTER, Align.MIN)))
@@ -648,18 +629,17 @@ def _vorreiniger(t: Sammler) -> None:
     for dy in (-22, 22):
         t.mat("blank", stab((VR_X, -290 + dy, 690), (VR_X, -290 + dy, 627), 3))
     t.mat("blank", stab((VR_X, -312, 627), (VR_X, -268, 627), 3.5))
-    t.mat("blank", rohr_glatt([(VR_X - 20, -300, 706), (ESP_X1 - 40, -312, 706), (xf + 31, -312, 690),
-                               (xf + 26, y0 - 22, 680)], 4, 14))
+    t.mat("blank", rohr_glatt([(VR_X - 20, -300, 706), (645, -300, 706), (645, -277, 752), (FP_X1 + 1, -277, 752)], 4, 14))
 
 
 def _vorreiniger_vorn(t: Sammler) -> None:
     """Vorreiniger mit Glasschale und Buegel vorn im Fenster (Nordhorn: Mitte x ~430..505, z 815..890), Messinganschluss
     zum Gusszylinder."""
     zk = VF_Z1
-    t.mat("glas", Pos(VF_X, VF_Y, VF_Z0) * Cylinder(28, VF_Z1 - VF_Z0, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    t.mat("messing", Pos(VF_X, VF_Y, zk) * Cylinder(32, 16, align=(Align.CENTER, Align.CENTER, Align.MIN)))     # Kopf
-    t.mat("blank", Pos(VF_X, VF_Y, VF_Z0 - 8) * Cylinder(30, 8, align=(Align.CENTER, Align.CENTER, Align.MIN)))  # Bodenplatte
-    for dx in (-31, 31):                                              # Buegel
+    t.mat("glas", Pos(VF_X, VF_Y, VF_Z0) * Cylinder(VF_R, VF_Z1 - VF_Z0, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("messing", Pos(VF_X, VF_Y, zk) * Cylinder(VF_R + 5, 16, align=(Align.CENTER, Align.CENTER, Align.MIN)))     # Kopf
+    t.mat("blank", Pos(VF_X, VF_Y, VF_Z0 - 8) * Cylinder(VF_R + 3, 8, align=(Align.CENTER, Align.CENTER, Align.MIN)))  # Boden
+    for dx in (-VF_R - 3, VF_R + 3):                                  # Buegel
         t.mat("blank", stab((VF_X + dx, VF_Y, VF_Z0 - 4), (VF_X + dx, VF_Y, zk), 2.5))
     t.mat("messing", stab((461.0, VF_Y, zk + 8), (VF_X - 20, VF_Y, zk + 8), 8))                  # Anschluss zum Gusszylinder
     t.mat("messing", sechskant((470.0, VF_Y, zk + 8), (1, 0, 0), 20, 8))
@@ -766,9 +746,9 @@ def _wasserkasten_oben(t: Sammler) -> None:
 
 def _wasserkasten_unten(t: Sammler) -> None:
     """Unterer Wasserkasten: Mitte bis z = 480 zwischen den Traegern, aussen auf den Traegern; Ablasshahn und -stutzen."""
-    t.mat("auspuff", kasten_rund(K_X0, K_X1, -K_Y, K_Y, Z_TRAEGER + 8, K_NETZ_Z0, 20, Axis.X))
-    t.mat("auspuff", kasten_rund(K_X0 + 10, K_X1 - 10, -180, 180, K_Z0, Z_TRAEGER + 10, 20, Axis.X))
-    t.mat("blank", sechskant((280, 0, K_Z0), (0, 0, -1), 22, 12))     # Ablasshahn
+    t.mat("auspuff", kasten_rund(K_X0, K_X1, -K_Y, K_Y, K_Z0, K_NETZ_Z0, 20, Axis.X))   # flacher Kasten, UK >= 520
+    t.mat("blank", rad_x(K_X1 + 8, 0, K_Z0 + 24, 9, 16))               # Ablasshahn an der Rueckseite (nicht unter der Maske)
+    t.mat("blank", sechskant((K_X1 + 16, 0, K_Z0 + 24), (1, 0, 0), 22, 12))
     t.mat("auspuff", rad_x(K_X1 + 8, -300, 552, 22, 16))               # Ablaufstutzen links
 
 
@@ -880,13 +860,14 @@ def _oelfilter(t: Sammler) -> None:
             t.mat("blank", sechskant((x + dx, 197, zf + dz), (0, 1, 0), 16, 7))
     t.append(stab((x, 196, zf), (x, 238, zf), 26))
     b = Vector(x, 238, zf)
-    d = Vector(-math.sin(math.radians(32)), 0, math.cos(math.radians(32)))
-    t.mat("zink", Pos(*b) * Sphere(27.5))
-    t.mat("zink", stab(tuple(b), tuple(b + d * 130), 27.5))
-    t.mat("zink", stab(tuple(b + d * 85), tuple(b + d * 93), 31))                    # Rollrand
-    top = b + d * 130
-    t.mat("zink", Pos(*top) * Sphere(27.5))
-    t.mat("blank", sechskant(tuple(top + d * 24), tuple(d), 18, 10))               # Deckelschraube
+    # Nordhorn 2:58/3:00 (Massstab Anlasser Ø 115): Kanister Ø ~68, Gesamthoehe ~120, nahezu senkrecht (~8 Grad)
+    d = Vector(-math.sin(math.radians(8)), 0, math.cos(math.radians(8)))
+    t.mat("zink", Pos(*b) * Sphere(OELF_R))
+    t.mat("zink", stab(tuple(b), tuple(b + d * OELF_L), OELF_R))
+    t.mat("zink", stab(tuple(b + d * (OELF_L * 0.65)), tuple(b + d * (OELF_L * 0.65 + 8)), OELF_R + 3.5))   # Rollrand
+    top = b + d * OELF_L
+    t.mat("zink", Pos(*top) * Sphere(OELF_R))
+    t.mat("blank", sechskant(tuple(top + d * (OELF_R - 3)), tuple(d), 18, 10))     # Deckelschraube
 
 
 def _oelmessstab(t: Sammler) -> None:
@@ -1009,7 +990,7 @@ def _ansaugrohr(t: Sammler) -> None:
     """Ansaugrohr durch das Haubendach: Manschette auf dem Kragen, zwei Spannringe mit Ohren (z 1478..1540)."""
     ix, iy = ANSAUG_XY
     r_rohr, zs = ANSAUG_R_ROHR, ANSAUG_ZS
-    t.mat("schwarz", stab((ix, iy, 1244), (ix, iy, 1720), r_rohr))
+    t.mat("schwarz", stab((ix, iy, 1244), (ix, iy, ANSAUG_KAPPE_Z0 + 12), r_rohr))
     t.mat("gummi", Pos(ix, iy, zs) * Cylinder(r_rohr + 10, 22, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("blank", Pos(ix, iy, zs + 14) * (Cylinder(r_rohr + 13, 8) - Cylinder(r_rohr + 5, 10)))
     # Kragen: zwei Spannringe mit Ohren (z 1478..1540)
@@ -1019,40 +1000,37 @@ def _ansaugrohr(t: Sammler) -> None:
 
 
 def _ansaugkappe(t: Sammler) -> None:
-    """Schlanke Kappe (Video 054/135-140/165/172, DSC04729/37): Anschlussstutzen, Zylinderkopf mit 5 Kuehlrippen
-    (Ø 130) und flachem Deckel (Ø 136), Oberkante z 1840."""
+    """Ansaugkappe (Nordhorn 0:10 / 2:46, Massstab Deckel Ø 140): glatter Becher Ø 92 auf dem Rohr, flacher Deckel Ø 140
+    mit gerundeter Kante, Oberkante ANSAUG_Z_TOP."""
     ix, iy = ANSAUG_XY
-    t.mat("schwarz", Pos(ix, iy, 1690) * Cylinder(48, 56, align=(Align.CENTER, Align.CENTER, Align.MIN)))   # Stutzen
-    kern = Pos(ix, iy, 1746) * Cylinder(56, 76, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    t.mat("schwarz", kern)
-    for i in range(5):                                                 # Rippen Ø 130, 8 hoch, Teilung 15
-        t.mat("schwarz", Pos(ix, iy, 1752 + i * 15) * Cylinder(65, 8, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    deckel = Pos(ix, iy, 1822) * Cylinder(68, 18, align=(Align.CENTER, Align.CENTER, Align.MIN))
-    deckel = fillet(deckel.edges().group_by(Axis.Z)[-1], 5)
+    t.mat("schwarz", Pos(ix, iy, ANSAUG_KAPPE_Z0) * Cylinder(
+        46, ANSAUG_KAPPE_BECHER_H + 2, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    deckel = Pos(ix, iy, ANSAUG_Z_TOP - ANSAUG_KAPPE_DECKEL_H) * Cylinder(
+        70, ANSAUG_KAPPE_DECKEL_H, align=(Align.CENTER, Align.CENTER, Align.MIN))
+    deckel = fillet(deckel.edges().group_by(Axis.Z)[-1], 12)
     t.mat("schwarz", deckel)
 
 
 def _arbeitsleuchte(t: Sammler) -> None:
-    """Arbeitsleuchte an Konsole am Rohr, ~90 vor der Rohrachse: Gehaeuse, Metallring, Glasdom Ø 80 / ~85 hoch;
-    Kabel am Rohr entlang in die Manschette."""
+    """Arbeitsleuchte an Konsole am Rohr, ~72 hinter der Rohrachse (Nordhorn 0:10 / 2:46): Gehaeuse Ø 60, Metallring,
+    Glasdom Ø 66 / ~78 hoch, Oberkante Gehaeuse ~1609; Kabel am Rohr entlang in die Manschette."""
     ix, iy = ANSAUG_XY
     r_rohr, zs = ANSAUG_R_ROHR, ANSAUG_ZS
-    lx, zr = ix - 90, 1612.0
-    t.mat("schwarz", stab((ix - r_rohr + 4, iy, 1650), (lx, iy, 1650), 6))
-    t.mat("schwarz", Pos(lx, iy, zr) * Cylinder(34, 58, align=(Align.CENTER, Align.CENTER, Align.MIN)))
-    t.mat("chrom", Pos(lx, iy, zr - 6) * (Cylinder(43, 8, align=(Align.CENTER, Align.CENTER, Align.MIN))
-                                        - Cylinder(36, 8, align=(Align.CENTER, Align.CENTER, Align.MIN))))
-    dom = scale(Sphere(40), by=(1, 1, 2.1)) & box(-60, 60, -60, 60, -100, 0)
+    lx, zr = ix + 72, 1571.0
+    t.mat("schwarz", stab((ix + r_rohr - 4, iy, 1592), (lx, iy, 1592), 5))
+    t.mat("schwarz", Pos(lx, iy, zr) * Cylinder(30, 38, align=(Align.CENTER, Align.CENTER, Align.MIN)))
+    t.mat("chrom", Pos(lx, iy, zr - 6) * (Cylinder(34, 8, align=(Align.CENTER, Align.CENTER, Align.MIN))
+                                        - Cylinder(28, 8, align=(Align.CENTER, Align.CENTER, Align.MIN))))
+    dom = scale(Sphere(33), by=(1, 1, 2.4)) & box(-60, 60, -60, 60, -100, 0)
     t.mat("glas", Pos(lx, iy, zr - 2) * dom)
-    # Kabel der Leuchte am Rohr entlang in die Manschette
-    t.mat("gummi", rohr_glatt([(lx + 34, iy, 1640), (ix - r_rohr - 4, iy, 1625), (ix - r_rohr - 4, iy, zs + 10)], 3.5, 15))
+    t.mat("gummi", rohr_glatt([(lx - 30, iy, 1580), (ix + r_rohr + 4, iy, 1560), (ix + r_rohr + 4, iy, zs + 10)], 3.5, 15))
 
 
 def _ansaugung(t: Sammler) -> None:
-    """Oelbadluftfilter: Topf Ø 190 (Unterkante z 1020, Oberkante 1194; Ø durch die Haubenwand innen y 332 begrenzt)
-    mit Spannring und 2 Buegelverschluessen, sitzt mit Aussparungen auf Kopf/Kruemmer/Steigflansch; Rohr Ø 66 durch das
-    Dach (Manschette), Kragen mit 2 Ohren, schlanke gerippte Kappe Ø 130 mit flachem Deckel (Video 165/172,
-    DSC04729/37), Arbeitsleuchte mit Glasdom am Rohr (DSC04729)."""
+    """Oelbadluftfilter: Topf Ø 190 (Unterkante z 1020, Oberkante 1194; Nordhorn 1:34: ~Ø 200..215, durch die
+    Haubenwand innen y 332 begrenzt) mit Spannring und 2 Buegelverschluessen, sitzt mit Aussparungen auf
+    Kopf/Kruemmer/Steigflansch; Rohr Ø 66 durch das Dach (Manschette), Kragen mit 2 Ohren, glatte Kappe (Becher Ø 92,
+    Deckel Ø 140, Oberkante 1740; Nordhorn 0:10/2:46), Arbeitsleuchte mit Glasdom am Rohr (DSC04729)."""
     _luftfilter_topf(t)
     _ansaugrohr(t)
     _ansaugkappe(t)
@@ -1082,7 +1060,7 @@ def motor() -> Sammler:
 
 def auspuff() -> Sammler:
     """Abgaskruemmer rechts -> offenes glattes Auspuffrohr Ø 48 (ohne Klappe, Gewicht, Schelle; DSC04729/30);
-    Ansaugrohr links: Oelbadtopf mit Spannring unter der Haube, Rohr Ø 66 durch das Dach, Kragen, gerippte Kappe, Leuchte."""
+    Ansaugrohr links: Oelbadtopf mit Spannring unter der Haube, Rohr Ø 66 durch das Dach, Kragen, Kappe, Leuchte."""
     t = Sammler("auspuff")
     _auspuff(t)
     _ansaugung(t)

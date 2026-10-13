@@ -123,7 +123,9 @@ X_ENDBL = -525.0              # Hinterkante der Endbleche (Video 165: ~ 250 hint
 QT_SZ0, QT_SX1 = 590.0, -560.0         # Quertraeger hinter der Oberkante: Unterkante z, Rueckwand x (Video 165)
 
 # --- Schubrahmen (C-Rahmen hinter dem Schild, Video 008/169-173) ---
-Z_RAHMEN = 400.0              # Mitte der Rahmentraeger (= Z_SCHUB)
+# Mitte der Rahmentraeger = Oberkante Balken vorn (515): der Anschlussbock ragt in Frame n167 (Blick von rechts) ~ 100 ueber den
+# Balken, Oberkante ~ z 600
+Z_RAHMEN = Z_SCHUB + 230.0 / 2
 RA_H, RA_B = 150.0, 110.0     # Kastenprofil Hoehe / Breite
 X_RA_SB = -130.0              # Diagonale trifft den Schubbalken innen (vorderes Ende der Spitzplatten, Video 171/173)
 X_RA_Q, Y_RA_Q = -555.0, 640.0   # Ecke Diagonale / Quertraeger (Mitte), Quertraeger liegt am Blechruecken an
@@ -131,11 +133,28 @@ X_RA_Q, Y_RA_Q = -555.0, 640.0   # Ecke Diagonale / Quertraeger (Mitte), Quertra
 # --- Schubbalken ---
 SB_B, SB_H = 120.0, 170.0     # Video t=164/158: hinterer Balkenteil niedrig (~150..180), vorn hoeher (~230) mit Schraegubergang
 SB_Z0, SB_Z1 = Z_SCHUB - SB_H / 2, Z_SCHUB + SB_H / 2       # hinten 315 / 485
-SB_XV = 560.0                 # ab hier nach hinten volle Hoehe, davor Verjuengung
+# ab hier nach hinten niedrig, davor Uebergang auf volle Hoehe (Overlay n160/n167: Uebergang bei x ~ 190..300; die Klammer
+# x 520 liegt noch im niedrigen Teil)
+SB_XV = 300.0
 SB_H_VORN = 230.0             # Hoehe am vorderen Teil (x < SB_XV - 110)
 X_GELENK = 1860.0             # hinteres Gelenk: Video t=164/158, Foto 40431489714: Lagerkappe ~ 390 VOR der Triebradachse
 X_SCHILDBOLZEN = -575.0       # Balkenende vorn am Zahnsegment (Video 008/165: Balken endet direkt hinter dem Endblech)
-X_STUFE0, X_STUFE1 = -160.0, 260.0      # aufgeschweisste Spitzplatten aussen am Balken (Video 022/165)
+# aufgeschweisste Spitzplatten aussen: hinteres Ende am Hoehenuebergang SB_XV, Vorderende ~ 100 weiter hinten als frueher (-160)
+# (Overlay n160: -50; Ausmessung n167 ueber A-Bock-Fuss/Zahnsegment: -160 bis -170; gewaehlt: Mittel)
+X_STUFE0, X_STUFE1 = -100.0, 270.0
+# Druckstrebe Anschlussbock -> Schildruecken: z am Bock / am Schild (Frame n167 Ausschnitt: Hakenlasche am Schildruecken ueber dem
+# Balkenende, z ~ 600..700); Flachstahl Hoehe im Schnitt (z) / Blechstaerke (y)
+STR_Z0, STR_Z1 = 590.0, 650.0
+STR_B, STR_T = 70.0, 24.0
+
+# Laengssteg auf dem Balken vor dem A-Bock (Frame n172: Rippe auf der Oberseite, innen neben dem Steckbolzen)
+STEG_X0, STEG_X1 = 570.0, 880.0
+STEG_Y0, STEG_Y1 = 31.0, 55.0           # |y| ab Balkenmitte nach innen
+STEG_H = 12.0
+# gegabelter Anschlussbock auf dem Balkenende (Frame n172: zwei Wangen, Bolzen von oben mit rundem Deckel und Schraube)
+GAB_X0, GAB_X1 = X_SCHILDBOLZEN + 30.0, X_SCHILDBOLZEN + 150.0
+GAB_H, GAB_T = 80.0, 14.0               # Wangenhoehe ueber Balkenoberkante / Blechstaerke
+GAB_BOLZEN_R, GAB_DECKEL_R = 16.0, 30.0
 
 # --- A-Bock ---
 XA_VORN, XA_HINTEN = ABOCK_FUESSE
@@ -364,6 +383,11 @@ def schubrahmen(t: Sammler, B: Kontur) -> None:
         yi = s * (Y_SCHUB - SB_B / 2)
         t.append(box(X_RA_SB - 150, X_RA_SB + 90, *sorted((yi, yi - s * 12)), Z_RAHMEN - 95, Z_RAHMEN + 95))
         t += [sechskant((X_RA_SB + dx, yi - s * 12, Z_RAHMEN + dz), (0, -s, 0), 20, 7) for dx in (-120, 60) for dz in (-65, 65)]
+        # Druckstrebe: Flachstahl von der Oberkante des Anschlussblechs schraeg nach vorn-oben an den Schildruecken
+        xa, xb = X_RA_SB - 150, _x_auf(B, STR_Z1) - 4
+        za = STR_Z0
+        t.append(_platte_xz([(xa, za), (xb, STR_Z1 - STR_B / 2), (xb, STR_Z1 + STR_B / 2), (xa, za + STR_B)],
+                            yi - s * 12, yi - s * (12 + STR_T)))
 
 
 def schild(t: Sammler) -> None:
@@ -424,9 +448,9 @@ def _spitzplatten(t: Sammler, s: int) -> None:
         zc = (z0 + z1) / 2
         t.append(_platte_xz([(X_STUFE0, zc), (X_STUFE0 + 70, z0), (X_STUFE1 - 70, z0), (X_STUFE1, zc), (X_STUFE1 - 70, z1),
                              (X_STUFE0 + 70, z1)], yo - s * 1, yo + s * 16))
-    zt = _sb_top(X_STUFE0)
-    t.append(_platte_xz([(X_STUFE0 + 20, zt - 1), (X_STUFE1 - 20, zt - 1), (X_STUFE1 - 60, zt + 16), (X_STUFE0 + 60, zt + 16)],
-                        yi - 6, ya + 6 + s * 10))
+    xd0, xd1 = X_STUFE0 + 20, X_STUFE1 - 20                    # Deckplatte folgt der Oberkante (Uebergang bei SB_XV)
+    t.append(_platte_xz([(xd0, _sb_top(xd0) - 1), (xd1, _sb_top(xd1) - 1), (xd1 - 40, _sb_top(xd1 - 40) + 16),
+                         (xd0 + 40, _sb_top(xd0 + 40) + 16)], yi - 6, ya + 6 + s * 10))
 
 
 def _lagernabe(t: Sammler, s: int) -> None:
@@ -455,12 +479,35 @@ def _balkenklammer(t: Sammler, s: int) -> None:
         t.append(box(x - 8, x + 8, yo, yo + s * 6, _sb_bot(x) + 14, _sb_top(x) - 14))
 
 
+def _laengssteg(t: Sammler, s: int) -> None:
+    """Aufgeschweisster Flachstahl laengs auf der Balkenoberseite vor dem A-Bock (Frame n172)."""
+    y0, y1 = sorted((s * (Y_SCHUB - STEG_Y1), s * (Y_SCHUB - STEG_Y0)))
+    t.append(box(STEG_X0, STEG_X1, y0, y1, SB_Z1 - 1, SB_Z1 + STEG_H))
+
+
+def _anschlussbock(t: Sammler, s: int) -> None:
+    """Gegabelter Anschlussbock auf dem Balkenende hinter dem Zahnsegment: zwei Wangen, senkrechter Bolzen mit rundem Deckel
+    (Frame n172), dazu die Stellschraube der Klinke am Zahnsegment."""
+    y = s * Y_SCHUB
+    zt = _sb_top(GAB_X0)
+    for dy in (-SB_B / 2, SB_B / 2 - GAB_T):
+        t.append(_platte_xz([(GAB_X0, zt - 1), (GAB_X1, zt - 1), (GAB_X1 - 30, zt + GAB_H), (GAB_X0 + 10, zt + GAB_H)],
+                            y + dy, y + dy + GAB_T))
+    xb = (GAB_X0 + GAB_X1) / 2
+    t.mat("blank", stab((xb, y, zt + 4), (xb, y, zt + GAB_H + 18), GAB_BOLZEN_R))
+    t.mat("blank", _scheibe_z(xb, y, zt + GAB_H + 18, GAB_DECKEL_R, 12))
+    t.mat("blank", sechskant((xb, y, zt + GAB_H + 30), (0, 0, 1), 26, 10))
+    t.mat("blank", sechskant((X_SCHILDBOLZEN + 14, y + s * (SB_B / 2 + 9), Z_SCHUB + 95), (-1, 0, 0), 24, 18))    # Stellschraube
+
+
 def schubbalken(t: Sammler, s: int) -> None:
     """Schubbalken der Seite ``s`` (-1 links, +1 rechts) vom Zahnsegment bis zur Lagernabe am Gelenk."""
     _balkenkasten(t, s)
     _spitzplatten(t, s)
     _lagernabe(t, s)
     _balkenklammer(t, s)
+    _anschlussbock(t, s)
+    _laengssteg(t, s)
 
 
 def gelenkbock(t: Sammler, s: int) -> None:

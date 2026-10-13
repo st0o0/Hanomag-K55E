@@ -270,7 +270,7 @@ def _glockenanschluss() -> Teile:
 def quertraeger_vorn() -> Teile:
     """Quertraeger unter der Maske (Oberkante 15 mm unter MASKE_UK) mit Zugoese; nichts vor x 10."""
     t = []
-    z0, z1 = 280.0, MASKE_UK - 15.0       # Oberkante 435: unter der Maskenunterkante 450, Pumpe davor frei
+    z0, z1 = 280.0, MASKE_UK - 15.0       # Oberkante 510: unter der Maskenunterkante 525, Pumpe davor frei
     x0, x1 = 110.0, 205.0
     # liegendes U, Steg vorn
     t.append(box(x0, x0 + 14, -330, 330, z0, z1))
@@ -601,7 +601,8 @@ def _kot_wange_konsolen() -> Teile:
     t.append(box(KOT_XQ0, KOT_XQ1, 205, ya - BLECH, DECK_UK - 12, DECK_UK))
     # Konsolen (dreieckige Knotenbleche) unter dem Trittblech, nur innerhalb y < 430; die vorderen beginnen
     # ausserhalb der linken Fussraumwand (gespiegelt auch rechts)
-    for x, y_in, z_tief in ((1520, FW_Y1 + FW_WAND, 560), (1680, FW_Y1 + FW_WAND, 590), (2470, 210, 560), (2600, 210, 560)):
+    z_tief = DECK_Z - 60    # hoechstens 60 unter dem Trittblech: darunter bleibt der Blick auf die Kette frei
+    for x, y_in in ((1520, FW_Y1 + FW_WAND), (1680, FW_Y1 + FW_WAND), (2470, 210), (2600, 210)):
         prof = Polyline((y_in, DECK_UK), (Y_WANGE - 12, DECK_UK), (Y_WANGE - 12, DECK_UK - 60), (y_in, z_tief), close=True)
         t.append(extrude(Plane.YZ.offset(x - 6) * make_face(prof), amount=12))
     # Knotenbleche hinten aussen (ueber dem Triebrad-Ende frei)

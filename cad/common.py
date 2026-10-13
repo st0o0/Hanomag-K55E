@@ -66,11 +66,11 @@ TRAEGER_Z0, TRAEGER_Z1 = 380.0, 520.0
 DECK_Z = 915.0                # Plattform / Kotfluegel-Oberkante (Spalt Kette/Aufbau ~120..150 wie Video 165/174 + Flickr,
                               # Unterkante Plattformrand 891, Greifer oben 738..768; Tankkasten steht auf der Plattformkante)
 DECK_X0, DECK_X1, DECK_B = 1430.0, 2780.0, 1800.0
-MASKE_UK = 450.0              # Unterkante Kuehlermaske (Foto BV: Maske 897 hoch, h/b = 1,26)
+MASKE_UK = 525.0              # Unterkante Kuehlermaske (Nordhorn-Video n160/n167, Overlay: 520..560; Maske 525..1410 = 885 hoch)
 HAUBE_X0, HAUBE_X1, HAUBE_B = 210.0, 1080.0, 690.0   # Foto BS: Haube endet ~1080, dahinter Tank
-HAUBE_DACH_Z = 1410.0        # Video 165/167 + Flickr 1426..1441, Maske 450..1410 = 960 hoch (h/b 1,35, wie DSC04737)
-HAUBE_UNTEN_Z = 620.0         # Unterkante vorderes Haubenseitensegment: hinter dem oberen Trum bis etwa Leitrad-Oberkante
-                              # (Nordhorn-Video 2:54 / Frame 174, Segment steht innen hinter der Kette)
+HAUBE_DACH_Z = 1410.0        # Video 165/167 + Flickr 1426..1441, Maske 525..1410 = 885 hoch
+HAUBE_UNTEN_Z = 780.0         # Unterkante vorderes Haubenseitensegment: Nordhorn 2:44 (s164), Haubenkante auf Greiferhoehe
+                              # (Greifer oben 738..768)
 HAUBE_BAND_Z = 1090.0         # Oberkante Motorausschnitt = Unterkante Schriftband (Video 165/173, DSC04742 1070..1095)
 SEG_X1 = 370.0                # vorderes Seitensegment x 210..370 (Video 066/070/173 + DSC04742, 150..200 breit),
                               # dann flacher Ellipsenbogen in die Bandkante
@@ -92,7 +92,7 @@ SCHEINWERFER = (230.0, 430.0, 1290.0)             # Lampenmitte x, |y|, z: an de
                                                   # (Video 165/172/196, Flickr 40431489714)
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
 Y_LTG = 392.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
-LENKRAD = (1930.0, 200.0, 1440.0)   # Lenkradmitte: hinterer Kranzrand ueber der Sitzvorderkante (Nordhorn 2:15/2:21)
+LENKRAD = (1850.0, 140.0, 1440.0)   # Lenkradmitte: Saeule gerade aus der Kastenfront, ~47 Grad (Short 0:47, Nordhorn 2:15)
 SITZ_X = 2340.0               # Mitte Sitzschale (Seitenansicht Video 2:44, s164: x = 1031 + 1168*f, f 1.10..1.13 -> 2316..2351)
 SITZ_Y = 200.0                # Sitzachse y, unter dem Lenkrad ausgerichtet (LENKRAD y 200)
 KD_X = 140.0                  # Kuehlerverschluss auf der Maskenkappe, Mitte x (Foto BS: x ~100..180)

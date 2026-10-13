@@ -148,17 +148,17 @@
         }
       ],
       "druck": "druck/haube_tank.stl",
-      "druck_mb": 7.38,
+      "druck_mb": 7.37,
       "masse_mm": [
         169.0,
         91.2,
-        111.8
+        91.8
       ],
       "druck_koerper": 1,
       "druck_bett_mm": [
         169.0,
         91.2,
-        111.8
+        91.8
       ],
       "druck_pruefung": {
         "dicht": true,
@@ -172,11 +172,11 @@
             "masse_mm": [
               169.0,
               91.2,
-              111.8
+              91.8
             ],
-            "volumen_mm3": 223911.8,
+            "volumen_mm3": 219539.9,
             "wand_min": 0.75,
-            "ueberhang": 0.189
+            "ueberhang": 0.201
           }
         ]
       }
@@ -207,11 +207,11 @@
       "masse_mm": [
         27.0,
         88.8,
-        125.8
+        116.4
       ],
       "druck_koerper": 1,
       "druck_bett_mm": [
-        125.8,
+        116.4,
         88.8,
         27.0
       ],
@@ -226,13 +226,13 @@
         "koerper": [
           {
             "masse_mm": [
-              125.8,
+              116.4,
               88.8,
               26.9
             ],
-            "volumen_mm3": 20174.5,
-            "wand_min": 0.7,
-            "ueberhang": 0.159
+            "volumen_mm3": 19172.2,
+            "wand_min": 0.63,
+            "ueberhang": 0.164
           }
         ]
       }
@@ -259,29 +259,29 @@
       "masse_mm": [
         0.8,
         78.5,
-        82.0
+        72.6
       ],
       "druck_koerper": 1,
       "druck_bett_mm": [
         0.8,
         78.5,
-        82.0
+        72.6
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Koerper 0 sehr klein (0.80 mm, 2039.20 mm3) bei x/y/z [18, 0, 975] Original-mm, geht beim Druck evtl. verloren"
+          "Koerper 0 sehr klein (0.80 mm, 1814.95 mm3) bei x/y/z [18, 0, 1012] Original-mm, geht beim Druck evtl. verloren"
         ],
         "koerper": [
           {
             "masse_mm": [
               0.8,
               78.5,
-              82.0
+              72.6
             ],
-            "volumen_mm3": 2039.2,
+            "volumen_mm3": 1815.0,
             "wand_min": 0.8,
-            "ueberhang": 0.004
+            "ueberhang": 0.005
           }
         ]
       }
@@ -432,7 +432,7 @@
           "2 eingeschlossene Innenteile im gefuellten Hohlraum verworfen",
           "Koerper 0: 1/113 Proben duenner als 0.5 mm: 0.20 mm (1 Probe) bei x/y/z [244, 355, 1162] Original-mm, Solid 2 (14x92x84 Original-mm)",
           "Koerper 1 sehr klein (0.25 mm, 6.10 mm3) bei x/y/z [194, 341, 1193] Original-mm, geht beim Druck evtl. verloren",
-          "Koerper 1: 136/149 Proben duenner als 0.5 mm: 0.25 mm (46 Proben) bei x/y/z [185, 341, 1187] Original-mm, Solid 1 (43x99x56 Original-mm); 0.25 mm (57 Proben) bei x/y/z [201, 341, 1188] Original-mm, Solid 1 (43x99x56 Original-mm); 0.25 mm (18 Proben) bei x/y/z [200, 341, 1213] Original-mm, Solid 1 (43x99x56 Original-mm); 0.25 mm (15 Proben) bei x/y/z [189, 341, 1213] Original-mm, Solid 1 (43x99x56 Original-mm)",
+          "Koerper 1: 136/149 Proben duenner als 0.5 mm: 0.25 mm (46 Proben) bei x/y/z [185, 341, 1187] Original-mm, Solid 1 (43x99x56 Original-mm); 0.25 mm (57 Proben) bei x/y/z [201, 341, 1188] Original-mm, Solid 1 (43x99x56 Original-mm); 0.25 mm (18 Proben) bei x/y/z [200, 341, 1213] Original-mm, Solid 1 (43x99x56 Original-mm); 0.25 mm (15 Proben) bei x/y/z [188, 341, 1213] Original-mm, Solid 1 (43x99x56 Original-mm)",
           "Koerper 2 sehr klein (0.25 mm, 0.55 mm3) bei x/y/z [188, 356, 1179] Original-mm, geht beim Druck evtl. verloren",
           "Koerper 2: 116/150 Proben duenner als 0.5 mm: 0.25 mm (104 Proben) bei x/y/z [187, 356, 1179] Original-mm, Solid 1 (43x99x56 Original-mm); 0.25 mm (12 Proben) bei x/y/z [193, 356, 1179] Original-mm, Solid 1 (43x99x56 Original-mm)",
           "Koerper 3 sehr klein (0.25 mm, 0.55 mm3) bei x/y/z [188, 356, 1208] Original-mm, geht beim Druck evtl. verloren",
@@ -532,7 +532,7 @@
         }
       ],
       "druck": "druck/motor.stl",
-      "druck_mb": 13.19,
+      "druck_mb": 14.89,
       "masse_mm": [
         122.4,
         83.0,
@@ -540,7 +540,7 @@
       ],
       "druck_koerper": 8,
       "druck_bett_mm": [
-        185.6,
+        190.0,
         83.0,
         122.4
       ],
@@ -550,7 +550,7 @@
           "Passung zu kuehlermaske: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu fahrerstand: 1 Ansatzstellen buendig gekuerzt",
           "81 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0: 8/1481 Proben duenner als 0.5 mm: 0.50 mm (2 Proben) bei x/y/z [364, -18, 794] Original-mm, Solid 431 (4x160x160 Original-mm); 0.50 mm (1 Probe) bei x/y/z [364, -64, 817] Original-mm, Solid 259 (17x203x124 Original-mm); 0.50 mm (2 Proben) bei x/y/z [372, 250, 913] Original-mm, Solid 435 (4x112x112 Original-mm); 0.50 mm (1 Probe) bei x/y/z [376, 240, 908] Original-mm, Solid 435 (4x112x112 Original-mm); 0.50 mm (1 Probe) bei x/y/z [368, 24, 709] Original-mm, Solid 573 (8x422x527 Original-mm); 0.50 mm (1 Probe) bei x/y/z [368, -114, 586] Original-mm, Solid 573 (8x422x527 Original-mm)"
+          "Koerper 0: 5/1463 Proben duenner als 0.5 mm: 0.50 mm (1 Probe) bei x/y/z [364, 219, 934] Original-mm, Solid 419 (4x112x112 Original-mm); 0.50 mm (1 Probe) bei x/y/z [364, 106, 620] Original-mm, Solid 249 (17x124x203 Original-mm); 0.50 mm (1 Probe) bei x/y/z [364, -40, 695] Original-mm, Solid 558 (8x422x527 Original-mm); 0.50 mm (1 Probe) bei x/y/z [368, -32, 789] Original-mm, Solid 416 (4x160x160 Original-mm); 0.50 mm (1 Probe) bei x/y/z [364, -113, 603] Original-mm, Solid 558 (8x422x527 Original-mm)"
         ],
         "koerper": [
           {
@@ -559,7 +559,7 @@
               83.0,
               122.4
             ],
-            "volumen_mm3": 459917.3,
+            "volumen_mm3": 452477.8,
             "wand_min": 0.5,
             "ueberhang": 0.217
           },
@@ -615,6 +615,16 @@
           },
           {
             "masse_mm": [
+              6.9,
+              9.5,
+              9.5
+            ],
+            "volumen_mm3": 126.5,
+            "wand_min": 0.75,
+            "ueberhang": 0.097
+          },
+          {
+            "masse_mm": [
               6.5,
               2.5,
               2.5
@@ -622,16 +632,6 @@
             "volumen_mm3": 16.1,
             "wand_min": 1.0,
             "ueberhang": 0.142
-          },
-          {
-            "masse_mm": [
-              2.5,
-              1.5,
-              2.5
-            ],
-            "volumen_mm3": 7.4,
-            "wand_min": 1.5,
-            "ueberhang": 0.084
           }
         ]
       }
@@ -678,53 +678,44 @@
         }
       ],
       "druck": "druck/auspuff.stl",
-      "druck_mb": 1.81,
+      "druck_mb": 1.52,
       "masse_mm": [
-        81.0,
+        81.5,
         79.0,
-        120.6
+        103.8
       ],
-      "druck_koerper": 3,
+      "druck_koerper": 2,
       "druck_bett_mm": [
-        124.1,
+        107.1,
         23.9,
-        117.9
+        101.0
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
-          "Passung zu haube_tank: 1 Ansatzstellen buendig gekuerzt"
+          "Passung zu haube_tank: 1 Ansatzstellen buendig gekuerzt",
+          "1 eingeschlossene Hohlraeume gefuellt"
         ],
         "koerper": [
           {
             "masse_mm": [
-              28.2,
+              26.0,
               23.9,
-              102.5
+              90.0
             ],
-            "volumen_mm3": 18095.2,
+            "volumen_mm3": 17282.7,
             "wand_min": 0.75,
-            "ueberhang": 0.12
+            "ueberhang": 0.107
           },
           {
             "masse_mm": [
               77.1,
               14.4,
-              117.9
+              101.0
             ],
-            "volumen_mm3": 9242.2,
+            "volumen_mm3": 8765.5,
             "wand_min": 1.5,
-            "ueberhang": 0.124
-          },
-          {
-            "masse_mm": [
-              10.8,
-              10.8,
-              11.0
-            ],
-            "volumen_mm3": 563.0,
-            "wand_min": 0.87,
-            "ueberhang": 0.066
+            "ueberhang": 0.131
           }
         ]
       }
@@ -759,7 +750,7 @@
         }
       ],
       "druck": "druck/rumpf.stl",
-      "druck_mb": 14.58,
+      "druck_mb": 14.47,
       "masse_mm": [
         359.0,
         226.5,
@@ -785,9 +776,9 @@
               125.2,
               93.7
             ],
-            "volumen_mm3": 129487.9,
-            "wand_min": 1.28,
-            "ueberhang": 0.232
+            "volumen_mm3": 130979.9,
+            "wand_min": 0.66,
+            "ueberhang": 0.222
           },
           {
             "masse_mm": [
@@ -795,8 +786,8 @@
               91.4,
               66.1
             ],
-            "volumen_mm3": 37491.3,
-            "wand_min": 1.12,
+            "volumen_mm3": 37261.4,
+            "wand_min": 1.25,
             "ueberhang": 0.04
           },
           {
@@ -805,9 +796,9 @@
               164.4,
               93.9
             ],
-            "volumen_mm3": 724965.3,
-            "wand_min": 1.25,
-            "ueberhang": 0.212
+            "volumen_mm3": 721530.3,
+            "wand_min": 1.0,
+            "ueberhang": 0.219
           },
           {
             "masse_mm": [
@@ -1234,38 +1225,39 @@
         }
       ],
       "druck": "druck/fahrerstand.stl",
-      "druck_mb": 7.69,
+      "druck_mb": 7.36,
       "masse_mm": [
         180.3,
         106.1,
-        135.2
+        134.7
       ],
       "druck_koerper": 6,
       "druck_bett_mm": [
         210.5,
         267.2,
-        112.5
+        112.4
       ],
       "druck_pruefung": {
         "dicht": true,
         "hinweise": [
           "Passung zu motor: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu rumpf: 3 Ansatzstellen buendig gekuerzt",
-          "49 eingeschlossene Hohlraeume gefuellt",
-          "Koerper 0: 11/1183 Proben duenner als 0.5 mm: 0.05 mm (1 Probe) bei x/y/z [1383, 334, 1047] Original-mm, Solid 18 (6x18x35 Original-mm); 0.37 mm (1 Probe) bei x/y/z [1512, -19, 969] Original-mm, Solid 186 (5x4x8 Original-mm); 0.50 mm (1 Probe) bei x/y/z [1730, 214, 1211] Original-mm, Solid 195 (50x53x50 Original-mm); 0.50 mm (2 Proben) bei x/y/z [1699, 204, 1232] Original-mm, Solid 195 (50x53x50 Original-mm); 0.50 mm (4 Proben) bei x/y/z [1265, 340, 993] Original-mm, Solid 176 (44x4x66 Original-mm); 0.50 mm (2 Proben) bei x/y/z [1277, -341, 973] Original-mm, Solid 171 (12x12x12 Original-mm)",
-          "Koerper 1: 7/733 Proben duenner als 0.5 mm: 0.05 mm (1 Probe) bei x/y/z [2493, 311, 1076] Original-mm, Solid 146 (357x450x46 Original-mm); 0.15 mm (2 Proben) bei x/y/z [2198, 314, 1094] Original-mm, Solid 146 (357x450x46 Original-mm); 0.22 mm (1 Probe) bei x/y/z [2483, 69, 1078] Original-mm, Solid 146 (357x450x46 Original-mm); 0.23 mm (1 Probe) bei x/y/z [2348, 420, 1086] Original-mm, Solid 146 (357x450x46 Original-mm); 0.33 mm (1 Probe) bei x/y/z [2255, 389, 1091] Original-mm, Solid 146 (357x450x46 Original-mm); 0.33 mm (1 Probe) bei x/y/z [2175, 238, 1096] Original-mm, Solid 146 (357x450x46 Original-mm)",
-          "Koerper 3: 1/150 Proben duenner als 0.5 mm: 0.50 mm (1 Probe) bei x/y/z [1950, 219, 1433] Original-mm, Solid 202 (47x62x46 Original-mm)"
+          "48 eingeschlossene Hohlraeume gefuellt",
+          "2 Splitter unter 0.05 mm3 verworfen",
+          "Koerper 0: 5/1122 Proben duenner als 0.5 mm: 0.02 mm (1 Probe) bei x/y/z [1179, -420, 907] Original-mm, Solid 41 (10x98x50 Original-mm); 0.38 mm (1 Probe) bei x/y/z [1515, -33, 949] Original-mm, Solid 177 (7x18x18 Original-mm); 0.50 mm (1 Probe) bei x/y/z [1254, -339, 1009] Original-mm, Solid 160 (44x4x66 Original-mm); 0.50 mm (2 Proben) bei x/y/z [1278, 341, 1000] Original-mm, Solid 166 (44x4x66 Original-mm)",
+          "Koerper 1: 7/734 Proben duenner als 0.5 mm: 0.05 mm (1 Probe) bei x/y/z [2493, 311, 1076] Original-mm, Solid 136 (357x450x46 Original-mm); 0.15 mm (2 Proben) bei x/y/z [2198, 314, 1094] Original-mm, Solid 136 (357x450x46 Original-mm); 0.22 mm (1 Probe) bei x/y/z [2483, 69, 1078] Original-mm, Solid 136 (357x450x46 Original-mm); 0.23 mm (1 Probe) bei x/y/z [2348, 420, 1086] Original-mm, Solid 136 (357x450x46 Original-mm); 0.33 mm (1 Probe) bei x/y/z [2255, 389, 1091] Original-mm, Solid 136 (357x450x46 Original-mm); 0.33 mm (1 Probe) bei x/y/z [2175, 238, 1096] Original-mm, Solid 136 (357x450x46 Original-mm)",
+          "Koerper 3: 2/150 Proben duenner als 0.5 mm: 0.50 mm (1 Probe) bei x/y/z [1847, 159, 1455] Original-mm, Solid 184 (48x62x45 Original-mm); 0.50 mm (1 Probe) bei x/y/z [1847, 137, 1455] Original-mm, Solid 184 (48x62x45 Original-mm)"
         ],
         "koerper": [
           {
             "masse_mm": [
-              103.2,
+              93.3,
               105.0,
-              112.5
+              112.4
             ],
-            "volumen_mm3": 76040.5,
-            "wand_min": 0.05,
-            "ueberhang": 0.228
+            "volumen_mm3": 75757.3,
+            "wand_min": 0.02,
+            "ueberhang": 0.232
           },
           {
             "masse_mm": [
@@ -1283,29 +1275,29 @@
               80.6,
               63.4
             ],
-            "volumen_mm3": 16097.3,
+            "volumen_mm3": 15858.3,
             "wand_min": 0.75,
-            "ueberhang": 0.402
+            "ueberhang": 0.405
           },
           {
             "masse_mm": [
-              41.3,
+              42.4,
               56.2,
-              40.5
+              39.3
             ],
             "volumen_mm3": 2248.7,
             "wand_min": 0.5,
-            "ueberhang": 0.179
+            "ueberhang": 0.196
           },
           {
             "masse_mm": [
-              21.4,
-              11.9,
-              18.8
+              20.8,
+              11.1,
+              24.8
             ],
-            "volumen_mm3": 344.7,
+            "volumen_mm3": 345.1,
             "wand_min": 0.75,
-            "ueberhang": 0.173
+            "ueberhang": 0.155
           },
           {
             "masse_mm": [
@@ -1366,16 +1358,16 @@
         }
       ],
       "druck": "druck/planierschild.stl",
-      "druck_mb": 10.33,
+      "druck_mb": 10.38,
       "masse_mm": [
         459.6,
         277.2,
         172.9
       ],
-      "druck_koerper": 11,
+      "druck_koerper": 21,
       "druck_bett_mm": [
         218.0,
-        1118.1,
+        738.3,
         133.5
       ],
       "druck_pruefung": {
@@ -1383,9 +1375,17 @@
         "hinweise": [
           "Passung zu kuehlermaske: 1 Ansatzstellen buendig gekuerzt",
           "Passung zu rumpf: 7 Ansatzstellen buendig gekuerzt",
-          "6 eingeschlossene Hohlraeume gefuellt",
+          "8 eingeschlossene Hohlraeume gefuellt",
           "Koerper 0 geteilt in 8 Stuecke bei x=-265 / x=1121 / x=1129 / y=-590 / y=-32 (Original-mm, Einbaulage), 10 Passstifte (Loch 2.0 x 4.0 mm je Haelfte, Stift: 1,75-mm-Filament 7.5 mm lang)",
-          "Koerper 10 sehr klein (0.75 mm, 34.86 mm3) bei x/y/z [2819, -935, 1305] Original-mm, geht beim Druck evtl. verloren"
+          "Koerper 12 sehr klein (0.75 mm, 34.86 mm3) bei x/y/z [2819, -935, 1305] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 13 sehr klein (0.62 mm, 0.85 mm3) bei x/y/z [2540, 241, 1252] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 14 sehr klein (0.62 mm, 0.85 mm3) bei x/y/z [2540, 259, 1252] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 15 sehr klein (0.62 mm, 0.85 mm3) bei x/y/z [2600, 241, 1252] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 16 sehr klein (0.62 mm, 0.85 mm3) bei x/y/z [2600, 259, 1252] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 17 sehr klein (0.62 mm, 0.85 mm3) bei x/y/z [2600, -354, 1252] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 18 sehr klein (0.62 mm, 0.85 mm3) bei x/y/z [2600, -336, 1252] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 19 sehr klein (0.62 mm, 0.85 mm3) bei x/y/z [2540, -354, 1252] Original-mm, geht beim Druck evtl. verloren",
+          "Koerper 20 sehr klein (0.62 mm, 0.85 mm3) bei x/y/z [2540, -336, 1252] Original-mm, geht beim Druck evtl. verloren"
         ],
         "koerper": [
           {
@@ -1394,9 +1394,9 @@
               134.7,
               96.5
             ],
-            "volumen_mm3": 133883.9,
-            "wand_min": 0.73,
-            "ueberhang": 0.124
+            "volumen_mm3": 134290.7,
+            "wand_min": 1.32,
+            "ueberhang": 0.114
           },
           {
             "masse_mm": [
@@ -1404,9 +1404,9 @@
               142.6,
               96.5
             ],
-            "volumen_mm3": 140908.5,
+            "volumen_mm3": 141207.0,
             "wand_min": 0.75,
-            "ueberhang": 0.123
+            "ueberhang": 0.111
           },
           {
             "masse_mm": [
@@ -1414,9 +1414,9 @@
               34.6,
               81.7
             ],
-            "volumen_mm3": 85301.1,
-            "wand_min": 0.75,
-            "ueberhang": 0.099
+            "volumen_mm3": 81956.9,
+            "wand_min": 0.98,
+            "ueberhang": 0.118
           },
           {
             "masse_mm": [
@@ -1434,9 +1434,9 @@
               34.6,
               83.4
             ],
-            "volumen_mm3": 86262.3,
-            "wand_min": 1.0,
-            "ueberhang": 0.101
+            "volumen_mm3": 82900.9,
+            "wand_min": 0.62,
+            "ueberhang": 0.119
           },
           {
             "masse_mm": [
@@ -1444,9 +1444,9 @@
               102.5,
               66.1
             ],
-            "volumen_mm3": 15341.9,
+            "volumen_mm3": 15436.3,
             "wand_min": 1.5,
-            "ueberhang": 0.179
+            "ueberhang": 0.18
           },
           {
             "masse_mm": [
@@ -1454,39 +1454,59 @@
               209.8,
               118.6
             ],
-            "volumen_mm3": 242530.3,
+            "volumen_mm3": 242798.4,
             "wand_min": 0.63,
-            "ueberhang": 0.164
+            "ueberhang": 0.166
           },
           {
             "masse_mm": [
-              186.8,
-              67.2,
+              186.6,
+              70.6,
               43.8
             ],
-            "volumen_mm3": 10886.7,
-            "wand_min": 0.63,
-            "ueberhang": 0.134
+            "volumen_mm3": 12679.4,
+            "wand_min": 0.62,
+            "ueberhang": 0.133
           },
           {
             "masse_mm": [
-              123.9,
-              216.1,
-              24.6
+              41.2,
+              53.1,
+              25.3
             ],
-            "volumen_mm3": 7392.9,
-            "wand_min": 3.75,
-            "ueberhang": 0.21
+            "volumen_mm3": 1156.3,
+            "wand_min": 3.74,
+            "ueberhang": 0.19
           },
           {
             "masse_mm": [
-              144.0,
-              216.2,
-              24.6
+              26.2,
+              53.1,
+              20.3
             ],
-            "volumen_mm3": 7338.8,
-            "wand_min": 3.75,
-            "ueberhang": 0.211
+            "volumen_mm3": 935.6,
+            "wand_min": 3.74,
+            "ueberhang": 0.193
+          },
+          {
+            "masse_mm": [
+              7.5,
+              7.5,
+              14.5
+            ],
+            "volumen_mm3": 225.2,
+            "wand_min": 1.5,
+            "ueberhang": 0.111
+          },
+          {
+            "masse_mm": [
+              7.5,
+              7.5,
+              14.5
+            ],
+            "volumen_mm3": 225.2,
+            "wand_min": 1.5,
+            "ueberhang": 0.111
           },
           {
             "masse_mm": [
@@ -1497,6 +1517,86 @@
             "volumen_mm3": 34.9,
             "wand_min": 0.75,
             "ueberhang": 0.179
+          },
+          {
+            "masse_mm": [
+              1.4,
+              1.2,
+              0.6
+            ],
+            "volumen_mm3": 0.8,
+            "wand_min": 0.63,
+            "ueberhang": 0.0
+          },
+          {
+            "masse_mm": [
+              1.4,
+              1.2,
+              0.6
+            ],
+            "volumen_mm3": 0.8,
+            "wand_min": 0.63,
+            "ueberhang": 0.0
+          },
+          {
+            "masse_mm": [
+              1.4,
+              1.2,
+              0.6
+            ],
+            "volumen_mm3": 0.8,
+            "wand_min": 0.63,
+            "ueberhang": 0.0
+          },
+          {
+            "masse_mm": [
+              1.4,
+              1.2,
+              0.6
+            ],
+            "volumen_mm3": 0.8,
+            "wand_min": 0.63,
+            "ueberhang": 0.0
+          },
+          {
+            "masse_mm": [
+              1.4,
+              1.2,
+              0.6
+            ],
+            "volumen_mm3": 0.8,
+            "wand_min": 0.63,
+            "ueberhang": 0.0
+          },
+          {
+            "masse_mm": [
+              1.4,
+              1.2,
+              0.6
+            ],
+            "volumen_mm3": 0.8,
+            "wand_min": 0.63,
+            "ueberhang": 0.0
+          },
+          {
+            "masse_mm": [
+              1.4,
+              1.2,
+              0.6
+            ],
+            "volumen_mm3": 0.8,
+            "wand_min": 0.63,
+            "ueberhang": 0.0
+          },
+          {
+            "masse_mm": [
+              1.4,
+              1.2,
+              0.6
+            ],
+            "volumen_mm3": 0.8,
+            "wand_min": 0.63,
+            "ueberhang": 0.0
           }
         ]
       }
@@ -1505,7 +1605,7 @@
   "step": "hanomag-k55e_1-8.step.zip",
   "vorschau": "vorschau.png",
   "stand": "2026-10-13",
-  "build": "20261013110620",
+  "build": "20261013135522",
   "quellen": {
     "hinweis": "Die Bilder gehören ihren Urhebern und liegen nicht im Repository. Hier steht nur, wo sie zu finden sind und wofür sie im Modell benutzt wurden.",
     "gruppen": [
