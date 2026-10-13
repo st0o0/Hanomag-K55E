@@ -20,7 +20,7 @@ GABEL_L = 124.0                # Gabelkopf ab Scheitelauge bis Kontermutter
 
 # ---------------- Traverse: Endkaesten aussen, Quertraeger = Oeltank hinten oben ----------------
 EK_X0, EK_X1 = 2395.0, 2830.0
-EK_Z0, EK_Z1 = DECK_Z + 12.0, 1170.0   # 243 hoch (Seitenfotos 240..290), steht auf der Konsole ueber der Plattform
+EK_Z0, EK_Z1 = DECK_Z + 7.0, 1170.0   # 248 hoch; Kastenboden ueber dem Rollrand (r 8, bis 921) und den Schraubenkoepfen
 Z_AUSS_O = EK_Z1 - 18.0        # Oberkante des Kastenausschnitts (Rest oben 18 mm, Verrundung 14)
 Z_AUSS = 995.0                 # Unterkante des Kastenausschnitts (Zylinder + untere Leitung)
 EK_SCHR_DX, EK_SCHR_DY = 120.0, 190.0   # abgeschraegte hintere Aussenecke, ganze Kastenhoehe (c_ende_l)

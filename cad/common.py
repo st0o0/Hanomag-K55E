@@ -93,7 +93,7 @@ SCHEINWERFER = (230.0, 430.0, 1290.0)             # Lampenmitte x, |y|, z: an de
 PUMPE = (-70.0, 0.0, 530.0)   # Hydraulikpumpe vor dem Maskensockel, Antrieb von der Kurbelwelle
 Y_LTG = 392.0                 # Hydraulikleitungen aussen an der Haubenseite (|y| der Rohrmitte)
 LENKRAD = (1850.0, 140.0, 1440.0)   # Lenkradmitte: Saeule gerade aus der Kastenfront, ~47 Grad (Short 0:47, Nordhorn 2:15)
-SITZ_X = 2240.0               # Mitte Sitzschale (Kamera-Fit n129 2:09; n164 unsicher +-100)
+SITZ_X = 2180.0               # Mitte Sitzschale (Kamera-Fit n129 2:09; n164 unsicher +-100)
 SITZ_Y = 125.0                # Sitzachse y (n129: linke Schalenspitze bei y ~ -100)
 KD_X = 140.0                  # Kuehlerverschluss auf der Maskenkappe, Mitte x (Foto BS: x ~100..180)
 GESAMT_HOEHE = 1840.0
@@ -102,7 +102,7 @@ GESAMT_HOEHE = 1840.0
 # rumpf.py baut die Waende, fahrerstand.py das Bodenblech.
 # vorn hinter dem Zwischenflansch der Glocke (Flansch 1400..1426, Schraubenkoepfe bis 1434), 10 hinter DECK_X0;
 # hinten stuft die Plattform wieder auf DECK_Z (Hinterachsflansch ab 2056)
-FW_X0, FW_X1 = 1440.0, 2050.0
+FW_X0, FW_X1 = 1440.0, 2520.0
 # Bodenblech y, 645 breit (>= Haubenbreite 690: |y| 345); links bis y -300 belegt, rechts Wand innen y 345
 # (Aussenseite 355, die Pumpenleitung bei |y| 392 bleibt auf der Plattform)
 FW_Y0, FW_Y1 = -300.0, 345.0

@@ -447,8 +447,19 @@ def _heckkasten() -> Teile:
 
 
 def getriebe() -> Teile:
-    """Mittiger Getriebeblock (symmetrisch, ganz gebaut)."""
-    return _glocke() + _kupplungsgehaeuse() + _wechselgetriebe() + _hinterachsgehaeuse() + _heckkasten()
+    """Mittiger Getriebeblock (symmetrisch, ganz gebaut); im Bereich der bis hinten durchgezogenen Fussraumwanne werden die
+    Gehaeuseoberteile (Hinterachs-/Heckkasten) bis auf den Wannenboden FW_Z0 abgeschnitten."""
+    teile = _glocke() + _kupplungsgehaeuse() + _wechselgetriebe() + _hinterachsgehaeuse() + _heckkasten()
+    wanne = box(GETR_X1 - 30, FW_X1 + FW_WAND, FW_Y0, FW_Y1, FW_Z0, DECK_Z + 1)
+    out: Teile = []
+    for s in teile:
+        bb = s.bounding_box()
+        if bb.max.X > GETR_X1 - 30 and bb.min.X < FW_X1 + FW_WAND and bb.max.Z > FW_Z0:
+            s = s - wanne
+            if s.volume < 1.0:
+                continue
+        out.append(s)
+    return out
 
 
 def lenkbremse() -> Teile:
@@ -480,7 +491,7 @@ def endantrieb() -> Teile:
     y_aus = Y_ENDANTRIEB                                    # Aussenwand, davor Lagerrohr bis y 425
     t.append(kasten_rund(x0, x1, Y_FLANSCH, y_aus, z0, z1, 70, Axis.Y))
     # Anschlussflansch zum Hinterachsgehaeuse
-    t.append(kasten_rund(x0 - 32, x1 + 32, Y_FLANSCH - 4, Y_FLANSCH + 20, z0 - 32, z1 + 32, 90, Axis.Y))
+    t.append(kasten_rund(x0 - 32, x1 + 32, Y_FLANSCH - 4, Y_FLANSCH + 20, z0 - 32, min(z1 + 32, FW_Z0 - 2), 90, Axis.Y))
     pl = Plane(origin=((x0 + x1) / 2, Y_FLANSCH + 20, (z0 + z1) / 2), x_dir=(1, 0, 0), z_dir=(0, 1, 0))
     t += schrauben_rechteck(pl, x1 - x0 + 30, z1 - z0 + 30, 85, 20, 10, r_ecke=85)
     # Aussenwand: Versteifungsrippe oben, Lagerrohr zur Triebradnabe (Nabenflansch r 155 bei y 425)
@@ -530,6 +541,8 @@ def _fussraum_waende() -> Teile:
     """Seitenwaende des Fussraums (tuerkis), von der Plattform bis auf das Getriebe; rechts bis DECK_Z."""
     return [box(FW_X0, FW_X1, FW_Y0 - FW_WAND, FW_Y0, FW_Z0, DECK_UK + 1),
             box(FW_X0, FW_X1, FW_Y1, FW_Y1 + FW_WAND, FW_Z0, DECK_Z),
+            # Rueckwand der Wanne an der Oeltank-Vorderwand (2530): die Vertiefung reicht bis hinten durch (Nutzer)
+            box(FW_X1, FW_X1 + FW_WAND, FW_Y0 - FW_WAND, FW_Y1 + FW_WAND, FW_Z0, DECK_Z),
             # schmaler Streifen links neben dem Armaturenkasten (Video 128: senkrechte tuerkise Wand)
             box(1485.0, 1485.0 + FW_WAND, FW_Y0, FW_Y0 + 8, 924.0, 1078.0)]
 
@@ -540,7 +553,7 @@ def _spritzwand_und_boden() -> Teile:
     # nur ein niedriges Fussblech am Wannenende: darueber ist der Raum unter dem Armaturenkasten offen (Short c48/c50,
     # dahinter sieht man die Kupplungsglocke)
     t = [box(FW_X0, FW_X0 + FW_WAND, FW_Y0, FW_Y1, FW_Z1, FW_Z1 + 90.0)]
-    for sx in (1500.0, 1990.0):
+    for sx in (1540.0, 1990.0):                      # 1540: hinter dem Bremspedal-Arm (x 1482)
         t.append(box(sx - 14, sx + 14, 250.0, FW_Y1, FW_Z0 - 22.0, FW_Z0))
         t.append(box(sx - 14, sx + 14, FW_Y0, -250.0, FW_Z0 - 22.0, FW_Z0))
         t.append(box(sx - 14, sx + 14, FW_Y1 - 12, FW_Y1, FW_Z0 - 90.0, FW_Z0))     # Knotenblech an der Wand

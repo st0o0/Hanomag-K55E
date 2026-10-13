@@ -101,6 +101,20 @@ direkt auf dem Boden, Kupplungsarm quer bei x 1680, Pedale tief (40 über Boden)
 SITZ_ZB 1070, Kissen 36 über dem Rand mit weißer Biese (SITZ_X/SITZ_Y in common nachgezogen). Rahmen: kein Träger sichtbar,
 Spalt Plattform–Kette 133–146 passt (n164), RAHMEN_Z unverändert.
 
+Runde 19 (2026-10-13, Nutzer-Review von Runde 18): Querrohre auf die hintere Tankdecke (Steiger 2440/2490, nach hinten,
+T-Stücke bei x 2680/2740, Rohr 2 auf 1275 wegen Kreuzung, Halter 2710; Nordhorn 2:24); Fahrerstand: Pedale wieder vorn rechts
+unter dem Armaturenkasten mit Hebeln vom Boden (Runde-17-Anordnung) auf Querwellen mit Lagerböcken, Kupplungsgestänge
+(Welle → Arm → Gabel → Querstange → Hebel durch die Stirnwand zur Glocke) und Bremszugstange mit Spannschloss zum
+Bremshebel (X_BREMSE), Stufe entfernt, Sitz 2240 → 2180; Fußraumwanne bis zur Tank-Vorderwand durchgezogen (FW_X1 2050 → 2520,
+Rückwand bei 2520..2530, Hinterachs-/Heckkasten-Oberteile im Wannenbereich auf FW_Z0 abgeschnitten), Sitzsockel steht auf dem
+Wannenboden, Klinke und hintere Bodenschrauben auf dem Wannenboden. Haubenbreite geprüft (n174, 0:45): bündig mit der Maske,
+keine Änderung (HAUBE_B 690, Unsicherheit ±40); Werksblätter (Museums Victoria, Folder 191/197): K 55 E Spur 1270, Platten 400,
+Gesamtbreite 1803, Länge 2883, Bodenfreiheit hinten 311 – alles im Modell getroffen. „Klobige Haube“: Pixelraster auf n164
+(Dach 385 px = 1410, 2,46 mm/px) ergibt Fensterunterkante ≈ 800 (war 745), K55-Sicken ≈ 1016/837 → AUSSCHNITT_UNTEN_Z 800,
+SICKE_TYP_Z 1020, SICKE_VORN_Z 840, TYP_Z 930, TYP_X 270 (Kollision mit der Bogensicke). Traverse unten geschlossen: EK_Z0/QT_Z0
+927 → 915 (auf der Plattform), Untergurt x 2780..2830 bis z 761 (Schürzenhöhe), Endkästen unten dicht. Pedal-Lagerböcke
+(PED_X0 1482) und Kupplungsarm hinter der Stirnwand, Endantriebsflansch unter dem Wannenboden, Klinke x 2095.
+
 Offen:
 - Haltestange (dünnes Rohr quer über dem Sitz, Short 0:15/Nordhorn 2:15) nicht modelliert.
 - Kein Rücklauf zum Öltank (Nutzerentscheidung). Pumpendeckel-Tiefe 39 wegen Druckleitungen.
@@ -110,7 +124,9 @@ Offen:
 - Innere Bauteile unter der Plattform (Fußraumwand, Getriebe) wirken als geschlossene Fläche – ggf. dunkles Material.
 - Rundes Speichen-Verstellrad unter dem hinteren Sitzrand (Short) nicht verortet.
 - Pedal-Details/Kupplungsgestänge plausibel, aber bis auf den Gabelkopf nicht fotografisch belegt.
-- Haubenunterkante 620 ±30 (Stollen verdecken); vorderes Segment reicht evtl. tiefer mit gerundeter Vorderecke (0:08).
+- Haubenunterkante 620 ±30 und Sockelsicke 715 (Stollen verdecken); vorderes Segment evtl. tiefer mit gerundeter Vorderecke (0:08).
+- Arbeitsscheinwerfer auf dem linken Endkasten: Position (hinten außen vs. vorn, 2:24) vom Nutzer zu entscheiden.
+- Werksblatt: Höhe Lenkradoberkante 1803 – Video 2:44 zeigt ≈ 1530..1600, Modell ≈ 1590, nicht geändert.
 - Sitz-x unsicher (n129 ≈ 2240, n164 eher 2340 ±100); hohes schwarzes Blech rechts hinter dem Sitz (n129, x 2100..2300,
   z 1250..1330) nicht verortet; Haltebügel hinter dem Sitz (n164/c51) fehlt; Bremspedal-Lage geraten; FW_STUFE 225 evtl. 150..190.
 - Kasten hinter der Kette (n164, x 1890..2150, Oberkante ≈ 650) optional.

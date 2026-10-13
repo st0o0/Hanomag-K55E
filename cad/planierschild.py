@@ -677,7 +677,7 @@ def _schraegen_geometrie(s: int, y: float) -> tuple[Vector, Vector, Vector, Vect
     return p1, p2, d, n
 
 
-def _ecke_prisma(s: int, y: float, grow: float) -> Part:
+def _ecke_prisma(s: int, y: float, grow: float, z0: float | None = None, z1: float | None = None) -> Part:
     """Prisma (z-Extrusion) ueber der hinteren Aussenecke des Endkastens: Region hinter der Schraege
     (Dx = EK_SCHR_DX, Dy = EK_SCHR_DY, links und rechts gleich). grow > 0 verschiebt die Schraegflaeche um grow nach innen
     (fuer den Innenraum)."""
@@ -686,7 +686,9 @@ def _ecke_prisma(s: int, y: float, grow: float) -> Part:
     pts = [(a.X, a.Y), (b.X, b.Y), (b.X + n.X * 200, b.Y + n.Y * 200), (a.X + n.X * 200, a.Y + n.Y * 200)]
     if sum(pts[i][0] * pts[(i + 1) % 4][1] - pts[(i + 1) % 4][0] * pts[i][1] for i in range(4)) < 0:
         pts = pts[::-1]                                              # immer gegen den Uhrzeigersinn (Extrusion nach +z)
-    return extrude(Plane.XY.offset(EK_Z0 - 5) * Polygon(*pts, align=None), amount=EK_Z1 - EK_Z0 + 10)
+    z0 = EK_Z0 - 5 if z0 is None else z0
+    z1 = EK_Z1 + 5 if z1 is None else z1
+    return extrude(Plane.XY.offset(z0) * Polygon(*pts, align=None), amount=z1 - z0)
 
 
 def _langloch_schraege(s: int, y: float) -> Part:
@@ -732,13 +734,26 @@ def _zapfenlager(t: Sammler, s: int) -> None:
 
 
 def _konsole(t: Sammler, s: int) -> None:
-    """Konsole auf der Kotfluegelkante (Randwulst y = +-900), verschraubt."""
+    """Konsole auf der Kotfluegelkante (Randwulst y = +-900): Streifen unter dem Kastenboden ueber die ganze Plattformlaenge,
+    verschraubt (Schraubenkoepfe im Kastenboden verborgen, daher nur die Streifen)."""
     yk0, yk1 = sorted((s * (EK_YI - 28), s * (EK_YI + 3)))
-    xk0 = KONSOLE_X0
-    t.append(box(xk0, DECK_X1 - 5, yk0, yk1, DECK_Z, EK_Z0 + 3))
-    t.append(box(xk0, DECK_X1 - 5, *sorted((s * (EK_YI - 60), s * (EK_YI - 28))), DECK_Z, DECK_Z + 12))
-    for x in (xk0 + 22, DECK_X1 - 27):
-        t.mat("schwarz", sechskant((x, s * (EK_YI - 44), DECK_Z + 12), (0, 0, 1), 16, 7))
+    t.append(box(KONSOLE_X0, DECK_X1 - 5, yk0, yk1, DECK_Z, EK_Z0 + 3))
+
+
+def _untergurt(t: Sammler) -> None:
+    """Geschlossene Unterseite hinter der Plattformkante (DECK_X1 .. EK_X1): Bodenblech auf Hoehe der Heckschuerze, Rueckschuerze
+    buendig mit der Tankrueckwand und Seitenschuerzen innen; so ist unter Tank und Endkaesten nichts durchsichtig."""
+    zb, bl = DECK_Z - 154.0, 6.0   # = rumpf.DECK_UK - 140 (Unterkante Heckschuerze 761)
+    yo = Y_SCHUB + EK_DY
+    x0 = DECK_X1 + 6.0             # hinter dem Wulst der Heckschuerze (rumpf, bis 2782)
+    kasten = box(x0, EK_X1, -yo, yo, zb, EK_Z0)
+    for s in (-1, 1):
+        kasten -= _ecke_prisma(s, s * Y_SCHUB, 0.0, zb - 5, EK_Z0 + 5)
+    ki = box(x0 + bl, EK_X1 - bl, -yo + bl, yo - bl, zb + bl, EK_Z0 + 1)
+    for s in (-1, 1):
+        ki -= _ecke_prisma(s, s * Y_SCHUB, bl, zb - 5, EK_Z0 + 5)
+    # Boden, Rueckwand und Seitenwaende; vorn zur Plattform offen (dort steht Schuerze bzw. Trittblech)
+    t.append(kasten - ki - box(x0 - 1, x0 + bl + 1, -yo - 1, yo + 1, DECK_Z - 14.0, EK_Z0 + 1))
 
 
 def endkasten(t: Sammler, s: int) -> None:
@@ -794,6 +809,7 @@ def traverse(t: Sammler) -> None:
     for s in (-1, 1):
         endkasten(t, s)
     _oeltank(t)
+    _untergurt(t)
     _firmenschild(t)
 
 

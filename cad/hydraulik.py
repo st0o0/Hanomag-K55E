@@ -7,8 +7,9 @@ Doppeltwirkender 2-Zylinder-Kreis (Belege: Video Nordhorn 2:09..2:53 und YouTube
 * Der Steuerblock steht auf einem Blechbock (Konsole) dicht hinter dem Sitz rechts der Sitzmitte (Short 0:13..0:17), Rueckwand an
   der Tank-Vorderwand; seine Oberkante liegt knapp unter dem Sitzschalenrand. Der Kugelhebel ist ein eigener Hebel auf einem
   Lagerbock vor dem Block und wirkt ueber Winkel und waagerechtes Gestaenge (Gabelkoepfe) auf die Schieberstange.
-* Zwei Zylinderleitungen (Ø 30) steigen als Steiger aus der Blockdecke senkrecht auf z 1230. Oben sitzt je ein T-Stueck, aus dem
-  ein Zweig nach links und rechts abgeht: quer, 90 Grad nach vorn ueber die Endkastendecke, 90 Grad nach unten vor der Vorderwand
+* Zwei Zylinderleitungen (Ø 30) steigen als Steiger aus der Blockdecke senkrecht auf z 1230 / 1275 und laufen hinter dem Sitz nach
+  hinten ueber die Tankdecke. Hinten sitzt je ein T-Stueck, aus dem ein Zweig nach links und rechts abgeht: quer ueber den
+  hinteren Teil der Traverse (Nordhorn 2:24), 90 Grad nach vorn ueber die Endkastendecke, 90 Grad nach unten vor der Vorderwand
   des Endkastens und 90 Grad nach aussen direkt in den Zylinder (Anschluesse uebereinander; Foto des Besitzers, Short 0:13..0:17).
   Die Rohrhalter auf dem Tank folgen Nordhorn 2:09 / 2:24.
 * Ein Ruecklauf zum Oeltank ist nicht modelliert (technisch waere einer von T/Block zum Tank noetig).
@@ -221,17 +222,18 @@ Z_PL_P = Z_PL + 50.0                     # Hoehe des Anschlusses P an der Blockf
 P_ANSCHLUSS = (VB_X0, 530.0, Z_PL_P)     # Druckanschluss P an der Vorderseite des Blocks
 
 # Zylinderleitungen
-X_STEIGER = (2450.0, 2510.0)             # zwei Steiger Ø 30 aus der Blockdecke (Rohr 1 / 2) ...
-Y_STEIGER = 500.0                        # ... bei y 500
+X_STEIGER = (2440.0, 2490.0)             # zwei Steiger Ø 30 aus der Blockdecke (Rohr 1 / 2) ...
+Y_STEIGER = (500.0, 540.0)               # ... bei y 500 / 540 (Rohr 2 weiter aussen)
+X_HINTEN = (2680.0, 2740.0)              # x der T-Stuecke und Querlaeufe auf dem hinteren Teil der Tankdecke (Nordhorn 2:24)
 Y_QUER = (810.0, 860.0)                  # |y| der Querlaeufe; hinteres Rohr 2 aussen (kreuzungsfrei)
 X_VOR = (2360.0, 2300.0)                 # x der senkrechten Abwaerts-Laeufe vor der Endkastenwand (2395, Kantenschutz 2387..2397)
 Z_ANSCHLUSS = (1100.0, 1060.0)           # Anschlusshoehe am Zylinder: Rohr 1 oben, Rohr 2 unten
-Z_QUER = 1230.0                          # beide Querrohre nebeneinander auf gleicher Hoehe (Short 0:13..0:16)
+Z_QUER = (1230.0, 1275.0)                # Rohr 2 45 ueber Rohr 1, damit sich die Querlaeufe nicht durchdringen
 BIEGUNG_QUER = 45.0                      # 1,5 x Ø
 R_T = 22.0                               # T-Stueck-Koerper Ø 44, 70 lang
 SW_ANSCHLUSS = 30.0                      # Schluesselweite der Verschraubungen
 H_ANSCHLUSS = 14.0                       # Hoehe der Winkel-/Stutzenverschraubung am Zylinderrohr
-X_HALTER = 2560.0                        # senkrechter Buegel auf der Tankdecke, der Tragarm greift nach vorn unter die Rohre
+X_HALTER = 2710.0                        # senkrechter Buegel auf der Tankdecke zwischen den beiden Querrohren
 X_PFOSTEN = 2810.0                       # Pfosten hinter den Querrohren (Kappe und Platte ragen etwas ueber die Tank-Rueckwand)
 
 # Pfosten auf dem Oeltank (Frame 144 / Short): Flachstahlbuegel links-mittig, Rundpfosten (Entlueftung) rechts-mittig
@@ -376,19 +378,19 @@ def pumpenleitungen(t: Sammler) -> None:
 # Zylinderleitungen
 # ---------------------------------------------------------------------------------------------------------------
 def zylinderrohr(t: Sammler, i: int) -> None:
-    """Rohr ``i`` (0 = x 2450, 1 = x 2510): Steiger aus der Blockdecke senkrecht hoch auf Z_QUER, dort ein T-Stueck (Achse y), aus
-    dem je ein Zweig nach links und rechts abgeht (Spiegelbild): quer bei Z_QUER, 90 Grad nach vorn (-x) ueber die Endkasten-
-    decke, 90 Grad nach unten vor der Endkastenwand, 90 Grad nach aussen direkt in den Zylinder (Verschraubung an der
-    Zylinder-Innenseite). Die Anschluesse liegen uebereinander. Das hintere Rohr (2) laeuft aussen (|y| 860 statt 810),
-    sonst wuerde sein Weg nach vorn den Querlauf von Rohr 1 kreuzen."""
-    x, yq, xv, z = X_STEIGER[i], Y_QUER[i], X_VOR[i], Z_ANSCHLUSS[i]
+    """Rohr ``i`` (0/1): Steiger aus der Blockdecke senkrecht hoch auf Z_QUER, 90 Grad nach hinten (+x) ueber die Tankdecke bis
+    X_HINTEN, dort ein T-Stueck (Achse y), aus dem je ein Zweig nach links und rechts quer ueber den Tank geht, dann 90 Grad nach
+    vorn (-x) ueber die Endkastendecke, 90 Grad nach unten vor der Endkastenwand und 90 Grad nach aussen direkt in den Zylinder
+    (Verschraubung an der Zylinder-Innenseite). Die Anschluesse liegen uebereinander. Das hintere Rohr (2) laeuft aussen
+    (|y| 860 statt 810) und 45 hoeher, sonst wuerden sich die Querlaeufe durchdringen."""
+    x, ys, xh, yq, xv, z, zq = X_STEIGER[i], Y_STEIGER[i], X_HINTEN[i], Y_QUER[i], X_VOR[i], Z_ANSCHLUSS[i], Z_QUER[i]
     y0 = Y_SCHUB - R_ZYL
     y_start = y0 - H_ANSCHLUSS + 2.0
-    Verschraubung((x, Y_STEIGER, VB_Z1), (0, 0, 1), SW_ANSCHLUSS, H_ANSCHLUSS).einfuegen(t)
-    Rohrzug(((x, Y_STEIGER, VB_Z1 + 2), (x, Y_STEIGER, Z_QUER)), R_QUER, name=f"Steiger {i + 1}").einfuegen(t)
-    t.mat("blank", stab((x, Y_STEIGER - 35, Z_QUER), (x, Y_STEIGER + 35, Z_QUER), R_T))              # T-Stueck
+    Verschraubung((x, ys, VB_Z1), (0, 0, 1), SW_ANSCHLUSS, H_ANSCHLUSS).einfuegen(t)
+    Rohrzug(((x, ys, VB_Z1 + 2), (x, ys, zq), (xh, ys, zq)), R_QUER, BIEGUNG_QUER, name=f"Steiger {i + 1}").einfuegen(t)
+    t.mat("blank", stab((xh, ys - 35, zq), (xh, ys + 35, zq), R_T))                                  # T-Stueck
     for s in (-1, 1):
-        punkte = ((x, s * Y_STEIGER, Z_QUER), (x, s * yq, Z_QUER), (xv, s * yq, Z_QUER), (xv, s * yq, z), (xv, s * y_start, z))
+        punkte = ((xh, ys, zq), (xh, s * yq, zq), (xv, s * yq, zq), (xv, s * yq, z), (xv, s * y_start, z))
         Rohrzug(punkte, R_QUER, BIEGUNG_QUER, name=f"Zylinderrohr {i + 1}").einfuegen(t)
         Verschraubung((xv, s * y0, z), (0, -s, 0), SW_ANSCHLUSS, 14.0).einfuegen(t)
 
@@ -402,18 +404,18 @@ def traversenleitungen(t: Sammler) -> None:
 
 def _halter(t: Sammler, yp: float) -> None:
     """Rohrhalter nach Nordhorn 2:09 / 2:24: Flachstahl-Buegel (40 x 8) auf Fussplatte (60 x 60 x 8, zwei Schrauben) auf der
-    Tankdecke; ein waagerechter Tragarm greift nach vorn unter die Querrohre (sie liegen auf), je eine Halbschalen-Schelle
-    mit zwei Schrauben haelt sie."""
+    Tankdecke zwischen den beiden Querrohren; je ein waagerechter Tragarm greift zu jedem Rohr, je eine Halbschalen-Schelle
+    mit zwei Schrauben haelt es."""
     xb = X_HALTER
-    z_arm = Z_QUER - R_QUER
     t.mat("lack", box(xb - 30, xb + 30, yp - 30, yp + 30, QT_Z1, QT_Z1 + 8))
     t += [sechskant((xb + 12, yp + dy, QT_Z1 + 8), (0, 0, 1), 12, 6) for dy in (-22, 22)]
-    t.mat("lack", box(xb - 4, xb + 4, yp - 20, yp + 20, QT_Z1 + 8, z_arm))
-    t.mat("lack", box(X_STEIGER[0] - 20, xb + 4, yp - 20, yp + 20, z_arm - 8, z_arm - 0.5))          # Tragarm
-    for x in X_STEIGER:
-        t.mat("blank", ring_y(x, yp, Z_QUER, R_QUER + 5, R_QUER - 0.5, 30))
+    t.mat("lack", box(xb - 4, xb + 4, yp - 20, yp + 20, QT_Z1 + 8, Z_QUER[1] - R_QUER - 0.5))
+    for x, zq in zip(X_HINTEN, Z_QUER, strict=True):
+        z_arm = zq - R_QUER
+        t.mat("lack", box(min(x - 20, xb - 4), max(x + 20, xb + 4), yp - 20, yp + 20, z_arm - 8, z_arm - 0.5))   # Tragarm
+        t.mat("blank", ring_y(x, yp, zq, R_QUER + 5, R_QUER - 0.5, 30))
         for dy in (-9.0, 9.0):
-            t.mat("blank", sechskant((x, yp + dy, Z_QUER + R_QUER + 5), (0, 0, 1), 10, 5))
+            t.mat("blank", sechskant((x, yp + dy, zq + R_QUER + 5), (0, 0, 1), 10, 5))
 
 
 def _pfosten(t: Sammler) -> None:
@@ -424,8 +426,8 @@ def _pfosten(t: Sammler) -> None:
     xp, yp = X_PFOSTEN, Y_PFOSTEN[1]
     t.append(box(xp - 30, xp + 30, yp - 35, yp + 35, QT_Z1 - 1, QT_Z1 + 10))
     t += [sechskant((xp, yp + dy, QT_Z1 + 10), (0, 0, 1), 14, 6) for dy in (-22, 22)]
-    t.append(_scheibe_z(xp, yp, QT_Z1 + 10, 22, Z_QUER - 28 - QT_Z1 - 10))
-    t.append(_scheibe_z(xp, yp, Z_QUER - 28, 35, 62))
+    t.append(_scheibe_z(xp, yp, QT_Z1 + 10, 22, Z_QUER[0] - 28 - QT_Z1 - 10))
+    t.append(_scheibe_z(xp, yp, Z_QUER[0] - 28, 35, 62))
 
 
 # ---------------------------------------------------------------------------------------------------------------

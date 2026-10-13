@@ -181,30 +181,21 @@ HANDGAS_FUSS = (1500.0, 955.0)        # Fuss der Zugstange (x, z), unter dem Kas
 HANDGAS_OBEN = (1565.0, 1310.0)       # Kopf des Hebels (x, z): parallel zur schraegen Tankrueckwand davor
 HANDGAS_LAGER_Z = 1185.0              # Lagerzylinder (Achse in y) auf dieser Hoehe
 
-# --- Pedale (Fussraum, relativ zur Konsolenrueckseite) ---
-# Review 2 (Nutzer: "Unter dem Lenkrad befinden sich die Pedale"): drei Pendelpedale unter dem Lenkrad (Saeule y 200), Hebel durch
-# Schlitze
-# im Bodenblech, Trittplatten schraeg zum Fahrer. Anordnung nach Traktorenlexikon Hanomag K 55 (Wikibooks: Kupplungspedal +
-# Bremspedale;
-# gelenkt wird ueber das Lenkrad auf die Lenkbremsen) und Konvention: Kupplung links neben der Saeule, Bremsen rechts / unter dem
-# Rad.
-# Neu (Review 18, Short c48/p48.5 + Nordhorn n129 Kamera-Fit): die Pedale stehen NICHT unter dem Armaturenkasten, sondern niedrig
-# auf dem Fussraumboden hinter dem rechten Stufenabsatz (siehe STUFE_*): die geriffelte Trittplatte steht knapp ueber dem Boden
-# (Unterkante ~40 mm) vor dem Kupplungsgestaenge, der Hebel ist kurz.
-PED_DX, PED_DZ = 60.0, 85.0     # Hebel: Boden -> Trittplatte (nach hinten oben)
-PED_B = 56.0                 # Breite der Trittplatten (y), Short c48: ~90 x 60
-# Kupplungsgestaenge: waagerechter Arm in y bei x ~1680 (n129: Kugelgelenk-Ende y 155, linkes Ende y 62, ~35 ueber dem Boden;
-# Fit t020 hatte x 1665..1720, y 10..105)
-PED_KUPPLUNG = (1675.0, 155.0)              # Gabelkopf mit Kugelgelenk (rechtes Ende)
-PED_KUPPLUNG_DURCHTRITT = (1693.0, 62.0)    # linkes Ende des Arms (hier setzt der Pedalhebel an)
-PED_KUPPLUNG_PAD = (1632.0, 90.0, 775.0)    # Mitte der Trittplatte: vor dem Arm (Short p48.5), rechts neben dem Gummibalg
-PED_BREMSE = (1590.0, 290.0)   # Bremspedal rechts davon (Lage nicht aus den Frames ablesbar, Hebelweg unter dem Blech y > 255)
-
-# --- Stufe vorn rechts im Fussraum (Short c48/c49/c50/p48/p48.5): rechts neben dem Armaturenkasten steigt der Boden mit einer
-# rueckwaertigen Stirnflaeche auf Plattformhoehe; auf dem Absatz laeuft vor dem Werkzeugkasten ein Rohr Ø ~35 (rostig) ---
-STUFE_X1 = 1590.0            # Hinterkante der Stufe (Stirnflaeche, zeigt zum Fahrer); Tiefe ~150 (c48: Trittflaeche + Rohr)
-STUFE_Y0 = 135.0             # links endet sie am Winkelblech des Armaturenkastens
-STUFE_ROHR_R, STUFE_ROHR_X = 17.0, 1472.0
+# --- Pedale (Fussraum, vorn rechts unter dem Armaturenkasten) ---
+# Zwei Pendelpedale (Kupplung y 195, Bremse y 290; Anordnung nach Traktorenlexikon Hanomag K 55, gelenkt wird ueber das Lenkrad
+# auf die Lenkbremsen). Je ein runder Hebel steigt von einer Querwelle auf dem Fussraumboden schraeg nach hinten oben zur
+# geriffelten Trittplatte (Short c48/c49/p48/p48.5: Pad mit Rippen, Hebel, kleine Platte mit Loch unter dem Kastenrand).
+# Gestaenge (die Frames zeigen nur Hebel, Gabel und Stange auf dem Boden; der Rest ist plausibel ergaenzt):
+#   Kupplung: Hebel -> Querwelle Ø 22 in zwei Lagerboecken -> Arm -> Querstange Ø 14 mit Gabelkopf -> Welle durch die Stirnwand
+#             zur Kupplungsglocke
+#   Bremse:   Hebel -> Querwelle -> Arm durch den Boden -> Zugstange Ø 14 (Spannschloss) unter dem Blech -> Bremsbandhebel
+PED_X0 = 1482.0                  # Fuss des Bremspedalhebels (Lagerboecke +-28 hinter der Stirnwand 1450)
+PED_DX, PED_DZ = 100.0, 160.0    # Hebel: Boden -> Trittplatte (nach hinten oben)
+PED_B = 56.0                     # Breite der Trittplatten (y), Short c48: ~90 x 60
+PED_KUPPLUNG = (1480.0, 195.0)   # Fuss des Kupplungspedalhebels
+PED_BREMSE = (PED_X0, 282.0)     # Bremspedal rechts davon (Hebelweg unter dem Blech y > 255)
+PED_WELLE_Z = 24.0               # Achse der Pedal-Querwellen ueber dem Fussraumboden
+PED_STIRN_Y, PED_STIRN_Z = 40.0, 752.0   # Kupplungswelle durch die Stirnwand (y, z)
 
 # --- Getriebedeckel im Fussraumboden (Short c48/c50: erhabene, rechteckige Platte mit gerundeten Ecken, 6 Schrauben) ---
 # Lage neu (Review 18): die Platte liegt HINTER und RECHTS vom Schalthebel-Balg (c48/c49/p48.5: vordere linke Ecke rechts hinter
@@ -228,7 +219,7 @@ FUGE_X = 1557.0              # Querfuge im schmalen Streifen an der Wand
 STUTZEN = (1894.0, -118.0)
 STUTZEN_H = 200.0            # Hoehe ueber dem Boden (Kopf z ~940, 25 ueber der Plattform)
 # Klinke/Zahnstange am Boden vor dem Sitz (Short 0:17/0:18.5), Lage nur grob aus dem Frame: x ~2090..2130, y ~ -25..215
-KLINKE_BODEN = (2108.0, 95.0)
+KLINKE_BODEN = (2095.0, 95.0)
 
 # --- Sitz: tiefe Blechschale mit Polster ---
 # Randellipse x/y, Mulde als Ausschnitt eines Ellipsoids, umgebordelter Rand, Sitztraeger unter der Mitte, Blattfeder-Arm
@@ -673,14 +664,6 @@ def _fussraumboden(t: Sammler) -> None:
             t.append(box(FW_X0, FW_X1, y0, y1, zf - FUGE_T - 1, zf))
 
 
-def _stufe(t: Sammler) -> None:
-    """Stufe rechts vorn im Fussraum (Short c48/c49/c50/p48/p48.5): Block vom Boden bis zur Bodenblech-Oberkante, Stirnflaeche
-    zum Fahrer, davor/dahinter ein Rohr Ø 35 quer vor dem Werkzeugkasten (rostig, zink)."""
-    y1 = FW_Y1
-    t.append(box(FW_X0 + 12, STUFE_X1, STUFE_Y0, y1, FW_Z1 - 1, BODEN_Z))      # hinter der Stirnwand (FW_WAND 10)
-    t.mat("zink", rad_y(STUFE_ROHR_X, (STUFE_Y0 + y1) / 2 + 4, BODEN_Z + STUFE_ROHR_R, STUFE_ROHR_R, y1 - STUFE_Y0 - 8))
-
-
 def _getriebedeckel(t: Sammler) -> None:
     """Erhabene Deckelplatte im Fussraumboden: dunkle, hohe Seitenwand, Oberseite in Bodenfarbe, sechs Sechskantschrauben
     (Short c48/c49/c50, p48.5)."""
@@ -706,15 +689,14 @@ def _bodenschrauben(t: Sammler) -> None:
     for yb, x0b, dx in ((-190.0, 1561.0, 140.0), (-160.0, 1540.0, 78.0), (-98.0, 1552.0, 140.0), (FW_Y1 - 22, FW_X0 + 30, 62.0)):
         x = x0b
         while x < (1955.0 if yb < 100 else FW_X1 - 20):      # links endet die Reihe vor dem Getriebedeckel (rumpf.py, x ab 1975)
-            # rechts Luecke fuer Stufe/Bremspedal, Deckel frei
+            # rechts Luecke fuer die Pedale, Deckel frei
             if not (yb > 100 and 1440.0 < x < 1760.0) and not _auf_deckel(x, yb):
                 t += schraube((x, yb, zf), (0, 0, 1), 18, 6)
             x += dx
     zb = BODEN_Z
     t += schraubenreihe((xb0 + 25, -335, zb), (xb1 - 25, -335, zb), 9, (0, 0, 1), 18, 6)       # links neben dem Fussraum
-    t += schraubenreihe((FW_X1 + 25, 335, zb), (xb1 - 25, 335, zb), 3, (0, 0, 1), 18, 6)       # rechts nur hinter dem Fussraum
-    t += schraubenreihe((xb1 - 25, -230, zb), (xb1 - 25, -90, zb), 2, (0, 0, 1), 18, 6)
-    t += schraubenreihe((xb1 - 25, 90, zb), (xb1 - 25, 230, zb), 2, (0, 0, 1), 18, 6)
+    t += schraubenreihe((xb1 - 25, -230, zf), (xb1 - 25, -90, zf), 2, (0, 0, 1), 18, 6)      # vor der Wannen-Rueckwand
+    t += schraubenreihe((xb1 - 25, 90, zf), (xb1 - 25, 230, zf), 2, (0, 0, 1), 18, 6)
 
 
 def _oel_stutzen(t: Sammler) -> None:
@@ -750,37 +732,63 @@ def _schalthebel(t: Sammler) -> None:
 
 
 # ---------------- Pedale ----------------
-def _pedal(t: Sammler, x: float, y: float) -> None:
-    """Pendelpedal: kurzer runder Hebel steigt aus einem Schlitz mit Gummimanschette im Fussraumboden schraeg nach hinten oben
-    zu einer geneigten, geriffelten Trittplatte (Normale zum Fahrer), die knapp ueber dem Boden steht (Short c48/p48.5)."""
+def _lagerbock(t: Sammler, x: float, y: float, zw: float) -> None:
+    """Lagerbock fuer eine Pedal-Querwelle: aufrechtes Blech mit Fussflansch auf dem Boden und zwei Schrauben."""
     zf = FW_Z1
-    t.mat("gummi", box(x - 16, x + 30, y - 27, y + 27, zf, zf + 8))               # Durchfuehrungsmanschette
-    _trittplatte(t, Vector(x, y, zf + 8), Vector(x + PED_DX, y, zf + 8 + PED_DZ))
+    t.append(box(x - 28, x + 28, y - 3, y + 3, zf, zw + 18))
+    t.append(box(x - 28, x + 28, y - 18, y + 18, zf, zf + 5))
+    t += [sechskant((x + dx, y, zf + 5), (0, 0, 1), 14, 5) for dx in (-20, 20)]
+
+
+def _pedal(t: Sammler, x: float, y: float, y0: float, y1: float) -> float:
+    """Pendelpedal: Querwelle Ø 22 (y0..y1) in zwei Lagerboecken auf dem Fussraumboden, darauf Nabe und runder Hebel, der
+    schraeg nach hinten oben zu einer geneigten, geriffelten Trittplatte steigt (Short c48/c49/p48/p48.5). Liefert die
+    Wellenhoehe."""
+    zf = FW_Z1
+    zw = zf + PED_WELLE_Z
+    t.mat("blank", rad_y(x, (y0 + y1) / 2, zw, 11, y1 - y0))
+    for yb in (y0 - 6, y1 + 6):
+        _lagerbock(t, x, yb, zw)
+    t.append(rad_y(x, y, zw, 17, 36))                                                       # Nabe auf der Welle
+    _trittplatte(t, Vector(x, y, zw), Vector(x + PED_DX, y, zf + 8 + PED_DZ))
+    return zw
+
+
+def _gabel(t: Sammler, p: Vector, richtung: Vector, laenge: float = 44.0) -> None:
+    """Gabelkopf mit Querbolzen; p = Bolzenmitte, richtung = Richtung, in die die Stange abgeht."""
+    pl = Plane(origin=p, x_dir=richtung.normalized(), z_dir=(0, 0, 1))
+    t.mat("zink", pl * (Pos(laenge / 2 - 14, 0, 0) * Box(laenge, 30, 28) - Pos(-6, 0, 0) * Box(laenge - 4, 14, 30)))
+    t.mat("blank", pl * (Rot(90, 0, 0) * Cylinder(5.5, 42)))
 
 
 def _bremspedale(t: Sammler) -> None:
-    """Bremspedal (neben dem Kupplungspedal, Short 0:48); unter dem Blech laufen Hebel und Zugstange zum
-    Lenkbremsgehaeuse (nur dort, wo unter dem Blech Luft ist, |y| > 255 neben dem Getriebegehaeuse)."""
+    """Bremspedal (neben dem Kupplungspedal, Short 0:48): Welle auf dem Boden, Arm durch einen Schlitz mit Gummimanschette nach
+    unten, darunter Gabelkopf und Zugstange Ø 14 mit Spannschloss nach hinten zum Bremsbandhebel am Lenkbremsgehaeuse (nur dort,
+    wo unter dem Blech Luft ist, y > 255 neben dem Getriebegehaeuse)."""
     zf = FW_Z1
-    _pedal(t, *PED_BREMSE)
-    # Hebel durch das Blech nach unten, Gabelkopf, Zugstange z 636 nach hinten zum Hebel am Lenkbremsgehaeuse
     xr, yr = PED_BREMSE
-    # Achse der Zugstange 676 (Gehaeuse oben 628, Blech unten 716)
-    zr = FW_Z0 - 40.0
-    t.append(stab((xr, yr, zr), (xr, yr, zf + 8), 12))
-    t.mat("blank", Pos(xr, yr, zr) * box(-16, 16, -14, 14, -14, 14))                     # Gabelkopf
-    t.mat("blank", rad_y(xr, yr, zr, 5, 40))                                             # Gabelbolzen
-    t.mat("blank", stab((xr + 12, yr, zr), (X_BREMSE - 8, yr, zr), 7))                   # Zugstange
-    # Hebel auf dem Lenkbremsgehaeuse (Rippe bis 630)
+    zw = _pedal(t, xr, yr, yr - 36, yr + 36)
+    t.mat("gummi", box(xr - 22, xr + 22, yr - 27, yr + 27, zf, zf + 8))                  # Durchfuehrungsmanschette
+    zr = FW_Z0 - 40.0                                                                     # Achse der Zugstange 636
+    t.append(stab((xr, yr, zr), (xr, yr, zw), 12))                                        # Hebelarm durch den Boden
+    _gabel(t, Vector(xr, yr, zr), Vector(1, 0, 0))
+    xe = X_BREMSE - 38                                                                    # endet vor dem Nachstellbock (rumpf)
+    t.mat("blank", stab((xr + 30, yr, zr), (xe, yr, zr), 7))                              # Zugstange Ø 14
+    xs = (xr + 30 + xe) / 2
+    t.mat("zink", sechskant((xs - 30, yr, zr), (1, 0, 0), 22, 60))                        # Spannschloss
+    for dx in (-36, 34):                                                                  # Kontermuttern
+        t.mat("blank", sechskant((xs + dx, yr, zr), (1, 0, 0), 20, 8))
+    # Bremsbandhebel auf dem Lenkbremsgehaeuse (Rippe bis 630) mit Bolzen, die Zugstange greift mit einem Auge an
     t.mat("blank", box(X_BREMSE - 14, X_BREMSE + 14, yr - 9, yr + 9, 631.0, zr + 16))
     t.mat("blank", rad_y(X_BREMSE, yr, zr, 5, 36))                                       # Bolzen Hebel
+    t.mat("blank", rad_y(xe, yr, zr, 11, 14) - rad_y(xe, yr, zr, 5, 16))                 # Auge der Zugstange
 
 
 def _klinke_boden(t: Sammler) -> None:
     """Klinke / Zahnstange am Boden vor dem Sitz (Short 0:17/0:18.5): flache, laengs geschlitzte Stange mit Auge,
     quer vor der Sitzschale auf dem Bodenblech, leicht schraeg."""
     w = math.radians(10)
-    pl_b = Plane(origin=(*KLINKE_BODEN, BODEN_Z), x_dir=(math.sin(w), math.cos(w), 0), z_dir=(0, 0, 1))
+    pl_b = Plane(origin=(*KLINKE_BODEN, FW_Z1), x_dir=(math.sin(w), math.cos(w), 0), z_dir=(0, 0, 1))
     bar = Pos(0, 0, 4) * Box(250, 38, 6)
     for dx in (-70, 0, 70):
         bar = bar - Pos(dx, 0, 4) * Box(48, 12, 10)
@@ -790,25 +798,26 @@ def _klinke_boden(t: Sammler) -> None:
 
 
 def _kupplungspedal(t: Sammler) -> None:
-    """Kupplungspedal: Gabelkopf mit Bolzen auf dem Boden (Video 2:09, Kamera-Fit t020: Gabelkopf x ~1665, y ~100;
-    waagerechte Zugstange auf dem Blech nach hinten-links zum Durchtritt bei x ~1720, y ~50), Zunge in der Gabel
-    und Pedalhebel mit Trittplatte (Lenkrad ueber dem Pedal)."""
-    zf = FW_Z1
+    """Kupplungspedal: Querwelle mit Hebel/Trittplatte (Lenkrad ueber dem Pedal). Am linken Wellenende sitzt ein Arm, an dem eine
+    Querstange Ø 14 mit Gabelkopf zur Stirnwand laeuft; dort greift sie an einem Hebel auf der Welle durch die Wand zur
+    Kupplungsglocke an (Video 2:09: Gabelkopf, waagerechte Stange auf dem Boden)."""
     kx, ky = PED_KUPPLUNG
-    za = zf + 28.0                                                                        # Achse des Gestaenges ueber dem Boden
-    A = Vector(kx, ky, za)
-    B = Vector(*PED_KUPPLUNG_DURCHTRITT, za)
-    u = (B - A).normalized()
-    pl_g = Plane(origin=A, x_dir=u, z_dir=(0, 0, 1))
-    t.mat("zink", pl_g * (Pos(6, 0, 0) * Box(52, 36, 30) - Pos(-8, 0, 0) * Box(44, 18, 32)))   # Gabelkopf mit Schlitz
-    t.mat("blank", pl_g * (Pos(-8, 0, 0) * Rot(90, 0, 0) * Cylinder(5, 46)))               # Gabelbolzen quer
-    t.mat("zink", stab(A + u * 30, B, 8))                                                   # Zugstange
-    t.mat("gummi", box(B.X - 26, B.X + 26, B.Y - 26, B.Y + 26, zf, zf + 8))                 # Durchtritt Zugstange
-    # Gegenmutter
-    t.mat("blank", Pos(*(A + u * 44)) * Rot(0, 0, math.degrees(math.atan2(u.Y, u.X))) * box(-5, 5, -10, 10, -10, 10))
-    # Kupplungshebel: kurzer Hebel vom linken Ende des Arms nach vorn oben zur Trittplatte (Short p48.5: Pad vor dem Arm)
-    t.mat("zink", Pos(B.X, B.Y, za) * Sphere(9))
-    _trittplatte(t, Vector(B.X, B.Y, za), Vector(*PED_KUPPLUNG_PAD))
+    zw = _pedal(t, kx, ky, ky - 55, ky + 55)
+    ya = ky - 62.0                                                                        # Arm hinter dem linken Lagerbock
+    ze = PED_STIRN_Z
+    ae = Vector(kx - 8, ya, ze)                                                           # Gabel (+-12) hinter der Stirnwand
+    t.append(stab((kx, ya, zw), (ae.X, ya, ae.Z), 9))                                    # Arm nach vorn oben
+    t.mat("blank", rad_y(kx, ya, zw, 15, 14))                                             # Klemmnabe
+    _gabel(t, ae, Vector(0, -1, 0))
+    yw = PED_STIRN_Y
+    t.mat("zink", stab((ae.X, ya - 36, ze), (ae.X, yw + 22, ze), 7))                      # Querstange Ø 14
+    t.mat("zink", box(ae.X - 8, ae.X + 8, yw - 4, yw + 26, ze - 40, ze + 14))             # Hebel auf der Wandwelle
+    t.mat("blank", rad_y(ae.X, yw + 22, ze, 5.5, 40))
+    t.mat("blank", rad_x(FW_X0 + 40, yw, ze - 30, 10, 60))                                # Wellenstummel bis an die Stirnwand
+    t.mat("gummi", rad_x(FW_X0 + 14, yw, ze - 30, 24, 8))                                 # Dichtscheibe an der Wand
+    # kleine Platte mit Loch unter dem Kastenrand ueber dem Pedal (Short c48/c49)
+    pl = Plane(origin=(DASH_XU + 3, ky, DASH_ZU - 22), x_dir=(0, 1, 0), z_dir=(1, 0, 0))
+    t.append(pl * (Box(44, 40, 6) - Cylinder(7, 8)))
 
 
 def _fussraum(t: Sammler) -> None:
@@ -816,7 +825,6 @@ def _fussraum(t: Sammler) -> None:
     _bodenblech(t)
     _fussraumboden(t)
     _getriebedeckel(t)
-    _stufe(t)
     _bodenschrauben(t)
     _oel_stutzen(t)
     _schalthebel(t)
@@ -887,7 +895,7 @@ def _sitz_sockel(t: Sammler) -> None:
     """Mittelsockel hinter dem Getriebedeckel (gepresster Kasten mit Fussplatte, unter der Sitzachse y = SITZ_MY) und
     Blattfeder-Arm: hinten im Sockel eingespannt, nach vorn unter die Sitzkonsole (zwei Lagen), Klemmplatte mit
     Buegelschrauben."""
-    zb_s = BODEN_Z                                            # auf dem Bodenblech
+    zb_s = FW_Z1                                              # auf dem Wannenboden (Vertiefung bis zum Tank)
     sx = SOCKEL_X
     ys = SITZ_MY
     t.append(kasten_rund(sx - 40, sx + 40, ys - 55, ys + 55, zb_s - 2, SOCKEL_Z1, 15))

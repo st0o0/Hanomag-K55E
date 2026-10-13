@@ -23,7 +23,7 @@ Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
   - Haube x 210..1080 (dahinter Tank), Dach 1410 (Pfeilhoehe 42, Kantenradius R 85; Maske gleich), 690 breit,
     zwei Laengssicken auf dem Dach.
     Seite: vorderes Segment x 210..370, dann grosser, hinten offener
-    Motorausschnitt (Unterkante 745) bis zum Haubenende, Oberkante 1090 (Schriftband 1090..1410), vorn flacher, elliptischer
+    Motorausschnitt (Unterkante 800) bis zum Haubenende, Oberkante 1090 (Schriftband 1090..1410), vorn flacher, elliptischer
     Bogen (340 breit x 200 hoch, als zwei tangentiale Kreisbogen) in die senkrechte Vorderkante. Darueber nur
     das Schriftband: untere Laengssicke (geht vorn in die Bogensicke parallel zum Ausschnitt ueber), HANOMAG
     (Mitte x ~630, Teilung 78), obere Laengssicke.
@@ -33,7 +33,7 @@ Fotobefund (blaue K 55 Bj. 1956: BS Seite rechts, BV Front; dazu PK, FL, WC):
     Kein ovales und kein helles Schild an der Seite (auf keinem Foto).
     Durchbrueche mit Kragen fuer Auspuff (rechts) und Ansaugrohr (links) im Dach.
   - Bodenstreifen unter dem Motorfenster (Nordhorn-Video n164/n179/n36): die Seitenwand endet NICHT am Fenster. Das
-    Fenster hat eine gerade Unterkante bei z ~745 (gebordelt); darunter laeuft ein geschlossener Streifen ueber die
+    Fenster hat eine gerade Unterkante bei z ~800 (gebordelt); darunter laeuft ein geschlossener Streifen ueber die
     ganze Haubenlaenge (x 210..1080) mit waagerechter Sicke bei z ~715 bis zur Haubenunterkante z ~620 (Ketten-
     greifer ueberdecken ihn in der Seitenansicht, daher +-30 unsicher).
   - Scheinwerfer: an der Naht Maske/Haube oben (Video 165/172/196, Flickr 40431489714), Mitte x 230,
@@ -191,11 +191,11 @@ BOGEN_R1 = m(130)
 BOGEN_R2 = ((BOGEN_W - BOGEN_R1) ** 2 + BOGEN_H ** 2 - BOGEN_R1 ** 2) / (2 * (BOGEN_H - BOGEN_R1))
 SICKE_Z = _z(1135)                    # untere Laengssicke (geht vorn in die Bogensicke ueber)
 SICKE_OBEN_Z = _z(1240)               # obere Laengssicke (unter dem Dachradius, Wand eben bis ~1285)
-SICKE_VORN_Z = _z(885)                # untere kurze Sicke unter dem Typschild (Video 0:08, Nordhorn s164 z ~895..900):
+SICKE_VORN_Z = _z(840)                # untere kurze Sicke unter dem Typschild (Video 0:08, Nordhorn s164 z ~895..900):
 #                                       mit dem Fuss der Bogensicke (z 890) verbunden; ersetzt die alte Sicke bei z 790
 SICKE_UNTEN_Z = _z(715)               # gerade Sicke im Bodenstreifen unter dem Motorfenster (Nordhorn n164: z ~710..720)
-AUSSCHNITT_UNTEN_Z = _z(745)          # gerade Unterkante des Motorfensters (Nordhorn n164: z ~745), darunter geschlossen
-SICKE_TYP_Z = _z(1035)                # obere kurze Sicke ueber dem Typschild (Nordhorn s164 z ~1025..1035)
+AUSSCHNITT_UNTEN_Z = _z(800)          # gerade Unterkante des Motorfensters (Nordhorn n164: z ~800), darunter geschlossen
+SICKE_TYP_Z = _z(1020)                # obere kurze Sicke ueber dem Typschild (Nordhorn s164 z ~1025..1035)
 
 # --- Beschriftung ---
 SCHRIFT = "HANOMAG"
@@ -203,7 +203,7 @@ SCHRIFT_X, SCHRIFT_Z = m(630), _z(1190)  # Mitte Schriftzug (zwischen den Sicken
 SCHRIFT_TEILUNG = m(78)                  # Buchstabenteilung (Gesamtlaenge ~520)
 SCHRIFT_VERSAL = m(55)                   # Versalhoehe
 TYP = "K55"                              # Fotos DSC04729/42: Schriftzug "K55" (kein E sichtbar)
-TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(298), (SICKE_TYP_Z + SICKE_VORN_Z) / 2, m(38), m(38)
+TYP_X, TYP_Z, TYP_TEILUNG, TYP_VERSAL = m(270), (SICKE_TYP_Z + SICKE_VORN_Z) / 2, m(38), m(38)
 #   Mitte x ~300, mittig zwischen den kurzen Sicken (z ~960), Versalhoehe ~40
 TYP_ABSTAND = 0.6                        # lichter Abstand der Glyphen (Modell-mm, >= 0.5)
 TYP_FELD_H = m(50)                       # Hoehe des Platzhalters fuer die Nietreihe (freie Schrift ohne Rahmen)
