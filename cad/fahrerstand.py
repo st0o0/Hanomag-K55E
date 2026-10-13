@@ -185,13 +185,17 @@ HANDGAS_OBEN = (1556.0, 1236.0)       # Kopf der Handgasstange (x, z): ueber der
 # Rad.
 PED_X0 = 1640.0              # Durchtritt der Bremspedalhebel im Bodenblech
 PED_DX, PED_DZ = 105.0, 112.0   # Hebel: Schlitz -> Trittplatte (nach hinten oben)
-PED_B = 74.0                 # Breite der Trittplatten (y)
+PED_B = 60.0                 # Breite der Trittplatten (y), Short c48: ~90 x 60
 PED_X1 = PED_X0 + PED_DX     # Trittflaechen 1745
 # Kupplungspedal (x, y): Gabelkopf des Gestaenges Video 2:09 (Kamera-Fit t020: Boden x ~1665..1720, y ~10..105)
 PED_KUPPLUNG = (1665.0, 112.0)
 PED_KUPPLUNG_DURCHTRITT = (1722.0, 52.0)   # Durchtritt der Kupplungs-Zugstange im Blech (x, y)
 PED_BREMSE = ((1640.0, 218.0), (1640.0, 298.0))   # zwei Bremspedale (links/rechts Lenkbremse), unter dem Lenkrad
 PED_KLINKE_Y = 258.0         # Verbindungsklinke zwischen den Bremspedalplatten
+
+# --- Getriebedeckel im Fussraumboden (Short c48/c50: erhabene, rechteckige Platte mit gerundeten Ecken, 6 Schrauben) ---
+DECKEL_X, DECKEL_Y = (1480.0, 1780.0), (-145.0, 105.0)   # 300 x 250, Schalthebel steht darauf
+DECKEL_H = 10.0
 
 # --- Schalthebel ---
 # Fuss Schalthebel (Gummibalg). Kamera-Fit Video 2:09: Strahl durch den Balg trifft den Boden (z 745) bei x 1561..1596, y -14;
@@ -250,7 +254,8 @@ def _ecke(f, x: float, z: float, r: float):
 
 def _trittplatte(t: Sammler, p0: Vector, p1: Vector) -> None:
     """Pedalhebel von p0 nach p1 mit geneigter, geriffelter Trittplatte (Normale zum Fahrer) und Pedalnabe."""
-    t.append(stab(p0, p1, 15))
+    mitte = (p0 + p1) / 2 + Vector(-14, 0, 8)                              # Hebel leicht gebogen (Short c48), Ø 16
+    t.append(rohr_glatt([p0, mitte, p1], 8, 90))
     pl = Plane(origin=p1, x_dir=(0, 1, 0), z_dir=(0.5, 0, 0.866))
     t.append(pl * Pos(0, 0, -6) * Box(PED_B, 90, 14))                      # Trittplatte
     for k in range(5):                                                      # Riffel (nur auf den Trittflaechen)
@@ -654,6 +659,21 @@ def _fussraumboden(t: Sammler) -> None:
             t.append(box(FW_X0, FW_X1, y0, y1, zf - FUGE_T - 1, zf))
 
 
+def _getriebedeckel(t: Sammler) -> None:
+    """Erhabene Deckelplatte des Wechselgetriebes im Fussraumboden mit sechs Sechskantschrauben (Short c48/c50)."""
+    zf = FW_Z1
+    t.mat("zink", kasten_rund(*DECKEL_X, *DECKEL_Y, zf - 1, zf + DECKEL_H, 25))
+    xs, ys = (DECKEL_X[0] + 24, DECKEL_X[1] - 24), (DECKEL_Y[0] + 24, DECKEL_Y[1] - 24)
+    for x in (xs[0], (xs[0] + xs[1]) / 2, xs[1]):
+        for y in ys:
+            t.mat("blank", sechskant((x, y, zf + DECKEL_H), (0, 0, 1), 18, 7))
+
+
+def _auf_deckel(x: float, y: float) -> bool:
+    """Liegt (x, y) auf der Getriebedeckel-Platte (mit Rand)?"""
+    return DECKEL_X[0] - 20 < x < DECKEL_X[1] + 20 and DECKEL_Y[0] - 20 < y < DECKEL_Y[1] + 20
+
+
 def _bodenschrauben(t: Sammler) -> None:
     """Schraubenreihen im Fussraumboden und auf dem Bodenblech."""
     zf = FW_Z1
@@ -661,7 +681,7 @@ def _bodenschrauben(t: Sammler) -> None:
     for yb, x0b, dx in ((-190.0, 1561.0, 140.0), (-160.0, 1540.0, 78.0), (-98.0, 1552.0, 140.0), (FW_Y1 - 22, FW_X0 + 30, 62.0)):
         x = x0b
         while x < (1955.0 if yb < 100 else FW_X1 - 20):      # links endet die Reihe vor dem Getriebedeckel (rumpf.py, x ab 1975)
-            if not (yb > 100 and 1590.0 < x < 1800.0):       # rechts Luecke fuer Bremspedale (Manschette / Trittplatte)
+            if not (yb > 100 and 1590.0 < x < 1800.0) and not _auf_deckel(x, yb):   # rechts Luecke fuer Bremspedale; Deckel frei
                 t += schraube((x, yb, zf), (0, 0, 1), 18, 6)
             x += dx
     zb = BODEN_Z
@@ -689,18 +709,19 @@ def _oel_stutzen(t: Sammler) -> None:
 
 # ---------------- Schalthebel ----------------
 def _schalthebel(t: Sammler) -> None:
-    """Schalthebel (Video 2:09/131/137/138): schwarzer flacher Gummibalg im Boden, duenner Hebel schwingt nach
-    links-vorn zum Armaturenkasten, schwarze Kugel knapp hinter und ueber dem unteren Kastenrand."""
-    zf = FW_Z1
+    """Schalthebel (Short c48/c50, Video 2:09/131/137/138): flacher Gummibalg auf der Getriebedeckel-Platte, Rohr Ø 20
+    steigt unten schraeg zum Armaturenkasten und knickt in die Senkrechte, schwarze Kugel Ø 45 oben."""
+    zf = FW_Z1 + DECKEL_H
     fx, fy = SCHALT
     t.append(Pos(fx, fy, zf) * _zyl(64, 6))     # Abdeckplatte unter dem Balg
     t.mat("gummi", Pos(fx, fy, zf + 6 + 16) * Torus(44, 16))                                       # Wulst (flacher Balg)
     t.mat("gummi", Pos(fx, fy, zf + 6 + 16) * Cone(46, 22, 40, align=(Align.CENTER, Align.CENTER, Align.MIN)))
     t.mat("gummi", Pos(fx, fy, zf + 6 + 54) * Torus(22, 6))                                        # Spannring oben
     knauf = SCHALT_KNAUF
-    # Review 3 (Short 0:45..0:50): duenne Stange Ø ~13, kleine Kugel
-    t.append(rohr_glatt([(fx, fy, zf + 56), (fx + 6, fy - 55, 930.0), knauf], 6.5, 160))
-    t.mat("schwarz", Pos(knauf[0] - 3, knauf[1], knauf[2] + 12) * Sphere(23))
+    kx, ky, kz = knauf
+    knick = (kx + 4, ky, zf + 190.0)                      # Knick: darunter schraeg, darueber senkrecht
+    t.append(rohr_glatt([(fx, fy, zf + 56), knick, (kx, ky, kz)], 10, 120))
+    t.mat("schwarz", Pos(kx - 3, ky, kz + 12) * Sphere(22.5))
 
 
 # ---------------- Pedale ----------------
@@ -775,6 +796,7 @@ def _fussraum(t: Sammler) -> None:
     """Bodenblech, Fussraumboden, Oel-Stutzen, Schalthebel und Pedale."""
     _bodenblech(t)
     _fussraumboden(t)
+    _getriebedeckel(t)
     _bodenschrauben(t)
     _oel_stutzen(t)
     _schalthebel(t)

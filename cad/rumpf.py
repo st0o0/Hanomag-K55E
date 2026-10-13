@@ -536,7 +536,9 @@ def _fussraum_waende() -> Teile:
 def _spritzwand_und_boden() -> Teile:
     """Spritzwand vorn unter dem Armaturenkasten (endet 1 mm unter Werkzeugkasten/Konsolenblech) und Bodentraeger
     unter dem Fussraumblech neben dem Getriebe (das Blech ragt dort frei ueber die Rundung des Gehaeuses, |y| > 250)."""
-    t = [box(FW_X0, FW_X0 + FW_WAND, FW_Y0, FW_Y1, FW_Z1, DECK_Z - 1.0)]
+    # nur ein niedriges Fussblech am Wannenende: darueber ist der Raum unter dem Armaturenkasten offen (Short c48/c50,
+    # dahinter sieht man die Kupplungsglocke)
+    t = [box(FW_X0, FW_X0 + FW_WAND, FW_Y0, FW_Y1, FW_Z1, FW_Z1 + 90.0)]
     for sx in (1500.0, 1990.0):
         t.append(box(sx - 14, sx + 14, 250.0, FW_Y1, FW_Z0 - 22.0, FW_Z0))
         t.append(box(sx - 14, sx + 14, FW_Y0, -250.0, FW_Z0 - 22.0, FW_Z0))

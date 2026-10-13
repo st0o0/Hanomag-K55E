@@ -106,8 +106,9 @@ FW_X0, FW_X1 = 1440.0, 2050.0
 # Bodenblech y, 645 breit (>= Haubenbreite 690: |y| 345); links bis y -300 belegt, rechts Wand innen y 345
 # (Aussenseite 355, die Pumpenleitung bei |y| 392 bleibt auf der Plattform)
 FW_Y0, FW_Y1 = -300.0, 345.0
-FW_Z0 = DECK_Z - 185.0 - 14.0   # Unterkante Bodenblech = Oberkante Kupplungs-/Wechselgetriebe 716 (Fit Frame 128)
-FW_Z1 = FW_Z0 + 14.0            # Oberkante Bodenblech 730
+FW_STUFE = 225.0                # Stufe Plattform -> Fussraumboden ~ Armaturenkasten (Short c48/c50: 220..250; vorher 185)
+FW_Z0 = DECK_Z - FW_STUFE - 14.0   # Unterkante Bodenblech = Oberkante Kupplungs-/Wechselgetriebe 676
+FW_Z1 = FW_Z0 + 14.0            # Oberkante Bodenblech 690
 X_BREMSE = 1870.0               # Bremstrommel-Achse x (rumpf.py baut die Bremse, fahrerstand.py die Pedale/Gestaenge)
 
 # Haubendach (Original-mm): Dachbogen quer ueber die Maskenbreite, Kantenradius zur Seitenwand

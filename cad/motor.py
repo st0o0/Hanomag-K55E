@@ -447,14 +447,14 @@ def _pumpendeckel(t: Sammler) -> None:
     t.mat("blank", sechskant((xv, ym, SD_DK_Z1 + 7), (0, 0, 1), 16, 7))
 
 
-def _kraftstoffleitung_geflecht(t: Sammler) -> None:
-    """Geflochtene Kraftstoffleitung (Oe 12, blank) vom Vorreiniger in flachem Bogen quer ueber das Schriftfeld
-    (vorn z ~870, hinten ~900) zur Rueckseite des Kastens (Nordhorn 1:37-1:49)."""
-    pts = [(VF_X + 18, VF_Y, VF_Z1 + 8), (545.0, -306.0, 874.0), (780.0, -306.0, 862.0), (960.0, -306.0, 884.0),
-           (1010.0, -306.0, 922.0), (1010.0, -288.0, 922.0)]
-    t.mat("blank", rohr_glatt(pts, 6.0, 40))
-    t.mat("blank", sechskant((1010.0, SD_Y1, 922.0), (0, -1, 0), 20, 6))
+def _kraftstoffleitung(t: Sammler) -> None:
+    """Schlichte Stahl-Kraftstoffleitung (Oe 8, blank) vom Vorreiniger unauffaellig unter dem Schriftfeld entlang zur
+    Rueckseite des Kastens, zwei Verschraubungen (Nordhorn 1:42: die Geflechtschlaeuche sind moderne Ersatzteile)."""
+    pts = [(VF_X + 18, VF_Y, VF_Z1 + 8), (535.0, -310.0, VF_Z1 + 8), (535.0, -310.0, 797.0), (1015.0, -310.0, 797.0),
+           (1015.0, -288.0, 797.0)]
+    t.mat("blank", rohr_glatt(pts, 4.0, 24))
     t.mat("blank", sechskant((VF_X + 14, VF_Y, VF_Z1 + 8), (1, 0, 0), 16, 8))
+    t.mat("blank", sechskant((1015.0, SD_Y1 - 1.0, 797.0), (0, -1, 0), 14, 7))
 
 
 def _lageransatz(t: Sammler) -> None:
@@ -504,10 +504,10 @@ def _typenschild_und_stoesseldeckel(t: Sammler) -> None:
 def _seitendeckel(t: Sammler) -> None:
     """Hanomag-Kastenpumpe 'HANOMAG DIESEL' an der linken Blockseite: Gussgehaeuse 360 x 127 hoch, ~100 vom Block,
     Deckelplatte mit Schrauben, erhabenes Schriftfeld, Deckelflansch mit Schraubenreihe, aufgesetzter Blechdeckel mit
-    Einfuellkappe, geflochtene Kraftstoffleitung davor, Abstellhebel mit Kugelknopf hinten, Typenschild."""
+    Einfuellkappe, Stahl-Kraftstoffleitung darunter, Abstellhebel mit Kugelknopf hinten, Typenschild."""
     _pumpenkasten(t)
     _pumpendeckel(t)
-    _kraftstoffleitung_geflecht(t)
+    _kraftstoffleitung(t)
     _lageransatz(t)
     _reglerwelle(t)
     _typenschild_und_stoesseldeckel(t)

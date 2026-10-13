@@ -176,7 +176,7 @@ X_STECK = X_LEIT + 280.0
 R_ZYLLTG = 11.0              # duenne Zylinderrohre Ø 22 (Kopf -> Endkasten)
 
 # --- Arbeitsscheinwerfer hinten links auf dem Endkasten (Video 145/116/158) ---
-SW_XY = (2735.0, -935.0)
+SW_XY = (2790.0, -935.0)
 SW_R = 75.0
 
 # --- Konsole auf der Kotfluegelkante ---

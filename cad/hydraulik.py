@@ -4,11 +4,14 @@ Doppeltwirkender 2-Zylinder-Kreis (Belege: Video Nordhorn 2:09..2:53 und YouTube
 
 * Die Zahnradpumpe sitzt vor dem Maskensockel; je Seite fuehrt EINE Leitung nach hinten.
   Links ist es die Saugleitung zum Oeltank, rechts die Druckleitung zum Anschluss P des Steuerblocks.
-* Der Steuerblock steht dicht hinter dem Sitz rechts der Sitzmitte auf dem Plattformblech (Short 0:13..0:17).
-  Jede Seite bekommt genau ein dickes Rohr (Ø 42) aus der Seitenflaeche des Blocks (Angabe des Besitzers, Short 0:13..0:16):
-  seitlich hinaus, 90 Grad hoch auf z 1230, 90 Grad nach hinten ueber die Vorderkante des Oeltanks, 90 Grad nach aussen,
-  bei z 1230 zum Endkasten und dort senkrecht von oben durch die Kastendecke (Nordhorn 2:44: Rohrlinie ~ 1230,
-  Short 1:00: Rohre tauchen senkrecht ein). Innen verdeckt ein kurzer Schlauch zur Hohlschraube auf dem Zylinder.
+* Der Steuerblock steht auf einem Blechbock (Konsole) hinter dem Sitz rechts der Sitzmitte (Short 0:13..0:17); seine Oberkante
+  liegt knapp unter dem Sitzschalenrand. Der Kugelhebel ist ein eigener Hebel auf einem Lagerbock vor dem Block und wirkt ueber
+  Winkel und waagerechtes Gestaenge (Gabelkoepfe) auf die Schieberstange an der Blockfront (Foto des Besitzers, Short 0:17).
+* Die beiden sichtbaren Zylinderrohre (Ø 42) treten seitlich nach innen (zur Fahrzeugmitte) aus dem Zylinderrohr vor dem Endkasten
+  aus (Verschraubung auf Achshoehe), steigen senkrecht auf z ~ 1230, biegen 90 Grad nach hinten und 90 Grad quer ueber den Oeltank
+  zur anderen Seite, dort 90 Grad nach vorn und senkrecht abwaerts zum Anschluss am anderen Zylinder (Spiegelbild;
+  Short 0:13..0:16, Angabe des Besitzers). Die Verbindung vom Steuerblock ist unsichtbar: zwei Rohre Ø 28 vom Block waagerecht
+  durch die rechte Innenwand des Endkastens (Schott aussen). Die Rohrhalter auf dem Tank folgen Nordhorn 2:09 / 2:24.
 * Ein Ruecklauf zum Oeltank ist nicht modelliert (technisch waere einer von T/Block zum Tank noetig).
 
 Alle Rohrleitungen sind Instanzen von :class:`Rohrzug` (Polylinie mit echten Kreisboegen an den Ecken).
@@ -53,7 +56,7 @@ from .common import (
     sechskant,
     stab,
 )
-from .planiermasse import EK_T, EK_Z1, QT_X0, QT_Z1, R_ZYL, X_ZAPFEN, Z_ZYL
+from .planiermasse import EK_T, EK_YI, QT_X0, QT_Z1, R_ZYL, Z_ZYL
 
 Punkt = tuple[float, float, float]
 
@@ -188,7 +191,7 @@ def ring_z(x: float, y: float, z: float, r_aussen: float, r_innen: float, h: flo
 # Rohrradien
 R_QUER = 21.0        # Zylinderleitungen Ø 42 (Video: 40..45)
 R_PUMPE = 18.0       # Pumpenleitungen Ø 36
-R_SCHLAUCH = 11.0    # Schlauchstuecke im Endkasten
+R_SCHLAUCH = 8.0     # Schlauchstuecke im Endkasten (nur ~18 mm Luft zwischen Zylinder und Decke)
 
 # Pumpe (Fotos 26271249857 / 40431531504 / 40431489714)
 PU_Z = PUMPE[2]
@@ -204,31 +207,35 @@ Z_PL = DECK_Z + 45.0                     # Rohrmitte auf der Plattform, 27 ueber
 X_SCHELLE0, DX_SCHELLE = 1500.0, 160.0   # Schellenraster ab DECK_X0, links wie rechts gleich
 BIEGUNG_PUMPE = 60.0
 BIEGUNG_P = 30.0                         # Bogen zum Anschluss P
-X_P_BOGEN = 2380.0                       # rechts: Abbiegen nach innen zur Vorderseite des Blocks
+X_P_BOGEN = 2400.0                       # rechts: Abbiegen nach innen (vor dem Lagerbock des Hebels)
+X_P_STEIGER = 2455.0                     # kurzes senkrechtes Stueck vor dem Anschluss P
 
 # Steuerblock dicht hinter dem Sitz (Sitz x 2340, y 200, Rand y 425), Rueckseite an der Tank-Vorderwand 2630
 VB_X0, VB_X1 = 2480.0, 2620.0
 VB_Y0, VB_Y1 = 430.0, 560.0
-VB_Z0, VB_Z1 = DECK_Z + 20.0, DECK_Z + 150.0
-VB_PL_X = (2510.0, 2590.0)               # Fussplatte
-HEBEL_FUSS = (VB_X0, 450.0, 1050.0)      # Hebel aus der vorderen linken Oberkante des Blocks (Short 0:17)
-HEBEL_KUGEL = (2390.0, 480.0, 1190.0)    # Kugel neben dem hinteren Sitzrand, ueber dem Polster (1105)
+VB_Z0, VB_Z1 = DECK_Z + 70.0, DECK_Z + 200.0   # Oberkante 1115, knapp unter dem Sitzschalenrand (1105..1130)
+VB_PL_X = (2500.0, 2600.0)               # Blechbock (Konsole) unter dem Block
+Y_HEBEL = 470.0                          # Ebene des Hebels und des Gestaenges
+HEBEL_DREH = (2350.0, Y_HEBEL, 1000.0)   # Drehpunkt (Bolzen) im Lagerbock vor dem Block
+HEBEL_KUGEL = (2390.0, Y_HEBEL, 1240.0)  # Kugel neben dem hinteren Sitzrand, ueber dem Polster
 R_KUGEL = 25.0
-P_ANSCHLUSS = (VB_X0, 470.0, Z_PL)       # Druckanschluss P an der Vorderseite des Blocks
+Z_SCHIEBER = 1000.0                      # Schieberstange Ø 14 tritt hier aus der Blockfront
+Z_PL_P = Z_PL + 50.0                     # Hoehe des Anschlusses P an der Blockfront
+P_ANSCHLUSS = (VB_X0, 530.0, Z_PL_P)     # Druckanschluss P an der Vorderseite des Blocks
 
 # Zylinderleitungen
-X_PORT = 2570.0                          # Anschluesse in den Seitenflaechen des Blocks (Blockmitte x 2550)
-Z_PORT = 1010.0                          # Hoehe der Anschluesse (Blockmitte)
-Y_ABGANG = 70.0                          # gerades Stueck seitlich vom Block bis zum ersten Bogen (> Biegeradius)
-X_TANKROHR = 2700.0                      # Rohre ueber dem Oeltank (Tank x 2630..2830), beide Seiten gleich
-Z_QUER = 1230.0                          # Nordhorn-Seitenansicht 2:44: Rohrlinie ~ 1230
+Z_PORT = 1000.0                          # Anschluesse an der +y-Seite des Blocks (unter dem Zylinderrohr 1030)
+X_ROHR = (2540.0, 2600.0)                # Ø28-Rohre vom Block durch die rechte Innenwand
+X_ANSCHLUSS = (2360.0, 2290.0)           # Zylinderanschluesse (Rohr 1 / 2) am Zylinderrohr vor dem Endkasten (EK_X0 2395)
+Y_STEIGER = (840.0, 780.0)               # |y| der senkrechten Stuecke (Rohr 2 innen: Rohr 1 passiert Steiger 2 mit 18 mm Luft)
+Z_QUER = 1230.0                          # beide Querrohre nebeneinander auf gleicher Hoehe (Short 0:13..0:16)
+X_TANKROHR = (2710.0, 2650.0)            # Lage der Querrohre ueber dem Oeltank; Rohr 2 (innen) biegt vor Rohr 1 ab, ohne Kreuzung
 BIEGUNG_QUER = 63.0                      # 1,5 x Ø
-Y_EIN = 960.0                            # |y| der Eintauchstelle in die Endkastendecke
-Z_ENDE = EK_Z1 - 7.0                     # festes Rohrende 12 unter der Decken-Oberkante (Kastendecke 1170)
-X_ZYL_ANSCHLUSS = 2600.0                 # Hohlschraube auf dem Zylinderrohr nahe dem Boden (Kolbenseite)
-R_RING = R_ZYL + 10.0                    # Zapfenring um das Zylinderrohr
-RING_X = (X_ZAPFEN - 45.0, X_ZAPFEN + 45.0)
-X_PFOSTEN = 2800.0                       # Pfosten hinter den Querrohren (Rundpfosten-Kappe ragt ~5 ueber die Tank-Rueckwand)
+R_STUTZEN = 14.0                         # Rohr Ø 28 vom Block durch die Innenwand
+H_ANSCHLUSS = 14.0                       # Hoehe der Winkel-/Stutzenverschraubung am Zylinderrohr
+X_HALTER = 2680.0                        # Buegel zwischen den nebeneinander liegenden Querrohren (x 2650 / 2710)
+R_WAND = 20.0                            # Lochradius in der Innenwand (Ø 40 fuer das Rohr Ø 28, Decke bei 1170)
+X_PFOSTEN = 2810.0                       # Pfosten hinter den Querrohren (Kappe und Platte ragen etwas ueber die Tank-Rueckwand)
 
 # Pfosten auf dem Oeltank (Frame 144 / Short): Flachstahlbuegel links-mittig, Rundpfosten (Entlueftung) rechts-mittig
 Y_PFOSTEN = (-345.0, 250.0)
@@ -247,10 +254,10 @@ class Durchfuehrung:
 
 
 def durchfuehrungen(seite: int) -> list[Durchfuehrung]:
-    """Loecher des Endkastens der Seite ``seite`` (-1 links, +1 rechts).
-
-    Die Rohre tauchen senkrecht von oben durch die Decke (Loch mit Spiel fuer die Zylinderschwenkung)."""
-    return [Durchfuehrung((X_TANKROHR, seite * Y_EIN, EK_Z1 - EK_T / 2), (0, 0, 1))]
+    """Loecher des Endkastens der Seite ``seite`` (-1 links, +1 rechts): nur rechts je Ø28-Rohr ein Loch in der Innenwand."""
+    if seite < 0:
+        return []
+    return [Durchfuehrung((x, EK_YI + EK_T / 2, Z_PORT), (0, 1, 0), R_WAND) for x in X_ROHR]
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -279,30 +286,59 @@ def oelpumpe(t: Sammler) -> None:
 # ---------------------------------------------------------------------------------------------------------------
 # Steuerblock
 # ---------------------------------------------------------------------------------------------------------------
+def _gabelkopf(t: Sammler, x: float, y: float, z: float, richtung: int) -> None:
+    """Gabelkopf (zwei Backen, Querbolzen, Splint) am Stangenende; die Backen ragen ab ``x`` um 18 in ``richtung`` (+1/-1)."""
+    x2 = x + richtung * 18.0
+    for dy in (-8.0, 3.0):
+        t.mat("blank", box(min(x, x2), max(x, x2), y + dy, y + dy + 5, z - 8, z + 8))
+    xb = x + richtung * 9.0
+    t.mat("blank", stab((xb, y - 11, z), (xb, y + 11, z), 3.5))
+    t.mat("schwarz", box(xb - 1, xb + 1, y - 13, y - 11, z - 5, z + 1))                      # Splint
+
+
+def hebelwerk(t: Sammler) -> None:
+    """Handhebel nach dem Foto des Besitzers: Kugelhebel (Rohr Ø 16, Kugel Ø 50) auf einem Lagerbock (zwei Laschen mit Bolzen)
+    vor dem Block, unten ein Winkel; von dort ein waagerechtes Gestaenge (Stange Ø 10 mit Gabelkoepfen) zur Schieberstange
+    (Ø 14, Lasche mit Bolzen) an der Blockfront. Daneben ein kleiner Stellhebel (Ø 10 x 60) am linken Blockrand."""
+    xq, yq, zq = HEBEL_DREH
+    for dy in (-14.0, 8.0):                                                                   # Lagerbock
+        t.append(box(xq - 15, xq + 15, yq + dy, yq + dy + 6, DECK_Z, zq + 14))
+    t.append(box(xq - 15, xq + 15, yq - 14, yq + 14, DECK_Z, DECK_Z + 5))                      # Fussplatte
+    t += [sechskant((xq + dx, yq, DECK_Z + 5), (0, 0, 1), 12, 5) for dx in (-9, 9)]
+    t.mat("blank", stab((xq, yq - 17, zq), (xq, yq + 17, zq), 5))                              # Lagerbolzen
+    t.mat("blank", sechskant((xq, yq + 17, zq), (0, 1, 0), 14, 5))
+    xk, yk, zk = HEBEL_KUGEL
+    richtung = (Vector(xk, yk, zk) - Vector(xq, yq, zq)).normalized()
+    t.mat("blank", stab((xq, yq, zq), tuple(Vector(xk, yk, zk) - richtung * (R_KUGEL - 6)), 8))
+    t.mat("schwarz", Pos(xk, yk, zk) * Sphere(R_KUGEL))
+    t.mat("blank", box(xq - 8, xq + 32, yq - 4, yq + 4, zq - 8, zq + 8))                       # Winkel (Hebelarm nach hinten)
+    x_g1, x_g2 = xq + 30.0, 2436.0                                                             # Gestaenge
+    _gabelkopf(t, x_g1, yq, zq, +1)
+    t.mat("blank", stab((x_g1 + 18, yq, zq), (x_g2, yq, zq), 5))
+    _gabelkopf(t, x_g2 + 18, yq, zq, -1)
+    t.mat("blank", stab((VB_X0 + 2, yq, Z_SCHIEBER), (x_g2 + 4, yq, Z_SCHIEBER), 7))           # Schieberstange
+    t.mat("blank", box(x_g2 + 4, x_g2 + 16, yq - 3, yq + 3, Z_SCHIEBER - 8, Z_SCHIEBER + 8))   # Lasche
+    xs = VB_X0 + 20.0
+    t.mat("blank", stab((xs, VB_Y0 - 2, 1085), (xs - 4, VB_Y0 - 52, 1100), 5))                 # Stellhebel am linken Blockrand
+    t.mat("schwarz", Pos(xs - 4, VB_Y0 - 52, 1100) * Sphere(8))
+
+
 def steuerblock(t: Sammler) -> None:
-    """Dunkler Sektions-Steuerblock mit quer gestapelten Rippen (Short 0:15..0:17) auf einer Fussplatte, Handhebel mit
-    Kugel schraeg nach vorn-innen zum Fahrer. Anschluesse: A/B und die Ausgaenge zum rechten Zylinder an der +y-Seite,
-    P (Druck von der Pumpe) an der Vorderseite."""
+    """Dunkler Sektions-Steuerblock mit quer gestapelten Rippen (Short 0:15..0:17) auf einem Blechbock (zwei Flanschschrauben),
+    Hebelwerk davor (:func:`hebelwerk`). Anschluesse: die zwei Zylinderrohre an der +y-Seite, P (Druck von der Pumpe) vorn."""
     x0, x1, y0, y1, z0, z1 = VB_X0, VB_X1, VB_Y0, VB_Y1, VB_Z0, VB_Z1
-    t.append(box(VB_PL_X[0], VB_PL_X[1], y0, y1, DECK_Z, z0 + 1))
-    t += [sechskant((x, y, z0 - 13), (0, 0, 1), 14, 6) for x in (VB_PL_X[0] + 12, VB_PL_X[1] - 12) for y in (y0 + 14, y1 - 14)]
+    t.append(box(VB_PL_X[0], VB_PL_X[1], y0 + 12, y1 - 12, DECK_Z + 7, z0 + 1))                # Blechbock
+    t.append(box(VB_PL_X[0] - 14, VB_PL_X[1] + 14, y0 + 4, y1 - 4, DECK_Z, DECK_Z + 7))        # Fussflansch
+    t += [sechskant((x, (y0 + y1) / 2, DECK_Z + 7), (0, 0, 1), 16, 8) for x in (VB_PL_X[0] - 6, VB_PL_X[1] + 6)]
     t.mat("schwarz", kasten_rund(x0, x1, y0, y1, z0, z1 - 22, 12, Axis.Z))
     for i in range(6):
         xr = x0 + 14 + i * (x1 - x0 - 28) / 5
         t.mat("schwarz", kasten_rund(xr - 7, xr + 7, y0 - 2, y1 + 2, z0 + 12, z1 - 30, 5, Axis.Z))
     t.append(kasten_rund(x0 + 10, x1 - 10, y0 + 10, y1 - 10, z1 - 23, z1, 10, Axis.Z))
     t += [sechskant((x, y, z1), (0, 0, 1), 14, 6) for x in (x0 + 16, x1 - 16) for y in (y0 + 16, y1 - 16)]
-    # Handhebel: Lagerbock an der vorderen Oberkante, Gelenkkugel, Stange Ø 20, schwarze Kugel Ø 50
-    xf, yf, zf = HEBEL_FUSS
-    t.append(stab((xf + 4, yf, zf), (xf - 16, yf, zf), 18))
-    t.mat("blank", Pos(xf - 16, yf, zf) * Sphere(16))
-    xk, yk, zk = HEBEL_KUGEL
-    richtung = (Vector(xk, yk, zk) - Vector(xf - 16, yf, zf)).normalized()
-    t.mat("blank", stab((xf - 16, yf, zf), tuple(Vector(xk, yk, zk) - richtung * (R_KUGEL - 6)), 10))
-    t.mat("schwarz", Pos(xk, yk, zk) * Sphere(R_KUGEL))
-    # Anschluesse: A/B oben (die Rohre stehen auf der Decke), P vorn
-    for seite, y in ((-1, y0), (1, y1)):
-        Verschraubung((X_PORT, y, Z_PORT), (0, seite, 0), 46, 14).einfuegen(t)
+    hebelwerk(t)
+    for x in X_ROHR:
+        Verschraubung((x, y1 + 2, Z_PORT), (0, 1, 0), 46, 14).einfuegen(t)
     px, py, pz = P_ANSCHLUSS
     Verschraubung((px, py, pz), (-1, 0, 0), 40, 14).einfuegen(t)
 
@@ -321,8 +357,9 @@ def _pumpenzug(seite: int) -> Rohrzug:
         punkte.append((QT_X0 - 8, -Y_LTG, Z_PL))
         biegung = (BIEGUNG_PUMPE,) * 4
     else:
-        punkte += [(X_P_BOGEN, Y_LTG, Z_PL), (X_P_BOGEN, py, pz), (px - 4, py, pz)]
-        biegung = (BIEGUNG_PUMPE,) * 4 + (BIEGUNG_P, BIEGUNG_P)
+        punkte += [(X_P_BOGEN, Y_LTG, Z_PL), (X_P_BOGEN, py, Z_PL), (X_P_STEIGER, py, Z_PL), (X_P_STEIGER, py, pz),
+                   (px - 4, py, pz)]
+        biegung = (BIEGUNG_PUMPE,) * 4 + (BIEGUNG_P, BIEGUNG_P, 20.0, 20.0)
     return Rohrzug(tuple(punkte), R_PUMPE, biegung, name="Saugleitung" if s == -1 else "Druckleitung")
 
 
@@ -344,69 +381,62 @@ def pumpenleitungen(t: Sammler) -> None:
 # ---------------------------------------------------------------------------------------------------------------
 # Zylinderleitungen
 # ---------------------------------------------------------------------------------------------------------------
-def _hohlschraube_z(x: float) -> tuple[float, float]:
-    """Fusshoehe der Hohlschraube an der Unterseite und Oberkante von Zapfenring bzw. Zylinderrohr bei x."""
-    r = R_RING if RING_X[0] <= x <= RING_X[1] else R_ZYL
-    return Z_ZYL - r - 12.0, Z_ZYL + r
+def _stutzen(t: Sammler, x: float) -> None:
+    """Unsichtbare Verbindung vom Block in den rechten Endkasten: Rohr Ø 28 waagerecht von der +y-Seite des Blocks (Verschraubung)
+    durch die Innenwand, aussen an der Wand mit Schott-Verschraubung."""
+    t.mat("blank", stab((x, VB_Y1 + 2, Z_PORT), (x, EK_YI + EK_T + 6, Z_PORT), R_STUTZEN))
+    Verschraubung((x, EK_YI - 10, Z_PORT), (0, 1, 0), 30, 8).einfuegen(t)
 
 
-def _anschluss_oben(t: Sammler, x_rohr: float, y_rohr: float, x_zyl: float, seite: int) -> None:
-    """Verdeckt im Endkasten der Seite ``seite``: Schlauch vom Rohrende (Z_ENDE) zur Hohlschraube, die oben auf dem Zapfenring
-    (x_zyl im Ring) bzw. dem Zylinderrohr (nahe Boden) sitzt. Liegt das Rohrende neben dem Anschluss, fuehrt der Schlauch
-    knapp unter der Kastendecke seitlich dorthin."""
-    y_zyl = seite * Y_SCHUB
-    _, oben = _hohlschraube_z(x_zyl)
-    zf = oben - 4.0
-    ende = (x_zyl, y_zyl, zf + 16)
-    start = (x_rohr, y_rohr, Z_ENDE + 1)
-    if abs(x_rohr - x_zyl) < 1.0:
-        zug = Rohrzug((start, ende), R_SCHLAUCH, material="gummi", name="Schlauch")
-    else:
-        vor = (x_zyl + math.copysign(40.0, x_rohr - x_zyl), y_zyl, Z_ENDE - 2)
-        zug = Rohrzug((start, vor, ende), R_SCHLAUCH, (15.0,), material="gummi", name="Schlauch")
-    zug.einfuegen(t)
-    Verschraubung((x_zyl, y_zyl, zf), (0, 0, 1), 40, 16).einfuegen(t)
-
-
-def zylinderrohr(t: Sammler, seite: int) -> None:
-    """Dickes Rohr vom Block (Seitenflaeche, Anschluss in Blockmitte) zum Endkasten der Seite ``seite`` (-1 links, +1 rechts):
-    seitlich hinaus, 90 Grad hoch auf Z_QUER, 90 Grad nach hinten (+x), 90 Grad nach aussen, bei Z_QUER ueber den Oeltank,
-    senkrecht von oben durch die Kastendecke bis Z_ENDE (Gummituelle); innen verdeckt Schlauch und Hohlschraube."""
-    y_block = VB_Y0 if seite < 0 else VB_Y1
-    y_knick = y_block + seite * Y_ABGANG
-    y_ein = seite * Y_EIN
-    punkte = ((X_PORT, y_block - seite * 2, Z_PORT), (X_PORT, y_knick, Z_PORT), (X_PORT, y_knick, Z_QUER),
-              (X_TANKROHR, y_knick, Z_QUER), (X_TANKROHR, y_ein, Z_QUER), (X_TANKROHR, y_ein, Z_ENDE))
-    Rohrzug(punkte, R_QUER, BIEGUNG_QUER, name="Zylinderrohr links" if seite < 0 else "Zylinderrohr rechts").einfuegen(t)
-    t.mat("gummi", ring_z(X_TANKROHR, y_ein, EK_Z1 + 5, R_QUER + 9, R_QUER, 10))
-    _anschluss_oben(t, X_TANKROHR, y_ein, X_ZYL_ANSCHLUSS, seite)
+def zylinderrohr(t: Sammler, i: int) -> None:
+    """Rohr ``i`` (0 = hinterer Anschluss x 2360, 1 = vorderer x 2290): Verschraubung auf Achshoehe (Z_ZYL) an der Innenseite des
+    rechten Zylinderrohrs, waagerecht nach innen, 90 Grad hoch auf Z_QUER, 90 Grad nach hinten (+x), 90 Grad quer ueber den
+    Oeltank (-y), 90 Grad nach vorn und 90 Grad abwaerts zur Verschraubung am linken Zylinderrohr (Spiegelbild).
+    Die Querlagen sind so gewaehlt, dass der innere Steiger (Rohr 2) vor Rohr 1 abbiegt und sich nichts kreuzt."""
+    x, xq, y = X_ANSCHLUSS[i], X_TANKROHR[i], Y_STEIGER[i]
+    y0 = Y_SCHUB - R_ZYL
+    for s in (-1, 1):
+        Verschraubung((x, s * y0, Z_ZYL), (0, -s, 0), 36, H_ANSCHLUSS).einfuegen(t)
+    y_start = y0 - H_ANSCHLUSS + 2.0
+    punkte = ((x, y_start, Z_ZYL), (x, y, Z_ZYL), (x, y, Z_QUER), (xq, y, Z_QUER), (xq, -y, Z_QUER), (x, -y, Z_QUER),
+              (x, -y, Z_ZYL), (x, -y_start, Z_ZYL))
+    Rohrzug(punkte, R_QUER, BIEGUNG_QUER, name=f"Zylinderrohr {i + 1}").einfuegen(t)
+    _stutzen(t, X_ROHR[i])
 
 
 def traversenleitungen(t: Sammler) -> None:
-    """Die beiden Zylinderleitungen: je Seite ein Rohr aus dem Block zum Endkasten (siehe :func:`zylinderrohr`), dazu die
-    Pfosten auf dem Oeltank, die das linke Rohr halten."""
-    for seite in (-1, 1):
-        zylinderrohr(t, seite)
+    """Die beiden Zylinderrohre als Paar (siehe :func:`zylinderrohr`) und die Pfosten auf dem Oeltank."""
+    for i in (0, 1):
+        zylinderrohr(t, i)
     _pfosten(t)
 
 
+def _halter(t: Sammler, yp: float) -> None:
+    """Rohrhalter nach Nordhorn 2:09 / 2:24: senkrechter Flachstahl-Buegel (40 x 8, oben gerundet) zwischen den beiden Rohren
+    auf Fussplatte (60 x 60 x 8, zwei Sechskantschrauben) auf der Tankdecke; jedes Rohr ist mit einer Halbschalen-Schelle
+    (zwei Schrauben) an den Buegel geklemmt."""
+    xb = X_HALTER
+    z_top = Z_QUER + R_QUER + 8.0
+    t.mat("lack", box(xb - 30, xb + 30, yp - 30, yp + 30, QT_Z1, QT_Z1 + 8))
+    t += [sechskant((xb, yp + dy, QT_Z1 + 8), (0, 0, 1), 12, 6) for dy in (-22, 22)]
+    t.mat("lack", box(xb - 4, xb + 4, yp - 20, yp + 20, QT_Z1 + 8, z_top - 20))
+    t.mat("lack", rad_x(xb, yp, z_top - 20, 20, 8))                                  # gerundetes oberes Ende
+    for xq, r in zip(X_TANKROHR, (-1, 1), strict=True):
+        t.mat("blank", ring_y(xq, yp, Z_QUER, R_QUER + 5, R_QUER - 0.5, 30))
+        for dz in (-12.0, 12.0):                                                     # Schellenschrauben auf der Aussenseite
+            t.mat("blank", sechskant((xq + r * (R_QUER + 5), yp, Z_QUER + dz), (r, 0, 0), 10, 5))
+
+
 def _pfosten(t: Sammler) -> None:
-    """Pfosten auf dem Oeltank, die das linke Rohr (x = X_TANKROHR) halten: links-mittig Flachstahlbuegel (zwei Flachstaehle),
-    rechts-mittig Rundpfosten mit Kappe Ø 70 auf verschraubter Platte (Entlueftung des Oeltanks). Je Pfosten eine Rohrschelle
-    mit Querarm ueber dem Rohr."""
-    xp = X_PFOSTEN
-    z_oben = Z_QUER + R_QUER
-    for k, yp in enumerate(Y_PFOSTEN):
-        t.append(box(xp - 30, xp + 30, yp - 35, yp + 35, QT_Z1 - 1, QT_Z1 + 10))
-        t += [sechskant((xp, yp + dy, QT_Z1 + 10), (0, 0, 1), 14, 6) for dy in (-22, 22)]
-        if k == 0:
-            for dy in (-22, 14):
-                t.append(box(xp - 25, xp + 25, yp + dy, yp + dy + 8, QT_Z1 + 10, z_oben + 25))
-        else:
-            t.append(_scheibe_z(xp, yp, QT_Z1 + 10, 22, Z_QUER - 28 - QT_Z1 - 10))
-            t.append(_scheibe_z(xp, yp, Z_QUER - 28, 35, 62))
-        t.append(ring_y(X_TANKROHR, yp, Z_QUER, R_QUER + 6, R_QUER - 0.5, 30))
-        t.append(box(X_TANKROHR, xp, yp - 12, yp + 12, z_oben + 3, z_oben + 13))
+    """Zwei Rohrhalter (:func:`_halter`) auf dem Oeltank bei y -345 und +250 sowie der Einfuellstutzen mit Kappe Ø 70 auf
+    verschraubter Platte (rechts-mittig, neben dem rechten Halter)."""
+    for yp in Y_PFOSTEN:
+        _halter(t, yp)
+    xp, yp = X_PFOSTEN, Y_PFOSTEN[1]
+    t.append(box(xp - 30, xp + 30, yp - 35, yp + 35, QT_Z1 - 1, QT_Z1 + 10))
+    t += [sechskant((xp, yp + dy, QT_Z1 + 10), (0, 0, 1), 14, 6) for dy in (-22, 22)]
+    t.append(_scheibe_z(xp, yp, QT_Z1 + 10, 22, Z_QUER - 28 - QT_Z1 - 10))
+    t.append(_scheibe_z(xp, yp, Z_QUER - 28, 35, 62))
 
 
 # ---------------------------------------------------------------------------------------------------------------
